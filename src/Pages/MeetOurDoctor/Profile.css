@@ -1,0 +1,225 @@
+.doctordetails .Meetourdoctor {
+    text-align: left;
+}
+
+.doctordetails .doctorcard button {
+    font-size: 13px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.doctordetails .doctorcard button:hover {
+    font-size: 13px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.doctordetails .banner-img {
+    width: 100%;
+    height: auto;
+}
+
+.doctordetails .Meetourdoctor .about-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #0f7572;
+}
+
+.doctordetails .Meetourdoctor .text-left {
+    text-align: left !important;
+}
+
+.doctordetails .Meetourdoctor .about-description {
+    color: #000000;
+    font-size: 17px;
+    margin: 40px 0px;
+}
+
+.doctordetails .Meetourdoctor .about-title>span {
+    position: relative;
+}
+
+.doctordetails .Meetourdoctor .about-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #0b4e8d;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+
+.doctorprofile .doctorpic p {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 10px;
+}
+
+/* .doctorprofile .doctorpic img {
+    border-radius: 100%;
+} */
+
+.doctorprofile .doctorpic {
+    text-align: center;
+}
+
+.doctorprofile {
+    margin: 90px 0px;
+}
+
+.doctorprofile .doctordetails p {
+    /* font-weight: bold; */
+    font-size: 16px;
+}
+
+.doctorprofile .doctordetails form .slotbook {
+    /* border: 1px solid lightgray; */
+    border-radius: 10px;
+}
+
+.doctorprofile .doctordetails form {
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.doctorprofile .doctordetails form input {
+    border-radius: 0px;
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    margin: 5px 0px;
+    border-bottom: 2px solid #d0d0d0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.doctorprofile .doctordetails form textarea {
+    border: 2px solid #dadada;
+    border-top: 0px;
+    width: 100%;
+    border-right: none;
+    border-left: none;
+}
+
+.doctorprofile form select {
+    margin: 10px;
+    padding: 10px;
+    border-top: none;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #dadada;
+}
+
+.doctorprofile form select option {
+    padding: 10px;
+}
+
+.doctorprofile .doctordetails form .btn {
+    width: 100%;
+    margin: 5px 0px;
+    background-color: #2f80be;
+    color: white;
+    font-size: 20px;
+}
+
+.doctorprofile .doctorpic h2 {
+    font-weight: bold;
+    margin: 20px 0px;
+    color: #004177;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.doctorprofile .h5 {
+    font-weight: bold;
+}
+
+ .shadowdrp {
+    box-shadow: 0px 0px 3px #000000;
+    background: white;
+    /* padding-bottom: 10px; */
+}
+
+.doctordetails button {
+    border: none;
+    background-color: #019a50;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.doctorprofile .doctorpic .profile-card {
+    /* height: 279px; */
+    position: relative;
+    font-family: sans-serif;
+    padding: 30px;
+    /* background: #019a50; */
+    transition: .6s;
+    border-radius: 10px;
+}
+
+.doctorprofile .doctorpic .profile-card .img {
+    position: relative;
+    transition: .6s;
+    z-index: 99;
+    /* transform: translateY(-92px); */
+    border-radius: 10px;
+}
+
+.doctorprofile .doctorpic .img img {
+    width: 80%;
+    /* border-radius: 50%; */
+    /* box-shadow: 0 0 22px #3336; */
+    transition: .6s;
+}
+
+.doctorprofile .doctorpic .caption {
+    text-align: center;
+    transform: translateY(-80px);
+    opacity: 0;
+    transition: .6s;
+    opacity: 1;
+
+}
+
+.doctorprofile .doctorpic .caption h3 {
+    font-size: 21px;
+    font-family: sans-serif;
+}
+
+.doctorprofile .doctorpic .caption p {
+    font-size: 15px;
+    color: #0c52a1;
+    font-family: sans-serif;
+    margin: 2px 0 9px 0;
+}
+.doctorprofile ol, .doctordetails ul {
+    padding-left: 16px;
+    text-decoration: none;
+ }  
+
+ .doctorback{
+    background: linear-gradient(#b3f1d483, #b3f1d483),url('../../Assets/index/texturedocprofile.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding:1px 0px;
+    border-radius:5px;
+    border: none;
+}
+
+.doctorback .container{
+    padding:0;
+    margin:-35px auto;
+}

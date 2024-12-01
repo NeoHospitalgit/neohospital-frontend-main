@@ -1,0 +1,23 @@
+#GalleryPage .btn-trans{
+    background-color: transparent;
+    padding: 10px 0px 10px 0px;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    width: 100%;
+ }
+ 
+
+#GalleryPage .activebtn{
+    background-color: #0b4e8d;
+color: white;
+border-right: 2px solid #000000;
+border-bottom: 1px solid #373ad1;
+border-radius: 8px;
+
+}
+#GalleryPage .mrgcolor{
+    background-color: #d1d1d167;
+color: rgb(0, 0, 0);
+ padding: 5px;
+}

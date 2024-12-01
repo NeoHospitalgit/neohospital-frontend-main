@@ -1,0 +1,96 @@
+
+/* .AdminList ul li.active {
+  background-color: #00a2ff; 
+} */
+.adminright .updatebtn{
+        background: green;
+    font-size: 25PX;
+    text-align: CENTER;
+}
+.adminright .deletebtn{
+        background: red;
+    font-size: 25PX;
+    text-align: CENTER;
+}
+.adminright table th{
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.adminright table td{
+    font-size: 14px;
+    font-weight: 500;
+}
+.topbaradmin{
+    padding: 10px;
+    background: #05131f;
+}
+ 
+.topbaradmin .flex{
+    display: flex;
+}
+
+.topbaradmin .flex .flex-end{
+    margin-left: auto;
+}
+
+.adminleft{
+    background-color: #05131f; 
+}
+.adminright .addblogform{
+    background-color: white;
+    padding: 30px;
+    border-radius: 30px;
+}
+.adminright .contentbox textarea{
+width: 100%;
+padding: 10px;
+}
+.AdminList a.active{
+    color:black;
+}
+
+.AdminList ul{
+   padding: 0px;
+}
+.AdminList img{
+    max-width: 100px;
+    height: 100%;
+}
+.AdminList ul li{
+    list-style-type: none;
+    color: white;
+    padding: 15px 30px;
+    border-bottom: 1px solid white;
+    display: flex;
+    justify-content: space-between;
+}
+.AdminList a{
+    display: block;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+.AdminList a:hover{
+    color: rgb(32, 73, 255);
+}
+
+.addblogform h2{
+    padding: 10px;
+    background-color: #05131f;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+
+
+.ss{
+    float: right;
+}
+
+
+.table tr .ptd{
+    padding-top: 25px;
+}
+.table tr .pbtn{
+    padding-top: 15px;
+}

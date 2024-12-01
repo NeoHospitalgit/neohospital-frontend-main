@@ -1,0 +1,72 @@
+.chooseus .choosecontent p{
+    /* margin-top: 10px;   
+    padding: 10px;
+    border: 1px solid lightblue;
+    background: #000000;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1px;
+    height: 100%; */
+
+    background: #10efa517;
+    border: 1px solid #add8e6;
+    color: #000;
+    font-weight: 500;
+    height: 100%;
+    letter-spacing: 1px;
+    margin-top: 0px;
+    padding: 33px 35px;
+    border-radius: 5px;
+
+}
+.chooseus .about-title {
+    font-size: 27px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #000000;
+}
+.chooseus .about-description {
+    color: #000000;
+    font-size: 17px;
+    margin: 40px 0px;
+}
+.chooseus .about-title > span {
+    position: relative;
+}
+.chooseus .about-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #0b4e8d;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+
+.chooseus button{
+      border: 1px solid lightblue;
+    /* background: #005961; */
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin: 5px 5px;
+    padding: 20px 20px;
+    text-align: left;
+    width: 100%;
+ }
+
+.chooseus .active{
+    border-radius: 5px;
+    transform: scale(1.1);
+    border: 1px solid lightblue;
+    background: #000000;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin: 5px 5px;
+    padding: 20px 20px;
+    text-align: left;
+    width: 100%;
+}
+
+

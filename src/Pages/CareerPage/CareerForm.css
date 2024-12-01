@@ -1,0 +1,74 @@
+#careerform .custom-file{
+    font-size: 12px;
+     border-bottom: 1px solid #ccc;
+}
+#careerform .notetitle{
+    font-size: 22px;
+      color: #1a8efd;
+      padding:10px 0px;
+}
+ 
+#careerform  .form-control{
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+
+#careerform  .form-control:focus{
+    box-shadow: none;
+    outline: none;
+    border-bottom: 2px solid #1a8efd;
+}
+
+#careerform  .form-control::placeholder{
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+
+#careerform button.contact_form_submit {
+    background: linear-gradient(to top right, #04656c -5%, #18b187 100%);
+    border: none;
+    color: #fff;
+    /* padding: 10px 15px; */
+    width: 100%;
+    /* margin-top: 19px; */
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+
+
+#careerform {
+    margin-bottom: 100px;
+}
+#careerform .contact_form_submit{
+    margin-bottom: 100px;
+}
+ #careerform .sdfgh{
+    border: 1px solid black;
+}
+ 
+ @media (max-width: 768px) {
+    #careerform  {
+        padding: 40px;
+    }
+
+}
+
+ @media (max-width: 576px) {
+    #careerform  {
+        padding: 20px;
+    }
+
+    #careerform button.contact_form_submit {
+        font-size: 12px;
+    }
+ 
+}
+.can{
+    text-decoration: none;
+    color:#fff
+}

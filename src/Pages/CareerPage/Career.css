@@ -1,0 +1,34 @@
+#careerform .banner-img{
+    width: 100%;
+    height: auto;
+}
+#careerform .container{
+    margin-top:100px;
+}
+#careerform .about-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #0f7572;
+    text-align: center;
+}
+#careerform .about-description {
+    color: #000000;
+    font-size: 17px;
+    margin: 40px 0px;
+    text-align: center;
+}
+#careerform .about-title > span {
+    position: relative;
+}
+#careerform .about-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #0b4e8d;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}

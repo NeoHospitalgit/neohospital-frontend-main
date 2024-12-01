@@ -1,0 +1,128 @@
+.neotestimonials {
+  padding: 100px 0px;
+  background-color: lightgray;
+  margin: 40px 0px;
+}
+
+
+/* .testifile .col-md-9{
+width: 70%;
+} */
+.slick-next {
+  z-index: 9999;
+  right: 0px !important;
+}
+
+.slick-prev {
+  left: 0px !important;
+  z-index: 9999;
+}
+
+.neotestimonial .dt-title-content {
+  margin: 0 0 30px 0;
+}
+
+.neotestimonial .dt-title {
+  font-weight: bold;
+}
+
+.neotestimonial .dt-title>span {
+  position: relative;
+}
+
+.neotestimonial .dt-title span::before {
+  content: '';
+  position: absolute;
+  width: 64%;
+  height: 4px;
+  background-color: #9D2553;
+  border-radius: 8px;
+  left: 0;
+  bottom: -12px;
+}
+
+.neotestimonial .dt-description {
+  font-size: 20px;
+  margin-top: 30px;
+  color: rgb(0, 0, 0);
+}
+
+.testifile .slick-prev:before,
+.testifile .slick-next:before {
+  color: black;
+  opacity: 1;
+}
+
+.testifile .main {
+  font-family: Arial;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.testifile h3 {
+  background: #fff;
+  color: #3498db;
+  font-size: 36px;
+  line-height: 100px;
+  margin: 10px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+}
+
+.testifile .action {
+  display: block;
+  margin: 100px auto;
+  width: 100%;
+  text-align: center;
+}
+
+.testifile .action a {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #f30;
+  color: #fff;
+  text-decoration: none;
+}
+
+.testifile .action a:hover {
+  background: #000;
+}
+
+.testifile .testcardnew {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.testifile .testcardnew .col-md-3 {
+  display: flex;
+  align-items: center;
+}
+
+.testifile .testcardnew .col-md-3 img {
+  border-radius: 100%;
+  width: 55px;
+}
+
+.testifile .testcardnew .col-md-9 h2 {
+  font-size: 20px;
+  color: black;
+}
+
+.testifile .testcardnew .col-md-9 img {
+  height: 20px;
+}
+
+.testifile .testcardnew .reviewpara {
+  margin-top: 15px;
+  color: black;
+}
+
+.neotestimonials .testcardnew a {
+  text-decoration: none;
+}
+
+.neotestimonials .testcardnew i {
+  color: #ffa90b;
+}

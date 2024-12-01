@@ -1,0 +1,273 @@
+:root {
+  --logocolor: #159e93;
+  --color3: #019a50;
+  --hovercolor2: #2c6661;
+  --color2: #0c4944;
+  --white: #ffffff;
+  --black: #000;
+  --gradient-c1: #369e9544;
+  --gradient-c2: #57a7dd7a;
+  --gradient-start: #6a11cb;
+  --gradient-end: #2575fc;
+  --hover-gradient-start: #3a3d99;
+  --hover-gradient-end: #121212;
+}
+
+
+.btn-btn-neo-logocolor {
+  color: var(--black);
+  background-color: transparent;
+  border: 1px solid var(--black);
+  border-radius: 5px;
+  padding: 5px 10px;
+  transition: background 0.3s, color 0.3s;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+
+.btn-btn-neo-logocolor:hover {
+  color: var(--white);
+  background-color: var(--logocolor);
+  border: 1px solid var(--color3);
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+
+ .sahiltop {
+  background: linear-gradient(-125deg, var(--gradient-c2) 0%, var(--gradient-c1) 100%);
+  border-bottom: 1px solid #87ccec56;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items:center;
+  }
+
+  .ddddicon{
+    border-radius: 5px;
+    border: 1px solid #159e93;
+    height: 30px;
+    padding: 7px;
+  }
+
+@media screen and (max-width: 728px) {
+
+  .sahiltop {
+    display: none;
+  } .sahiltop {
+    display: none;
+  }
+
+}
+
+.sahiltop .header {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 13px;
+}
+
+/* .sahiltop {
+  background: black;
+  border-bottom: 1px solid #87ccec56;
+
+} */
+
+
+.sahiltop a {
+  color: #000000 !important;
+  text-decoration: none;
+
+}
+.sahiltop .ticon {
+  color: #ffffff !important;
+  text-decoration: none;
+
+}
+
+
+.sahiltop i {
+  padding-right: 5px;
+}
+
+
+.topbar a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+
+.sahiltop  .social-media-icons a {
+  padding: 0px 7px;
+  height: 30px;
+  width: 30px;
+  margin: 5px 5px;
+  font-size: 15px;
+
+}
+
+.sahiltop  .social-media-icons {
+  margin: 0px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+
+}
+
+@media screen and (max-width: 780px) {
+  .neomiddel {
+    display: none;
+  }
+}
+
+.maintop .input {
+  padding: 0px 15px;
+  text-align: center;
+  width: 300px;
+  transform: skewX(40deg);
+  background-color: rgb(255, 255, 255);
+}
+
+@media screen and (max-width:800px) {
+  .maintop .bookappoint {
+    display: none;
+  }
+}
+
+.maintop .input h4 {
+  transform: skewX(-40deg);
+  color: #2f80be;
+}
+
+/* .neoheader marquee a{
+color: #019a50;
+} */
+.maintop {
+  /* box-shadow: 0px 0px 53px inset; */
+  padding: 3px;
+  background: #2f80be;
+}
+
+.maintop a {
+  color: white !important;
+  text-decoration: none;
+}
+
+.maintop input {
+  background-color: #019a50;
+  color: white;
+  border: none;
+}
+
+
+/* second top bar  */
+
+
+@media screen and (max-width:600px) {
+  .neologo {
+    max-width: 60px;
+    height: auto;
+  }
+}
+
+@media screen and (min-width:600px) {
+  .neologo {
+    max-width: 80px;
+    height: auto;
+  }
+}
+
+.topbar .col-md-2 {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar .col-md-3 {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar .col-md-2 i {
+  margin: 2px 10px;
+  font-size: 20px;
+}
+
+.topbar .col-md-2 p {
+  font-size: 13px;
+}
+
+.topbar .col-md-3 p {
+  font-size: 13px;
+}
+
+
+.neoheader .hospital i {
+  font-size: 24px;
+  border: 1px solid #2f80be;
+  padding: 11px;
+  border-radius: 100%;
+  text-shadow: 2px 1px 1px black;
+}
+
+.neoheader .social {
+  background: #3c6188;
+  box-shadow: 0px 0px 44px inset #172739;
+  width: 100%;
+  transform: skewx(-26deg);
+}
+
+.neoheader .social .fa {
+  transform: skewx(26deg);
+  background-color: white;
+}
+
+.neoheader .social {
+  justify-content: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.social-media-icons i {
+  padding: 7px;
+  border-radius: 5px;
+  border: 1px solid #159e93;
+}
+
+.social-media-icons .fb {
+  background-color: #1877F2;
+}
+
+.social-media-icons .insta {
+  background: radial-gradient(circle at 108% 45%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.social-media-icons .linkedin {
+  background-color: #0762C8;
+}
+/* 
+@media only screen and (max-width:728px) {
+  .sahiltop .header .icon {
+    margin: 0px 10px;
+  }
+} */
+
+/* 
+@media screen and (min-width:768px) {
+  .sahiltop .header .icon {
+    margin: 0px 10px;
+  }
+} */
+/* @media only screen and (max-width:1024px) { */
+  .sahiltop .header .icon {
+    margin: 0px 10px;
+  }
+/* } */

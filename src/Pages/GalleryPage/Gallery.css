@@ -1,0 +1,35 @@
+#GalleryPage .pd{
+    margin:45px auto;
+}
+
+#GalleryPage .pd1{
+    margin-bottom:30px;
+}
+#GalleryPage .about-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #0b4947;
+    text-align: left;
+}
+ 
+#GalleryPage .about-title > span {
+    position: relative;
+}
+#GalleryPage .about-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #1a8efd;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+
+.photo.active,
+.video.active {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,98 @@
+
+.ba-section {
+        margin-top: 100px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Image */
+.ba-section .backimg{
+    background-image: url('../../Assets/index/Neohospital.jpg');
+    background-size: 50%;
+    background-attachment: fixed;
+}
+/* .ba-image-content {
+    background-image: url('../../Assets/index/Neohospital.jpg');
+    width: 50%;
+    max-width: 100%;
+    text-align: center;
+} */
+.ba-image1 {
+    width: 80%;
+    height: auto;
+}
+/* Text */
+.ba-text-content {
+    width: 100%;
+    padding: 30px;
+}
+.ba-title {
+    font-weight: bold;
+}
+.ba-title > span {
+        color: #000000;
+    position: relative;
+}
+.ba-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #9D2553;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+.ba-description {
+        margin: 32px 0;
+    color: #000000;
+    font-size: 18px;
+}
+/* Checks */
+.ba-checks {
+       font-size: 18px;
+    /* font-weight: bold; */
+}
+.ba-check-first {
+    margin-top: 40px;
+}
+.ba-check-last {
+    margin-bottom: 40px;
+}
+/* Book Appointment Button */
+.ba-appointment-btn {
+    padding: 18px 24px;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    outline: transparent;
+    background-color: #1A8EFD;
+    font-size: 20px;
+    font-family: 'Rubik', sans-serif;
+    letter-spacing: .8px;
+    cursor: pointer;
+    transition: all .4s ease;
+}
+.ba-appointment-btn:hover {
+    color: #1A8EFD;
+    background-color: transparent;
+    border: 1px solid #1A8EFD;
+}
+/* Responsive */
+@media screen and (max-width: 1000px) {
+    .ba-section {
+        display: block;
+    }
+    .ba-image-content {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 0 32px 0;
+    }
+    .ba-text-content {
+        width: 100%;
+    }
+    .ba-image1 {
+        width: 80%;
+        height: 80%;
+    }
+}

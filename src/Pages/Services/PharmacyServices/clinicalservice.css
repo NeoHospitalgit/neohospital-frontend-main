@@ -1,0 +1,41 @@
+.ClinicalService .about-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #0f7572;
+}
+.ClinicalService .about-description {
+    color: #000000;
+    font-size: 17px;
+    margin: 40px 0px;
+}
+.ClinicalService .about-title > span {
+    position: relative;
+}
+.ClinicalService .about-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #0b4e8d;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+.ClinicalService{
+    margin-top:70px;
+}
+.ClinicalService a{
+    text-decoration: none;
+}
+.ClinicalService ul{
+    padding-left:0px !important ;
+   margin-left: 0px !important;
+}
+.ClinicalService .servicelist li{
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px 0px;
+    border-bottom: 1px solid gray;
+}

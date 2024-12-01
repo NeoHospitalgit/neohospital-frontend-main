@@ -1,0 +1,13 @@
+.AdminLoginForm{
+    margin: 40px 0px;
+}
+.AdminLoginForm .LoginForm{
+    box-shadow: 0px 0px 5px black;
+    padding: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+.AdminLoginForm .LoginForm .signin{
+    width: 100%;
+}

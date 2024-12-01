@@ -1,0 +1,82 @@
+/* fixed social*/
+
+@media screen and (max-width:800px){
+  #fixed-social {
+    display: none;
+  }
+}
+@media screen and (min-width:800px) {
+    #fixed-social {
+    position: fixed;
+    top: 240px;
+    z-index: 9999;
+  }
+}
+
+#fixed-social a {
+    text-shadow: 0px 0px 5px black;
+  color: #fff;
+  display: block;
+  height: 40px;
+  position: relative;
+  text-align: center;
+  line-height: 40px;
+  width: 40px;
+  margin-bottom: 1px;
+  z-index: 2;
+}
+#fixed-social a:hover > span {
+  visibility: visible;
+  left: 41px;
+  opacity: 1;
+}
+#fixed-social a span {
+  line-height: 40px;
+  left: 60px;
+  position: absolute;
+  text-align: center;
+  width: 120px;
+  visibility: hidden;
+  transition-duration: 0.5s;
+  z-index: 1;
+  opacity: 0;
+}
+.fixed-facebook {
+  background-color: #00aae5;
+}
+.fixed-facebook span {
+  background-color: #00aae5;
+}
+.fixed-twitter {
+  background-color: #000000;
+}
+.fixed-twitter span {
+  background-color: #000000;
+}
+.fixed-gplus {
+  background-color: #00af54;
+}
+.fixed-gplus span {
+  background-color: #00af54;
+}
+.fixed-linkedin {
+  background-color: #0a66c2;
+}
+.fixed-linkedin span {
+  background-color: #0a66c2;
+}
+.fixed-instagrem {
+  background: #833ab4;
+  background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+}
+.fixed-instagrem span {
+  background: #833ab4;
+  background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+}
+.fixed-tumblr {
+  background-color: #eb1471;
+}
+.fixed-tumblr span {
+  background-color: #eb1471;
+}
+/*end fixed social*/

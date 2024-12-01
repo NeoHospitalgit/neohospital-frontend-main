@@ -1,0 +1,164 @@
+
+#Contactform .right_conatct_social_icon{
+        background: linear-gradient(to top right, #005960 -5%, #0a7880 100%);
+}
+
+#Contactform .contact_inner{
+    background-color: #fff;
+    position: relative;
+    box-shadow: 20px 22px 44px #cccc;
+    border-radius: 25px;
+}
+#Contactform .contact_field{
+  padding: 60px 240px 90px 50px;
+}
+#Contactform .right_conatct_social_icon{
+    height: 100%;
+}
+
+#Contactform .contact_field h3{
+   text-align: left;
+    margin-bottom: 10px
+}
+#Contactform .contact_field p{
+    color: #000;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+}
+#Contactform .contact_field .form-control{
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+#Contactform .contact_field .form-control:focus{
+    box-shadow: none;
+    outline: none;
+    border-bottom: 2px solid #1325e8;
+}
+#Contactform .contact_field .form-control::placeholder{
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+#Contactform .contact_info_sec {
+    position: absolute;
+    background-color: #2d2d2d;
+    right: 1px;
+    top: 18%;
+    height: 340px;
+    width: 340px;
+    padding: 40px;
+    border-radius: 25px 0 0 25px;
+}
+#Contactform .contact_info_sec h4{
+    color: white;
+    letter-spacing: 1px;
+    padding-bottom: 15px;
+}
+
+#Contactform .info_single{
+    color: white;
+    margin: 20px 0px;
+}
+#Contactform .info_single i{
+    margin-right: 15px;
+}
+/* 
+.socil_item_inner i{
+    font-size:35px;
+} */
+
+#Contactform .info_single span{
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+#Contactform button.contact_form_submit {
+    background: linear-gradient(to top right, #04656c -5%, #18b187 100%);
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    width: 100%;
+    margin-top: 19px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+#Contactform .socil_item_inner li{
+    list-style: none;
+}
+#Contactform .socil_item_inner li a{
+    color: #fff;
+    margin: 0px 15px;
+    font-size: 14px;
+}
+#Contactform .socil_item_inner{
+    padding-bottom: 10px;
+}
+
+
+/* Default styles for larger screens */
+#Contactform .contact_field {
+    padding: 0px 240px 90px 50px;
+}
+
+#Contactform .contact_info_sec {
+    width: 340px;
+    padding: 40px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    #Contactform .contact_field {
+        padding: 40px;
+    }
+
+    #Contactform .contact_info_sec {
+        width: 100%;
+        border-radius: 0;
+        padding: 20px;
+        top: 0;
+        display: none;
+    }
+}
+
+/* Styles for even smaller screens, like mobile devices */
+@media (max-width: 576px) {
+    #Contactform .contact_field {
+        padding: 20px;
+    }
+
+    #Contactform .contact_info_sec {
+        padding: 10px;
+        display: none;
+    }
+
+    #Contactform .contact_field h3 {
+        font-size: 30px;
+    }
+
+    #Contactform .contact_field p {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    #Contactform .info_single {
+        margin: 15px 0;
+    }
+
+    #Contactform button.contact_form_submit {
+        font-size: 12px;
+    }
+
+    #Contactform .socil_item_inner li a {
+        font-size: 12px;
+    }
+}
+.can{
+    text-decoration: none;
+    color:#fff
+}

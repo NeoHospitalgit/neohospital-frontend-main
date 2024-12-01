@@ -1,0 +1,269 @@
+.doctorpage h2{
+        color: #0081b9;
+    font-weight: bold;
+    padding-top: 33px;
+    padding-bottom: 10px;
+    font-size: 30px;
+}
+
+.doclinks a{
+    text-decoration: none !important;
+}
+.doctorpage .search-bar .form-control{
+width: auto !important;
+display: inline !important;
+}
+.Meetourdoctor{
+    text-align: center;
+}
+.doctorcard button{
+       width: 100%;
+    font-size: 13px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    margin-top: 10px;
+    padding: 4px;
+    background: #17ac83;
+    color: white;
+}
+.doctorcard button:hover{
+    font-size: 13px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    margin-top: 10px;
+    background: #005961;
+    color: white;
+}
+.banner-img{
+    width:100%;
+    height:auto;
+}
+.Meetourdoctor .about-title {
+  text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 35px;
+    font-weight: bold; 
+    color: #000000;
+}
+.Meetourdoctor .text-left {
+    text-align: left !important;
+}
+.Meetourdoctor .about-description {
+    color: #000000;
+    font-size: 17px;
+    margin: 40px 0px;
+    text-align: left;
+}
+.Meetourdoctor .about-title > span {
+    position: relative;
+}
+.Meetourdoctor .about-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #0b4e8d;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+
+.doctor-section { 
+    margin-top: 32px;
+    text-align: left;
+    background-color: white;
+}
+
+.doctor-section .card input{
+        box-shadow: 0px 0px 4px white;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 3px;
+    background: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+.dt-title-content {
+    margin: 0 0 30px 0;
+}
+.dt-title {
+    font-weight: bold;
+}
+.dt-title > span {
+    position: relative;
+}
+.dt-title span::before {
+    content: '';
+    position: absolute;
+    width: 64%;
+    height: 4px;
+    background-color: #9D2553;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+.dt-description {
+    font-size: 20px;
+    margin-top: 30px;
+    color: rgb(0, 0, 0);
+}
+/* Doctor Cards */
+.dt-cards-content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+.dt-card {
+    width: 332px;
+    height: 400px;
+    gap: 32px;
+    text-align: left;
+    font-family: 'Rubik', sans-serif;
+}
+.dt-card-img {
+    width: 100%;
+    height: 275px;
+    padding: 16px 32px 0;
+    background-position: center;
+    background-color: #DDE5F8;
+    border-radius: 20px;
+}
+.dt-card-name {
+    margin: 12px 0 0 0;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: .7px;
+}
+.dt-card-title {
+    margin: 6px 0 8px;
+    color: #494949;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    letter-spacing: .7px;
+}
+.dt-card-stars {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: .7px;
+}
+.dt-card-reviews {
+    color: #5a5a5a;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: .7px;
+}
+/* Responsive */
+@media screen and (max-width: 700px) {
+    .dt-title {
+        font-size: 32px;
+    }
+    .dt-description {
+        margin: 48px 0 0;
+        font-size: 18px;
+    }
+}
+
+.doctorcard {
+    position: relative;
+}
+.doctorcard .card{
+        border: 1px solid #0374c3;
+    margin: 10px;
+    position: relative;
+    cursor: pointer;
+    background: none;
+    padding-top: 5px;
+    transition: all ease-in 0.1s;
+}
+
+/* .doctorcard .card:hover {
+    border: none;
+    box-shadow: 0px 0px 128px #2f80be inset;
+    border:1px solid black;
+    margin: 10px;
+    position: relative;
+    cursor: pointer;
+    background: none;
+    padding-top: 5px;
+} */
+
+.doctorcard .card .face{
+    max-width: 100%;
+    height: auto;
+    transition: 1s;
+}
+
+.doctorcard .card .face.face1{
+   border-radius: 15px 15px 0px 0px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.doctorcard .card .face.face1 .content{
+    text-align: center;
+    width: 100%;
+}
+.doclinks{
+    margin-top: 26px;
+}
+.doctorcard .card .face.face1 .content img{
+  margin-top: -26px;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    box-shadow: 0px 0px 17px -10px gray;
+}
+
+.doctorcard .card .face.face1 .content h3{
+    margin-top: 25px;
+    padding: 0;
+    color: #107b5d;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.doctorcard .card .face.face1 .content h3:hover{
+color: #005961;
+}
+
+.doctorcard .card .face.face2{
+        border-radius: 0px 0px 15px 15px;
+    text-align: center;
+    position: relative;
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px 20px 20px;
+}
+
+.doctorcard .card .face.face2 .content p{
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+}
+
+.doctorcard .card .face.face2 .content a{
+    width:100%;
+    display:  block;
+    text-decoration: none;
+    font-weight: 500;
+    color: #ffffff;
+
+}
+.doctorcard .card .face.face2 .content{
+    width:100%;
+    display:  block; 
+
+}

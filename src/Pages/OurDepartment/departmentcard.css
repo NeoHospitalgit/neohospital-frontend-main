@@ -1,0 +1,327 @@
+.departmentarrow .custom-prev-arrow,
+.departmentarrow .custom-next-arrow {
+    position: absolute;
+    border-radius: 10px;
+    top: 50%;
+    background-color: #2f80be;
+    color: #000;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+    z-index: 1;
+}
+.departmentcards button a{
+  text-decoration:none !important;
+}
+/* .slick-initialized .slick-slide{
+  width:auto !important;
+} */
+
+.departmentarrow .slick-prev, .departmentarrow .slick-next{
+    width: auto !important;
+    height:auto !important;
+}
+
+.departmentarrow .custom-prev-arrow:hover,
+.departmentarrow .custom-next-arrow:hover {
+  background-color: #019a50;
+}
+
+.departmentcards .slick-dots{
+  display: none !important;
+}
+
+.departmentcards button{
+        font-weight: bold;
+    box-shadow: 0px 0px 4px white;
+    border: none;
+    /* padding: 2px 10px; */
+    border-radius: 4px;
+}
+
+.departmentcards h3 {
+    margin: 13px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 600;
+    text-align:center;
+}
+
+.departmentcards p{
+    color: white;
+    font-size: 16px;
+}
+
+.departmentcards .go-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  background-color: #2d6d6d;
+  border-radius: 0 4px 0 32px;
+}
+
+.departmentcards .go-arrow {
+  margin-top: -4px;
+  margin-right: -4px;
+  color: white;
+  font-family: courier, sans;
+}
+
+.departmentcards .card1 {
+    box-shadow: 0px 0px 10px -3px #1787a3;
+    display: block;
+    position: relative;
+    max-width: 262px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 12px 0px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -16px;
+    right: -16px;
+    background: #2d6d6d;
+    /* background: #0a4938; */
+    height: 32px;
+    width: 32px;
+    border-radius: 32px;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition: transform 0.25s ease-out;
+  }
+
+  &:hover:before {
+    transform: scale(21);
+  }
+}
+
+.departmentcards .card1:hover {
+  p {
+    transition: all 0.3s ease-out;
+    color: #ffffff;
+  }
+  h3 {
+    transition: all 0.3s ease-out;
+    color: #ffffff;
+  }
+}
+
+.aligncard{
+  height: 100%;
+  align-items: space-between;
+  display: flex;
+  justify-content: center;
+}
+
+.Ourdepartmentcards .card1 img{
+  max-width: 100%;
+}
+.slick-slide img{
+  max-width: 100%;
+}
+
+.Ourdepartmentcards .about-title {
+    /* margin-left: 0px; */
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #000e18;
+    /* text-align: left; */
+}
+.Ourdepartmentcards .about-description {
+    color: #000000;
+    font-size: 17px;
+    margin: 40px 0px;
+    /* text-align: left; */
+}
+.Ourdepartmentcards .about-title > span {
+    position: relative;
+}
+.Ourdepartmentcards .about-title span::before {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 4px;
+    background-color: #0b4e8d;
+    border-radius: 8px;
+    left: 0;
+    bottom: -12px;
+}
+
+.Ourdepartmentcards button{
+        font-weight: bold;
+    box-shadow: 0px 0px 4px white;
+    border: none;
+    padding: 2px 10px;
+    border-radius: 4px;
+}
+
+.Ourdepartmentcards h3 {
+    text-align: center;
+margin: 13px;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.Ourdepartmentcards p{
+    color: white;
+    font-size: 16px;
+    text-align: center;
+
+}
+
+.Ourdepartmentcards .department-responsive{
+  display: flex;
+  justify-content: center;
+}
+
+.Ourdepartmentcards .go-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  background-color: #000000;
+  border-radius: 0 4px 0 32px;
+}
+
+.Ourdepartmentcards .go-arrow {
+  margin-top: -4px;
+  margin-right: -4px;
+  color: white;
+  font-family: courier, sans;
+}
+
+.Ourdepartmentcards .card1 {
+  display: block;
+  position: relative;
+  max-width: 262px;
+  background-color: #2f80be;
+  border-radius: 4px;
+  padding: 32px 24px;
+  margin: 12px;
+  text-decoration: none;
+  z-index: 0;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -16px;
+    right: -16px;
+    background: #000000;
+    height: 32px;
+    width: 32px;
+    border-radius: 32px;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition: transform 0.25s ease-out;
+  }
+
+  &:hover:before {
+    transform: scale(21);
+  }
+}
+.Ourdepartmentcards .col-md-3{
+  display: flex;
+  justify-content: center;
+}
+.Ourdepartmentcards .card1:hover {
+  p {
+    transition: all 0.3s ease-out;
+    color: #ffffff;
+  }
+  h3 {
+    transition: all 0.3s ease-out;
+    color: #ffffff;
+  }
+}
+
+footer a{
+  text-decoration: none !important;
+  color: white;
+}
+
+.NeoSpecialityDetails a{
+  text-decoration: none;
+}
+
+.NeoSpecialityDetails h2{
+  font-size: 15px;
+  font-weight: bold;
+}
+.NeoSpecialityDetails i{
+  color: black;
+  margin-right: 13px;
+}
+.NeoSpecialityDetails h1{
+  position: relative;
+      font-size: 28px;
+    font-weight: 800;
+    padding: 30px 0px;
+}
+.NeoSpecialityDetails h1::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 4px;
+    background-color: #005961;
+    border-radius: 8px;
+    bottom: 0;
+    left: 0;
+}
+
+#Blogbanner img{
+    width: 100%;
+    height: auto;
+}
+
+.NeoSpeciality{
+    margin-top:100px;
+    margin-bottom:100px;
+
+}
+.NeoSpeciality .dt-title-content {
+    margin: 0 0 30px 0;
+}
+.NeoSpeciality .dt-title {
+    font-weight: bold;
+}
+.NeoSpeciality .dt-title > span {
+    position: relative;
+}
+.NeoSpeciality .dt-title span::before {
+    content: '';
+    position: absolute;
+    width: 64%;
+    height: 4px;
+    background-color: #9D2553;
+    border-radius: 8px;
+    left: 0;
+}
+.NeoSpeciality .dt-description {
+        font-weight: 300;
+    font-size: 15px;
+    margin-top: 30px;
+    color: rgb(0, 0, 0);
+}
+
