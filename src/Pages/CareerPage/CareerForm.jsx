@@ -106,7 +106,7 @@ function CareerForm() {
                   hr@neohospital.com
                 </a>
               </strong>
-              . You can also submit your resume directly on reception of Neo
+              .  submit your resume directly on reception of Neo
               Hospital. Kindly include your full information about education,
               experience & Employers, current & Expected Salary.
             </p>
