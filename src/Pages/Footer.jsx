@@ -106,7 +106,7 @@ function Footer() {
                         <a href="#">
                           NEO HOSPITAL D-170, 170A, 170B, Sector-50, Noida,
                           <br />
-                          Gautam Buddh Nagar (U.P) 201301
+                          Gautam Buddha Nagar (U.P) 201301
                         </a>
                       </span>
                     </div>
