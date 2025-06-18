@@ -86,7 +86,7 @@ function Hero() {
                 <p className="text-headline">Your Health, Our Priority</p>
                 <h2 className="text-title">Expert Care for a Healthier Tomorrow</h2>
                 <p className="text-descritpion">
-                  At Nivok Superspeciality Hospital, we provide world-class medical care with compassion and expertise.
+                  At Neo Superspeciality Hospital, we provide world-class medical care with compassion and expertise.
                 </p>
                 <div className="button-group">
                   <button
