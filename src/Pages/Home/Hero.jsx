@@ -13,8 +13,8 @@ function Hero() {
   const sliderRef = useRef(null);
   const images = [
     "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "/Assets/2.jpg",
-    "/Assets/1.jpg",
+    "2.jpg",
+    "1.jpg",
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
