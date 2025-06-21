@@ -1,0 +1,197 @@
+.doctors-section {
+  padding: 5rem 0;
+  background: linear-gradient(#0db7ad40, #0DB7AD02);
+}
+
+.doctors-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.doctors-title-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 2rem;
+  background: rgba(13, 183, 173, 0.1);
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+
+.doctors-icon {
+  color: #2a2c2b;
+  font-size: 1.5rem;
+}
+
+.doctors-title {
+  color: #232121;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.doctors-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 1rem auto;
+}
+
+.doctors-content {
+  margin: 2rem 0;
+}
+
+.doctors-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.view-all-doctors {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #0db7ad;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(13, 183, 173, 0.2);
+}
+
+.view-all-doctors:hover {
+  background: #14918e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(13, 183, 173, 0.3);
+  color: white;
+}
+
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+.view-all-doctors:hover .arrow-icon {
+  transform: translateX(5px);
+}
+
+/* Animation for doctor cards (add to existing DoctorAll component styles) */
+.doctor-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  border: 1px solid #eee;
+  position: relative;
+}
+
+.doctor-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(13, 183, 173, 0.2);
+}
+
+.doctor-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: all 0.4s ease;
+}
+
+.doctor-card:hover img {
+  transform: scale(1.05);
+}
+
+.doctor-info {
+  padding: 1.5rem;
+  position: relative;
+  background: linear-gradient(to bottom, transparent, white 20%);
+  margin-top: -60px;
+}
+
+.doctor-name {
+  color: #14918e;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.doctor-speciality {
+  color: #0db7ad;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  background: rgba(13, 183, 173, 0.1);
+  border-radius: 20px;
+}
+
+.doctor-description {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.doctor-contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.doctor-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icon {
+  color: #14918e;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #0db7ad;
+  transform: translateY(-3px);
+}
+
+.book-btn {
+  padding: 0.5rem 1.2rem;
+  background: #0db7ad;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background: #14918e;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .doctor-card img {
+    height: 250px;
+  }
+  
+  .doctor-info {
+    margin-top: -40px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .doctors-section {
+    padding: 3rem 0;
+  }
+
+  .doctors-title {
+    font-size: 1.8rem;
+  }
+
+  .doctors-title-wrapper {
+    padding: 0.5rem 1.5rem;
+  }
+}
