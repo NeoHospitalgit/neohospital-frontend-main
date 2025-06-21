@@ -7,9 +7,9 @@
   
   .banner-back-color {
     position: relative;
-    background: linear-gradient(to right, #0db7ad, #14918e);
+    background: linear-gradient(to right, #1374ac, #1374ac);
     z-index: 99;
-  }
+}
   
   .section-container {
     max-width: 1400px;
@@ -37,7 +37,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(13, 183, 173, 0.8), rgba(20, 145, 142, 0.3));
+    background: linear-gradient(to right, rgb(19 116 172 / 29%), rgb(24 157 235 / 64%));
     z-index: 1;
   }
   
@@ -243,5 +243,168 @@
       font-size: 18px;
       bottom: 20px;
       right: 20px;
+    }
+  }
+  
+  /* Add these styles to your existing Hero.css file */
+  
+  .whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 50vh;
+    right: 40px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite;
+    transition: all 0.3s ease;
+  }
+  
+  .whatsapp-float:hover {
+    background-color: #128C7E;
+    transform: scale(1.1);
+  }
+  
+  .whatsapp-icon {
+    margin-top: 0;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+  }
+  
+  /* Add these styles to your existing Hero.css file */
+  
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .text-section {
+    flex: 0 0 60%;
+    padding-right: 20px;
+  }
+  
+  .contact-quick-info {
+    flex: 0 0 35%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .quick-info-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 350px;
+    color: #333;
+  }
+  
+  .quick-info-card h3 {
+    color: #0e4c92;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .info-item i {
+    color: #0e4c92;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+  }
+  
+  .info-item p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  
+  .info-divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 20px 0;
+  }
+  
+  .quick-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .quick-link {
+    display: inline-block;
+    background-color: #0e4c92;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+  }
+  
+  .quick-link:hover {
+    background-color: #0a3a70;
+  }
+  
+  /* Media query for responsive design */
+  @media (max-width: 992px) {
+    .content-wrapper {
+      flex-direction: column;
+    }
+    
+    .text-section {
+      flex: 0 0 100%;
+      padding-right: 0;
+      margin-bottom: 30px;
+    }
+    
+    .contact-quick-info {
+      flex: 0 0 100%;
+      justify-content: center;
+    }
+    
+    .quick-info-card {
+      max-width: 100%;
+    }
+  }
+  
+  /* Hide contact info section on mobile devices */
+  @media (max-width: 768px) {
+    .contact-quick-info {
+      display: none;
+    }
+    
+    .text-section {
+      margin-bottom: 0;
     }
   }
