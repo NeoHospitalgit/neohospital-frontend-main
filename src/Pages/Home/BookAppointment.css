@@ -1,98 +1,178 @@
-
 .ba-section {
-        margin-top: 100px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 80px 0;
+  overflow: hidden;
+  background: linear-gradient(#0db7ad40, #0DB7AD02);
 }
-/* Image */
-.ba-section .backimg{
-    background-image: url('../../Assets/index/Neohospital.jpg');
-    background-size: 50%;
-    background-attachment: fixed;
+
+.ba-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
 }
-/* .ba-image-content {
-    background-image: url('../../Assets/index/Neohospital.jpg');
-    width: 50%;
-    max-width: 100%;
-    text-align: center;
-} */
-.ba-image1 {
-    width: 80%;
-    height: auto;
+
+.ba-video-container {
+  position: relative;
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
 }
-/* Text */
+
+.background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+
+
+.ba-content {
+  padding: 20px;
+}
+
 .ba-text-content {
-    width: 100%;
-    padding: 30px;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
 .ba-title {
-    font-weight: bold;
+  margin-bottom: 2rem;
+  position: relative;
 }
-.ba-title > span {
-        color: #000000;
-    position: relative;
+
+.ba-title span {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #14918e;
+  position: relative;
 }
-.ba-title span::before {
-    content: '';
-    position: absolute;
-    width: 75%;
-    height: 4px;
-    background-color: #9D2553;
-    border-radius: 8px;
-    left: 0;
-    bottom: -12px;
+
+.ba-title span::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60%;
+  height: 3px;
+  background: #0db7ad;
 }
+
 .ba-description {
-        margin: 32px 0;
-    color: #000000;
-    font-size: 18px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 2rem;
 }
-/* Checks */
-.ba-checks {
-       font-size: 18px;
-    /* font-weight: bold; */
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
-.ba-check-first {
-    margin-top: 40px;
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
-.ba-check-last {
-    margin-bottom: 40px;
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  background: #e8f5f5;
 }
-/* Book Appointment Button */
-.ba-appointment-btn {
-    padding: 18px 24px;
-    color: white;
-    border: 1px solid transparent;
-    border-radius: 50px;
-    outline: transparent;
-    background-color: #1A8EFD;
-    font-size: 20px;
-    font-family: 'Rubik', sans-serif;
-    letter-spacing: .8px;
-    cursor: pointer;
-    transition: all .4s ease;
+
+.feature-icon {
+  color: #0db7ad;
+  font-size: 1.2rem;
 }
-.ba-appointment-btn:hover {
-    color: #1A8EFD;
-    background-color: transparent;
-    border: 1px solid #1A8EFD;
+
+.appointment-btn {
+  background: #0db7ad;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+  margin-top: 2rem;
 }
-/* Responsive */
-@media screen and (max-width: 1000px) {
-    .ba-section {
-        display: block;
-    }
-    .ba-image-content {
-        width: 100%;
-        max-width: 100%;
-        margin: 0 0 32px 0;
-    }
-    .ba-text-content {
-        width: 100%;
-    }
-    .ba-image1 {
-        width: 80%;
-        height: 80%;
-    }
+
+.appointment-btn:hover {
+  background: #14918e;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(13, 183, 173, 0.3);
+}
+
+@media (max-width: 768px) {
+  .video-container {
+    min-height: 300px;
+    max-height: 350px;
+  }
+  
+  .ba-text-content {
+    padding: 2rem;
+    margin: 1rem;
+    height: auto;
+  }
+  
+  .row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 992px) {
+  .ba-section {
+    padding: 40px 0;
+  }
+
+  .ba-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .ba-video-container {
+    height: 400px;
+    order: 2;
+  }
+
+  .ba-content {
+    order: 1;
+  }
+
+  .ba-text-content {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .ba-video-container {
+    height: 300px;
+  }
+
+  .ba-text-content {
+    padding: 20px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-item {
+    padding: 15px;
+  }
 }
