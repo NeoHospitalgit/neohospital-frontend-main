@@ -1,140 +1,112 @@
-import React from "react";
-import Slider from "react-slick";
-import { useState, useEffect } from "react";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-// import "./Specialty.css";
-import DepartmentCard from "../OurDepartment/DepartmentCard";
-// import departmentcontent from "../OurDepartment/DepartmentContent";
-import "../OurDepartment/departmentcard.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Specialty.css';
 
 const Specialty = () => {
-  const [Neospecial, setNeospecial] = useState([]); // Neospecial state to store API data
-  const [error, setError] = useState(null); // State to handle errors
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://api.neohospital.com/api/adminv1/view-category"
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const data = await response.json();
-
-        setNeospecial(data.category);
-        // Set the fetched data to Neospecial state
-      } catch (error) {
-        setError(error); // Handle errors
-      }
-    };
-
-    fetchData(); // Call the fetchData function when the component mounts
-  }, []); // Empty dependency array to ensure the effect runs only once
-
-  // Rendering the component
-  const CustomPrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <>
-        <section className="departmentarrow">
-          <div
-            className={`${className} custom-prev-arrow`}
-            style={{ ...style }}
-            onClick={onClick}
-          >
-            Previous
-          </div>
-        </section>
-      </>
-    );
-  };
-
-  const CustomNextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <>
-        <section className="departmentarrow">
-          <div
-            className={`${className} custom-next-arrow`}
-            style={{ ...style }}
-            onClick={onClick}
-          >
-            Next
-          </div>
-        </section>
-      </>
-    );
-  };
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 400,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
-    responsive: [
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 568,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  };
-
-
-  const [showMore, setShowMore] = useState(false);
-
-  const toggleShowMore = () => {
-    setShowMore(!showMore);
-  };
-
-  const cardsToShow = showMore ? Neospecial.length : 12;
+  const specialties = [
+    {
+      id: 1,
+      title: "Internal Medicine",
+      description: "Advanced cardiac treatments and interventions",
+      link: "internal-medicine"
+    },
+    {
+      id: 2,
+      title: "Neurology",
+      description: "Comprehensive oncology services and treatments",
+      link: "neurology"
+    },
+    {
+      id: 3,
+      title: "Gastrosciences",
+      description: "Expert care for neurological conditions",
+      link: "gastrosciences"
+    },
+    {
+      id: 4,
+      title: "Cardiology",
+      description: "Specialized digestive health treatments",
+      link: "cardiology"
+    },
+    {
+      id: 5,
+      title: "Pulmonology",
+      description: "Advanced bone and joint care",
+      link: "pulmonology"
+    },
+    {
+      id: 6,
+      title: "Dental",
+      description: "Comprehensive kidney treatment services",
+      link: "dental"
+    },
+    {
+      id: 7,
+      title: "Dermatology",
+      description: "Expert liver transplantation services",
+      link: "dermatology"
+    },
+    {
+      id: 8,
+      title: "Dietetics",
+      description: "Specialized bone marrow procedures",
+      link: "dietetics"
+    },
+    {
+      id: 9,
+      title: "ENT",
+      description: "Specialized bone marrow procedures",
+      link: "ent"
+    },
+    {
+      id: 10,
+      title: "Gynaecology & Obstetrics",
+      description: "Specialized women's health services",
+      link: "gynaecology" // Updated link with "and" instead of hyphen
+    },
+    {
+      id: 11,
+      title: "Clinical Laboratory",
+      description: "Specialized bone marrow procedures",
+      link: "clinical-laboratory"
+    },
+    {
+      id: 12,
+      title: "Anaesthesiology",
+      description: "Specialized bone marrow procedures",
+      link: "anaesthesiology"
+    }
+  ];
 
   return (
-    <>
-      <section className="departmentcards">
-        <div className="card-slider">
-          <div className="row">
-            {Neospecial.slice(0, cardsToShow).map((value, index) => (
-              <div
-                key={index}
-                className="col-lg-2 col-md-3 col-6 department-responsive"
-              >
-                <DepartmentCard
-                  blogimage={`https://api.neohospital.com/uploads/categories/${value.image}`}
-                  title={value.title}
-                  departmentslug={value.slug}
-                />
-              </div>
-            ))}
+    <div className="specialty-container">
+      <div className="specialty-grid">
+        {specialties.map((specialty) => (
+          <div key={specialty.id} className="specialty-card">
+            <div className="specialty-icon">
+              <img 
+                src={`sicons/${specialty.id}.svg`} 
+                alt={specialty.title}
+                className="specialty-img"
+              />
+            </div>
+            <h3>{specialty.title}</h3>
+            <p>{specialty.description}</p>
+            <Link to={`https://www.neohospital.com/${specialty.link}`} className="know-more-btn">
+              Know More
+              <i className="fas fa-arrow-right"></i>
+            </Link>
           </div>
-          <div className="text-center mt-3">
-            <button onClick={toggleShowMore} className="text-appointment-btn">
-              {showMore ? "View Less" : "View All Department"}
-            </button>
-          </div>
-        </div>
-      </section>
-    </>
+        ))}
+      </div>
+      <div className="view-all-services">
+        <Link to="/services">
+          <button className="view-all-services-btn">
+            View All Services
+          </button>
+        </Link>
+      </div>
+    </div>
   );
 };
 
