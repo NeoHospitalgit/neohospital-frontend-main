@@ -13,8 +13,8 @@ function Hero() {
   const sliderRef = useRef(null);
   const images = [
     "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    "https://images.pexels.com/photos/7089396/pexels-photo-7089396.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "/slider/2.jpg",
+    "/slider/1.jpg",
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -116,9 +116,49 @@ function Hero() {
                   </div>
                 </div>
               </div>
+              
+              {/* New right side contact info section */}
+              <div className="contact-quick-info">
+                <div className="quick-info-card">
+                  <h3>Emergency Contact</h3>
+                  <div className="info-item">
+                    <i className="fa fa-phone"></i>
+                    <p>+91 1800-123-4567</p>
+                  </div>
+                  <div className="info-item">
+                    <i className="fa fa-ambulance"></i>
+                    <p>Ambulance: +91 1800-999-8888</p>
+                  </div>
+                  <div className="info-divider"></div>
+                  <h3>Hospital Hours</h3>
+                  <div className="info-item">
+                  <i class="fa-solid fa-clock"></i>
+                    <p>24/7 Emergency Services</p>
+                  </div>
+                  <div className="info-item">
+                    <i className="fa fa-calendar"></i>
+                    <p>OPD: 9:00 AM - 6:00 PM</p>
+                  </div>
+                  <div className="info-divider"></div>
+                  <div className="quick-actions">
+                    <Link to="/doctors" className="quick-link">Find a Doctor</Link>
+                    <Link to="/services" className="quick-link">Our Services</Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        
+        {/* WhatsApp floating button */}
+        <a 
+          href="https://wa.me/919999999999?text=Hello%20Neo%20Hospital,%20I%20would%20like%20to%20inquire%20about" 
+          className="whatsapp-float"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+         <i class="fa-brands fa-whatsapp"></i>
+        </a>
         <div
           onClick={scrollToTop}
           className={`scroll-up ${goUp ? "show-scroll" : ""}`}
