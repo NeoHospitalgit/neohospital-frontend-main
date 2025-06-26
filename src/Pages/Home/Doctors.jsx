@@ -2,39 +2,35 @@ import React from "react";
 import "./Doctors.css";
 import DoctorAll from "../MeetOurDoctor/DoctorAll";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserMd, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
 function Doctors() {
   return (
-    <>
-      <section className="container">
-        <div className="doctor-section" id="doctors">
-          <div className="dt-title-content">
-            <div className="row">
-              <div className="col-md-12">
-                <div>
-                  <h3 className="dt-title">
-                    <span>Meet Our Doctors</span>
-                    <p className="dt-description">
-                      Join our team of compassionate healthcare providers at Neo
-                      Hospital!
-                    </p>
-                  </h3>
-                </div>
-              </div>
-            </div>
+    <section className="doctors-section" id="doctors">
+      <div className="container">
+        <div className="doctors-header">
+          <div className="doctors-title-wrapper">
+            <FontAwesomeIcon icon={faUserMd} className="doctors-icon" />
+            <h2 className="doctors-title">Meet Our Specialists</h2>
           </div>
-          <DoctorAll />
-          <div className="d-flex justify-content-center p-4">
-            <Link to="/doctors">
-              <input
-                type="button"
-                value="View More"
-                className="btn btn-secondary w-20 text-appointment-btn"
-              />
-            </Link>
-          </div>
+          <p className="doctors-subtitle">
+            Experience exceptional care from our team of dedicated healthcare professionals
+          </p>
         </div>
-      </section>
-    </>
+
+        <div className="doctors-content">
+          <DoctorAll />
+        </div>
+
+        <div className="doctors-cta">
+          <Link to="/doctors" className="view-all-doctors">
+            View All Doctors
+            <FontAwesomeIcon icon={faArrowRight} className="arrow-icon" />
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 
