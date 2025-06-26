@@ -5,9 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import feedbackpic from "../../Assets/index/feedbackpic.jpg";
 import userreview from "../../Assets/index/userreview.png";
-// import reviewstar from "../../Assets/index/reviewstars.png";
 import { testimonials } from "./Homeimages.jsx";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Testimonialfile = () => {
   const sliderFor = useRef(null);
@@ -70,30 +69,25 @@ const Testimonialfile = () => {
                           <img src={userreview} className="img-fluid" alt="" />
                         </div>
                         <div className="col-md-9">
-                          <h2><a
-                            href={testimonial.testurl}
-                            // target="_blank"
-                            className="author"
-                          >
-                            {testimonial.author}
-                          </a></h2>
+                          <h2>
+                            <a
+                              href={testimonial.testurl}
+                              className="author"
+                            >
+                              {testimonial.author}
+                            </a>
+                          </h2>
                           <div className="reviewstartimg">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            {/* <span>
-                              ({testimonial.stars} starts)
-                            </span> */}
+                            <FontAwesomeIcon icon="star" />
+                            <FontAwesomeIcon icon="star" />
+                            <FontAwesomeIcon icon="star" />
+                            <FontAwesomeIcon icon="star" />
+                            <FontAwesomeIcon icon="star" />
                           </div>
-
                         </div>
                       </div>
                       <div className="reviewpara">
-                        <p>
-                          {testimonial.text}
-                        </p>
+                        <p>{testimonial.text}</p>
                       </div>
                     </div>
                   ))}
