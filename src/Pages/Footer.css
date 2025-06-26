@@ -36,7 +36,74 @@ ul {
 
 .neofooter .category a {
   text-decoration: none;
-  color: white;
+  color: #0f7572;
+  transition: all 0.3s ease;
+  position: relative;
+  padding-left: 20px;
+}
+
+.neofooter .category a:before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.neofooter .category a:hover {
+  color: #14918e;
+  padding-left: 25px;
+  font-weight: 600;
+}
+
+.neofooter .category a:hover:before {
+  opacity: 1;
+}
+
+.neofooter .footer-social-icon a {
+  color: #fff;
+  font-size: 16px;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+}
+
+.neofooter .footer-social-icon i {
+  border: 1px solid #0f7572;
+  background: #0f7572;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 100px;
+  transition: all 0.3s ease;
+}
+
+.neofooter .footer-social-icon i:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(15, 117, 114, 0.3);
+}
+
+.neofooter .footer-widget ul li a {
+  color: #0f7572;
+  text-transform: capitalize;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.neofooter .footer-widget ul li a:hover {
+  color: #14918e;
+  transform: translateX(5px);
+  font-weight: 500;
+}
+
+.footer-speciality a {
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.footer-speciality a:hover {
+  color: #14918e !important;
+  text-decoration: underline !important;
 }
 
 .neofooter .category li {
@@ -49,7 +116,7 @@ ul {
 }
 
 .neofooter h3 {
-  color: white;
+  color: #2a7572;
 }
 
 .neofooter .copyright-area {
@@ -62,7 +129,7 @@ ul {
 }
 
 .neofooter .footer-section {
-  background: #00152b;
+  background: #e2f5f4;
   position: relative;
 }
 
@@ -89,13 +156,13 @@ ul {
 }
 
 .neofooter .cta-text h4 {
-  color: #fff;
+  color: #14918e;
   font-size: 20px;
   font-weight: 600;
 }
 
 .neofooter .cta-text span {
-  color: #ffffff;
+  color: #14918e;
   font-size: 15px;
   padding-top: 30px;
 }
@@ -125,12 +192,12 @@ ul {
 .neofooter .footer-text p {
   margin-bottom: 14px;
   font-size: 16px;
-  color: #fff;
+  color: #14918e;
   line-height: 28px;
 }
 
 .neofooter .footer-social-icon span {
-  color: #fff;
+  color: #0f7572;
   display: block;
   font-size: 20px;
   font-family: 'Poppins', sans-serif;
@@ -164,7 +231,7 @@ ul {
 .footer-widget-heading h3 {
   margin-top: 50px;
   margin-left: 20px;
-  color: #fff;
+  color: #15918e;
   font-size: 21px;
   margin-bottom: 40px;
   position: relative;
@@ -294,4 +361,55 @@ ul {
 
 .footer-social-icon .tw {
   background-color: #000000;
+}
+
+/* Add these styles to your Footer.css file if they're missing */
+
+.speciality-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.speciality-header:hover {
+  background-color: rgba(20, 145, 142, 0.05);
+}
+
+.speciality-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle-icon {
+  margin-left: 10px;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.all-department {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.all-department.show {
+  max-height: 1000px; /* Adjust based on your content */
+  padding: 20px 0;
+}
+
+.all-department.hide {
+  max-height: 0;
+  padding: 0;
+}
+
+.footer-speciality {
+  border: 1px solid rgba(20, 145, 142, 0.1);
+  border-radius: 8px;
+  margin-bottom: 30px;
+  background-color: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
 }
