@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import "./Footer.css";
-import logo from "../Assets/index/logo.png";
+import logo from "../Assets/index/logom.png";
 import { Link } from "react-router-dom";
 import Social from "./Home/Social";
 import axios from 'axios';
-
 
 function Footer() {
   const [Neospecial, setNeospecial] = useState([]);
@@ -15,6 +14,7 @@ function Footer() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSpecialties, setShowSpecialties] = useState(false);
 
 
   useEffect(() => {
@@ -89,6 +89,11 @@ function Footer() {
 
   };
 
+  const toggleSpecialties = () => {
+    setShowSpecialties(!showSpecialties);
+    console.log("Toggle clicked, new state:", !showSpecialties); // Add this for debugging
+  };
+
   return (
     <>
       <Social />
@@ -106,7 +111,7 @@ function Footer() {
                         <a href="#">
                           NEO HOSPITAL D-170, 170A, 170B, Sector-50, Noida,
                           <br />
-                          Gautam Buddha Nagar (U.P) 201301
+                          Gautam Buddh Nagar (U.P) 201301
                         </a>
                       </span>
                     </div>
@@ -128,13 +133,19 @@ function Footer() {
             </div>
 
             <div className="footer-speciality">
-              <h3 className="text-center py-5">
-                <i className="fa fa-user-md"></i> Speciality</h3>
-              <div className="all-department">
+              <div className="speciality-header" onClick={toggleSpecialties}>
+                <h3 className="text-center py-3">
+                  <i className="fa fa-user-md"></i> Speciality
+                  <i className={`fa fa-chevron-${showSpecialties ? 'up' : 'down'} toggle-icon`}></i>
+                </h3>
+              </div>
+              
+              <div className={`all-department ${showSpecialties ? 'show' : 'hide'}`}>
                 <div className="row">
                   {Neospecial.map((value) => (
                     <div className="col-md-3" key={value.slug}>
-                      <Link to={`https://www.neohospital.com/${value.slug}`}> <i className="fa fa-caret-right pe-2"></i>
+                      <Link to={`https://www.neohospital.com/${value.slug}`}> 
+                        <i className="fa fa-caret-right pe-2"></i>
                         {value.title}
                       </Link>
                     </div>
@@ -162,16 +173,16 @@ function Footer() {
                     <div className="footer-social-icon">
                       <span>Follow us</span>
                       <a href="https://www.facebook.com/neohospitalinnoida">
-                        <i className="fa fa-facebook fb"></i>
+                        <i class="fa-brands fa-facebook"></i>
                       </a>
                       <a href="https://twitter.com/neo_hospital">
-                        <i className="fa-brands fa-x-twitter tw"></i>
+                        <i class="fa-brands fa-twitter"></i>
                       </a>
                       <a href="https://www.instagram.com/neohospitalnoida/">
-                        <i className="fa fa-instagram insta"></i>
+                      <i class="fa-brands fa-square-instagram"></i>
                       </a>
                       <a href="https://www.linkedin.com/company/neohospitalnoida/">
-                        <i className="fa fa-linkedin linkedin"></i>
+                      <i class="fa-brands fa-linkedin"></i>
                       </a>
                     </div>
                   </div>
