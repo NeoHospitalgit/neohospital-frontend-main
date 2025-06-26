@@ -1,6 +1,6 @@
 .neotestimonials {
   padding: 100px 0px;
-  background-color: lightgray;
+  background-color: #e2f5f4;
   margin: 40px 0px;
 }
 
@@ -24,6 +24,7 @@ width: 70%;
 
 .neotestimonial .dt-title {
   font-weight: bold;
+  color: #14918e;
 }
 
 .neotestimonial .dt-title>span {
@@ -116,11 +117,12 @@ width: 70%;
 
 .testifile .testcardnew .reviewpara {
   margin-top: 15px;
-  color: black;
+  color: rgb(20 147 142);
 }
 
 .neotestimonials .testcardnew a {
   text-decoration: none;
+  color: black;
 }
 
 .neotestimonials .testcardnew i {
