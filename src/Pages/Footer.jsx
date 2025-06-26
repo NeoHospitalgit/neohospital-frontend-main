@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import "./Footer.css";
-import logo from "../Assets/index/logom.png";
+import logo from "../Assets/index/logom.jpeg";
 import { Link } from "react-router-dom";
 import Social from "./Home/Social";
 import axios from 'axios';
