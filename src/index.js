@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 // import { BrowserRouter as Router } from "react-router-dom";
-import './fontawesome';
+
 
 import App from "./App";
 import { ToastContainer } from "react-toastify";
