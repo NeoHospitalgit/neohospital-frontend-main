@@ -62,7 +62,7 @@ const Specialty = () => {
       id: 10,
       title: "Gynaecology & Obstetrics",
       description: "Specialized women's health services",
-      link: "gynaecology" // Updated link with "and" instead of hyphen
+      link: "gynaecology"
     },
     {
       id: 11,
@@ -94,7 +94,20 @@ const Specialty = () => {
             <p>{specialty.description}</p>
             <Link to={`https://www.neohospital.com/${specialty.link}`} className="know-more-btn">
               Know More
-              <i className="fas fa-arrow-right"></i>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="arrow-icon"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
             </Link>
           </div>
         ))}
