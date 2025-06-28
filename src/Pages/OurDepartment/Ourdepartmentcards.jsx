@@ -62,7 +62,7 @@ function Ourdepartmentcards() {
             {Neospecial.map((value, index) => (
               <div
                 key={index}
-                className="col-lg-2 col-md-3 col-6 department-responsive"
+                className="col-4 lg-2 col-md-3 col-6 department-responsive"
               >
                 <DepartmentCard
                   blogimage={`https://api.neohospital.com/uploads/categories/${value.image}`}
