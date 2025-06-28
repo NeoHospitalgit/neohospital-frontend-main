@@ -33,7 +33,7 @@ function Ourdepartmentcards() {
   );
   // Rendering the component
   return (
-    <section>
+    <section  className='special'>
       <div className="Ourdepartmentcards container">
         <h3 className="about-title">
           <span>OUR SPECIALTY DEPARTMENTS</span>
