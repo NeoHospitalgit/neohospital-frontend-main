@@ -169,54 +169,157 @@ display: inline !important;
     }
 }
 
+/* Doctor Card Styling - Enhanced Version */
+.doclinks a {
+    text-decoration: none !important;
+    display: block;
+}
+
 .doctorcard {
     position: relative;
-}
-.doctorcard .card{
-        border: 1px solid #0374c3;
-    margin: 10px;
-    position: relative;
-    cursor: pointer;
-    background: none;
-    padding-top: 5px;
-    transition: all ease-in 0.1s;
+    margin: 20px 0;
 }
 
-/* .doctorcard .card:hover {
+.doctorcard .card {
     border: none;
-    box-shadow: 0px 0px 128px #2f80be inset;
-    border:1px solid black;
+    border-radius: 15px;
     margin: 10px;
     position: relative;
     cursor: pointer;
-    background: none;
-    padding-top: 5px;
-} */
-
-.doctorcard .card .face{
-    max-width: 100%;
-    height: auto;
-    transition: 1s;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.doctorcard .card .face.face1{
-   border-radius: 15px 15px 0px 0px;
+.doctorcard .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(13, 183, 173, 0.2);
+}
+
+.doctorcard .card .face {
+    width: 100%;
+    transition: 0.5s;
+}
+
+/* Face 1 - Doctor Image and Name */
+.doctorcard .card .face.face1 {
+    border-radius: 15px 15px 0 0;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
+    background: linear-gradient(180deg, #f5f9ff 0%, #ecf5fc 100%);
+    padding: 20px 0 0 0;
 }
 
-.doctorcard .card .face.face1 .content{
+.doctorcard .card .face.face1 .content {
     text-align: center;
     width: 100%;
+}
+
+.doctorcard .card .face.face1 .content img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.doctorcard .card:hover .face.face1 .content img {
+    transform: scale(1.05);
+    border-color: #0db7ad;
+}
+
+.doctorcard .card .face.face1 .content h3 {
+    margin-top: 20px;
+    padding: 10px 0;
+    color: #0081b9;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.doctorcard .card:hover .face.face1 .content h3 {
+    color: #005961;
+}
+
+/* Face 2 - Doctor Details */
+.doctorcard .card .face.face2 {
+    border-radius: 0 0 15px 15px;
+    text-align: center;
+    position: relative;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: white;
+}
+
+.doctorcard .card .face.face2 .content {
+    width: 100%;
+    display: block;
+}
+
+.doctorcard .card .face.face2 .content p {
+    margin: 0 0 8px 0;
+    padding: 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+}
+
+.doctorcard .card .face.face2 .content p:first-of-type {
+    font-weight: 500;
+    color: #0db7ad;
+    font-size: 16px;
+}
+
+/* Schedule Button */
+.doctorcard button.text-appointment-btn {
+    width: 100%;
+    font-size: 14px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: #0db7ad;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(13, 183, 173, 0.2);
+}
+
+.doctorcard button.text-appointment-btn:hover {
+    background: #005961;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 89, 97, 0.3);
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .doctorcard .card .face.face1 .content img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .doctorcard .card .face.face1 .content h3 {
+        font-size: 18px;
+    }
+    
+    .doctorcard .card .face.face2 .content p {
+        font-size: 13px;
+    }
 }
 .doclinks{
     margin-top: 26px;
 }
 .doctorcard .card .face.face1 .content img{
-  margin-top: -26px;
     width: 200px;
     height: 200px;
     text-align: center;
