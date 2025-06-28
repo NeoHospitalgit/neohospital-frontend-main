@@ -1,26 +1,29 @@
 import React from "react";
-import "./departmentcard.css";
 import { Link } from "react-router-dom";
+import "./departmentcard.css";
 
-function DepartmentCard(props) {
+function DepartmentCard({ id, blogimage, title, departmentcontent, departmentslug }) {
   return (
     <div className="aligncard">
-      <a class="card1">
-        <div key={props.id} className="card"></div>
-        <img src={props.blogimage} alt={props.title} className="img-fluid" />
-        <h3>{props.title}</h3>
-        <p>{props.departmentcontent}</p>
+      <Link
+        to={`https://www.neohospital.com/${departmentslug}`}
+        className="card1"
+        aria-label={`Learn more about ${title}`}
+      >
+        <img
+          src={blogimage}
+          alt={title}
+          className="departmentcards-img"
+        />
+        <h3>{title}</h3>
+        <p>{departmentcontent}</p>
         <div className="text-center">
-          <button className="text-btn">
-            <Link to={`https://www.neohospital.com/${props.departmentslug}`}>
-              Read More
-            </Link>
-          </button>
+          <span className="text-btn">Read More</span>
         </div>
-        <div class="go-corner">
-          <div class="go-arrow">→</div>
+        <div className="go-corner">
+          <div className="go-arrow">→</div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }
