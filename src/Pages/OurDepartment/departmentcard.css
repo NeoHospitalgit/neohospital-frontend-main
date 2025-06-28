@@ -408,25 +408,265 @@ footer a {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 15px;
   min-height: 100%;
+  perspective: 1000px;
+}
+
+/* Main Card */
+.departmentcards .card1 {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 420px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  text-decoration: none;
+  transform-style: preserve-3d;
+}
+
+/* Card Hover Effects */
+.departmentcards .card1:hover {
+  transform: translateY(-15px) rotateX(5deg);
+  box-shadow: 0 20px 40px rgba(13, 183, 173, 0.3);
+}
+
+/* Card Background Animation */
+.departmentcards .card1:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -16px;
+  right: -16px;
+  background: linear-gradient(135deg, #0db7ad, #0081b9);
+  height: 32px;
+  width: 32px;
+  border-radius: 32px;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  transition: transform 0.4s ease-out;
+}
+
+.departmentcards .card1:hover:before {
+  transform: scale(30);
+}
+
+/* Card Image */
+.departmentcards-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+  transition: all 0.5s ease;
+  filter: brightness(0.95);
+}
+
+.departmentcards .card1:hover .departmentcards-img {
+  filter: brightness(1.1) contrast(1.1);
+  transform: scale(1.05) translateY(-5px);
+}
+
+/* Card Content */
+.departmentcards h3 {
+  margin: 20px 15px 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a202c;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.departmentcards h3:after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background: #0db7ad;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.departmentcards .card1:hover h3:after {
+  width: 80px;
+  background: #fff;
+}
+
+.departmentcards p {
+  font-size: 15px;
+  color: #4a5568;
+  margin: 25px 20px 20px;
+  text-align: center;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 72px;
+}
+
+/* Text Button */
+.departmentcards .text-center {
+  text-align: center;
+  margin: 15px 0;
+  transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+.departmentcards .card1:hover .text-center {
+  transform: translateY(-5px);
+}
+
+.departmentcards .text-btn {
+  display: inline-block;
+  padding: 10px 25px;
+  background: #0db7ad;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(13, 183, 173, 0.2);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.departmentcards .text-btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: #0081b9;
+  transition: all 0.4s ease;
+  z-index: -1;
+  border-radius: 50px;
+}
+
+.departmentcards .text-btn:hover:before {
+  width: 100%;
+}
+
+.departmentcards .text-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 129, 185, 0.3);
+}
+
+/* Corner Arrow */
+.departmentcards .go-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #0db7ad, #0081b9);
+  border-radius: 0 20px 0 50px;
+  transition: all 0.3s ease;
+  box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.departmentcards .card1:hover .go-corner {
+  width: 45px;
+  height: 45px;
+  background: #fff;
+  box-shadow: -2px 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.departmentcards .go-arrow {
+  margin-top: -4px;
+  margin-right: -4px;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+
+.departmentcards .card1:hover .go-arrow {
+  color: #0db7ad;
+  transform: rotate(45deg);
+}
+
+/* Card Content Color Change on Hover */
+.departmentcards .card1:hover h3 {
+  color: #ffffff;
+}
+
+.departmentcards .card1:hover p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .departmentcards .card1 {
+    max-width: 280px;
+    height: 400px;
+  }
+  
+  .departmentcards-img {
+    height: 200px;
+  }
 }
 
 @media (max-width: 768px) {
   .departmentcards .card1 {
-    max-width: 90%;
-    margin: 10px auto;
+    max-width: 100%;
+    height: 380px;
   }
-
+  
   .departmentcards-img {
-    height: 150px;
+    height: 180px;
   }
-
+  
   .departmentcards h3 {
+    font-size: 18px;
+  }
+  
+  .departmentcards p {
+    font-size: 14px;
+    margin: 20px 15px 15px;
+  }
+  
+  .departmentcards .text-btn {
+    padding: 8px 20px;
     font-size: 14px;
   }
+}
 
-  .departmentcards p {
-    font-size: 13px;
+/* Card Loading Animation */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+.aligncard {
+  animation: cardEntrance 0.8s ease-out;
+  animation-fill-mode: backwards;
+}
+
+/* Staggered Animation for Multiple Cards */
+.aligncard:nth-child(1) { animation-delay: 0.1s; }
+.aligncard:nth-child(2) { animation-delay: 0.2s; }
+.aligncard:nth-child(3) { animation-delay: 0.3s; }
+.aligncard:nth-child(4) { animation-delay: 0.4s; }
