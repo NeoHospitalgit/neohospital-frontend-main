@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import logo from "../Assets/index/neologo.png";
+import logo from "../Assets/index/logo.png";
 import nbl from "../Assets/nbl.png";
 import { Link } from "react-router-dom";
 
