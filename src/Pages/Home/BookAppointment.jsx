@@ -26,10 +26,10 @@ function BookAppointment() {
           <div className="ba-content">
             <div className="ba-text-content">
               <h3 className="ba-title">
-                <span>Why Choose Neo Hospital</span>
+                <span>Why Choose Neo Super speciality Hospital</span>
               </h3>
               <p className="ba-description">
-                Experience excellence in healthcare at Neo Hospital. Our state-of-the-art 
+                Experience excellence in healthcare at Neo Super speciality  Hospital. Our state-of-the-art 
                 facility combines cutting-edge technology with compassionate care, 
                 featuring over 20 specialties and 250+ beds across Delhi NCR.
               </p>
