@@ -123,11 +123,11 @@ function Hero() {
                   <h3>Emergency Contact</h3>
                   <div className="info-item">
                     <i className="fa fa-phone"></i>
-                    <p>+91 1800-123-4567</p>
+                    <p>+91 0120-4880000</p>
                   </div>
                   <div className="info-item">
                     <i className="fa fa-ambulance"></i>
-                    <p>Ambulance: +91 1800-999-8888</p>
+                    <p>Ambulance: +91 0120-3120000</p>
                   </div>
                   <div className="info-divider"></div>
                   <h3>Hospital Hours</h3>
