@@ -165,7 +165,7 @@ function Hero() {
         
         {/* WhatsApp floating button with SVG icon */}
         <a 
-          href="https://wa.me/919999999999?text=Hello%20Neo%20Hospital,%20I%20would%20like%20to%20inquire%20about" 
+          href="https://wa.me/91 9599388049?text=Hello%20Neo%20Hospital,%20I%20would%20like%20to%20inquire%20about" 
           className="whatsapp-float"
           target="_blank"
           rel="noopener noreferrer"
