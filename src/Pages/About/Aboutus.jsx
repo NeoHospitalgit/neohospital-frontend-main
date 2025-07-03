@@ -9,13 +9,13 @@ function Aboutus() {
         <div className="about-section container" id="about">
           <h3 className="about-title">
             <span>
-              Neo Hospital - A Commitment to Excellence in Healthcare
+              Neo Super Speciality Hospital - A Commitment to Excellence in Healthcare
             </span>
           </h3>
           <p className="about-description">
-            Welcome to Neo Hospital, where your health and well-being are our
+            Welcome to Neo Super Speciality Hospital, where your health and well-being are our
             utmost priorities. Situated at the forefront of healthcare
-            innovation and patient-centered care, Neo Hospital stands as a
+            innovation and patient-centered care, Neo Super Speciality Hospital stands as a
             symbol of excellence, compassion, and integrity. In this article,
             we delve deeper into our mission, values, services, and the
             dedicated team that drives us forward, shaping the future of
@@ -36,7 +36,7 @@ function Aboutus() {
                   <div className="col-md-6">
                     <h4>Vision</h4>
                     <p className="about-description">
-                      Our vision at Neo Hospital is to redefine healthcare by
+                      Our vision at Neo Super Speciality Hospital is to redefine healthcare by
                       setting new standards in clinical excellence, patient
                       satisfaction, and community engagement. We aspire to
                       create an ecosystem where healthcare is not just a
