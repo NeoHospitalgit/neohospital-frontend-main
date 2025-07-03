@@ -88,7 +88,7 @@ function DemoDoctor() {
             </div>
           </div>
           <p className="about-description">
-            Neo Hospital places paramount importance on patient care, seamlessly
+            Neo Super Speciality Hospital places paramount importance on patient care, seamlessly
             merging cutting-edge medical advancements with heartfelt compassion.
             Our foundational principle is to craft an experience where every
             patient feels supported, efficient, and valued.
