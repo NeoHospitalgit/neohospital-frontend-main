@@ -79,7 +79,7 @@ function Contactform() {
                               <span>Contact Us Today</span>
                             </h3>
                             <p className="about-description">
-                              Welcome to Neo Hospital! Ensuring your health is
+                              Welcome to Neo Super Speciality Hospital! Ensuring your health is
                               our priority. Schedule your consultation with our
                               expert physicians and specialists effortlessly.
                               Simply choose your preferred date, time, and
@@ -177,7 +177,7 @@ function Contactform() {
                   <div className="d-flex info_single align-items-center">
                     <i className="fa fa-map"></i>
                     <span>
-                      NEO HOSPITAL D-170, 170A, 170B, Sector-50, NOIDA, GAUTAM
+                      Neo Super Speciality Hospital D-170, 170A, 170B, Sector-50, NOIDA, GAUTAM
                       BUDDH NAGAR (U.P) 201301
                     </span>
                   </div>
