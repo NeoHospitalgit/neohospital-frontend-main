@@ -105,7 +105,7 @@ function Footer() {
                       <h4>Find Us :</h4>
                       <span>
                         <a href="#">
-                          NEO HOSPITAL D-170, 170A, 170B, Sector-50, Noida,
+                          Neo Super Speciality Hospital D-170, 170A, 170B, Sector-50, Noida,
                           <br />
                           Gautam Buddh Nagar (U.P) 201301
                         </a>
@@ -161,7 +161,7 @@ function Footer() {
                     </div>
                     <div className="footer-text">
                       <p>
-                        NEO Hospital is recognized within and beyond Noida
+                      Neo Super Speciality Hospital is recognized within and beyond Noida
                         people as an advanced diagnostic and treatment facility,
                         staffed with highly qualified professionals.
                       </p>
