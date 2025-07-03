@@ -27,7 +27,7 @@ function Info() {
           </div>
           <div className="col-md-7">
             <p className="info-description">
-              At Neo Hospital, excellence is our tradition. Explore our
+              At Neo Super Speciality Hospital, excellence is our tradition. Explore our
               specialized departments, including Neurology, Cardiology,
               Orthopedics, and Women's Health. Our expert teams are committed to
               providing unparalleled care for your well-being.
