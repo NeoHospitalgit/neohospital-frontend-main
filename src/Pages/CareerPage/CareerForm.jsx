@@ -50,7 +50,7 @@ function CareerForm() {
     //   var mailOptions = {
     //     from: email,
     //     to: "krapter.dev@gmail.com",
-    //     subject: "Job Application From Neo Hospital",
+    //     subject: "Job Application From Neo Super Speciality Hospital",
     //     html: `
     //       <p>Name: ${name}</p>
     //       <p>Phone Number: ${number}</p>
