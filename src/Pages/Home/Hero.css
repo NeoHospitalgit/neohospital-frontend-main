@@ -252,7 +252,8 @@
     position: fixed;
     width: 60px;
     height: 60px;
-    bottom: 50vh;
+      bottom:0;
+/*     bottom: 50vh; */
 /*     right: 40px; */
     background-color: #25d366;
     color: #FFF;
