@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import emailjs from "@emailjs/browser";
 import parse from "html-react-parser";
 import BlogBanner from "./BlogBanner";
@@ -85,50 +84,10 @@ const BlogDetails = () => {
   const { blogs: blogSlug } = useParams();
   const blog = blogs.find(({ blog_slug }) => blog_slug === blogSlug);
 
-  // Generate meta description from blog content
-  const getMetaDescription = (content) => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
-    const textContent = tempDiv.textContent || tempDiv.innerText || '';
-    return textContent.substring(0, 160).trim() + '...';
-  };
-
   if (!blog) return <div>Blog not found</div>;
-
-  const metaDescription = getMetaDescription(blog.blog_content);
-  const blogImageUrl = `https://api.neohospital.com/uploads/blogs/${blog.blog_image}`;
 
   return (
     <>
-      <Helmet>
-        <title>{blog.blog_title} | Neo Hospital</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={`${blog.blog_title}, Neo Hospital, Healthcare, Medical Blog`} />
-        <meta name="author" content="Neo Hospital" />
-        
-        {/* Open Graph tags */}
-        <meta property="og:title" content={blog.blog_title} />
-        <meta property="og:description" content={metaDescription} />
-        <meta property="og:image" content={blogImageUrl} />
-        <meta property="og:url" content={window.location.href} />
-        <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="Neo Hospital" />
-        
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={blog.blog_title} />
-        <meta name="twitter:description" content={metaDescription} />
-        <meta name="twitter:image" content={blogImageUrl} />
-        
-        {/* Article specific meta tags */}
-        {blog.blog_date && <meta property="article:published_time" content={blog.blog_date} />}
-        <meta property="article:author" content="Neo Hospital" />
-        <meta property="article:section" content="Healthcare" />
-        
-        {/* Canonical URL */}
-        <link rel="canonical" href={window.location.href} />
-      </Helmet>
-
       <section className="container NeoBlog">
         <h3 className="dt-title">
           <span>Informative Blogs</span>
@@ -143,7 +102,7 @@ const BlogDetails = () => {
           <div className="col-md-8">
             <main>
               <img
-                src={blogImageUrl}
+                src={`https://api.neohospital.com/uploads/blogs/${blog.blog_image}`}
                 alt={blog.blog_title}
                 className="img-fluid"
               />
