@@ -5,6 +5,7 @@ import parse from "html-react-parser";
 import BlogBanner from "./BlogBanner";
 import Corevalue from "../About/Corevalue";
 import "./OurBlog.css";
+import { Helmet } from "react-helmet";
 
 const BlogDetails = () => {
   const [blogs, setBlogs] = useState([]);
@@ -88,6 +89,30 @@ const BlogDetails = () => {
 
   return (
     <>
+      {blog && (
+        <Helmet>
+          <title>{blog.blog_title} | NEO Hospital</title>
+          <meta name="title" content={`${blog.blog_title} | NEO Hospital`} />
+          <meta 
+            name="description" 
+            content={blog.blog_meta_description || `Read about ${blog.blog_title} at NEO Hospital, one of the Best Hospitals in Noida.`} 
+          />
+          <meta 
+            name="keywords" 
+            content={blog.blog_meta_keywords || "NEO Hospital, Best Hospital in Noida"} 
+          />
+          <link rel="canonical" href={`https://www.neohospital.com/blog/${blog.blog_slug}`} />
+          <meta property="og:title" content={`${blog.blog_title} | NEO Hospital`} />
+          <meta 
+            property="og:description" 
+            content={blog.blog_meta_description || `Read about ${blog.blog_title} at NEO Hospital, one of the Best Hospitals in Noida.`} 
+          />
+          <meta name="author" content="Neo Hospital" />
+          <meta name="language" content="en-us" />
+          <meta name="robots" content="INDEX,FOLLOW" />
+        </Helmet>
+      )}
+      
       <section className="container NeoBlog">
         <h3 className="dt-title">
           <span>Informative Blogs</span>
