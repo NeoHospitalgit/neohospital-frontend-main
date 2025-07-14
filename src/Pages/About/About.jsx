@@ -23,7 +23,7 @@ function About() {
         ogdescription={Aboutseo.ogdescription}
       /> */}
       <Helmet>{parse(Aboutseo.meetafamily)}</Helmet>
-      <Aboutbanner />
+{/*       <Aboutbanner /> */}
       <Corevalue />
       <Aboutus />
       <Chooseus />
