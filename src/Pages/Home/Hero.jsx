@@ -145,14 +145,13 @@ function Hero() {
                   <div className="info-divider"></div>
                   <h3>Hospital Hours</h3>
                   <div className="info-item">
-                    <i className="fa fa-ambulance"></i>
-                    <p>24/7 Emergency Services</p>
+                   <i class="fa fa-hospital-o"></i>
+                    <p>24/7 Services Available</p>
                   </div>
-                  <div className="info-item">
+{/*                   <div className="info-item">
                     <i class="fa fa-user-md"></i>
-{/*                     <i className="fa fa-calendar"></i> */}
                     <p>24/7 Available OPD </p>
-                  </div>
+                  </div> */}
                   <div className="info-divider"></div>
                   <div className="quick-actions">
                     <Link to="/doctors" className="quick-link">Find a Doctor</Link>
