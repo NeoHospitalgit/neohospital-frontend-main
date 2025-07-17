@@ -149,7 +149,7 @@ function Hero() {
                     <p>24/7 Emergency Services</p>
                   </div>
                   <div className="info-item">
-                    <i class="fa-solid fa-clock"></i>
+                    <i class="fa fa-user-md"></i>
 {/*                     <i className="fa fa-calendar"></i> */}
                     <p>24/7 Available OPD </p>
                   </div>
