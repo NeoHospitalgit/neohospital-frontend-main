@@ -151,7 +151,7 @@ function Hero() {
                   <div className="info-item">
                     <i class="fa-solid fa-clock"></i>
 {/*                     <i className="fa fa-calendar"></i> */}
-                    <p>OPD: Available 24/7</p>
+                    <p>24/7 Available OPD </p>
                   </div>
                   <div className="info-divider"></div>
                   <div className="quick-actions">
