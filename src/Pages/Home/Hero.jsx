@@ -145,7 +145,7 @@ function Hero() {
                   <div className="info-divider"></div>
                   <h3>Hospital Hours</h3>
                   <div className="info-item">
-                    <i className="fa-solid fa-clock"></i>
+                    <i className="fa fa-ambulance"></i>
                     <p>24/7 Emergency Services</p>
                   </div>
                   <div className="info-item">
