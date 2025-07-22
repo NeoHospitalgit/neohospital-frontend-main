@@ -6,14 +6,14 @@
     text-align: center;
 }
 
-#corevalue header .footer-wave {
+/* #corevalue header .footer-wave {
      height: 125px;
     left: 0;
     z-index: 1;
     bottom: -67px;
     background: url('../../Assets/Banners/hero-wave.png') repeat-x;
     animation: wave 10s cubic-bezier(0.44, 0.66, 0.67, 0.37) infinite;
-}
+} */
 
 @keyframes wave {
   0% {
