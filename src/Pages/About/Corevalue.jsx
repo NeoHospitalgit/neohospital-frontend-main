@@ -4,7 +4,6 @@ function Corevalue() {
   return (
       <>
           <section id="corevalue">
-              <header className="header-design">
 
   {/* <div className="footer-wave"></div> */}
 </header>
