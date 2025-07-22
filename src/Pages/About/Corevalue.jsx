@@ -3,7 +3,6 @@ import "./Corevalue.css"
 function Corevalue() {
   return (
       <>
-          <section id="corevalue">
 
   {/* <div className="footer-wave"></div> */}
 </header>
