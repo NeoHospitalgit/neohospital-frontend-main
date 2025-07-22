@@ -1,33 +1,32 @@
-import React from "react";
-import Aboutbanner from "./Aboutbanner";
+import React from 'react';
 import Aboutus from "./Aboutus";
 import Corevalue from "./Corevalue";
 import Chooseus from "./Chooseus";
 import { Aboutseo } from "../SeoContent";
 import { Helmet } from "react-helmet";
-import parse from "html-react-parser";   
+import parse from "html-react-parser";
+import './About.css';
 
 function About() {
   return (
-    <>
-      {/* <Seo
-        title={Aboutseo.title}
-        metatitle={Aboutseo.metatitle}
-        metadescription={Aboutseo.metadescription}
-        metakeyword={Aboutseo.metakeyword}
-        canonical={Aboutseo.canonical}
-        gsv={Aboutseo.gsv}
-        dctitle={Aboutseo.dctitle}
-        dcsubject={Aboutseo.dcsubject}
-        ogtitle={Aboutseo.ogtitle}
-        ogdescription={Aboutseo.ogdescription}
-      /> */}
+    <div className="about-container">
       <Helmet>{parse(Aboutseo.meetafamily)}</Helmet>
-{/*       <Aboutbanner /> */}
-      <Corevalue />
+      
+      {/* Video Hero Section */}
+      <section className="video-hero">
+        <video autoPlay loop muted playsInline className="hero-video">
+          <source src="/video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="video-overlay">
+          {/* <p className="hero-subtitle">Compassionate Care, Advanced Technology</p> */}
+        </div>
+      </section>
+      
       <Aboutus />
       <Chooseus />
-    </>
+      <Corevalue />
+    </div>
   );
 }
 
