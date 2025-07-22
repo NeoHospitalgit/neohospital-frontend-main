@@ -1,70 +1,211 @@
-.chooseus .choosecontent p{
-    /* margin-top: 10px;   
-    padding: 10px;
-    border: 1px solid lightblue;
-    background: #000000;
-    color: white;
-    font-weight: 500;
-    letter-spacing: 1px;
-    height: 100%; */
-
-    background: #10efa517;
-    border: 1px solid #add8e6;
-    color: #000;
-    font-weight: 500;
-    height: 100%;
-    letter-spacing: 1px;
-    margin-top: 0px;
-    padding: 33px 35px;
-    border-radius: 5px;
-
+/* Choose Us Section Styling */
+.chooseus {
+    /* background: linear-gradient(135deg, #e1f6f5 0%, #ffffff 50%, #fdd9a0 100%); */
+    padding: 60px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+/* Title Styling */
 .chooseus .about-title {
-    font-size: 27px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #046f54;
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeIn 1s ease-out;
 }
-.chooseus .about-description {
-    color: #000000;
-    font-size: 17px;
-    margin: 40px 0px;
-}
+
 .chooseus .about-title > span {
     position: relative;
 }
+
 .chooseus .about-title span::before {
     content: '';
     position: absolute;
-    width: 75%;
-    height: 4px;
-    background-color: #0b4e8d;
+    width: 70%;
+    height: 6px;
+    background: linear-gradient(to right, #0b4e8d, #046f54);
     border-radius: 8px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: -12px;
+    transition: width 0.3s ease;
 }
 
-.chooseus button{
-      border: 1px solid lightblue;
-    /* background: #005961; */
-    font-weight: 500;
-    letter-spacing: 2px;
-    margin: 5px 5px;
-    padding: 20px 20px;
-    text-align: left;
-    width: 100%;
- }
+.chooseus .about-title:hover span::before {
+    width: 80%;
+}
 
-.chooseus .active{
-    border-radius: 5px;
-    transform: scale(1.1);
-    border: 1px solid lightblue;
-    background: #000000;
-    color: rgb(255, 255, 255);
-    font-weight: 500;
-    letter-spacing: 2px;
-    margin: 5px 5px;
-    padding: 20px 20px;
+/* Description Styling */
+.chooseus .about-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    color: #333333;
+    line-height: 1.7;
+    margin: 24px 0;
+    text-align: center;
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* Tab Buttons */
+.chooseus button {
+    background: #ffffff;
+    border: 2px solid #add8e6;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #046f54;
+    letter-spacing: 1.5px;
+    padding: 18px 24px;
+    margin: 8px 0;
     text-align: left;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chooseus button:hover {
+    background: #0b4e8d;
+    color: #ffffff;
+    border-color: #0b4e8d;
+    transform: translateX(5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.chooseus .active {
+    background: #046f54;
+    color: #ffffff;
+    border: 2px solid #046f54;
+    border-radius: 8px;
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    animation: pulse 0.5s ease;
+}
+
+/* Content Area */
+.chooseus .choosecontent p {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #add8e6;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: #333333;
+    line-height: 1.7;
+    padding: 40px;
+    margin: 0;
+    height: 100%;
+    animation: fadeInUp 0.8s ease-out;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.chooseus .choosecontent p:hover {
+    background: #e1f6f5;
+    color: #0b4e8d;
+}
+
+/* Icon Styling */
+.chooseus button i {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.chooseus button:hover i {
+    transform: translateX(5px);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1.02);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chooseus {
+        padding: 40px 15px;
+    }
+
+    .chooseus .about-title {
+        font-size: 28px;
+    }
+
+    .chooseus .about-description {
+        font-size: 16px;
+        margin: 20px 0;
+    }
+
+    .chooseus button {
+        font-size: 15px;
+        padding: 16px 20px;
+    }
+
+    .chooseus .choosecontent p {
+        padding: 32px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .chooseus {
+        padding: 30px 10px;
+    }
+
+    .chooseus .about-title {
+        font-size: 24px;
+    }
+
+    .chooseus .about-description {
+        font-size: 15px;
+    }
+
+    .chooseus button {
+        font-size: 14px;
+        padding: 14px 16px;
+    }
+
+    .chooseus .choosecontent p {
+        padding: 24px;
+        font-size: 15px;
+    }
+
+    .chooseus .about-title span::before {
+        width: 50%;
+    }
 }
