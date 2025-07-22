@@ -1,211 +1,312 @@
-/* Choose Us Section Styling */
-.chooseus {
-    /* background: linear-gradient(135deg, #e1f6f5 0%, #ffffff 50%, #fdd9a0 100%); */
-    padding: 60px 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+import React from "react";
+import Aboutbanner from "./Aboutbanner";
+import Aboutus from "./Aboutus";
+import Corevalue from "./Corevalue";
+import Chooseus from "./Chooseus";
+import { Aboutseo } from "../SeoContent";
+import { Helmet } from "react-helmet";
+import parse from "html-react-parser";   
+
+function About() {
+  return (
+    <>
+      {/* <Seo
+        title={Aboutseo.title}
+        metatitle={Aboutseo.metatitle}
+        metadescription={Aboutseo.metadescription}
+        metakeyword={Aboutseo.metakeyword}
+        canonical={Aboutseo.canonical}
+        gsv={Aboutseo.gsv}
+        dctitle={Aboutseo.dctitle}
+        dcsubject={Aboutseo.dcsubject}
+        ogtitle={Aboutseo.ogtitle}
+        ogdescription={Aboutseo.ogdescription}
+      /> */}
+      <Helmet>{parse(Aboutseo.meetafamily)}</Helmet>
+{/*       <Aboutbanner /> */}
+      <Corevalue />
+      <Aboutus />
+      <Chooseus />
+    </>
+  );
 }
 
-/* Title Styling */
+export default About;
+
+
+
+import React from "react";
+import Aboutbanner from "./Aboutbanner";
+import Aboutus from "./Aboutus";
+import Corevalue from "./Corevalue";
+import Chooseus from "./Chooseus";
+import { Aboutseo } from "../SeoContent";
+import { Helmet } from "react-helmet";
+import parse from "html-react-parser";   
+
+function About() {
+  return (
+    <>
+      {/* <Seo
+        title={Aboutseo.title}
+        metatitle={Aboutseo.metatitle}
+        metadescription={Aboutseo.metadescription}
+        metakeyword={Aboutseo.metakeyword}
+        canonical={Aboutseo.canonical}
+        gsv={Aboutseo.gsv}
+        dctitle={Aboutseo.dctitle}
+        dcsubject={Aboutseo.dcsubject}
+        ogtitle={Aboutseo.ogtitle}
+        ogdescription={Aboutseo.ogdescription}
+      /> */}
+      <Helmet>{parse(Aboutseo.meetafamily)}</Helmet>
+{/*       <Aboutbanner /> */}
+      <Corevalue />
+      <Aboutus />
+      <Chooseus />
+    </>
+  );
+}
+
+export default About;
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from "react";
+import "./Chooseus.css";
+
+const Chooseus = () => {
+  const [activeTab, setActiveTab] = useState(1);
+
+  const handleTabClick = (tabNumber) => {
+    setActiveTab(tabNumber);
+  };
+
+  return (
+    <>
+      <section className="chooseus container">
+        <div>
+          <h3 className="about-title">
+            <span>Why Choose Neo Hospital</span>
+          </h3>
+          <p className="about-description">
+            Choosing Neo Hospital means choosing a healthcare provider dedicated
+            to accuracy, expertise, and patient well-being, promising a superior
+            standard of healthcare for individuals and communities.
+          </p>
+        </div>
+        <div className="row">
+          <div className="col-md-3">
+            <div>
+              <button
+                onClick={() => handleTabClick(1)}
+                className={activeTab === 1 ? "active" : ""}
+              >
+                High Quality Lab{" "}
+                <i className="fa fa-angle-double-right text-light"></i>
+              </button>
+            </div>
+            <div>
+              {" "}
+              <button
+                onClick={() => handleTabClick(2)}
+                className={activeTab === 2 ? "active" : ""}
+              >
+                Unmatched Expertise{" "}
+                <i className="fa fa-angle-double-right text-light"></i>
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={() => handleTabClick(3)}
+                className={activeTab === 3 ? "active" : ""}
+              >
+                Precise Result{" "}
+                <i className="fa fa-angle-double-right text-light"></i>
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={() => handleTabClick(4)}
+                className={activeTab === 4 ? "active" : ""}
+              >
+                Qualified Staff{" "}
+                <i className="fa fa-angle-double-right text-light"></i>
+              </button>
+            </div>
+          </div>
+          <div className="col-md-9">
+            <div>
+              {activeTab === 1 && (
+                <>
+                  <section className="choosecontent">
+                    <p className="about-description">
+                      Neo Hospital is committed to delivering a high-quality lab
+                      experience by integrating state-of-the-art technology into
+                      its facilities. Equipped with cutting-edge diagnostic
+                      tools, the modern labs empower medical professionals to
+                      make accurate and informed diagnoses. <br />
+                      <br />
+                      This commitment ensures that patients receive precise and
+                      reliable test results, laying the foundation for effective
+                      treatment plans. The emphasis on a high-quality lab
+                      underscores Neo Hospital's dedication to medical
+                      excellence, fostering trust among patients and healthcare
+                      providers.
+                    </p>
+                  </section>
+                </>
+              )}
+              {activeTab === 2 && (
+                <>
+                  <section className="choosecontent">
+                    <p className="about-description">
+                      Neo Hospital stands as a beacon of Unmatched Expertise in
+                      healthcare, housing a team of highly skilled and
+                      experienced medical professionals across diverse
+                      specialties. <br />
+                      <br /> This collective proficiency ensures that patients
+                      receive comprehensive and personalized care, setting
+                      Neo Hospital apart as a trusted healthcare provider. The
+                      depth of expertise within the medical staff enables the
+                      hospital to address complex medical challenges, offering
+                      tailored solutions for optimal patient outcomes.
+                    </p>
+                  </section>
+                </>
+              )}
+              {activeTab === 3 && (
+                <>
+                  <section className="choosecontent">
+                    <p className="about-description">
+                      Neo Hospital prioritizes Precise Results, emphasizing
+                      accuracy in diagnostic outcomes. This commitment is
+                      pivotal in understanding patients' health conditions with
+                      precision and facilitating informed treatment decisions.
+                      <br />
+                      By focusing on delivering reliable and exact results,
+                      Neo Hospital ensures that healthcare professionals can
+                      tailor treatment plans according to individual needs.
+                      <br />
+                      <br /> This dedication to precision enhances the overall
+                      quality of patient care, instilling confidence in both
+                      medical practitioners and those seeking healthcare
+                      services.
+                    </p>
+                  </section>
+                </>
+              )}
+              {activeTab === 4 && (
+                <>
+                  <section className="choosecontent">
+                    <p className="about-description">
+                      Neo Hospital takes pride in its Qualified Staff, composed
+                      of skilled and well-trained professionals, including
+                      doctors, nurses, and support staff.
+                      <br /> This team forms the backbone of the hospital,
+                      contributing to the delivery of high-quality healthcare
+                      services. Their expertise ensures a comprehensive approach
+                      to patient care, fostering efficiency and effectiveness in
+                      medical operations.
+                      <br />
+                      <br />
+                      Neo Hospital recognizes the significance of a proficient
+                      staff in enhancing the overall healthcare experience for
+                      patients.
+                    </p>
+                  </section>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Chooseus;
+
+
+
+
+.chooseus .choosecontent p{
+    /* margin-top: 10px;   
+    padding: 10px;
+    border: 1px solid lightblue;
+    background: #000000;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 1px;
+    height: 100%; */
+
+    background: #10efa517;
+    border: 1px solid #add8e6;
+    color: #000;
+    font-weight: 500;
+    height: 100%;
+    letter-spacing: 1px;
+    margin-top: 0px;
+    padding: 33px 35px;
+    border-radius: 5px;
+
+}
 .chooseus .about-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: #046f54;
-    text-align: center;
-    margin-bottom: 32px;
-    animation: fadeIn 1s ease-out;
+    font-size: 27px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #000000;
 }
-
+.chooseus .about-description {
+    color: #000000;
+    font-size: 17px;
+    margin: 40px 0px;
+}
 .chooseus .about-title > span {
     position: relative;
 }
-
 .chooseus .about-title span::before {
     content: '';
     position: absolute;
-    width: 70%;
-    height: 6px;
-    background: linear-gradient(to right, #0b4e8d, #046f54);
+    width: 75%;
+    height: 4px;
+    background-color: #0b4e8d;
     border-radius: 8px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     bottom: -12px;
-    transition: width 0.3s ease;
 }
 
-.chooseus .about-title:hover span::before {
-    width: 80%;
-}
-
-/* Description Styling */
-.chooseus .about-description {
-    font-family: 'Poppins', sans-serif;
-    font-size: 17px;
-    color: #333333;
-    line-height: 1.7;
-    margin: 24px 0;
-    text-align: center;
-    animation: fadeIn 1.2s ease-out;
-}
-
-/* Tab Buttons */
-.chooseus button {
-    background: #ffffff;
-    border: 2px solid #add8e6;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    color: #046f54;
-    letter-spacing: 1.5px;
-    padding: 18px 24px;
-    margin: 8px 0;
+.chooseus button{
+      border: 1px solid lightblue;
+    /* background: #005961; */
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin: 5px 5px;
+    padding: 20px 20px;
     text-align: left;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+ }
 
-.chooseus button:hover {
-    background: #0b4e8d;
-    color: #ffffff;
-    border-color: #0b4e8d;
-    transform: translateX(5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-.chooseus .active {
-    background: #046f54;
-    color: #ffffff;
-    border: 2px solid #046f54;
-    border-radius: 8px;
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    animation: pulse 0.5s ease;
-}
-
-/* Content Area */
-.chooseus .choosecontent p {
-    background: rgba(255, 255, 255, 0.95);
-    border: 2px solid #add8e6;
-    border-radius: 12px;
-    font-family: 'Poppins', sans-serif;
+.chooseus .active{
+    border-radius: 5px;
+    transform: scale(1.1);
+    border: 1px solid lightblue;
+    background: #000000;
+    color: rgb(255, 255, 255);
     font-weight: 500;
-    font-size: 17px;
-    color: #333333;
-    line-height: 1.7;
-    padding: 40px;
-    margin: 0;
-    height: 100%;
-    animation: fadeInUp 0.8s ease-out;
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-.chooseus .choosecontent p:hover {
-    background: #e1f6f5;
-    color: #0b4e8d;
-}
-
-/* Icon Styling */
-.chooseus button i {
-    font-size: 18px;
-    transition: transform 0.3s ease;
-}
-
-.chooseus button:hover i {
-    transform: translateX(5px);
-}
-
-/* Keyframe Animations */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1.02);
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .chooseus {
-        padding: 40px 15px;
-    }
-
-    .chooseus .about-title {
-        font-size: 28px;
-    }
-
-    .chooseus .about-description {
-        font-size: 16px;
-        margin: 20px 0;
-    }
-
-    .chooseus button {
-        font-size: 15px;
-        padding: 16px 20px;
-    }
-
-    .chooseus .choosecontent p {
-        padding: 32px;
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 576px) {
-    .chooseus {
-        padding: 30px 10px;
-    }
-
-    .chooseus .about-title {
-        font-size: 24px;
-    }
-
-    .chooseus .about-description {
-        font-size: 15px;
-    }
-
-    .chooseus button {
-        font-size: 14px;
-        padding: 14px 16px;
-    }
-
-    .chooseus .choosecontent p {
-        padding: 24px;
-        font-size: 15px;
-    }
-
-    .chooseus .about-title span::before {
-        width: 50%;
-    }
+    letter-spacing: 2px;
+    margin: 5px 5px;
+    padding: 20px 20px;
+    text-align: left;
+    width: 100%;
 }
