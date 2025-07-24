@@ -3,9 +3,9 @@ import ourspecailty from "../../Assets/Banners/web-banner2.jpg";
 function Doctorsbanner() {
   return (
     <>
-        <section>
+{/*         <section>
           <img src={ourspecailty} alt="" srcset="" className="banner-img" />
-        </section>
+        </section> */}
     </>
   );
 }
