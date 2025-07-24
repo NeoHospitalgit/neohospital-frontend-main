@@ -39,7 +39,6 @@ function Profile() {
   const { dr } = useParams();
   const doctor = Neodoctor.find((value) => value.drSlug === dr);
 
-  // Moved doctor check to within the useEffect
   useEffect(() => {
     if (doctor) {
       setDoctorname(doctor.drTitle);
@@ -47,21 +46,24 @@ function Profile() {
   }, [doctor]);
 
   if (!doctor) {
-    return <div>Loading....</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading doctor information...</p>
+      </div>
+    );
   }
 
   const sendEmail = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Validate inputs
     if (!name || !number || !email || !booktime || !bookdate) {
       window.alert("Please fill out all fields.");
       setIsSubmitting(false);
       return;
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       window.alert("Please enter a valid email address.");
@@ -69,7 +71,6 @@ function Profile() {
       return;
     }
 
-    // Validate phone number format
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!phoneRegex.test(number)) {
       window.alert("Please enter a valid Indian phone number.");
@@ -79,7 +80,6 @@ function Profile() {
 
     try {
       const response = await axios.post('https://api.neohospital.com/api/sendmails/send-doctoremail', {
-        // const response = await axios.post('http://localhost:5001/api/sendmails/send-doctoremail', {
         name,
         number,
         email,
@@ -90,8 +90,7 @@ function Profile() {
       });
 
       if (response.status === 200) {
-        alert('Feedback submitted successfully');
-        // Reset form fields
+        alert('Appointment request submitted successfully!');
         setName("");
         setNumber("");
         setEmail("");
@@ -100,8 +99,8 @@ function Profile() {
         setMessage("");
       }
     } catch (error) {
-      console.error('Error submitting feedback:', error);
-      alert('Failed to submit feedback');
+      console.error('Error submitting appointment:', error);
+      alert('Failed to submit appointment request. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -110,7 +109,7 @@ function Profile() {
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value);
     if (selectedDate.getDay() === 0) {
-      alert("Doctor is not available on this day");
+      alert("Doctor is not available on Sundays");
       setBookdate("");
     } else {
       setBookdate(e.target.value);
@@ -118,118 +117,223 @@ function Profile() {
   };
 
   return (
-    <section className="container">
-      <div className="doctorprofile">
-        <div className="row">
-          <div className="col-md-8">
-            <h1 className="pb-3">{doctor.drTitle}</h1>
-            <div className="doctordetails">
-              <section className="Meetourdoctor">
-                <div>
-                  <p>{parse(doctor.drDetail)}</p>
-                </div>
-              </section>
+    <div className="profile-page">
+      {/* Header Section */}
+      <header className="profile-header">
+        <div className="container">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
+            <span>Home</span>
+            <span className="separator">→</span>
+            <span>Doctors</span>
+            <span className="separator">→</span>
+            <span className="current">{doctor.drTitle}</span>
+          </nav>
+          
+          <div className="header-content">
+            {/* Doctor Photo - Left Side */}
+            <div className="doctor-photo-container">
+              <div className="doctor-photo">
+                {doctor.drImage ? (
+                  <img 
+                    src={`https://api.neohospital.com/uploads/doctors/${doctor.drImage}`} 
+                    alt={`${doctor.drTitle}`} 
+                    loading="lazy"
+                  />
+                ) : (
+                  <img src={fallbackImage} alt="Doctor" loading="lazy" />
+                )}
+                <div className="availability-badge">Available Today</div>
+              </div>
             </div>
-          </div>
 
-          <div className="col-md-4 shadowdrp">
-            <div className="doctorpic">
-              <div className="profile-card">
-                <div className="img">
-                  {doctor.drImage ? (
-                    <img src={`https://api.neohospital.com/uploads/doctors/${doctor.drImage}`} alt={doctor.drTitle} />
-                  ) : (
-                    <img src={fallbackImage} alt="NEO Hospital Doctors" />
-                  )}
+            {/* Doctor Info - Right Side */}
+            <div className="doctor-info">
+              <h1 className="doctor-name">{doctor.drTitle}</h1>
+              
+              <div className="doctor-rating">
+                
+              </div>
+              
+              <div className="doctor-details">
+                <div className="detail-item">
+                  <span className="icon">🎓</span>
+                  <span>{doctor.drQualification}</span>
                 </div>
-                <div className="about-title">
-                  <h2>{doctor.drTitle}</h2>
-                  <h5>{doctor.drQualification}</h5>
-                  <p>{doctor.drDepartment}</p>
+                <div className="detail-item">
+                  <span className="icon">🏆</span>
+                  <span>{doctor.drDepartment}</span>
+                </div>
+                
+                <div className="detail-item">
+                  <span className="icon">📍</span>
+                  <span>Neo Super-Speciality Hospital</span>
                 </div>
               </div>
             </div>
-            <hr />
-            <div className="doctordetails">
-              <form onSubmit={sendEmail}>
-                <div className="row">
-                  <p>Your appointment will be confirmed within 24 hours after a callback from our team.</p>
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      className="form-control"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      name="name"
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      placeholder="Email"
-                      className="form-control"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      name="email"
-                    />
-                  </div>
-                </div>
-
-                <input
-                  type="text"
-                  placeholder="Phone"
-                  className="form-control"
-                  value={number}
-                  onChange={(e) => setNumber(e.target.value)}
-                  name="number"
-                />
-
-                <div className="slotbook p-3">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <p>Book your Slot Date:</p>
-                      <input
-                        type="date" // Changed to date input for better UX
-                        value={bookdate}
-                        onChange={handleDateChange}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <p>Time Slots:</p>
-                      <input
-                        type="text"
-                        value={booktime}
-                        onChange={(e) => setBooktime(e.target.value)}
-                        placeholder="Enter Time Slot"
-                        className="form-control"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  name="message"
-                  placeholder="Additional message"
-                  className="form-control"
-                />
-
-                <button
-                  type="submit"
-                  className="btn"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Submitting...' : 'Schedule Appointment'}
-                </button>
-              </form>
-            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </header>
+
+      {/* Main Content */}
+      <main className="container main-content">
+        <div className="content-grid">
+          {/* Doctor Details - Left Side */}
+          <section className="doctor-content">
+            <div className="about-section">
+              <h2 className="section-title">
+                <span className="icon">🏆</span>
+                About {doctor.drTitle.split('.')[1]?.trim() || doctor.drTitle}
+              </h2>
+              <div className="about-text">
+                {parse(doctor.drDetail)}
+              </div>
+            </div>
+
+            <div className="info-cards">
+              <div className="info-card">
+                <h3 className="card-title">
+                  <span className="icon">🎓</span>
+                  Education & Qualifications
+                </h3>
+                <div className="card-content">
+                  <div className="qualification-item">• {doctor.drQualification}</div>
+                  <div className="qualification-item">• Specialized Training in {doctor.drDepartment}</div>
+                 
+                </div>
+              </div>
+
+              
+            </div>
+          </section>
+
+          {/* Appointment Form - Right Side */}
+          <aside className="appointment-sidebar">
+            <div className="appointment-card">
+              <h3 className="appointment-title">
+                <span className="icon">📅</span>
+                Book Appointment
+              </h3>
+              
+              <div className="appointment-note">
+                <p><strong>Note:</strong> Your appointment will be confirmed within 24 hours after a callback from our team.</p>
+              </div>
+
+              <div className="appointment-form">
+                <div className="form-group">
+                  <label className="form-label" htmlFor="full-name">Full Name</label>
+                  <input
+                    id="full-name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="form-input"
+                    aria-required="true"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label" htmlFor="email">Email Address</label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="form-input"
+                    aria-required="true"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label" htmlFor="phone">Phone Number</label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
+                    className="form-input"
+                    aria-required="true"
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="preferred-date">Preferred Date</label>
+                    <input
+                      id="preferred-date"
+                      type="date"
+                      value={bookdate}
+                      onChange={handleDateChange}
+                      className="form-input"
+                      aria-required="true"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="preferred-time">Preferred Time</label>
+                    <select
+                      id="preferred-time"
+                      value={booktime}
+                      onChange={(e) => setBooktime(e.target.value)}
+                      className="form-select"
+                      aria-required="true"
+                    >
+                      <option value="">Select time slot</option>
+                      <option value="09:00 AM">09:00 AM</option>
+                      <option value="10:00 AM">10:00 AM</option>
+                      <option value="11:00 AM">11:00 AM</option>
+                      <option value="12:00 PM">12:00 PM</option>
+                      <option value="02:00 PM">02:00 PM</option>
+                      <option value="03:00 PM">03:00 PM</option>
+                      <option value="04:00 PM">04:00 PM</option>
+                      <option value="05:00 PM">05:00 PM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label" htmlFor="message">Additional Message (Optional)</label>
+                  <textarea
+                    id="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Any specific concerns or requirements..."
+                    rows={3}
+                    className="form-textarea"
+                  />
+                </div>
+
+                <button
+                  onClick={sendEmail}
+                  disabled={isSubmitting}
+                  className="submit-btn"
+                  aria-busy={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="loading-spinner small"></div>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <span className="icon">📅</span>
+                      Schedule Appointment
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <div className="contact-info">
+                <div className="contact-item">
+                  <span className="icon">📞</span>
+                  <span>+91 926 888 0303</span>
+                </div>
+                <div className="availability-badge small">24/7 Available</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
   );
 }
 
