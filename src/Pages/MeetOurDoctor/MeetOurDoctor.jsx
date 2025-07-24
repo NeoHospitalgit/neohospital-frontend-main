@@ -8,7 +8,6 @@ function MeetOurDoctor() {
   return (
     <>
       <Doctorsbanner />
-      <Corevalue />
       <section className="Meetourdoctor container mt-5">
         
         <DemoDoctor />
