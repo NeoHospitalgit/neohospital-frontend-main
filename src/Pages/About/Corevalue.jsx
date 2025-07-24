@@ -5,7 +5,7 @@ function Corevalue() {
       <>
 
   {/* <div className="footer-wave"></div> */}
-</header>
+ </header>
 {/* <div className="pset">
   <div className="container">
     <div className="row listar-feature-items">
