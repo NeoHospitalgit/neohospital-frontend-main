@@ -9,7 +9,7 @@ function Aboutus() {
         <div className="about-section container" id="about">
           <h3 className="about-title">
             <span>
-              Neo Hospital - A Commitment to Excellence in Healthcare
+              Neo Super Specialty Hospital - A Commitment to Excellence in Healthcare
             </span>
           </h3>
           <p className="about-description">
