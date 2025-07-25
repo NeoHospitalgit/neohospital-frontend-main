@@ -99,7 +99,7 @@ function Topbar() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i class="fab fa-youtube"></i>
+            <i class="fa-brands fa-youtube ticon"></i>
           </a>
         </div>
       </section>
