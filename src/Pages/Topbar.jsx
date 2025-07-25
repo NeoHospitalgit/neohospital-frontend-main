@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { useAuth } from "../store/auth";
 import "./Topbar.css";
-// const { isLoggedIn } = useAuth();
 
 function Topbar() {
   return (
@@ -12,13 +10,11 @@ function Topbar() {
           <div className="icon">
             <i className="fa fa-phone"></i>
             <a>Emergency Number - </a>
-            <a href="tel:0120-3120000"> 0120-3120000</a>
+            <a href="tel:0120-3120000"><span className="emergency-highlight">0120-3120000</span></a>
           </div>
           <div className="icon">
             <i className="fa fa-phone"></i>
-            <a href="tel:0120-4880000">0120-4880000</a>
-            {/* <a href="tel:0120-4880000">0120-4880000 /</a> */}
-            {/* <a href="tel:0120-3120000"> 0120-3120000</a> */}
+            <a href="tel:0120-4880000"><span className="emergency-highlight">0120-4880000</span></a>
           </div>
           <div className="icon">
             <i className="fa fa-calendar"></i>
@@ -33,34 +29,6 @@ function Topbar() {
             <i className="fa fa-envelope-open-o"></i>
             <a href="mailto:info@neohospital.com">info@neohospital.com</a>
           </div>
-
-          {/* <div className="icon"> */}
-          {/* <Link className="btn-btn-neo-logocolor" to="/login">
-              Login
-            </Link> */}
-
-          {/*  {isLoggedIn ? (
-              <>
-                <Link className="btn-btn-neo-logocolor" to="/logout">
-                  LOGOUT
-                </Link>
-
-                <Link className="btn-btn-neo-logocolor" to="/admin">
-                  DASHBOARD
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link className="btn-btn-neo-logocolor" to="/login">
-                  <button className="btn btn-outline-dark px-3">Login</button>
-                </Link>
-
-                <Link className="btn-btn-neo-logocolor" to="/register">
-                  Register
-                </Link>
-              </>
-            )} */}
-          {/* </div> */}
         </div>
         <div className="social-media-icons">
           <a
@@ -70,7 +38,6 @@ function Topbar() {
           >
             <i className="fa fa-facebook-f fb ticon"></i>
           </a>
-
           <a
             href="https://www.linkedin.com/company/neohospitalnoida/"
             target="_blank"
@@ -78,7 +45,6 @@ function Topbar() {
           >
             <i className="fa fa-linkedin linkedin ticon"></i>
           </a>
-
           <a
             href="https://www.instagram.com/neohospitalnoida/"
             target="_blank"
@@ -86,99 +52,26 @@ function Topbar() {
           >
             <i className="fa fa-instagram insta ticon"></i>
           </a>
-
           <a
             href="https://twitter.com/neo_hospital"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <svg className="ticon ddddicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" /></svg>
+            <svg className="ticon ddddicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+            </svg>
           </a>
           <a
             href="https://youtube.com/@neohospitalofficial?si=aDuqZU-awqibJiUB"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i class="fa-brands fa-youtube ticon"></i>
+            <svg className="ticon ddddicon youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              <path fill="#FF0000" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/>
+            </svg>
           </a>
         </div>
       </section>
-      {/* 
-      <section className="neoheader neomiddel">
-        <div className="row topbar px-2">
-          <div className="col-md-2">
-            <Link to="/">
-              <img
-                src={logo}
-                alt="Neo Hospital"
-                className="neologo"
-                srcSet=""
-              />
-            </Link>
-          </div>
-          <div className="col-md-2">
-            <div className="d-flex">
-              <div className="mx-3 hospital">
-                <i className="fa fa-phone"></i>
-              </div>
-              <p>
-                <a href="tel:0120-4880000">
-                  Emergency Call
-                  <br /> 0120-4880000 <br /> 0120-3120000
-                </a>
-              </p>
-            </div>
-          </div>
-          <div className="col-md-2">
-            <div className="d-flex">
-              <div className="mx-3 hospital">
-                <i className="fa fa-calendar-o text-warning"></i>
-              </div>
-              <p>
-                <a href="http://103.75.34.114/online_his/design/online_lab/default.aspx">
-                  View Online <br /> LAB Report
-                </a>
-              </p>
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div className="d-flex">
-              <div className="mx-3 hospital">
-                <i className="fa fa-envelope text-primary"></i>
-              </div>
-              <p>
-                <a href="mailto:info@neohospital.com">
-                  Email-id <br />
-                  info@neohospital.com
-                </a>
-              </p>
-            </div>
-          </div>
-          <div className="col-md-1">
-            <div>
-              <img
-                src={nabhlogo}
-                alt="Neo Hospital"
-                className="neologo"
-                srcSet=""
-              />
-            </div>
-          </div>
-          <div className="col-md-1">
-            <div>
-              <img
-                src={nbl}
-                alt="Neo Hospital"
-                className="neologo"
-                srcSet=""
-              />
-            </div>
-          </div> 
-          <div className="col-md-2">
-            <img src={nbl} alt="Neo Hospital" className="neologo" srcSet="" />
-          </div>
-        </div>
-      </section> */}
     </>
   );
 }
