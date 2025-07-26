@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import "./Footer.css";
-import logo from "../Assets/index/neologo.png";
+import logo from "../Assets/index/logom.png";
 import { Link } from "react-router-dom";
 import Social from "./Home/Social";
 import axios from 'axios';
@@ -15,6 +15,7 @@ function Footer() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSpecialties, setShowSpecialties] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,8 +63,10 @@ function Footer() {
       return;
     }
 
+
     try {
       const response = await axios.post('https://api.neohospital.com/api/sendmails/send-contact-email', {
+        // const response = await axios.post('http://localhost:5001/api/sendmails/send-contact-email', {
         name,
         number,
         email,
@@ -83,11 +86,12 @@ function Footer() {
     } finally {
       setIsSubmitting(false);
     }
+
   };
 
   const toggleSpecialties = () => {
     setShowSpecialties(!showSpecialties);
-    console.log("Toggle clicked, new state:", !showSpecialties);
+    console.log("Toggle clicked, new state:", !showSpecialties); // Add this for debugging
   };
 
   return (
@@ -105,7 +109,7 @@ function Footer() {
                       <h4>Find Us :</h4>
                       <span>
                         <a href="#">
-                          Neo Super Speciality Hospital D-170, 170A, 170B, Sector-50, Noida,
+                          NEO HOSPITAL D-170, 170A, 170B, Sector-50, Noida,
                           <br />
                           Gautam Buddh Nagar (U.P) 201301
                         </a>
@@ -161,7 +165,7 @@ function Footer() {
                     </div>
                     <div className="footer-text">
                       <p>
-                      Neo Super Speciality Hospital is recognized within and beyond Noida
+                        NEO Hospital is recognized within and beyond Noida
                         people as an advanced diagnostic and treatment facility,
                         staffed with highly qualified professionals.
                       </p>
@@ -169,27 +173,19 @@ function Footer() {
                     <div className="footer-social-icon">
                       <span>Follow us</span>
                       <a href="https://www.facebook.com/neohospitalinnoida">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M9.19795 21.5H13.198V13.4901H16.8021L17.198 9.50977H13.198V7.5C13.198 6.44772 14.1457 5.5 15.198 5.5H17.198V2.5H14.698C12.292 2.5 9.69795 4.18688 9.19795 6.50977V9.50977H7.19795V13.4901H9.19795V21.5Z" fill="currentColor"/>
-                        </svg>
+                        <i class="fa-brands fa-facebook"></i>
                       </a>
                       <a href="https://twitter.com/neo_hospital">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M18.244 2.25H21.552L14.837 9.951L22.705 21.75H16.025L10.872 15.123L4.991 21.75H1.681L8.891 13.566L1.5 2.25H8.281L12.952 8.241L18.244 2.25ZM17.083 19.77H18.753L7.055 4.078H5.243L17.083 19.77Z" fill="currentColor"/>
-                        </svg>
+                        <i class="fa-brands fa-twitter"></i>
                       </a>
                       <a href="https://www.instagram.com/neohospitalnoida/">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2.163C15.204 2.163 15.584 2.175 16.85 2.233C18.102 2.29 18.741 2.515 19.258 2.757C19.835 3.024 20.319 3.351 20.79 3.822C21.261 4.293 21.588 4.776 21.856 5.352C22.099 5.869 22.323 6.508 22.381 7.76C22.439 9.026 22.451 9.406 22.451 12.611C22.451 15.816 22.439 16.196 22.381 17.462C22.323 18.714 22.099 19.353 21.856 19.87C21.588 20.446 21.261 20.929 20.79 21.4C20.319 21.871 19.835 22.198 19.258 22.465C18.741 22.707 18.102 22.932 16.85 22.989C15.584 23.047 15.204 23.059 12 23.059C8.796 23.059 8.416 23.047 7.15 22.989C5.898 22.932 5.259 22.707 4.742 22.465C4.165 22.198 3.681 21.871 3.21 21.4C2.739 20.929 2.412 20.446 2.144 19.87C1.902 19.353 1.677 18.714 1.619 17.462C1.561 16.196 1.549 15.816 1.549 12.611C1.549 9.406 1.561 9.026 1.619 7.76C1.677 6.508 1.902 5.869 2.144 5.352C2.412 4.776 2.739 4.293 3.21 3.822C3.681 3.351 4.165 3.024 4.742 2.757C5.259 2.515 5.898 2.29 7.15 2.233C8.416 2.175 8.796 2.163 12 2.163ZM12 5.838C9.239 5.838 7 8.077 7 10.838C7 13.599 9.239 15.838 12 15.838C14.761 15.838 17 13.599 17 10.838C17 8.077 14.761 5.838 12 5.838ZM12 13.838C10.343 13.838 9 12.495 9 10.838C9 9.181 10.343 7.838 12 7.838C13.657 7.838 15 9.181 15 10.838C15 12.495 13.657 13.838 12 13.838ZM18.406 5.414C18.406 6.042 17.906 6.542 17.278 6.542C16.65 6.542 16.15 6.042 16.15 5.414C16.15 4.786 16.65 4.286 17.278 4.286C17.906 4.286 18.406 4.786 18.406 5.414Z" fill="currentColor"/>
-                        </svg>
+                      <i class="fa-brands fa-square-instagram"></i>
                       </a>
                       <a href="https://www.linkedin.com/company/neohospitalnoida/">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M4.98 3.5C4.98 4.328 4.328 5 3.5 5C2.672 5 2 4.328 2 3.5C2 2.672 2.672 2 3.5 2C4.328 2 4.98 2.672 4.98 3.5ZM5 7H2V22H5V7ZM12.982 7H9.758V22H12.982V14.396C12.982 10.896 16.974 10.5 16.974 14.396V22H20.198V13.188C20.198 7.596 14.486 7.792 12.982 10.992V7Z" fill="currentColor"/>
-                        </svg>
+                      <i class="fa-brands fa-linkedin"></i>
                       </a>
                       <a href="https://youtube.com/@neohospitalofficial?si=aDuqZU-awqibJiUB">
-                        <svg viewBox="0 -3 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>youtube [#168]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-300.000000, -7442.000000)" fill="#ffffff"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M251.988432,7291.58588 L251.988432,7285.97425 C253.980638,7286.91168 255.523602,7287.8172 257.348463,7288.79353 C255.843351,7289.62824 253.980638,7290.56468 251.988432,7291.58588 M263.090998,7283.18289 C262.747343,7282.73013 262.161634,7282.37809 261.538073,7282.26141 C259.705243,7281.91336 248.270974,7281.91237 246.439141,7282.26141 C245.939097,7282.35515 245.493839,7282.58153 245.111335,7282.93357 C243.49964,7284.42947 244.004664,7292.45151 244.393145,7293.75096 C244.556505,7294.31342 244.767679,7294.71931 245.033639,7294.98558 C245.376298,7295.33761 245.845463,7295.57995 246.384355,7295.68865 C247.893451,7296.0008 255.668037,7296.17532 261.506198,7295.73552 C262.044094,7295.64178 262.520231,7295.39147 262.895762,7295.02447 C264.385932,7293.53455 264.28433,7285.06174 263.090998,7283.18289" id="youtube-[#168]"> </path> </g> </g> </g> </g></svg>
+                      <i class="fa-brands fa-youtube"></i>
                       </a>
                     </div>
                   </div>
@@ -346,8 +342,9 @@ function Footer() {
                         <Link to="/">Terms</Link>
                       </li>
                       <li>
-                        <Link to="/">Privacy Privacy</Link>
+                        <Link to="/">Privacy Policy</Link>
                       </li>
+                      
                       <li>
                         <Link to="/contact">Contact</Link>
                       </li>
