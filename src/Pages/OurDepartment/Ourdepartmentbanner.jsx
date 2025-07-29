@@ -4,9 +4,9 @@ import ourspecailty from "../../Assets/Banners/ourspecialty.jpg"
 function Ourdepartmentbanner() {
   return (
     <>
-      <section>
+{/*       <section>
         <img src={ourspecailty} alt="" srcSet="" className='img-fluid'/>
-      </section>
+      </section> */}
     </>
   );
 }
