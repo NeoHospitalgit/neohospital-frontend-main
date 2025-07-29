@@ -7,7 +7,7 @@
   
   .banner-back-color {
     position: relative;
-    background: linear-gradient(to right, #1374ac, #1374ac);
+/*     background: linear-gradient(to right, #1374ac, #1374ac); */
     z-index: 99;
 }
   
