@@ -74,7 +74,7 @@ function DetailsDepartment() {
       <Helmet>{parse(departments.seo_tag)}</Helmet>
       
       {/* Hero Section */}
-      <section className="hero-section">
+{/*       <section className="hero-section">
         <div className="hero-overlay">
           <div className="container">
             <div className="hero-content">
@@ -90,7 +90,7 @@ function DetailsDepartment() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Main Content */}
       <section className="main-content">
