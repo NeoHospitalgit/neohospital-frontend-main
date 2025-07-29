@@ -6,7 +6,7 @@ function OurDepartment() {
   return (
     <>
       <Ourdepartmentbanner />
-      <Corevalue />
+{/*       <Corevalue /> */}
       <Ourdepartmentcards />
     </>
   );
