@@ -25,7 +25,7 @@ function About() {
       
       <Aboutus />
       <Chooseus />
-      <Corevalue />
+{/*       <Corevalue /> */}
     </div>
   );
 }
