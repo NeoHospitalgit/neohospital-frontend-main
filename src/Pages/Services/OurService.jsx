@@ -11,8 +11,8 @@ function OurService() {
   return (
     <>
       <Helmet>{parse(Serviceseo.meetafamily)}</Helmet>
-          <OurServicebanner />
-          <Corevalue />
+{/*           <OurServicebanner />
+          <Corevalue /> */}
           <OurServicecards/>
     </>
   );
