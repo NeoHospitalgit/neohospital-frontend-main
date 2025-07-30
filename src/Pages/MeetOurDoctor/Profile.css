@@ -8,7 +8,14 @@
   position: relative;
   overflow-x: hidden;
 }
-
+.content-grid {
+    grid-gap: 40px;
+    align-items: start;
+    display: grid
+;
+    gap: 40px;
+    grid-template-columns: 65% 1fr;
+}
 /* Floating Background Elements */
 .floating-elements {
   position: absolute;
