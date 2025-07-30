@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./Servicecard.css";
-import patientservicess from "../../Assets/Services/lb.jpg";
 
 function OurServicecards() {
   const [NeoService, setNeoService] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,8 +18,10 @@ function OurServicecards() {
         }
         const data = await response.json();
         setNeoService(data.servicescategories);
+        setLoading(false);
       } catch (error) {
         setError(error);
+        setLoading(false);
       }
     };
 
@@ -29,83 +31,110 @@ function OurServicecards() {
   const { service } = useParams();
   const Service = NeoService.find((value) => value.service_slug === service);
 
-  if (!Service) {
-    return <div>No service found</div>;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+      </div>
+    );
   }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h3>Error loading services</h3>
+        <p>Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <section className="OurServicecards container">
-        <div>
-          <h3 className="about-title">
-            <span>SCOPE OF SERVICES</span>
-          </h3>
-          <p className="about-description">
-            Neo Super Speciality Hospital places paramount importance on patient care, seamlessly
-            merging cutting-edge medical advancements with heartfelt compassion.
-            Our foundational principle is to craft an experience where every
-            patient feels supported, efficient, and valued.
-          </p>
-        </div>
-        <div className="row ">
-          <div className="col-md-3">
-            <a
-              className="card1"
+    <section className="services-section">
+      {/* Header Section */}
+      <div className="services-header">
+        <h2 className="services-title">Our Medical Services</h2>
+        <div className="title-underline"></div>
+        <p className="services-description">
+          Neo Hospital places paramount importance on patient care, seamlessly merging 
+          cutting-edge medical advancements with heartfelt compassion. Our foundational 
+          principle is to craft an experience where every patient feels supported, 
+          efficient, and valued.
+        </p>
+      </div>
+
+      {/* Services Grid */}
+      <div className="services-grid">
+        {/* Lab Report Special Card */}
+        <div className="service-card lab-report-card">
+          <div className="card-background-pattern"></div>
+          <div className="card-content">
+            <div className="card-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <h3 className="card-title">Lab Reports</h3>
+            <p className="card-description">
+              Access your laboratory test results online quickly and securely
+            </p>
+            <a 
               href="http://103.75.34.114/online_his/design/online_lab/default.aspx"
+              className="card-button"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <div className="card"></div>
-              <div>
-                <img
-                  src={patientservicess}
-                  className="img-fluid"
-                  alt="lab-report"
-                  srcSet=""
-                />
-              </div>
-              <h3>Lab Report</h3>
-              <div className="text-center">
-                <a href="http://103.75.34.114/online_his/design/online_lab/default.aspx">
-                  <button>Read More</button>
-                </a>
-              </div>
-              <div className="go-corner">
-                <div className="go-arrow">→</div>
-              </div>
+              <span>Access Now</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </a>
           </div>
-
-          {NeoService.map((value) => (
-            <div className="col-md-3">
-              <Link className="card1" to={`/service/${value.slug}`}>
-                <div key={value.id} className="card"></div>
-                {/* <img src={value.imageUrl} alt={value.title} /> */}
-                <div>
-                  <img
-                    src={`https://api.neohospital.com/uploads/Service/${value.image}`}
-                    className="img-fluid"
-                    alt={value.altImg}
-                    srcSet=""
-                  />
-                </div>
-                {/* <h3>{value.imageUrl}</h3> */}
-                <h3>{value.title}</h3>
-                {/* <p>
-                  Card description with lots of great facts and interesting
-                  details.
-                </p> */}
-                <div className="text-center">
-                  <Link to={`/service/${value.slug}`}>
-                    <button>Read More</button>
-                  </Link>
-                </div>
-                <div className="go-corner">
-                  <div className="go-arrow">→</div>
-                </div>
-              </Link>
-            </div>
-          ))}
         </div>
-      </section>
-    </>
+
+        {/* Dynamic Service Cards */}
+        {NeoService.map((value, index) => (
+          <Link 
+            key={value.id} 
+            to={`/service/${value.slug}`} 
+            className={`service-card dynamic-card card-${index + 1}`}
+          >
+            <div className="card-image-container">
+              <img
+                src={`https://api.neohospital.com/uploads/Service/${value.image}`}
+                className="card-image"
+                alt={value.altImg || value.title}
+                loading="lazy"
+              />
+              <div className="card-overlay"></div>
+            </div>
+            
+            <div className="card-content">
+              <h3 className="card-title">{value.title}</h3>
+              <p className="card-description">
+                {value.description || "Comprehensive medical care with expert healthcare professionals"}
+              </p>
+              
+              <div className="card-button">
+                <span>Learn More</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <div className="card-hover-effect"></div>
+          </Link>
+        ))}
+      </div>
+
+      {/* No Service Found Message */}
+      {!Service && service && (
+        <div className="no-service-found">
+          <h3>Service not found</h3>
+          <p>The requested service could not be found. Please check the URL or browse our available services.</p>
+        </div>
+      )}
+    </section>
   );
 }
 
