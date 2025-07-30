@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Clock, Phone, MapPin, Award, GraduationCap, Calendar, Star, CheckCircle, MessageCircle, Send, Stethoscope, Heart, Users, Shield } from "lucide-react";
-import "./profile.css";
+import "Profile.css";
 import parse from "html-react-parser";
 import axios from 'axios';
 import fallbackImage from "../../Assets/manpic.png";
