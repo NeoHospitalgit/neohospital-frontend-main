@@ -166,7 +166,7 @@ function DetailsDepartment() {
 
                 {/* Action Buttons */}
                 <div className="action-buttons">
-                  <Link to="/MeetOurDoctors" className="btn btn-secondary">
+                  <Link to="/doctors" className="btn btn-secondary">
                     <i className="fa fa-user-md"></i>
                     View Doctors
                   </Link>
