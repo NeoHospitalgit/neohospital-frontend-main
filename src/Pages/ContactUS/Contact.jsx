@@ -12,7 +12,6 @@ function Contact() {
     <>
       <Helmet>{parse(Contactseo.meetafamily)}</Helmet>
       <Contactbanner />
-      <Corevalue />
       <Contactform />
     </>
   );
