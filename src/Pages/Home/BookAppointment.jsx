@@ -16,11 +16,11 @@ function BookAppointment() {
         <div className="ba-wrapper">
           <div className="ba-video-container">
             <img 
-              src="/images/neo.jpg" 
+              src="/images/neo.png" 
               alt="Neo Hospital" 
               className="background-image"
             />
-            <div className="video-overlay"></div>
+{/*             <div className="video-overlay"></div> */}
           </div>
 
           <div className="ba-content">
