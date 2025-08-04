@@ -35,6 +35,11 @@ function DetailsDepartment() {
   const { departid } = useParams();
   const departments = Neospecial.find((value) => value.slug === departid);
 
+  // Function to handle phone call
+  const handleCallNow = () => {
+    window.location.href = "tel:0120-4880000";
+  };
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -126,7 +131,7 @@ function DetailsDepartment() {
               <div className="contact-card">
                 <h4>Need Help?</h4>
                 <p>Contact our specialists for more information</p>
-                <button className="contact-btn">
+                <button className="contact-btn" onClick={handleCallNow}>
                   <i className="fa fa-phone"></i>
                   Call Now
                 </button>
@@ -161,18 +166,10 @@ function DetailsDepartment() {
 
                 {/* Action Buttons */}
                 <div className="action-buttons">
-                  <button className="btn btn-primary">
-                    <i className="fa fa-calendar"></i>
-                    Book Appointment
-                  </button>
-                  <button className="btn btn-secondary">
+                  <Link to="/MeetOurDoctors" className="btn btn-secondary">
                     <i className="fa fa-user-md"></i>
                     View Doctors
-                  </button>
-                  <button className="btn btn-outline">
-                    <i className="fa fa-info-circle"></i>
-                    More Info
-                  </button>
+                  </Link>
                 </div>
               </div>
             </main>
