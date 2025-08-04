@@ -113,7 +113,7 @@ const Specialty = () => {
         ))}
       </div>
       <div className="view-all-services">
-        <Link to="/services">
+        <Link to="/specialities">
           <button className="view-all-services-btn">
             View All Services
           </button>
