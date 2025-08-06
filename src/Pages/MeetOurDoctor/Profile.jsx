@@ -145,7 +145,7 @@ function Profile() {
             </div>
 
             <div id="doctor-info">
-              <h1 className="doctor-name">{doctor.drTitle}</h1>
+              <h1 className="doctor-name" id="dn">{doctor.drTitle}</h1>
               
               <div className="doctor-rating">
                 {/* Rating component can be added here */}
