@@ -45,9 +45,10 @@ display: inline !important;
     font-size: 35px;
     font-weight: bold; 
     color: #000000;
+    text-align: center;
 }
 .Meetourdoctor .text-left {
-    text-align: left !important;
+    text-align: center !important;
 }
 .Meetourdoctor .about-description {
     color: #000000;
