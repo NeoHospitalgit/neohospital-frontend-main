@@ -47,7 +47,7 @@ function Profile() {
 
   if (!doctor) {
     return (
-      <div className="loading-container">
+      <div id="loading-container">
         <div className="loading-spinner"></div>
         <p>Loading doctor information...</p>
       </div>
@@ -117,11 +117,10 @@ function Profile() {
   };
 
   return (
-    <div className="profile-page">
-      {/* Header Section */}
-      <header className="profile-header">
+    <div id="profile-page">
+      <header id="profile-header">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb">
+          <nav id="breadcrumb" aria-label="Breadcrumb">
             <span>Home</span>
             <span className="separator">→</span>
             <span>Doctors</span>
@@ -129,9 +128,8 @@ function Profile() {
             <span className="current">{doctor.drTitle}</span>
           </nav>
           
-          <div className="header-content">
-            {/* Doctor Photo - Left Side */}
-            <div className="doctor-photo-container">
+          <div id="header-content">
+            <div id="doctor-photo-container">
               <div className="doctor-photo">
                 {doctor.drImage ? (
                   <img 
@@ -146,15 +144,14 @@ function Profile() {
               </div>
             </div>
 
-            {/* Doctor Info - Right Side */}
-            <div className="doctor-info">
+            <div id="doctor-info">
               <h1 className="doctor-name">{doctor.drTitle}</h1>
               
               <div className="doctor-rating">
-                
+                {/* Rating component can be added here */}
               </div>
               
-              <div className="doctor-details">
+              <div id="doctor-details">
                 <div className="detail-item">
                   <span className="icon">🎓</span>
                   <span>{doctor.drQualification}</span>
@@ -163,7 +160,6 @@ function Profile() {
                   <span className="icon">🏆</span>
                   <span>{doctor.drDepartment}</span>
                 </div>
-                
                 <div className="detail-item">
                   <span className="icon">📍</span>
                   <span>Neo Super-Speciality Hospital</span>
@@ -174,12 +170,10 @@ function Profile() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container main-content">
-      <div className="content-grid" style={{ gridTemplateColumns: '60% 1fr' }}>
-          {/* Doctor Details - Left Side */}
-          <section className="doctor-content">
-            <div className="about-section">
+      <main id="main-content" className="container">
+        <div id="content-grid">
+          <section id="doctor-content">
+            <div id="about-section">
               <h2 className="section-title">
                 <span className="icon">🏆</span>
                 About {doctor.drTitle.split('.')[1]?.trim() || doctor.drTitle}
@@ -188,37 +182,20 @@ function Profile() {
                 {parse(doctor.drDetail)}
               </div>
             </div>
-
-            <div className="info-cards">
-              <div className="info-card">
-                <h3 className="card-title">
-                  <span className="icon">🎓</span>
-                  Education & Qualifications
-                </h3>
-                <div className="card-content">
-                  <div className="qualification-item">• {doctor.drQualification}</div>
-                  <div className="qualification-item">• Specialized Training in {doctor.drDepartment}</div>
-                 
-                </div>
-              </div>
-
-              
-            </div>
           </section>
 
-          {/* Appointment Form - Right Side */}
-          <aside className="appointment-sidebar">
-            <div className="appointment-card">
+          <aside id="appointment-sidebar">
+            <div id="appointment-card">
               <h3 className="appointment-title">
                 <span className="icon">📅</span>
                 Book Appointment
               </h3>
               
-              <div className="appointment-note">
+              <div id="appointment-note">
                 <p><strong>Note:</strong> Your appointment will be confirmed within 24 hours after a callback from our team.</p>
               </div>
 
-              <div className="appointment-form">
+              <div id="appointment-form">
                 <div className="form-group">
                   <label className="form-label" htmlFor="full-name">Full Name</label>
                   <input
@@ -291,15 +268,15 @@ function Profile() {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label" htmlFor="message">Additional Message (Optional)</label>
-                  <textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Any specific concerns or requirements..."
-                    rows={3}
-                    className="form-textarea"
-                  />
+                  <label className="form-label" htmlFor="message">Additional Message (Optional)</ label>
+                    <textarea
+                      id="message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Any specific concerns or requirements..."
+                      rows={3}
+                      className="form-textarea"
+                    />
                 </div>
 
                 <button
@@ -322,7 +299,7 @@ function Profile() {
                 </button>
               </div>
 
-              <div className="contact-info">
+              <div id="contact-info">
                 <div className="contact-item">
                   <span className="icon">📞</span>
                   <span>+91 926 888 0303</span>
