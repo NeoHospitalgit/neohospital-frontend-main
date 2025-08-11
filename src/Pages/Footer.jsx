@@ -166,46 +166,37 @@ function Footer() {
                         staffed with highly qualified professionals.
                       </p>
                     </div>
-                   <div className="footer-social-icon">
-  <span>Follow us</span>
-  <div className="social-icons">
-    {/* Facebook */}
-    <a href="https://facebook.com/neohospitalinnoida" target="_blank" rel="noreferrer">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M22 12c0-5.522-4.478-10-10-10S2 6.478 2 12c0 5.006 3.657 9.128 8.438 9.878v-6.988H7.898v-2.89h2.54V9.845c0-2.506 1.493-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.772-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 17.006 22 12z"/>
-      </svg>
-    </a>
-
-    {/* X (Twitter New Logo) */}
-    <a href="https://twitter.com/neo_hospital" target="_blank" rel="noreferrer">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M17.21 2H20.5l-7.42 8.48L21.96 22h-6.03l-4.72-5.53L5.82 22H2.5l7.92-9.05L2.04 2h6.14l4.27 4.99L17.21 2zm-1.06 17h1.66L7.93 4.87H6.14l10.01 14.13z"/>
-      </svg>
-    </a>
-
-    {/* Instagram */}
-    <a href="https://instagram.com/neohospitalnoida" target="_blank" rel="noreferrer">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4.5-2.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
-      </svg>
-    </a>
-
-    {/* LinkedIn */}
-    <a href="https://linkedin.com/company/neohospitalnoida" target="_blank" rel="noreferrer">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 24h5V7H0v17zM7 7v17h5v-9.4c0-2.9 3-3.1 3 0V24h5V13.4c0-6.1-6.5-5.9-8-2.9V7H7z"/>
-      </svg>
-    </a>
-
-    {/* YouTube */}
-    <a href="https://youtube.com/@neohospitalofficial?si=aDuqZU-awqibJiUB" target="_blank" rel="noreferrer">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M23.5 6.2s-.2-1.6-.8-2.3c-.8-.8-1.7-.8-2.1-.9C17.4 2.5 12 2.5 12 2.5h-.1s-5.4 0-8.6.5c-.4 0-1.3.1-2.1.9C.7 4.6.5 6.2.5 6.2S0 8.1 0 10v4c0 1.9.5 3.8.5 3.8s.2 1.6.8 2.3c.8.8 1.8.8 2.2.9 1.6.2 6.5.5 8.5.5s6.9-.1 8.6-.5c.4 0 1.3-.1 2.1-.9.6-.6.8-2.3.8-2.3s.5-1.9.5-3.8v-4c0-1.9-.5-3.8-.5-3.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
-      </svg>
-    </a>
-  </div>
-</div>
-
+                    <div className="footer-social-icon">
+                      <span>Follow us</span>
+                      <a href="https://www.facebook.com/neohospitalinnoida">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.19795 21.5H13.198V13.4901H16.8021L17.1979 9.50977H13.198V7.5C13.198 6.79746 13.9985 6 15.1979 6H17.1979V2.5H14.6979C12.7972 2.5 9.19795 3.79731 9.19795 6.5V9.50977H7.19795L6.80214 13.4901H9.19795V21.5Z" fill="currentColor"/>
+                        </svg>
+                      </a>
+                      <a href="https://x.com/neo_hospital">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M18.901 2.48H21.581L14.801 10.48L22.781 21.48H17.421L12.441 14.98L6.781 21.48H4.101L11.341 12.98L3.781 2.48H9.281L13.781 8.48L18.901 2.48ZM18.101 19.48H20.101L8.101 4.48H6.101L18.101 19.48Z" fill="currentColor"/>
+                        </svg>
+                      </a>
+                      <a href="https://www.instagram.com/neohospitalnoida/">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill="currentColor"/>
+                          <path d="M17.5 2.5H6.5C4.29086 2.5 2.5 4.29086 2.5 6.5V17.5C2.5 19.7091 4.29086 21.5 6.5 21.5H17.5C19.7091 21.5 21.5 19.7091 21.5 17.5V6.5C21.5 4.29086 19.7091 2.5 17.5 2.5ZM12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM18.5 7C17.6716 7 17 6.32843 17 5.5C17 4.67157 17.6716 4 18.5 4C19.3284 4 20 4.67157 20 5.5C20 6.32843 19.3284 7 18.5 7Z" fill="currentColor"/>
+                        </svg>
+                      </a>
+                      <a href="https://www.linkedin.com/company/neohospitalnoida/">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3ZM8 17H6V10H8V17ZM7 8.5C6.17157 8.5 5.5 7.82843 5.5 7C5.5 6.17157 6.17157 5.5 7 5.5C7.82843 5.5 8.5 6.17157 8.5 7C8.5 7.82843 7.82843 8.5 7 8.5ZM18 17H16V13C16 12.4477 15.5523 12 15 12C14.4477 12 14 12.4477 14 13V17H12V10H14V11.5C14.6321 10.6739 15.5523 10 16.5 10C18.433 10 18 11.567 18 13V17Z" fill="currentColor"/>
+                        </svg>
+                      </a>
+                      <a href="https://youtube.com/@neohospitalofficial?si=aDuqZU-awqibJiUB">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M21.5 6.5C21.5 5.39543 20.6046 4.5 19.5 4.5H4.5C3.39543 4.5 2.5 5.39543 2.5 6.5V17.5C2.5 18.6046 3.39543 19.5 4.5 19.5H19.5C20.6046 19.5 21.5 18.6046 21.5 17.5V6.5ZM10 15.5V8.5L15 12L10 15.5Z" fill="currentColor"/>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="col-xl-2 col-lg-2 col-md-6">
                   <div>
