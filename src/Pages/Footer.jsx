@@ -16,7 +16,6 @@ function Footer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSpecialties, setShowSpecialties] = useState(false);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -63,10 +62,8 @@ function Footer() {
       return;
     }
 
-
     try {
       const response = await axios.post('https://api.neohospital.com/api/sendmails/send-contact-email', {
-        // const response = await axios.post('http://localhost:5001/api/sendmails/send-contact-email', {
         name,
         number,
         email,
@@ -86,12 +83,11 @@ function Footer() {
     } finally {
       setIsSubmitting(false);
     }
-
   };
 
   const toggleSpecialties = () => {
     setShowSpecialties(!showSpecialties);
-    console.log("Toggle clicked, new state:", !showSpecialties); // Add this for debugging
+    console.log("Toggle clicked, new state:", !showSpecialties);
   };
 
   return (
@@ -118,7 +114,7 @@ function Footer() {
                   </div>
                 </div>
 
-                <div className="col-md-6 ">
+                <div className="col-md-6">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.997586581386!2d77.3675414745703!3d28.56983518692671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce58cda3bc64d%3A0x2e9995b44137c369!2sNEO%20Hospital!5e0!3m2!1sen!2sin!4v1709726316429!5m2!1sen!2sin"
                     width="100%"
@@ -173,19 +169,30 @@ function Footer() {
                     <div className="footer-social-icon">
                       <span>Follow us</span>
                       <a href="https://www.facebook.com/neohospitalinnoida">
-                        <i class="fa-brands fa-facebook"></i>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.19795 21.5H13.198V13.4901H16.8021L17.1979 9.50977H13.198V7.5C13.198 6.79746 13.9985 6 15.1979 6H17.1979V2.5H14.6979C12.7972 2.5 9.19795 3.79731 9.19795 6.5V9.50977H7.19795L6.80214 13.4901H9.19795V21.5Z" fill="currentColor"/>
+                        </svg>
                       </a>
                       <a href="https://twitter.com/neo_hospital">
-                        <i class="fa-brands fa-twitter"></i>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M22 4.01001C21 4.50001 20.02 4.69901 19 4.90001C19.02 3.90001 18.62 2.90001 17.8 2.20001C15.9 0.600013 13.1 0.200012 10.8 1.20001C8.5 2.20001 7 4.10001 6.6 6.30001C4.3 6.10001 2.1 5.20001 0.5 3.50001C0.5 3.50001 -0.5 7.00001 2 9.00001C1.3 8.99001 0.7 8.80001 0 8.50001C0 8.50001 0 8.60001 0 8.80001C0 11.2 1.6 13.3 4 14.3C3.4 14.5 2.7 14.6 2 14.5C2.7 16.6 4.7 18.3 7.1 18.7C5.1 20.2 2.7 21 0 20.9C2.4 22.4 5.2 23 8 22.9C15.8 22.9 20.2 15.8 20 8.90001C21 8.40001 21.9 7.70001 22 6.90001C21.1 7.40001 20.1 7.71001 19 7.90001" fill="currentColor"/>
+                        </svg>
                       </a>
                       <a href="https://www.instagram.com/neohospitalnoida/">
-                      <i class="fa-brands fa-square-instagram"></i>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill="currentColor"/>
+                          <path d="M17.5 2.5H6.5C4.29086 2.5 2.5 4.29086 2.5 6.5V17.5C2.5 19.7091 4.29086 21.5 6.5 21.5H17.5C19.7091 21.5 21.5 19.7091 21.5 17.5V6.5C21.5 4.29086 19.7091 2.5 17.5 2.5ZM12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM18.5 7C17.6716 7 17 6.32843 17 5.5C17 4.67157 17.6716 4 18.5 4C19.3284 4 20 4.67157 20 5.5C20 6.32843 19.3284 7 18.5 7Z" fill="currentColor"/>
+                        </svg>
                       </a>
                       <a href="https://www.linkedin.com/company/neohospitalnoida/">
-                      <i class="fa-brands fa-linkedin"></i>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3ZM8 17H6V10H8V17ZM7 8.5C6.17157 8.5 5.5 7.82843 5.5 7C5.5 6.17157 6.17157 5.5 7 5.5C7.82843 5.5 8.5 6.17157 8.5 7C8.5 7.82843 7.82843 8.5 7 8.5ZM18 17H16V13C16 12.4477 15.5523 12 15 12C14.4477 12 14 12.4477 14 13V17H12V10H14V11.5C14.6321 10.6739 15.5523 10 16.5 10C18.433 10 18 11.567 18 13V17Z" fill="currentColor"/>
+                        </svg>
                       </a>
                       <a href="https://youtube.com/@neohospitalofficial?si=aDuqZU-awqibJiUB">
-                      <i class="fa-brands fa-youtube"></i>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M21.5 6.5C21.5 5.39543 20.6046 4.5 19.5 4.5H4.5C3.39543 4.5 2.5 5.39543 2.5 6.5V17.5C2.5 18.6046 3.39543 19.5 4.5 19.5H19.5C20.6046 19.5 21.5 18.6046 21.5 17.5V6.5ZM10 15.5V8.5L15 12L10 15.5Z" fill="currentColor"/>
+                        </svg>
                       </a>
                     </div>
                   </div>
@@ -238,13 +245,13 @@ function Footer() {
                         here to help you with everything.
                       </p>
                       <div>
-                        <div className="single-cta ">
+                        <div className="single-cta">
                           <i className="fa fa-phone"></i>
                           <a className="fss" href="tel:0120-4880000">
                             0120-4880000
                           </a>
                         </div>
-                        <div className="single-cta ">
+                        <div className="single-cta">
                           <i className="fa fa-phone"></i>
                           <a className="fss" href="tel:0120-3120000">
                             0120-3120000
@@ -323,7 +330,7 @@ function Footer() {
                 </div>
               </div>
             </div>
-          </div >
+          </div>
           <div className="copyright-area">
             <div className="container">
               <div className="row">
@@ -344,7 +351,6 @@ function Footer() {
                       <li>
                         <Link to="/">Privacy Policy</Link>
                       </li>
-                      
                       <li>
                         <Link to="/contact">Contact</Link>
                       </li>
@@ -354,8 +360,8 @@ function Footer() {
               </div>
             </div>
           </div>
-        </footer >
-      </div >
+        </footer>
+      </div>
     </>
   );
 }
