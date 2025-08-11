@@ -55,7 +55,7 @@ function OurServicecards() {
         <h2 className="services-title">Our Medical Services</h2>
         <div className="title-underline"></div>
         <p className="services-description">
-          Neo Hospital places paramount importance on patient care, seamlessly merging 
+           Neo Super Speciality Hospital places paramount importance on patient care, seamlessly merging 
           cutting-edge medical advancements with heartfelt compassion. Our foundational 
           principle is to craft an experience where every patient feels supported, 
           efficient, and valued.
