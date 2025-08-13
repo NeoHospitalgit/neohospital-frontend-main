@@ -17,7 +17,7 @@ const Chooseus = () => {
       <section className="chooseus container">
         <div>
           <h3 className="about-title">
-            <span>Why Choose Super Speciality Hospital</span>
+            <span>Why Choose Neo Super Speciality Hospital</span>
           </h3>
           <p className="about-description">
             Choosing Neo Hospital means choosing a healthcare provider dedicated
