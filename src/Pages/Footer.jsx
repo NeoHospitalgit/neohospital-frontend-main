@@ -161,7 +161,7 @@ function Footer() {
                     </div>
                     <div className="footer-text">
                       <p>
-                        NEO Hospital is recognized within and beyond Noida
+                        NEO Super Speciality Hospital is recognized within and beyond Noida
                         people as an advanced diagnostic and treatment facility,
                         staffed with highly qualified professionals.
                       </p>
