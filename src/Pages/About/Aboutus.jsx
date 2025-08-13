@@ -38,7 +38,7 @@ At Neo Super Specialty Hospital, we’re not just treating patients—we’re bu
                   <div className="col-md-6">
                     <h4>Vision</h4>
                     <p className="about-description">
-                      Our vision at Neo Hospital is to redefine healthcare by
+                      Our vision at Neo Super Speciality Hospital is to redefine healthcare by
                       setting new standards in clinical excellence, patient
                       satisfaction, and community engagement. We aspire to
                       create an ecosystem where healthcare is not just a
