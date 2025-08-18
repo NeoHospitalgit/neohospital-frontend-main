@@ -20,7 +20,7 @@ const Chooseus = () => {
             <span>Why Choose Neo Super Speciality Hospital</span>
           </h3>
           <p className="about-description">
-            Choosing Neo Hospital means choosing a healthcare provider dedicated
+            Choosing Neo Super Speciality Hospital means choosing a healthcare provider dedicated
             to accuracy, expertise, and patient well-being, promising a superior
             standard of healthcare for individuals and communities.
           </p>
@@ -71,7 +71,7 @@ const Chooseus = () => {
                 <>
                   <section className="choosecontent">
                     <p className="about-description">
-                      Neo Hospital is committed to delivering a high-quality lab
+                      Neo Super Speciality Hospital is committed to delivering a high-quality lab
                       experience by integrating state-of-the-art technology into
                       its facilities. Equipped with cutting-edge diagnostic
                       tools, the modern labs empower medical professionals to
@@ -91,7 +91,7 @@ const Chooseus = () => {
                 <>
                   <section className="choosecontent">
                     <p className="about-description">
-                      Neo Hospital stands as a beacon of Unmatched Expertise in
+                      Neo Super Speciality Hospital stands as a beacon of Unmatched Expertise in
                       healthcare, housing a team of highly skilled and
                       experienced medical professionals across diverse
                       specialties. <br />
@@ -109,7 +109,7 @@ const Chooseus = () => {
                 <>
                   <section className="choosecontent">
                     <p className="about-description">
-                      Neo Hospital prioritizes Precise Results, emphasizing
+                      Neo Super Speciality Hospital prioritizes Precise Results, emphasizing
                       accuracy in diagnostic outcomes. This commitment is
                       pivotal in understanding patients' health conditions with
                       precision and facilitating informed treatment decisions.
