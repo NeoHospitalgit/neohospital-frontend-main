@@ -1,16 +1,55 @@
 import React from "react";
+import "./Complaints.css";
 
 function Complaints() {
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // In a real application, you would send this data to your server
+    console.log('Form submitted:', formData);
+    
+    // Show success message
+    alert(`Thank you ${formData.name}, your complaint has been submitted.`);
+    
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: ''
+    });
+  };
+
   return (
     <div className="complaints-container">
       <h2>Grievance Redressal & Data Privacy Compliance Statement</h2>
+      
       <p>
         At NEO Super Speciality Hospital, we prioritize patient safety, data
         privacy, and ethical healthcare practices. We hereby confirm that the
         Company and its Subsidiary have complied with the following requirements
         under the Information Technology Act, 2000 and associated rules:
       </p>
+      
       <hr />
+      
       <h3>(a) Implementation of a Privacy Policy</h3>
       <p>
         We have implemented a comprehensive Privacy Policy in accordance with the
@@ -28,7 +67,9 @@ function Complaints() {
           [Insert Website Link]
         </a>
       </p>
+      
       <hr />
+      
       <h3>(b) Consent Mechanism for Data Collection</h3>
       <p>
         A formal mechanism is in place to obtain prior consent from all
@@ -41,13 +82,16 @@ function Complaints() {
         <li>Sharing information with third parties (insurance, labs, etc.)</li>
         <li>Any data retention for administrative or legal purposes</li>
       </ul>
+      
       <hr />
+      
       <h3>(c) Appointment of a Grievance Officer & Online Publication</h3>
       <p>
         We have appointed a dedicated Grievance Officer, whose name and contact
         details are published on our official website and are also provided
         below for your reference.
       </p>
+      
       <h4>Grievance Officer Details</h4>
       <ul>
         <li>Name: Dr. Sachin Arora</li>
@@ -64,7 +108,9 @@ function Complaints() {
           Buddha Nagar, Uttar Pradesh – 201301
         </li>
       </ul>
+      
       <hr />
+      
       <h3>How to Raise a Grievance</h3>
       <ul>
         <li>
@@ -77,7 +123,9 @@ function Complaints() {
           Officer
         </li>
       </ul>
+      
       <hr />
+      
       <h3>Grievance Redressal Process</h3>
       <ol>
         <li>Acknowledgement – Within 48 working hours</li>
@@ -88,7 +136,9 @@ function Complaints() {
           hospital management
         </li>
       </ol>
+      
       <hr />
+      
       <h3>Our Commitment</h3>
       <ul>
         <li>
@@ -98,7 +148,74 @@ function Complaints() {
         <li>Following all applicable Indian laws and medical ethics</li>
         <li>Using patient feedback to improve our services continuously</li>
       </ul>
+      
       <p>Your trust and safety are our top priority.</p>
+      
+      {/* Complaint Form Section */}
+      <div className="complaint-form">
+        <h3>Submit Your Complaint</h3>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Full Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="phone">Phone:</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="subject">Subject:</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="message">Description:</label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
+          </div>
+          
+          <button type="submit">Submit Complaint</button>
+        </form>
+      </div>
     </div>
   );
 }
