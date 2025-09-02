@@ -21,7 +21,7 @@ import Service from "./Pages/Services/OurService.jsx";
 import ServiceDetails from "./Pages/Services/servicedetails.jsx";
 import BlogDetails from "./Pages/OurBlog/BlogDetails.jsx";
 import Sitemap from "./Pages/sitemap";
-import Complaints from "./Pages/Complaints.jsx;
+import Complaints from "./Pages/Complaints.jsx";
 
 // manage page routes
 import Login from "./Pages/manage/Login.jsx";
