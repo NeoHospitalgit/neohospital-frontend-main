@@ -229,6 +229,9 @@ function Footer() {
                         <li>
                           <Link to="/career">Career</Link>
                         </li>
+                        <li>
+                          <Link to="/Complaints">Complaints</Link>
+                        </li>
                       </ul>
                     </div>
                   </div>
