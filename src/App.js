@@ -21,7 +21,7 @@ import Service from "./Pages/Services/OurService.jsx";
 import ServiceDetails from "./Pages/Services/servicedetails.jsx";
 import BlogDetails from "./Pages/OurBlog/BlogDetails.jsx";
 import Sitemap from "./Pages/sitemap";
-import Complaints from "./Pages/Complaints.jsx";
+import CorporatePolicies from "./Pages/Corporate/CorporatePolicies.jsx";
 
 // manage page routes
 import Login from "./Pages/manage/Login.jsx";
@@ -97,12 +97,8 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<OurBlog />} />
           <Route path="/services" element={<Service />} />
+          <Route path="/corporate-policies" element={<CorporatePolicies />} />
           <Route path="service/:service" element={<ServiceDetails />} />
-              <Route path="/Complaints" element={<Complaints />} />
-          <Route
-            path="service/:service/:servicedetail"
-            element={<ServiceDetails />}
-          />
           <Route
             path="/international-patient"
             element={<InternationPatient />}

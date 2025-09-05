@@ -71,6 +71,11 @@ function Header() {
               Blogs
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/corporate-policies">
+              Corporate Policies
+            </Link>
+          </li>
           {/* 
           {isLoggedIn ? (
             <>
