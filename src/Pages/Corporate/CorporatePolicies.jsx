@@ -5,7 +5,7 @@ function CorporatePolicies() {
   const policies = [
     {
       id: 1,
-      title: "Quality Policy",
+      title: "CORPORATE SOCIAL RESPONSIBILITY POLICY",
       description: "Our commitment to maintaining the highest standards of healthcare",
       pdfUrl: "/pdfs/corporate.pdf"
     }
