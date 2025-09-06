@@ -7,19 +7,7 @@ function CorporatePolicies() {
       id: 1,
       title: "Quality Policy",
       description: "Our commitment to maintaining the highest standards of healthcare",
-      pdfUrl: "/pdfs/quality-policy.pdf"
-    },
-    {
-      id: 2,
-      title: "Patient Safety Policy",
-      description: "Guidelines ensuring patient safety and well-being",
-      pdfUrl: "/pdfs/patient-safety-policy.pdf"
-    },
-    {
-      id: 3,
-      title: "Privacy Policy",
-      description: "How we protect and handle patient information",
-      pdfUrl: "/pdfs/privacy-policy.pdf"
+      pdfUrl: "/pdfs/corporate.pdf"
     }
     // Add more policies as needed
   ];
