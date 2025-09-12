@@ -104,7 +104,7 @@
 .doctor-info {
   padding: 1.5rem;
   position: relative;
-  background: linear-gradient(to bottom, transparent, white 20%);
+  /* background: linear-gradient(to bottom, transparent, white 20%); */
   margin-top: -60px;
 }
 
