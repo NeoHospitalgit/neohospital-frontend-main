@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "./DetailsDepartment.css";
+import Header from "../Header";
+import Footer from "../Footer";
 
 function DetailsDepartment() {
   const [Neospecial, setNeospecial] = useState([]);
@@ -76,27 +78,9 @@ function DetailsDepartment() {
 
   return (
     <>
+      <Header /> {/* Place Header at the very top */}
       <Helmet>{parse(departments.seo_tag)}</Helmet>
       
-      {/* Hero Section */}
-{/*       <section className="hero-section">
-        <div className="hero-overlay">
-          <div className="container">
-            <div className="hero-content">
-              <nav className="breadcrumb">
-                <Link to="/">Home</Link>
-                <span>/</span>
-                <Link to="/departments">Departments</Link>
-                <span>/</span>
-                <span>{departments.title}</span>
-              </nav>
-              <h1 className="hero-title">{departments.title}</h1>
-              <p className="hero-subtitle">Expert care with cutting-edge technology</p>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
       {/* Main Content */}
       <section className="main-content">
         <div className="container">
@@ -176,9 +160,8 @@ function DetailsDepartment() {
           </div>
         </div>
       </section>
-
-      {/* Quick Stats Section */}
-   
+      {/* Quick Stats Section (if any) */}
+      <Footer /> {/* Place Footer at the very bottom */}
     </>
   );
 }
