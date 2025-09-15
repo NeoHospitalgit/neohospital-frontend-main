@@ -260,7 +260,7 @@ function Profile() {
 
       <main className="main-content">
         <div className="container">
-          <div className="content-grid">
+          <div className="content-gridd">
             <section className="doctor-content">
               <div className="about-section">
                 <h2 className="section-title">
@@ -269,7 +269,7 @@ function Profile() {
                       <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z"/>
                     </svg>
                   </div>
-                  About Dr. {getDoctorDisplayName()}
+                  About  {getDoctorDisplayName()}
                 </h2>
                 <div className="about-text">
                   {parse(doctor.drDetail)}
