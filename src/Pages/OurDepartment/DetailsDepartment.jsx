@@ -178,48 +178,7 @@ function DetailsDepartment() {
       </section>
 
       {/* Quick Stats Section */}
-      <section className="stats-section">
-        <div className="container">
-          <div className="stats-grid">
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fa fa-users"></i>
-              </div>
-              <div className="stat-content">
-                <h3>1000+</h3>
-                <p>Patients Treated</p>
-              </div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fa fa-trophy"></i>
-              </div>
-              <div className="stat-content">
-                <h3>15+</h3>
-                <p>Years Experience</p>
-              </div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fa fa-star"></i>
-              </div>
-              <div className="stat-content">
-                <h3>4.9/5</h3>
-                <p>Patient Rating</p>
-              </div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fa fa-clock-o"></i>
-              </div>
-              <div className="stat-content">
-                <h3>24/7</h3>
-                <p>Emergency Care</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+   
     </>
   );
 }
