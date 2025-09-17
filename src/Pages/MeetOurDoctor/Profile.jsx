@@ -172,91 +172,34 @@ function Profile() {
         </div>
       )}
 
-      <header className="profile-header">
+      <div className="doctor-profile-header">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb">
-            <span>Home</span>
-            <span className="separator">→</span>
-            <span>Doctors</span>
-            <span className="separator">→</span>
-            <span className="current">{getDoctorDisplayName()}</span>
-          </nav>
-          
-          <div className="header-content">
-            <div className="doctor-photo-container">
-              <div className="doctor-photo">
-                {doctor.drImage ? (
-                  <img 
-                    src={`https://api.neohospital.com/uploads/doctors/${doctor.drImage}`} 
-                    alt={`Dr. ${getDoctorDisplayName()}`} 
-                    loading="lazy"
-                  />
-                ) : (
-                  <img src={fallbackImage} alt="Doctor" loading="lazy" />
-                )}
-                <div className="availability-badge">
-                  <div className="status-indicator"></div>
-                  Available Today
-                </div>
-              </div>
+          <div className="doctor-header-grid">
+            <div className="doctor-image-container">
+              <img 
+                src={`https://api.neohospital.com/uploads/doctors/${doctor.drImage}`}
+                alt={doctor.drTitle}
+                onError={(e) => e.target.src = fallbackImage}
+                loading="lazy"
+              />
             </div>
-
-            <div className="doctor-info">
-              <div className="doctor-header">
-                <h1 className="doctor-name">{doctor.drTitle}</h1>
-                <div className="verified-badge">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z"/>
-                  </svg>
-                  Verified Doctor
-                </div>
-              </div>
-              
+            <div className="doctor-info-container">
+              <h1>{doctor.drTitle}</h1>
+              <p className="specialty">{doctor.drDepartment}</p>
               <div className="qualifications">
                 {formatQualification(doctor.drQualification)}
               </div>
-              
-              <div className="doctor-details">
-                <div className="detail-item">
-                  <div className="detail-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2L15.09 8.26L22 9L16 14.74L17.18 21.02L12 18L6.82 21.02L8 14.74L2 9L8.91 8.26L12 2Z"/>
-                    </svg>
-                  </div>
-                  <div className="detail-content">
-                    <span className="detail-label">Specialization</span>
-                    <span className="detail-value">{doctor.drDepartment}</span>
-                  </div>
-                </div>
-                
-                <div className="detail-item">
-                  <div className="detail-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2Z"/>
-                    </svg>
-                  </div>
-                  <div className="detail-content">
-                    <span className="detail-label">Location</span>
-                    <span className="detail-value">Neo Super-Speciality Hospital</span>
-                  </div>
-                </div>
-                
-                <div className="detail-item">
-                  <div className="detail-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z"/>
-                    </svg>
-                  </div>
-                  <div className="detail-content">
-                    <span className="detail-label">Experience</span>
-                    <span className="detail-value">10+ Years</span>
-                  </div>
-                </div>
-              </div>
+              <p className="experience">{doctor.drExperience}10+ years experience</p>
+              <button 
+                className="book-appointment-btn"
+                onClick={() => document.getElementById('appointmentForm').scrollIntoView({ behavior: 'smooth' })}
+              >
+                Book Appointment
+              </button>
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
       <main className="main-content">
         <div className="container">
@@ -300,7 +243,7 @@ function Profile() {
                   </div>
                 </div>
 
-                <form className="appointment-form" onSubmit={sendEmail}>
+                <form className="appointment-form" onSubmit={sendEmail} id="appointmentForm">
                   <div className="form-group">
                     <label className="form-label" htmlFor="full-name">
                      <span className="required"></span>
