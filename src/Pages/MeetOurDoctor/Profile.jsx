@@ -190,7 +190,17 @@ function Profile() {
               <div className="qualifications">
                 {formatQualification(doctor.drQualification)}
               </div>
-              <p className="experience">{doctor.drExperience} 10+ years experience</p>
+              <p className="experience">{doctor.drExperience}10+ years experience</p>
+              {/* Add the appointment button here */}
+              <button 
+                className="hero-appointment-btn"
+                onClick={() => setShowAppointmentForm(true)}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z"/>
+                </svg>
+                Book Appointment
+              </button>
             </div>
           </div>
         </div>
@@ -217,17 +227,6 @@ function Profile() {
           </div>
         </div>
       </main>
-
-      {/* Fixed Book Appointment Button */}
-      <button 
-        className="fixed-appointment-btn"
-        onClick={() => setShowAppointmentForm(true)}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z"/>
-        </svg>
-        Book Appointment
-      </button>
 
       {/* Appointment Form Modal */}
       {showAppointmentForm && (
