@@ -934,7 +934,7 @@ span.data-start::after {
     text-align: center;
   }
 
-  .contact-info {
+  .contact-infoo {
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -1060,6 +1060,18 @@ span.data-start::after {
 
 .about-section h2 {
         font-size: 20px;
+        background: #0074ac;
+        padding: 11px;
+        color: white;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+        box-shadow: 5px 5px 5px grey;
+    }
+
+
+    .about-text h3{
+       font-size: 20px;
         background: #0074ac;
         padding: 11px;
         color: white;

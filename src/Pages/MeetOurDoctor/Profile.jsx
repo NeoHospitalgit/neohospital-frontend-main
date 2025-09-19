@@ -377,7 +377,7 @@ function Profile() {
                 </button>
               </form>
 
-              <div className="contact-info">
+              <div className="contact-infoo">
                 <div className="contact-item">
                   <div className="contact-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -386,7 +386,9 @@ function Profile() {
                   </div>
                   <div>
                     <div className="contact-label">Emergency Contact</div>
-                    <div className="contact-value">+91 926 888 0303</div>
+                    <div className="contact-value">0120-4880000</div>
+                    <div className="contact-value">
+                       <div className="contact-value">0120-4880000</div></div>
                   </div>
                 </div>
                 <div className="availability-badge small">
