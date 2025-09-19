@@ -319,7 +319,7 @@ function Profile() {
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="preferred-time">
-                      <span className="required">*</span>
+                      <span className="required"></span>
                     </label>
                     <select
                       id="preferred-time"
