@@ -269,7 +269,6 @@ function Profile() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="form-input"
-                    placeholder="Enter your full name"
                     aria-required="true"
                   />
                 </div>
@@ -284,7 +283,6 @@ function Profile() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="form-input"
-                    placeholder="your.email@example.com"
                     aria-required="true"
                   />
                 </div>
@@ -299,7 +297,6 @@ function Profile() {
                     value={number}
                     onChange={(e) => setNumber(e.target.value)}
                     className="form-input"
-                    placeholder="9876543210"
                     aria-required="true"
                   />
                 </div>
@@ -322,7 +319,7 @@ function Profile() {
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="preferred-time">
-                      Preferred Time <span className="required">*</span>
+                      <span className="required">*</span>
                     </label>
                     <select
                       id="preferred-time"
@@ -346,7 +343,7 @@ function Profile() {
 
                 <div className="form-group">
                   <label className="form-label" htmlFor="message">
-                    Additional Message
+                  
                   </label>
                   <textarea
                     id="message"

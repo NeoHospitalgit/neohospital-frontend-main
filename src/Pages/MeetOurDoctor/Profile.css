@@ -136,7 +136,7 @@
 }
 
 .doctor-profile-header {
-  background: linear-gradient(135deg, #0082C8 0%, #005A8D 100%);
+  background: #e1f6f5;
   color: white;
   width: 100%;
   padding: 3rem 0;
@@ -232,15 +232,16 @@
 }
 
 .doctor-info-container h1 {
-  font-size: 2.8rem;
-  color: white;
-  margin-bottom: 1rem;
-  font-weight: 600;
+    font-size: 2.8rem;
+    color: #0082c8;
+    margin-bottom: 1rem;
+    font-family: 'Inter';
+    font-weight: 600;
 }
 
 .doctor-info-container .specialty {
   font-size: 1.4rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: black;
   margin-bottom: 1.5rem;
 }
 
@@ -256,13 +257,13 @@
   padding: 0.5rem 1rem;
   border-radius: 50px;
   font-size: 0.95rem;
-  color: white;
+  color: black;
   backdrop-filter: blur(5px);
 }
 
 .experience {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(43, 43, 43, 0.9);
 }
 
 /* Mobile styles - only apply below 768px */
@@ -329,7 +330,7 @@
 }
 
 .about-section {
-  background: transparent;
+  background: #e1f6f5;
   border-radius: 0;
   padding: 2.5rem 8%;
   box-shadow: none;
