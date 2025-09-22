@@ -8,6 +8,30 @@ function CorporatePolicies() {
       title: "CORPORATE SOCIAL RESPONSIBILITY POLICY",
       description: "Our commitment to maintaining the highest standards of healthcare",
       pdfUrl: "/pdfs/corporate.pdf"
+    },
+     {
+      id: 1,
+      title: "PRIVACY POLICY",
+      description: "Your privacy is important to us. Read our comprehensive privacy policy.",
+      pdfUrl: "/pdfs/PrivacyPolicy.pdf"
+    },
+     {
+      id: 1,
+      title: "ETHICS AT THE CODE",
+      description: "Our commitment to ethical practices in all aspects of our operations.",
+      pdfUrl: "/pdfs/ethics.pdf"
+    },
+    {
+      id: 1,
+      title: "TRANSPARENT GOVERNANCE, CLEAR OWNERSHIP",
+      description: "Our commitment to transparent governance and clear ownership structures.",
+      pdfUrl: "pdfs/Transparent Governance.pdf"
+    },
+     {
+      id: 1,
+      title: "COMPLIANCE YOU CAN TRUST",
+      description: "Our commitment to compliance and ethical practices.",
+      pdfUrl: "pdfs/Compliance.pdf"
     }
     // Add more policies as needed
   ];
