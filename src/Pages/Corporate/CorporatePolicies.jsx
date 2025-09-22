@@ -11,12 +11,6 @@ function CorporatePolicies() {
     },
      {
       id: 1,
-      title: "PRIVACY POLICY",
-      description: "Your privacy is important to us. Read our comprehensive privacy policy.",
-      pdfUrl: "/pdfs/PrivacyPolicy.pdf"
-    },
-     {
-      id: 1,
       title: "ETHICS AT THE CODE",
       description: "Our commitment to ethical practices in all aspects of our operations.",
       pdfUrl: "/pdfs/ethics.pdf"
