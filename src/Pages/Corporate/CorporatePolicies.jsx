@@ -10,23 +10,36 @@ function CorporatePolicies() {
       pdfUrl: "/pdfs/corporate.pdf"
     },
      {
-      id: 1,
+      id: 2,
+      title: "VIGIL MECHANISM POLICY",
+      description: "A mechanism to report unethical behavior.",
+      pdfUrl: "/pdfs/vigil.pdf"
+    },
+     {
+      id: 3,
       title: "ETHICS AT THE CODE",
       description: "Our commitment to ethical practices in all aspects of our operations.",
       pdfUrl: "/pdfs/ethics.pdf"
     },
     {
-      id: 1,
+      id: 4,
       title: "TRANSPARENT GOVERNANCE, CLEAR OWNERSHIP",
       description: "Our commitment to transparent governance and clear ownership structures.",
       pdfUrl: "pdfs/Transparent Governance.pdf"
     },
      {
-      id: 1,
+      id: 5,
       title: "COMPLIANCE YOU CAN TRUST",
       description: "Our commitment to compliance and ethical practices.",
       pdfUrl: "pdfs/Compliance.pdf"
+    },
+    {
+      id: 6,
+      title: "Privacy Policy",
+      description: "Our commitment to protecting your privacy and data security.",
+      pdfUrl: "pdfs/privacypolicy.pdf"
     }
+    
     // Add more policies as needed
   ];
 
