@@ -31,7 +31,7 @@ function CorporatePolicies() {
       id: 1,
       title: "PRIVACY POLICY",
       description: "Safeguarding Data, Building Trust..",
-      pdfUrl: "pdfs/Untitled-1.pdf"
+      pdfUrl: "pdfs/list.pdf"
     }
     // Add more policies as needed
   ];
