@@ -26,6 +26,12 @@ function CorporatePolicies() {
       title: "COMPLIANCE YOU CAN TRUST",
       description: "Our commitment to compliance and ethical practices.",
       pdfUrl: "pdfs/Compliance.pdf"
+    },
+      {
+      id: 1,
+      title: "PRIVACY POLICY",
+      description: "Safeguarding Data, Building Trust..",
+      pdfUrl: "pdfs/Untitled-1.pdf"
     }
     // Add more policies as needed
   ];
