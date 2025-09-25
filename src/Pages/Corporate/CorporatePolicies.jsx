@@ -13,7 +13,7 @@ function CorporatePolicies() {
       id: 1,
       title: "ETHICS AT THE CODE",
       description: "Our commitment to ethical practices in all aspects of our operations.",
-      pdfUrl: "/pdfs/ethics.pdf"
+      pdfUrl: "/pdfs/Lists pdf.pdf"
     },
     {
       id: 1,
