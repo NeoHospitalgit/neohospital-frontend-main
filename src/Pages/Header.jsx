@@ -154,6 +154,12 @@ function Header() {
                 BLOG
               </Link>
             </li>
+            {/* Add Corporate Policies link here */}
+            <li className="nav-item">
+              <Link className="nav-link" to="/corporate-policies" onClick={openNav}>
+                CORPORATE POLICIES
+              </Link>
+            </li>
             {/* login */}
             <li className="nav-item">
               <Link className="nav-link" to="/login" onClick={openNav}>
