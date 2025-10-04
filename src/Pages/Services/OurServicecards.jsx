@@ -17,6 +17,7 @@ function OurServicecards() {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
+        console.log('Received data:', data.servicescategories); // Add this line
         setNeoService(data.servicescategories);
         setLoading(false);
       } catch (error) {
@@ -29,7 +30,13 @@ function OurServicecards() {
   }, []);
 
   const { service } = useParams();
-  const Service = NeoService.find((value) => value.service_slug === service);
+  console.log("URL parameter:", service); // Debug URL parameter
+  console.log("Available services:", NeoService); // Debug available services
+  
+  const Service = NeoService.find((value) => {
+    console.log("Comparing:", value.slug, service); // Debug comparison
+    return value.slug === service;
+  });
 
   if (loading) {
     return (
@@ -95,7 +102,7 @@ function OurServicecards() {
         {NeoService.map((value, index) => (
           <Link 
             key={value.id} 
-            to={`/service/${value.slug}`} 
+            to={`/service/${value.slug}`}
             className={`service-card dynamic-card card-${index + 1}`}
           >
             <div className="card-image-container">
@@ -139,3 +146,7 @@ function OurServicecards() {
 }
 
 export default OurServicecards;
+
+/* In your routing file, ensure you have the following route defined:
+<Route path="/service/:service" element={<OurServicecards />} />
+*/
