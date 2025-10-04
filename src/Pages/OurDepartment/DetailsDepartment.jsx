@@ -78,7 +78,7 @@ function DetailsDepartment() {
 
   return (
     <>
-      <Header /> {/* Place Header at the very top */}
+       {/* Place Header at the very top */}
       <Helmet>{parse(departments.seo_tag)}</Helmet>
       
       {/* Main Content */}
@@ -161,7 +161,7 @@ function DetailsDepartment() {
         </div>
       </section>
       {/* Quick Stats Section (if any) */}
-      <Footer /> {/* Place Footer at the very bottom */}
+      {/* Place Footer at the very bottom */}
     </>
   );
 }
