@@ -8,6 +8,9 @@
   overflow: hidden;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
+.services.container {
+    padding-top: 22px;
+}
 
 .specialty-grid {
   display: grid;
