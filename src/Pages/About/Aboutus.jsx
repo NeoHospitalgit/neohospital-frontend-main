@@ -9,15 +9,15 @@ function Aboutus() {
         <div className="about-section container" id="about">
           <h3 className="about-title">
             <span>
-              Neo "Super speciality Hospital - A Commitment to Excellence in Healthcare
+              Neo Super Speciality Hospital - A Commitment to Excellence in Healthcare
             </span>
           </h3>
           <p className="about-description">
-          Welcome to Neo "Super speciality Hospital, a trusted name in advanced and compassionate healthcare. With 250+ beds, modern infrastructure, and a full range of clinical services, we are dedicated to providing high-quality, affordable, and patient-centered care. Our hospital is equipped with modular operation theatres, fully monitored ICUs, 24/7 emergency & trauma services, in-house pharmacy, advanced diagnostics, and ambulance support—all designed to offer seamless treatment in a safe and healing environment.
+          Welcome to Neo Super Speciality Hospital, a trusted name in advanced and compassionate healthcare. With 250+ beds, modern infrastructure, and a full range of clinical services, we are dedicated to providing high-quality, affordable, and patient-centered care. Our hospital is equipped with modular operation theatres, fully monitored ICUs, 24/7 emergency & trauma services, in-house pharmacy, advanced diagnostics, and ambulance support—all designed to offer seamless treatment in a safe and healing environment.
 
 One of our most renowned centers is the Neuro Department, where we specialize in treating conditions related to the brain, spine, and nervous system. Led by highly experienced neurologists and neurosurgeons, our Neuro Unit handles cases such as stroke, epilepsy, brain tumors, spinal disorders, neuropathies, Parkinson’s disease, and more. Equipped with high-resolution MRI, CT scan, EEG, and neuro-navigation systems, we ensure early detection and precise treatment with minimal risk and faster recovery.
 
-Apart from Neurosciences, we also offer "Super speciality care in Cardiology, Oncology, Orthopedics, Gastroenterology, Pulmonology, Nephrology, Urology, and Critical Care, with departments staffed by top experts in their fields.
+Apart from Neurosciences, we also offer Super Speciality care in Cardiology, Oncology, Orthopedics, Gastroenterology, Pulmonology, Nephrology, Urology, and Critical Care, with departments staffed by top experts in their fields.
 
 Our hospital is designed to cater to both emergency and long-term care needs, with a focus on comfort, safety, and dignity. We also provide preventive health check-ups, post-treatment rehabilitation services, and counseling support for a holistic approach to wellness.
 
