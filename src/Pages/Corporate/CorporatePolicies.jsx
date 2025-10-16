@@ -37,7 +37,7 @@ function CorporatePolicies() {
       id: 6,
       title: "Privacy Policy",
       description: "Our commitment to protecting your privacy and data security.",
-      pdfUrl: "pdfs/PrivacyPolicy.pdf"
+      pdfUrl: "pdfs/Privacyprivacy.pdf"
     }
     
     // Add more policies as needed
