@@ -140,7 +140,7 @@ function DetailsDepartment() {
 
               <div className="department-content">
                 <div className="content-header">
-                  <h2>About {departments.title}</h2>
+                  <h2>ABOUT {departments.title}</h2>
                   <div className="content-divider"></div>
                 </div>
                 
