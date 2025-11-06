@@ -1,4 +1,3 @@
-
 #Contactform .right_conatct_social_icon{
         background: linear-gradient(to top right, #005960 -5%, #0a7880 100%);
 }
@@ -161,4 +160,16 @@
 .can{
     text-decoration: none;
     color:#fff
+}
+.consent-section {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contact_form_submit:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }

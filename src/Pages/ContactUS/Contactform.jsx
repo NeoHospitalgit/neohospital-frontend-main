@@ -8,6 +8,10 @@ function Contactform() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showFullConsent, setShowFullConsent] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
+
+  const consentText = "By submitting this form, I consent to Neo Hospital collecting, storing, and processing my personal information for the purposes of responding to my enquiry, scheduling appointments, providing healthcare or related administrative services. I have read and understood the Privacy Policy (link), which explains how my data will be used, stored, shared, and how I can withdraw my consent. My data will be handled in accordance with the Digital Personal Data Protection Act, 2023 and the Information Technology Rules, 2011.";
 
   const sendEmail = async (e) => {
     e.preventDefault();
@@ -123,7 +127,53 @@ function Contactform() {
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                           ></textarea>
-                          <button type="submit" className="contact_form_submit" disabled={isSubmitting}>
+                          
+                          <div className="consent-section" style={{ marginBottom: '20px' }}>
+                            <div style={{ position: 'relative' }}>
+                              <p style={{ 
+                                display: '-webkit-box', 
+                                WebkitLineClamp: showFullConsent ? 'unset' : '2', 
+                                WebkitBoxOrient: 'vertical', 
+                                overflow: 'hidden',
+                                marginBottom: '5px'
+                              }}>
+                                {consentText}
+                              </p>
+                              {!showFullConsent && (
+                                <button 
+                                  type="button" 
+                                  onClick={() => setShowFullConsent(true)}
+                                  style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    color: '#0066cc',
+                                    padding: 0,
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  Read More
+                                </button>
+                              )}
+                            </div>
+                            <div style={{ marginTop: '10px' }}>
+                              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                                <input
+                                  type="checkbox"
+                                  checked={consentChecked}
+                                  onChange={(e) => setConsentChecked(e.target.checked)}
+                                />
+                                <span style={{ fontSize: '14px' }}>
+                                  I hereby provide my free, specific, informed, and unconditional consent to the collection and processing of my personal data as described above.
+                                </span>
+                              </label>
+                            </div>
+                          </div>
+
+                          <button 
+                            type="submit" 
+                            className="contact_form_submit" 
+                            disabled={isSubmitting || !consentChecked}
+                          >
                             {isSubmitting ? 'Submitting...' : 'Send'}
                           </button>
                         </form>
