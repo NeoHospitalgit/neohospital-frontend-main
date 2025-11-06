@@ -10,8 +10,10 @@ function Contactform() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showFullConsent, setShowFullConsent] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
+  const [showConsentModal, setShowConsentModal] = useState(false);
 
-  const consentText = "By submitting this form, I consent to Neo Hospital collecting, storing, and processing my personal information for the purposes of responding to my enquiry, scheduling appointments, providing healthcare or related administrative services. I have read and understood the Privacy Policy (link), which explains how my data will be used, stored, shared, and how I can withdraw my consent. My data will be handled in accordance with the Digital Personal Data Protection Act, 2023 and the Information Technology Rules, 2011.";
+  const privacyPdfPath = "/pdfs/Privacyprivacy.pdf";
+  const consentText = "By submitting this form, I consent to Neo Hospital collecting, storing, and processing my personal information for the purposes of responding to my enquiry, scheduling appointments, providing healthcare or related administrative services. I have read and understood the Privacy Policy, which explains how my data will be used, stored, shared, and how I can withdraw my consent. My data will be handled in accordance with the Digital Personal Data Protection Act, 2023 and the Information Technology Rules, 2011.";
 
   const sendEmail = async (e) => {
     e.preventDefault();
@@ -128,45 +130,102 @@ function Contactform() {
                             onChange={(e) => setMessage(e.target.value)}
                           ></textarea>
                           
-                          <div className="consent-section" style={{ marginBottom: '20px' }}>
-                            <div style={{ position: 'relative' }}>
-                              <p style={{ 
-                                display: '-webkit-box', 
-                                WebkitLineClamp: showFullConsent ? 'unset' : '2', 
-                                WebkitBoxOrient: 'vertical', 
-                                overflow: 'hidden',
-                                marginBottom: '5px'
-                              }}>
-                                {consentText}
-                              </p>
-                              {!showFullConsent && (
-                                <button 
-                                  type="button" 
-                                  onClick={() => setShowFullConsent(true)}
+                          <div className="consent-compact" style={{ marginBottom: '20px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                              <input
+                                id="contact-consent"
+                                type="checkbox"
+                                checked={consentChecked}
+                                onChange={(e) => setConsentChecked(e.target.checked)}
+                              />
+                              <label htmlFor="contact-consent" style={{ fontSize: '14px' }}>
+                                I hereby provide my free, specific, informed, and unconditional consent to the collection and processing of my personal data as described above.
+                              </label>
+
+                              <button
+                                type="button"
+                                onClick={() => setShowConsentModal(true)}
+                                style={{
+                                  background: 'transparent',
+                                  border: '1px solid #0066cc',
+                                  color: '#0066cc',
+                                  padding: '6px 10px',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  fontSize: '13px'
+                                }}
+                              >
+                                Read
+                              </button>
+                            </div>
+
+                            {showConsentModal && (
+                              <div
+                                role="dialog"
+                                aria-modal="true"
+                                style={{
+                                  position: 'fixed',
+                                  top: 0,
+                                  left: 0,
+                                  width: '100vw',
+                                  height: '100vh',
+                                  background: 'rgba(0,0,0,0.6)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  zIndex: 9999,
+                                  padding: '20px'
+                                }}
+                                onClick={() => setShowConsentModal(false)}
+                              >
+                                <div
+                                  onClick={(e) => e.stopPropagation()}
                                   style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    color: '#0066cc',
-                                    padding: 0,
-                                    cursor: 'pointer'
+                                    background: '#fff',
+                                    color: '#000',
+                                    maxWidth: '700px',
+                                    width: '100%',
+                                    borderRadius: '6px',
+                                    padding: '20px',
+                                    boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                                    maxHeight: '80vh',
+                                    overflowY: 'auto'
                                   }}
                                 >
-                                  Read More
-                                </button>
-                              )}
-                            </div>
-                            <div style={{ marginTop: '10px' }}>
-                              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                                <input
-                                  type="checkbox"
-                                  checked={consentChecked}
-                                  onChange={(e) => setConsentChecked(e.target.checked)}
-                                />
-                                <span style={{ fontSize: '14px' }}>
-                                  I hereby provide my free, specific, informed, and unconditional consent to the collection and processing of my personal data as described above.
-                                </span>
-                              </label>
-                            </div>
+                                  <h4 style={{ marginTop: 0 }}>Consent & Privacy</h4>
+                                  <p style={{ whiteSpace: 'pre-wrap', lineHeight: 1.5, marginBottom: 8 }}>
+                                    {consentText.replace('Privacy Policy', '')}
+                                  </p>
+                                  <p style={{ marginTop: 0 }}>
+                                    <a
+                                      href={privacyPdfPath}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      style={{ color: '#0066cc', textDecoration: 'underline' }}
+                                    >
+                                      Privacy Policy
+                                    </a>
+                                    &nbsp;— opens in a new tab.
+                                  </p>
+                                  <div style={{ textAlign: 'right', marginTop: '12px' }}>
+                                    <button
+                                      type="button"
+                                      onClick={() => setShowConsentModal(false)}
+                                      style={{
+                                        background: '#0066cc',
+                                        color: '#fff',
+                                        border: 'none',
+                                        padding: '8px 12px',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer'
+                                      }}
+                                    >
+                                      Close
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
 
                           <button 
