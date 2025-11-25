@@ -1,5 +1,6 @@
 import React from "react";
 import "./CorporatePolicies.css";
+import { Helmet } from "react-helmet";
 
 function CorporatePolicies() {
   const policies = [
@@ -44,7 +45,29 @@ function CorporatePolicies() {
   ];
 
   return (
-    <section className="policies-section">
+    <>
+      <Helmet>
+        <title>Corporate Policies at Neo Super-Speciality</title>
+        <meta name="title" content="Corporate Policies at Neo Super-Speciality" />
+        <meta name="description" content="Neo Super-Speciality Hospital ensures transparency, ethical practices and strong corporate policies that prioritize patient care, safety and integrity." />
+        <meta name="keywords" content="Best ivf clinic in delhi, best ivf centre in delhi, fertility centre in delhi, ivf specialist in delhi, ivf treatment in delhi" />
+        <link rel="canonical" href="https://www.neohospital.com/corporate-policies/" />
+
+        <meta name="DC.Title" content="Corporate Policies at Neo Super-Speciality" />
+        <meta name="DC.Subject" content="Neo Super-Speciality Hospital in Noida offers advanced treatment, expert doctors and patient-focused care across multiple specialties. Contact us today" />
+
+        <meta property="og:title" content="Corporate Policies at Neo Super-Speciality | Neo Hospital" />
+        <meta property="og:description" content="Neo Super-Speciality Hospital ensures transparency, ethical practices and strong corporate policies that prioritize patient care, safety and integrity." />
+
+        <meta name="language" content="en-us" />
+        <meta name="coverage" content="Global" />
+        <meta name="robots" content="INDEX,FOLLOW" />
+        <meta name="GOOGLEBOT" content="INDEX, FOLLOW" />
+        <meta name="doc-type" content="Webpage" />
+        <meta name="revisit-after" content="7 days" />
+      </Helmet>
+
+      <section className="policies-section">
       <div className="policies-header">
         <h2 className="policies-title">Corporate Policies</h2>
         <div className="title-underline"></div>
@@ -75,6 +98,7 @@ function CorporatePolicies() {
         ))}
       </div>
     </section>
+    </>
   );
 }
 
