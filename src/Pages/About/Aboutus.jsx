@@ -31,9 +31,9 @@ At Neo Super Specialty Hospital, we’re not just treating patients—we’re bu
             </div>
             <div className="col-md-7">
               <div className="ourmission">
-                <h3 className="about-title">
+                <h1 className="about-title">
                   <span>Vision and Mission</span>
-                </h3>
+                </h1>
                 <div className="row">
                   <div className="col-md-6">
                     <h4>Vision</h4>
