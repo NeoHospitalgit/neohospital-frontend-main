@@ -13,6 +13,7 @@ function About() {
         <h3 className="about-title">
           <span>About Us</span>
         </h3>
+        {/* <h1>about neohospital</h1> */}
         <p className="about-description">
           Welcome to Health Plus, your trusted partner for accessible and
           personalized healthcare. Our expert doctors offer online consultations
