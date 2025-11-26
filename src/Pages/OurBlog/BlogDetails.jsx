@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet";
 const BlogDetails = () => {
   const [blogs, setBlogs] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -141,6 +142,7 @@ const BlogDetails = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
+        setLoading(true);
         const response = await fetch("https://api.neohospital.com/api/adminv3/view-blogs");
         if (!response.ok) throw new Error("Failed to fetch blogs");
         const data = await response.json();
@@ -149,8 +151,10 @@ const BlogDetails = () => {
         );
 
         setBlogs(sortedBlo);
+        setLoading(false);
       } catch (error) {
         setError(error);
+        setLoading(false);
       }
     };
 
@@ -160,6 +164,15 @@ const BlogDetails = () => {
   console.log(blogs);
   const { blogs: blogSlug } = useParams();
   const blog = blogs.find(({ blog_slug }) => blog_slug === blogSlug);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner"></div>
+        <p>Loading blog content...</p>
+      </div>
+    );
+  }
 
   if (!blog) return <div>Blog not found</div>;
 
