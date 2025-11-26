@@ -5,10 +5,12 @@ import BlogCard from "./BlogCard";
 function BlogAll() {
   const [Neoblog, setNeoblog] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           "https://api.neohospital.com/api/adminv3/view-blogs"
         );
@@ -20,8 +22,10 @@ function BlogAll() {
           (a, b) => new Date(b.blog_date) - new Date(a.blog_date)
         );
         setNeoblog(sortedBlogs);
+        setLoading(false);
       } catch (error) {
         setError(error);
+        setLoading(false);
       }
     };
 
@@ -30,24 +34,31 @@ function BlogAll() {
 
   return (
     <>
-      <div className="row">
-        {Neoblog.map((value, index) => {
-          return (
-            <div className="col-md-3" key={index}>
-              <div>
-                <BlogCard
-                  blogimage={`https://api.neohospital.com/uploads/blogs/${value.blog_image}`}
-                  title={value.blog_title}
-                  description={value.blog_content}
-                  blogslug={value.blog_slug}
-                  author={value.blog_auther}
-                  blogdate={value.blog_date}
-                />
+      {loading ? (
+        <div className="loader-container">
+          <div className="spinner"></div>
+          <p>Loading blogs...</p>
+        </div>
+      ) : (
+        <div className="row">
+          {Neoblog.map((value, index) => {
+            return (
+              <div className="col-md-3" key={index}>
+                <div>
+                  <BlogCard
+                    blogimage={`https://api.neohospital.com/uploads/blogs/${value.blog_image}`}
+                    title={value.blog_title}
+                    description={value.blog_content}
+                    blogslug={value.blog_slug}
+                    author={value.blog_auther}
+                    blogdate={value.blog_date}
+                  />
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }
