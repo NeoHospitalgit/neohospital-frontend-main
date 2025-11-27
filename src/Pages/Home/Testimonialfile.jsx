@@ -1,33 +1,56 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Slider from "react-slick";
-import "./testimonialfile.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./testimonialfile.css";
+
 import feedbackpic from "../../Assets/index/feedbackpic.jpg";
 import userreview from "../../Assets/index/userreview.png";
 import { testimonials } from "./Homeimages.jsx";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons"; // Filled star
 
 const Testimonialfile = () => {
-  const sliderFor = useRef(null);
-  const sliderNav = useRef(null);
+  const [sliderFor, setSliderFor] = useState(null);
+  const [sliderNav, setSliderNav] = useState(null);
 
-  const settingsFor = {
+  const sliderForRef = useRef(null);
+  const sliderNavRef = useRef(null);
+
+  // Sync sliders after mount
+  useEffect(() => {
+    setSliderFor(sliderForRef.current);
+    setSliderNav(sliderNavRef.current);
+  }, []);
+
+  const mainSliderSettings = {
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: true,
-    asNavFor: sliderNav.current,
+    arrows: false,
+    fade: true,
+    asNavFor: sliderNav,
+    ref: sliderForRef,
   };
 
-  const settingsNav = {
-    slidesToShow: 2,
+  const navSliderSettings = {
+    slidesToShow: 3,
     slidesToScroll: 1,
-    asNavFor: sliderFor.current,
+    asNavFor: sliderFor,
     dots: true,
+    centerMode: true,
     focusOnSelect: true,
+    centerPadding: "0px",
+    ref: sliderNavRef,
     responsive: [
       {
-        breakpoint: 768, // Mobile view breakpoint
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
         },
@@ -35,14 +58,13 @@ const Testimonialfile = () => {
     ],
   };
 
-  const handleClick = (slideNumber) => {
-    if (sliderFor.current) {
-      sliderFor.current.slickGoTo(slideNumber - 1);
-    }
-  };
-
   return (
-    <section className="neotestimonials">
+    <section className="neotestimonials" aria-labelledby="testimonials-heading">
+      {/* SEO-Friendly H1 - Visible to Google, hidden visually if needed */}
+      <h1 id="testimonials-heading" className="seo-h1">
+        Patient Testimonials & Reviews - What Our Patients Say About Us
+      </h1>
+
       <div className="container">
         <div className="neotestimonial">
           <h3 className="dt-title">
@@ -50,44 +72,47 @@ const Testimonialfile = () => {
             <p className="dt-description">What our Patients say about us..</p>
           </h3>
         </div>
+
         <div className="testifile">
           <div className="main">
-            <div className="row">
-              <div className="col-md-3">
-                <img src={feedbackpic} className="img-fluid" alt="Feedback" />
+            <div className="row align-items-center">
+              {/* Left Image */}
+              <div className="col-lg-4 col-md-5 mb-4 mb-md-0">
+                <img src={feedbackpic} className="img-fluid rounded shadow" alt="Happy patient giving feedback" />
               </div>
-              <div className="col-md-9">
-                <Slider
-                  {...settingsNav}
-                  ref={sliderNav}
-                  className="slider slider-nav"
-                >
-                  {testimonials.map((testimonial) => (
-                    <div key={testimonial.id} className="testcardnew">
-                      <div className="row">
-                        <div className="col-md-3">
-                          <img src={userreview} className="img-fluid" alt="" />
-                        </div>
-                        <div className="col-md-9">
-                          <h2
-                            <a
-                              href={testimonial.testurl}
-                              className="author"
-                            >
-                              {testimonial.author}
-                            </a>
-                          </h2>
-                          <div className="reviewstartimg">
-                            <FontAwesomeIcon icon="star" />
-                            <FontAwesomeIcon icon="star" />
-                            <FontAwesomeIcon icon="star" />
-                            <FontAwesomeIcon icon="star" />
-                            <FontAwesomeIcon icon="star" />
-                          </div>
+
+              {/* Right Slider Area */}
+              <div className="col-lg-8 col-md-7">
+                {/* Main Large Testimonial Slider */}
+                <div className="main-testimonial-slider mb-4">
+                  <Slider {...mainSliderSettings}>
+                    {testimonials.map((testimonial) => (
+                      <div key={testimonial.id} className="testimonial-content px-4">
+                        <p className="lead fst-italic">"{testimonial.text}"</p>
+                        <div className="mt-4">
+                          <strong className="d-block">{testimonial.author}</strong>
+                          {testimonial.location && <small className="text-muted">{testimonial.location}</small>}
                         </div>
                       </div>
-                      <div className="reviewpara">
-                        <p>{testimonial.text}</p>
+                    ))}
+                  </Slider>
+                </div>
+
+                {/* Thumbnail / Navigation Slider */}
+                <Slider {...navSliderSettings} className="slider-nav-custom">
+                  {testimonials.map((testimonial, index) => (
+                    <div key={testimonial.id} className="nav-testimonial-item text-center px-3">
+                      <img
+                        src={userreview}
+                        alt={`${testimonial.author}'s photo`}
+                        className="rounded-circle mb-3"
+                        style={{ width: "70px", height: "70px", objectFit: "cover" }}
+                      />
+                      <h6 className="mb-1">{testimonial.author}</h6>
+                      <div className="text-warning small">
+                        {[...Array(5)].map((_, i) => (
+                          <FontAwesomeIcon key={i} icon={solidStar} />
+                        ))}
                       </div>
                     </div>
                   ))}
