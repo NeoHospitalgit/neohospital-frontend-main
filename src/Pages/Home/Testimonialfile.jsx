@@ -69,14 +69,14 @@ const Testimonialfile = () => {
                           <img src={userreview} className="img-fluid" alt="" />
                         </div>
                         <div className="col-md-9">
-                          <h1>
+                          <h2
                             <a
                               href={testimonial.testurl}
                               className="author"
                             >
                               {testimonial.author}
                             </a>
-                          </h1>
+                          </h2>
                           <div className="reviewstartimg">
                             <FontAwesomeIcon icon="star" />
                             <FontAwesomeIcon icon="star" />
