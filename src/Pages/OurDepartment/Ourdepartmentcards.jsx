@@ -36,7 +36,7 @@ function Ourdepartmentcards() {
     <section  className='special'>
       <div className="Ourdepartmentcards container">
         <h3 className="about-title">
-          <span>OUR SPECIALITY DEPARTMENTS</span>
+          <h1>OUR SPECIALITY DEPARTMENTS</h1>
         </h3>
         <p className="about-description">
           Neo Super Speciality Hospital places paramount importance on patient care, seamlessly
