@@ -23,6 +23,7 @@ function AddDoctor() {
     drQualification: "",
     drDetail: "",
     drTiming: "",
+    drExperience: "",
     drStatus: true,
   });
 
@@ -77,9 +78,9 @@ function AddDoctor() {
     const modifiedValue =
       name === "drSlug"
         ? value
-            .toLowerCase()
-            .replace(/[^\w\s]/gi, "")
-            .replace(/\s+/g, "-")
+          .toLowerCase()
+          .replace(/[^\w\s]/gi, "")
+          .replace(/\s+/g, "-")
         : value;
 
     setDoctorData({
@@ -161,6 +162,7 @@ function AddDoctor() {
       drQualification: "",
       drDetail: "",
       drTiming: "",
+      drExperience: "",
       drStatus: true,
     });
   };
@@ -289,7 +291,24 @@ function AddDoctor() {
                       </div>
                     </div>
 
+
+
                     <div className="row mt-4">
+                      <div className="col-md-6">
+                        <label htmlFor="drExperience" className="form-label">
+                          Doctor's Experience (Years)
+                        </label>
+                        <input
+                          name="drExperience"
+                          autoComplete="off"
+                          value={DoctorData.drExperience}
+                          onChange={handleDoctorInput}
+                          id="drExperience"
+                          required
+                          type="number"
+                          className="form-control"
+                        />
+                      </div>
                       <div className="col-md-6">
                         <label htmlFor="drImage" className="form-label">
                           Doctor's Image
@@ -313,21 +332,6 @@ function AddDoctor() {
                           </div>
                         )}
                       </div>
-                      {/* <div className="col-md-6">
-                        <label htmlFor="drStatus" className="form-label">
-                          Status
-                        </label>
-                        <select
-                          name="drStatus"
-                          value={DoctorData.drStatus ? "true" : "false"}
-                          onChange={handleDoctorInput}
-                          id="drStatus"
-                          className="form-select"
-                        >
-                          <option value="true">Active</option>
-                          <option value="false">Inactive</option>
-                        </select>
-                      </div> */}
                     </div>
                     <div className="row mt-4">
                       <div className="col-md-6">
