@@ -89,6 +89,7 @@ function ManageDoctor() {
                           <th scope="col">Doctor Name</th>
                           <th scope="col">Department</th>
                           <th scope="col">Timing</th>
+                          <th scope="col">Experience</th>
                           <th scope="col">Image</th>
                           <th scope="col">Update</th>
                           <th scope="col">Delete</th>
@@ -101,6 +102,7 @@ function ManageDoctor() {
                             <td className="ptd">{doctor.drTitle}</td>
                             <td className="ptd">{doctor.drDepartment}</td>
                             <td className="ptd">{doctor.drTiming}</td>
+                            <td className="ptd">{doctor.drExperience}</td>
                             <td>
                               <img
                                 src={`${API}/uploads/doctors/${doctor.drImage}`}
