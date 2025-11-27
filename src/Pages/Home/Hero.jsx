@@ -97,7 +97,7 @@ function Hero() {
             <div className="content-wrapper">
               <div className="text-section" ref={textRef}>
                 <p className="text-headline">Your Health, Our Priority</p>
-                <h2 className="text-title">Expert Care for a Healthier Tomorrow</h2>
+                <h1 className="text-title">Expert Care for a Healthier Tomorrow</h1>
                 <p className="text-descritpion">
                   At Neo Super Speciality Hospital, we provide world-class medical care with compassion and expertise.
                 </p>
