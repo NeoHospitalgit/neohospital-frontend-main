@@ -35,10 +35,11 @@ function Contactform() {
     }
 
     // Validate phone number format
-    const phoneRegex = /^[6-9]\d{9}$/;
+    // Allow spaces, dashes, and optional country code
+    const phoneRegex = /^\+?[\d\s-]{10,15}$/;
     if (!phoneRegex.test(number)) {
-      window.alert("Please enter a valid Indian phone number.");
-      
+      window.alert("Please enter a valid phone number (min 10 digits).");
+
       setIsSubmitting(false);
       return;
     }
@@ -129,7 +130,7 @@ function Contactform() {
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                           ></textarea>
-                          
+
                           <div className="consent-compact" style={{ marginBottom: '20px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                               <input
@@ -228,9 +229,9 @@ function Contactform() {
                             )}
                           </div>
 
-                          <button 
-                            type="submit" 
-                            className="contact_form_submit" 
+                          <button
+                            type="submit"
+                            className="contact_form_submit"
                             disabled={isSubmitting || !consentChecked}
                           >
                             {isSubmitting ? 'Submitting...' : 'Send'}
