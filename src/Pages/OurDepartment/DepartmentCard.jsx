@@ -15,7 +15,7 @@ function DepartmentCard({ id, blogimage, title, departmentcontent, departmentslu
           alt={title}
           className="departmentcards-img"
         />
-        <h1>{title}</h1>
+        <h2>{title}</h2>
         <p>{departmentcontent}</p>
         <div className="text-center">
           <span className="text-btn">Read More</span>
