@@ -61,9 +61,7 @@ const Testimonialfile = () => {
   return (
     <section className="neotestimonials" aria-labelledby="testimonials-heading">
       {/* SEO-Friendly H1 - Visible to Google, hidden visually if needed */}
-      <h1 id="testimonials-heading" className="seo-h1">
-        Patient Testimonials & Reviews - What Our Patients Say About Us
-      </h1>
+     
 
       <div className="container">
         <div className="neotestimonial">
