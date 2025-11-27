@@ -79,4 +79,27 @@
 .fixed-tumblr span {
   background-color: #eb1471;
 }
+
+
+.seo-h1 {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Optional: style active thumbnail */
+.slick-current .nav-testimonial-item {
+  opacity: 1;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+.nav-testimonial-item {
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 /*end fixed social*/
