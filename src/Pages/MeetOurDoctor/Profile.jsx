@@ -118,7 +118,7 @@ function Profile() {
         setBookdate("");
         setBooktime("");
         setMessage("");
-        
+
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 5000);
@@ -163,7 +163,7 @@ function Profile() {
               <h4>Appointment Request Submitted!</h4>
               <p>We'll contact you within 24 hours to confirm your appointment.</p>
             </div>
-            <button 
+            <button
               className="close-notification"
               onClick={() => setShowSuccessMessage(false)}
             >
@@ -177,7 +177,7 @@ function Profile() {
         <div className="container">
           <div className="doctor-header-grid">
             <div className="doctor-image-container">
-              <img 
+              <img
                 src={`https://api.neohospital.com/uploads/doctors/${doctor.drImage}`}
                 alt={doctor.drTitle}
                 onError={(e) => e.target.src = fallbackImage}
@@ -190,14 +190,16 @@ function Profile() {
               <div className="qualifications">
                 {formatQualification(doctor.drQualification)}
               </div>
-              <p className="experience">{doctor.drExperience}10+ years experience</p>
+              <p className="experience">
+                {doctor.drExperience ? `${doctor.drExperience}+ years experience` : "Experienced Doctor"}
+              </p>
               {/* Add the appointment button here */}
-              <button 
+              <button
                 className="hero-appointment-btn"
                 onClick={() => setShowAppointmentForm(true)}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z"/>
+                  <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z" />
                 </svg>
                 Book Appointment
               </button>
@@ -214,7 +216,7 @@ function Profile() {
                 <h2 className="section-title">
                   <div className="title-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z"/>
+                      <path d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" />
                     </svg>
                   </div>
                   About {getDoctorDisplayName()}
@@ -232,7 +234,7 @@ function Profile() {
       {showAppointmentForm && (
         <div className="appointment-modal">
           <div className="appointment-modal-content">
-            <button 
+            <button
               className="close-modal"
               onClick={() => setShowAppointmentForm(false)}
             >
@@ -243,14 +245,14 @@ function Profile() {
                 <h3 className="appointment-title">
                   <div className="title-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19Z"/>
+                      <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19Z" />
                     </svg>
                   </div>
                   Book Appointment
                 </h3>
                 <p className="appointment-subtitle">Get personalized medical care</p>
               </div>
-              
+
               <div className="appointment-note">
                 <div className="note-icon">ℹ️</div>
                 <div>
@@ -343,7 +345,7 @@ function Profile() {
 
                 <div className="form-group">
                   <label className="form-label" htmlFor="message">
-                  
+
                   </label>
                   <textarea
                     id="message"
@@ -369,7 +371,7 @@ function Profile() {
                   ) : (
                     <>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19Z"/>
+                        <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19Z" />
                       </svg>
                       Schedule Appointment
                     </>
@@ -381,14 +383,14 @@ function Profile() {
                 <div className="contact-item">
                   <div className="contact-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z"/>
+                      <path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" />
                     </svg>
                   </div>
                   <div>
                     <div className="contact-label">Emergency Contact</div>
                     <div className="contact-value">0120-4880000</div>
                     <div className="contact-value">
-                       <div className="contact-value">0120-4880000</div></div>
+                      <div className="contact-value">0120-4880000</div></div>
                   </div>
                 </div>
                 <div className="availability-badge small">
