@@ -15,13 +15,13 @@ function OurBlog() {
       <Corevalue />
       <section className="container NeoBlog">
         <div>
-          <h3 className="dt-title">
+          <h1 className="dt-title">
             <span>Informative Blogs</span>
             <p className="dt-description">
               Our mission is to provide a better reach to our patients by
               providing quality health care at a reasonable price.
             </p>
-          </h3>
+          </h1>
         </div>
         <BlogAll />
       </section>
