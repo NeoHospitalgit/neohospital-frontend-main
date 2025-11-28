@@ -82,9 +82,9 @@ function Contactform() {
                       <div className="contact_field">
                         <section id="contact">
                           <div className="mt-5">
-                            <h3 className="about-title">
+                            <h1 className="about-title">
                               <span>Contact Us Today</span>
-                            </h3>
+                            </h1>
                             <p className="about-description">
                               Welcome to Neo Super Speciality Hospital! Ensuring your health is
                               our priority. Schedule your consultation with our
