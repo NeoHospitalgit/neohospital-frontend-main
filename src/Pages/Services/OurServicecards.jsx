@@ -59,7 +59,7 @@ function OurServicecards() {
     <section className="services-section">
       {/* Header Section */}
       <div className="services-header">
-        <h2 className="services-title">Our Medical Services</h2>
+        <h1 className="services-title">Our Medical Services</h1>
         <div className="title-underline"></div>
         <p className="services-description">
            Neo Super Speciality Hospital places paramount importance on patient care, seamlessly merging 
