@@ -73,7 +73,7 @@ function DemoDoctor() {
         <div>
           <div className="row">
             <div className="col-md-8">
-              <h3 className="about-title">Meet Our Doctors</h3>
+              <h1 className="about-title">Meet Our Doctors</h1>
             </div>
             <div className="col-md-4">
               <form className="search-bar form-inline my-2 my-lg-0">
