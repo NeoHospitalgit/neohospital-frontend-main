@@ -44,9 +44,9 @@ function GalleryPage() {
   return (
     <section id="GalleryPage">
       <div className="container pd">
-        <h3 className="about-title">
+        <h1 className="about-title">
           <span>Gallery</span>
-        </h3>
+        </h1>
       </div>
       <div className="container pd1">
         <div className="row">
