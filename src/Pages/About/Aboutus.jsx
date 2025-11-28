@@ -7,11 +7,11 @@ function Aboutus() {
     <>
       <section className="container-fluid">
         <div className="about-section container" id="about">
-          <h3 className="about-title">
+          <h1 className="about-title">
             <span>
               Neo Super Speciality Hospital - A Commitment to Excellence in Healthcare
             </span>
-          </h3>
+          </h1>
           <p className="about-description">
           Welcome to Neo Super Speciality Hospital, a trusted name in advanced and compassionate healthcare. With 250+ beds, modern infrastructure, and a full range of clinical services, we are dedicated to providing high-quality, affordable, and patient-centered care. Our hospital is equipped with modular operation theatres, fully monitored ICUs, 24/7 emergency & trauma services, in-house pharmacy, advanced diagnostics, and ambulance support—all designed to offer seamless treatment in a safe and healing environment.
 
@@ -31,9 +31,9 @@ At Neo Super Specialty Hospital, we’re not just treating patients—we’re bu
             </div>
             <div className="col-md-7">
               <div className="ourmission">
-                <h1 className="about-title">
+                <h3 className="about-title">
                   <span>Vision and Mission</span>
-                </h1>
+                </h3>
                 <div className="row">
                   <div className="col-md-6">
                     <h4>Vision</h4>
