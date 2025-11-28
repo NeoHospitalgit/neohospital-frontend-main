@@ -69,7 +69,7 @@ function CorporatePolicies() {
 
       <section className="policies-section">
       <div className="policies-header">
-        <h2 className="policies-title">Corporate Policies</h2>
+        <h1 className="policies-title">Corporate Policies</h1>
         <div className="title-underline"></div>
         <p className="policies-description">
           Our corporate policies reflect our commitment to excellence, transparency, and patient care.
