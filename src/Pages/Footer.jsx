@@ -102,7 +102,7 @@ function Footer() {
                   <div className="single-cta">
                     <i className="fa fa-map"></i>
                     <div className="cta-text">
-                      <h4>Find Us :</h4>
+                      <h2>Find Us :</h2>
                       <span>
                         <a href="#">
                           NEO HOSPITAL D-170, 170A, 170B, Sector-50, Noida,
