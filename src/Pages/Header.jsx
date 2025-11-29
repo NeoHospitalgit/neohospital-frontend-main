@@ -106,13 +106,13 @@ function Header() {
             </>
           )} */}
         </ul>
-        <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={nbl} />
-        <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={nabhlogo} />
+        <img alt="Neo Super Speciality Hospital"  title="Neo Super Speciality Hospital" className="neologo" srcSet={nbl} />
+        <img alt="Neo Super Speciality Hospital"  title="Neo Super Speciality Hospital" className="neologo" srcSet={nabhlogo} />
         <div className={`mobile-navbar ${nav ? "open-nav" : ""}`}>
           <div onClick={openNav} className="mobile-navbar-close">
             <FontAwesomeIcon icon={faXmark} className="hamb-icon" />
           </div>
-          <img src={logo} alt="Neo Super Speciality Hospital" className="neologo" srcSet="" />
+          <img src={logo} alt="Neo Super Speciality Hospital"  title="Neo Super Speciality Hospital" className="neologo" srcSet="" />
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link
