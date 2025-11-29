@@ -32,6 +32,7 @@ const departmentcontent = [
     imageUrl: Cardiology,
     title: "CARDIOLOGY",
     departmentslug: "cardiology",
+    alt="CARDIOLOGY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -42,6 +43,7 @@ const departmentcontent = [
     imageUrl: Pshycologyimg,
     title: "PSYCHOLOGY",
     departmentslug: "psychology",
+    alt="PSYCHOLOGY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -52,6 +54,7 @@ const departmentcontent = [
     imageUrl: DentalScienceimg,
     title: "DENTAL",
     departmentslug: "dental",
+    alt="DENTAL",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -62,6 +65,7 @@ const departmentcontent = [
     imageUrl: Dermatologyimg,
     title: "DERMATOLOGY",
     departmentslug: "dermatology",
+    alt="DERMATOLOGY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -72,6 +76,7 @@ const departmentcontent = [
     imageUrl: Dieteticsimg,
     title: "DIETETICS",
     departmentslug: "dietetics",
+    alt="DIETETICS",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -81,8 +86,9 @@ const departmentcontent = [
   {
     id: 7,
     imageUrl: Entimg,
-    title: " ENT",
+    title: "ENT",
     departmentslug: "ent",
+    alt="ENT",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -92,6 +98,7 @@ const departmentcontent = [
     id: 8,
     imageUrl: Gastroenterologyimg,
     title: "GASTROENTEROLOGY",
+    alt="GASTROENTEROLOGY",
     departmentslug: "gastroenterlogy",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
@@ -101,8 +108,9 @@ const departmentcontent = [
   {
     id: 9,
     imageUrl: Gynaecologyimg,
-    title: " GYNAECOLOGY",
+    title: "GYNAECOLOGY",
     departmentslug: "gynaecology",
+    alt="GYNAECOLOGY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -111,7 +119,8 @@ const departmentcontent = [
   {
     id: 10,
     imageUrl: Nephrologyimg,
-    title: " NEPHROLOGY",
+    title: "NEPHROLOGY",
+    alt="NEPHROLOGY",
     departmentslug: "nephrology",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
@@ -122,6 +131,7 @@ const departmentcontent = [
     id: 11,
     imageUrl: Neuroscienceimg,
     title: "NEUROSCIENCES",
+    alt="NEUROSCIENCES",
     departmentslug: "neuroscience",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
@@ -132,6 +142,7 @@ const departmentcontent = [
     id: 12,
     imageUrl: Ophthalmologyimg,
     title: "OPHTHALMOLOGY",
+    alt="OPHTHALMOLOGY",
     departmentslug: "ophthalmology",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
@@ -143,6 +154,7 @@ const departmentcontent = [
     imageUrl: Paediatricsimg,
     title: "PAEDIATRICS",
     departmentslug: "paediatrics",
+    alt="paediatrics",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -153,6 +165,7 @@ const departmentcontent = [
     imageUrl: Physiotherapyimg,
     title: "PHYSIOTHERAPY",
     departmentslug: "physiotherapy",
+    alt="PHYSIOTHERAPY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -163,6 +176,7 @@ const departmentcontent = [
     imageUrl: Pshycologyimg,
     title: "PULMONOLOGY",
     departmentslug: "pulmonology",
+    alt="PULMONOLOGY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -173,6 +187,7 @@ const departmentcontent = [
     imageUrl: GeneralSurgery,
     title: "  SURGERY",
     departmentslug: "surgery",
+    alt="SURGERY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     description:
@@ -182,6 +197,7 @@ const departmentcontent = [
     id: 17,
     imageUrl: Urologyimg,
     title: "UROLOGY",
+    alt="UROLOGY",
     sortdescription:
       "Anaesthesiology is a critical medical specialty that plays a pivotal role in ensuring patient comfort and safety during surgical procedures. ",
     departmentslug: "urology",
