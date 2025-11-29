@@ -17,14 +17,14 @@ const Specialty = () => {
       title: "Neurology",
       description: "Comprehensive oncology services and treatments",
       link: "neurology",
-      alt:"NEUROLOGY ",
+      alt:"NEUROLOGY",
     },
     {
       id: 3,
       title: "Gastrosciences",
       description: "Expert care for neurological conditions",
       link: "gastrosciences",
-      alt:"GASTROSCIENCES ",
+      alt:"GASTROSCIENCES",
     },
     {
       id: 4,
