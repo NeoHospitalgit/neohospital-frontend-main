@@ -4,11 +4,15 @@ import './Specialty.css';
 
 const Specialty = () => {
   const specialties = [
-    {
-      id: 1,
-      title: "Internal Medicine",
-      description: "Advanced cardiac treatments and interventions",
-      link: "internal-medicine"
+ 
+{
+  id: 1,
+  title: "INTERNAL MEDICINE",
+  description: "Advanced cardiac treatments and interventions",
+  link: "internal-medicine",
+  img: InternalMedicineImg,       // <-- image
+  alt: "INTERNAL MEDICINE",  // <-- ALT TAG
+  seoTitle: "Best Internal Medicine Department in Noida" // <-- TITLE TAG (hover)    
     },
     {
       id: 2,
