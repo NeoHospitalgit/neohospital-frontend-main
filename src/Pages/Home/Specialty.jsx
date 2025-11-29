@@ -10,15 +10,14 @@ const Specialty = () => {
   title: "INTERNAL MEDICINE",
   description: "Advanced cardiac treatments and interventions",
   link: "internal-medicine",
-  img: InternalMedicineImg,       // <-- image
-  alt: "INTERNAL MEDICINE",  // <-- ALT TAG
-  seoTitle: "Best Internal Medicine Department in Noida" // <-- TITLE TAG (hover)    
+  alt: "INTERNAL MEDICINE",  // <-- ALT TAG 
     },
     {
       id: 2,
       title: "Neurology",
       description: "Comprehensive oncology services and treatments",
-      link: "neurology"
+      link: "neurology",
+      alt:"NEUROLOGY "
     },
     {
       id: 3,
