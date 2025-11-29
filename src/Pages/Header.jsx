@@ -28,7 +28,7 @@ function Header() {
 
       <div className="navbar-section">
         <Link to="/">
-          <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={logo} />
+          <img alt="Neo Super Speciality Hospital" title="Neo Super Speciality Hospital" className="neologo" srcSet={logo} />
         </Link>
         <ul className="navbar-items">
           <li className="nav-item">
