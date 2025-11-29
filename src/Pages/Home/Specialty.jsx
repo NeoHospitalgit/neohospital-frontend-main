@@ -17,67 +17,77 @@ const Specialty = () => {
       title: "Neurology",
       description: "Comprehensive oncology services and treatments",
       link: "neurology",
-      alt:"NEUROLOGY "
+      alt:"NEUROLOGY ",
     },
     {
       id: 3,
       title: "Gastrosciences",
       description: "Expert care for neurological conditions",
-      link: "gastrosciences"
+      link: "gastrosciences",
+      alt:"GASTROSCIENCES ",
     },
     {
       id: 4,
       title: "Cardiology",
       description: "Specialized digestive health treatments",
-      link: "cardiology"
+      link: "cardiology",
+      alt:"CARDIOLOGY",
     },
     {
       id: 5,
       title: "Pulmonology",
       description: "Advanced bone and joint care",
-      link: "pulmonology"
+      link: "pulmonology",
+       alt:"PULMONOLOGY",
     },
     {
       id: 6,
       title: "Dental",
       description: "Comprehensive kidney treatment services",
-      link: "dental"
+      link: "dental",
+       alt:"DENTAL",
     },
     {
       id: 7,
       title: "Dermatology",
       description: "Expert liver transplantation services",
-      link: "dermatology"
+      link: "dermatology",
+       alt:"DERMATOLOGY",
     },
     {
       id: 8,
       title: "Dietetics",
       description: "Specialized bone marrow procedures",
-      link: "dietetics"
+      link: "dietetics",
+       alt:"DIETETICS",
     },
     {
       id: 9,
       title: "ENT",
       description: "Specialized bone marrow procedures",
-      link: "ent"
+      link: "ent",
+       alt:"ENT",
     },
     {
       id: 10,
       title: "Gynaecology & Obstetrics",
       description: "Specialized women's health services",
-      link: "gynaecology"
+      link: "gynaecology",
+       alt:"GYNAECOLOGY & OBSTETRICS",
     },
     {
       id: 11,
       title: "Clinical Laboratory",
       description: "Specialized bone marrow procedures",
-      link: "clinical-laboratory"
+      link: "clinical-laboratory",
+       alt:"CLINICAL LABORATORY",
     },
     {
       id: 12,
       title: "Anaesthesiology",
       description: "Specialized bone marrow procedures",
-      link: "anaesthesiology"
+      link: "anaesthesiology",
+       alt:"ANAESTHESIOLOGY",
     }
   ];
 
