@@ -103,7 +103,12 @@ function AddDoctor() {
     try {
       const formData = new FormData();
       Object.entries(DoctorData).forEach(([key, value]) => {
-        formData.append(key, value);
+        // Convert drExperience to number before appending
+        if (key === 'drExperience') {
+          formData.append(key, value ? Number(value) : 0);
+        } else {
+          formData.append(key, value);
+        }
       });
 
       const response = await fetch(URL, {
@@ -131,7 +136,12 @@ function AddDoctor() {
     try {
       const formData = new FormData();
       Object.entries(DoctorData).forEach(([key, value]) => {
-        formData.append(key, value);
+        // Convert drExperience to number before appending
+        if (key === 'drExperience') {
+          formData.append(key, value ? Number(value) : 0);
+        } else {
+          formData.append(key, value);
+        }
       });
       const response = await fetch(`${URL}/${id}`, {
         method: "PUT",
