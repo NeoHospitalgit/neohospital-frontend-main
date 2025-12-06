@@ -101,15 +101,26 @@ function AddDoctor() {
 
   const addDoctor = async () => {
     try {
+      // Debug: Log the DoctorData before sending
+      console.log('DoctorData before sending:', DoctorData);
+
       const formData = new FormData();
       Object.entries(DoctorData).forEach(([key, value]) => {
         // Convert drExperience to number before appending
         if (key === 'drExperience') {
-          formData.append(key, value ? Number(value) : 0);
+          const numValue = value ? Number(value) : 0;
+          console.log(`Adding drExperience: ${numValue} (type: ${typeof numValue})`);
+          formData.append(key, numValue);
         } else {
           formData.append(key, value);
         }
       });
+
+      // Debug: Log FormData contents
+      console.log('FormData contents:');
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
 
       const response = await fetch(URL, {
         method: "POST",
@@ -134,15 +145,27 @@ function AddDoctor() {
 
   const updateDoctorData = async () => {
     try {
+      // Debug: Log the DoctorData before sending
+      console.log('DoctorData before updating:', DoctorData);
+
       const formData = new FormData();
       Object.entries(DoctorData).forEach(([key, value]) => {
         // Convert drExperience to number before appending
         if (key === 'drExperience') {
-          formData.append(key, value ? Number(value) : 0);
+          const numValue = value ? Number(value) : 0;
+          console.log(`Adding drExperience: ${numValue} (type: ${typeof numValue})`);
+          formData.append(key, numValue);
         } else {
           formData.append(key, value);
         }
       });
+
+      // Debug: Log FormData contents
+      console.log('FormData contents:');
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
+
       const response = await fetch(`${URL}/${id}`, {
         method: "PUT",
         headers: {
