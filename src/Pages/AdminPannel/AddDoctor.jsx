@@ -24,6 +24,7 @@ function AddDoctor() {
     drDetail: "",
     drTiming: "",
     drExperience: "",
+    drMetaTags: "",
     drStatus: true,
   });
 
@@ -196,6 +197,7 @@ function AddDoctor() {
       drDetail: "",
       drTiming: "",
       drExperience: "",
+      drMetaTags: "",
       drStatus: true,
     });
   };
@@ -397,6 +399,26 @@ function AddDoctor() {
                           name="drDetail"
                           onChange={handleQualificationChange}
                         />
+                      </div>
+                    </div>
+                    <div className="row mt-4">
+                      <div className="col-md-12">
+                        <label htmlFor="drMetaTags" className="form-label">
+                          SEO Meta Tags
+                        </label>
+                        <textarea
+                          name="drMetaTags"
+                          autoComplete="off"
+                          value={DoctorData.drMetaTags}
+                          onChange={handleDoctorInput}
+                          id="drMetaTags"
+                          rows={4}
+                          placeholder="Enter meta tags for SEO (e.g., meta description, keywords, etc.)&#10;Example: Best cardiologist in Delhi, Heart specialist, Cardiac care expert"
+                          className="form-control"
+                        />
+                        <small className="form-text text-muted">
+                          Add relevant keywords and meta information for better SEO
+                        </small>
                       </div>
                     </div>
                     <div className="row mt-4">
