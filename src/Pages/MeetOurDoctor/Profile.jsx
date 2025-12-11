@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import "./Profile.css";
 import parse from "html-react-parser";
 import axios from 'axios';
@@ -155,6 +156,20 @@ function Profile() {
 
   return (
     <div className="profile-page">
+      {/* SEO Meta Tags */}
+      {doctor && (
+        <Helmet>
+          <title>{doctor.drTitle} - Neo Hospital</title>
+          <meta name="description" content={`Book an appointment with ${doctor.drTitle}, ${doctor.drDepartment} at Neo Hospital. ${doctor.drExperience ? `${doctor.drExperience}+ years of experience.` : ''}`} />
+          {doctor.drMetaTags && (
+            <meta name="keywords" content={doctor.drMetaTags} />
+          )}
+          <meta property="og:title" content={`${doctor.drTitle} - Neo Hospital`} />
+          <meta property="og:description" content={`${doctor.drDepartment} specialist with ${doctor.drExperience || 'extensive'} years of experience`} />
+          <meta property="og:type" content="profile" />
+        </Helmet>
+      )}
+
       {showSuccessMessage && (
         <div className="success-notification">
           <div className="success-content">
