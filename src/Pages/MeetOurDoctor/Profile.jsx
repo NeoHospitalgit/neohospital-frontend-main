@@ -298,7 +298,7 @@ function Profile() {
               <form className="appointment-form" onSubmit={sendEmail} id="appointmentForm">
                 <div className="form-group">
                   <label className="form-label" htmlFor="full-name">
-                    Full Name <span className="required">*</span>
+                    <span className="required"></span>
                   </label>
                   <input
                     id="full-name"
