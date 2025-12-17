@@ -1,34 +1,28 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import logo from "../Assets/index/logo.png";
 import nabhlogo from "../Assets/index/NABH-Logo.png";
 import nbl from "../Assets/nbl.png";
 import { Link } from "react-router-dom";
-
-// import { useAuth } from "../store/auth";
-
-// import { toast } from "react-toastify";
 
 import "./Header.css";
 import Topbar from "./Topbar";
 
 function Header() {
   const [nav, setNav] = useState(false);
-  // const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const openNav = () => {
     setNav(!nav);
   };
-  // const { isLoggedIn } = useAuth();
 
   return (
     <>
       <Topbar />
-
       <div className="navbar-section">
         <Link to="/">
-          <img alt="Neo Super Speciality Hospital"  className="neologo" srcSet={logo} />
+          <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={logo} />
         </Link>
         <ul className="navbar-items">
           <li className="nav-item">
@@ -51,11 +45,6 @@ function Header() {
               Doctors
             </Link>
           </li>
-          {/* <li className="nav-item">
-            <Link className="nav-link" to="/international-patient">
-              International Patient
-            </Link>
-          </li> */}
           <li className="nav-item">
             <Link className="nav-link" to="/services">
               Patient Services
@@ -76,51 +65,17 @@ function Header() {
               Corporate Policies
             </Link>
           </li>
-          {/* 
-          {isLoggedIn ? (
-            <>
-              <li className="nav-item">
-                <Link className="nav-link" to="/logout">
-                  LOGOUT
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/admin">
-                  DASHBOARD
-                </Link>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  <button className="btn btn-outline-dark px-3">Login</button>
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Register
-                </Link>
-              </li>
-            </>
-          )} */}
         </ul>
-        <img alt="Neo Super Speciality Hospital"   className="neologo" srcSet={nbl} />
-        <img alt="Neo Super Speciality Hospital"   className="neologo" srcSet={nabhlogo} />
+        <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={nbl} />
+        <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={nabhlogo} />
         <div className={`mobile-navbar ${nav ? "open-nav" : ""}`}>
           <div onClick={openNav} className="mobile-navbar-close">
             <FontAwesomeIcon icon={faXmark} className="hamb-icon" />
           </div>
-          <img src={logo} alt="Neo Super Speciality Hospital"  className="neologo" srcSet="" />
+          <img src={logo} alt="Neo Super Speciality Hospital" className="neologo" />
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link
-                className="nav-link active"
-                onClick={openNav}
-                aria-current="page"
-                to="/"
-              >
+              <Link className="nav-link active" onClick={openNav} to="/">
                 HOME
               </Link>
             </li>
@@ -154,49 +109,25 @@ function Header() {
                 BLOG
               </Link>
             </li>
-            {/* Add Corporate Policies link here */}
             <li className="nav-item">
               <Link className="nav-link" to="/corporate-policies" onClick={openNav}>
                 CORPORATE POLICIES
               </Link>
             </li>
-            {/* login */}
-            <li className="nav-item">
-              <Link className="nav-link" to="/login" onClick={openNav}>
-                LOGIN
-              </Link>
-            </li>
-
-            <li className="nav-item labbtn">
-              <Link className="nav-link" to="/contact">
-                Book An Appointment
-              </Link>
-            </li>
-            <div className="d-flex mt-3">
-              <div className="mx-3 hospital">
-                <i className="fa fa-phone"></i>
-              </div>
-              <p>
-                Emergency Call <br />
-                <a href="tel:0120-4880000">0120-4880000 / </a>
-                <a href="tel:0120-3120000"> 0120-3120000 </a>
-              </p>
-            </div>
           </ul>
         </div>
         <div className="mobile-nav">
-          <FontAwesomeIcon
-            icon={faBars}
-            onClick={openNav}
-            className="hamb-icon"
-          />
+          <FontAwesomeIcon icon={faBars} onClick={openNav} className="hamb-icon" />
         </div>
       </div>
       <div className="labinmobile">
         <div className="left">
           <div className="labbtn">
-            <a href="http://lab.neohospital.com/online_his/design/online_lab/default.aspx"
-              target="_blank">
+            <a
+              href="http://lab.neohospital.com/online_his/design/online_lab/default.aspx"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               VIEW ONLINE LAB REPORT
             </a>
           </div>
@@ -207,6 +138,30 @@ function Header() {
           </div>
         </div>
       </div>
+      {/* WhatsApp Floating Icon */}
+      <a
+        href="https://wa.me/9599388051"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-whatsapp"
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          backgroundColor: "#25D366",
+          color: "white",
+          width: "60px",
+          height: "60px",
+          borderRadius: "50%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+          zIndex: 1000
+        }}
+      >
+        <FontAwesomeIcon icon={faWhatsapp} size="2x" />
+      </a>
     </>
   );
 }
