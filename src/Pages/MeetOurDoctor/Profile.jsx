@@ -276,124 +276,129 @@ function Profile() {
               </div>
 
               <form className="appointment-form" onSubmit={sendEmail} id="appointmentForm">
-                <div className="form-group">
-                  <label className="sr-only" htmlFor="full-name">
-                    Full Name
-                  </label>
-                  <input
-                    id="full-name"
-                    type="text"
-                    name="name"
-                    placeholder="Full Name *"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="form-input"
-                  />
-                </div>
 
-                <div className="form-group">
-                  <label className="form-label" htmlFor="email">
-                    Email Address <span className="required">*</span>
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="form-input"
-                    aria-required="true"
-                  />
-                </div>
+        {/* Full Name */}
+        <div className="form-group">
+          <label htmlFor="full-name" className="sr-only">Full Name</label>
+          <input
+            id="full-name"
+            type="text"
+            name="name"
+            placeholder="Full Name *"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="form-input"
+            required
+          />
+        </div>
 
-                <div className="form-group">
-                  <label className="form-label" htmlFor="phone">
-                    Phone Number <span className="required">*</span>
-                  </label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    value={number}
-                    onChange={(e) => setNumber(e.target.value)}
-                    className="form-input"
-                    aria-required="true"
-                  />
-                </div>
+        {/* Email */}
+        <div className="form-group">
+          <label htmlFor="email" className="sr-only">Email Address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Email Address *"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="form-input"
+            required
+          />
+        </div>
 
-                <div className="form-row">
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="preferred-date">
-                      Preferred Date <span className="required">*</span>
-                    </label>
-                    <input
-                      id="preferred-date"
-                      type="date"
-                      value={bookdate}
-                      onChange={handleDateChange}
-                      min={today}
-                      className="form-input"
-                      aria-required="true"
-                    />
-                  </div>
+        {/* Phone */}
+        <div className="form-group">
+          <label htmlFor="phone" className="sr-only">Phone Number</label>
+          <input
+            id="phone"
+            type="tel"
+            name="phone"
+            placeholder="Phone Number *"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            className="form-input"
+            required
+          />
+        </div>
 
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="preferred-time">
-                      <span className="required"></span>
-                    </label>
-                    <select
-                      id="preferred-time"
-                      value={booktime}
-                      onChange={(e) => setBooktime(e.target.value)}
-                      className="form-select"
-                      aria-required="true"
-                    >
-                      <option value="">Select time slot</option>
-                      <option value="09:00 AM">09:00 AM</option>
-                      <option value="10:00 AM">10:00 AM</option>
-                      <option value="11:00 AM">11:00 AM</option>
-                      <option value="12:00 PM">12:00 PM</option>
-                      <option value="02:00 PM">02:00 PM</option>
-                      <option value="03:00 PM">03:00 PM</option>
-                      <option value="04:00 PM">04:00 PM</option>
-                      <option value="05:00 PM">05:00 PM</option>
-                    </select>
-                  </div>
-                </div>
+        {/* Date & Time */}
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="preferred-date" className="sr-only">Preferred Date</label>
+            <input
+              id="preferred-date"
+              type="date"
+              name="date"
+              value={bookdate}
+              onChange={handleDateChange}
+              min={today}
+              className="form-input"
+              required
+            />
+          </div>
 
-                <div className="form-group">
-                  <label className="form-label" htmlFor="message">
+          <div className="form-group">
+            <label htmlFor="preferred-time" className="sr-only">Preferred Time</label>
+            <select
+              id="preferred-time"
+              name="time"
+              value={booktime}
+              onChange={(e) => setBooktime(e.target.value)}
+              className="form-select"
+              required
+            >
+              <option value="">Select Time Slot *</option>
+              <option value="09:00 AM">09:00 AM</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="02:00 PM">02:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="04:00 PM">04:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
+            </select>
+          </div>
+        </div>
 
-                  </label>
-                  <textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Any specific concerns, symptoms, or requirements..."
-                    rows={3}
-                    className="form-textarea"
-                  />
-                </div>
+  {/* Message */}
+  <div className="form-group">
+    <label htmlFor="message" className="sr-only">Message</label>
+    <textarea
+      id="message"
+      name="message"
+      placeholder="Any specific concerns, symptoms, or requirements..."
+      rows="3"
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      className="form-textarea"
+    />
+  </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="submit-btn"
-                  aria-busy={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="loading-spinner small"></div>
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19Z" />
-                      </svg>
-                      Schedule Appointment
-                    </>
-                  )}
-                </button>
-              </form>
+  {/* Submit Button */}
+  <button
+    type="submit"
+    disabled={isSubmitting}
+    className="submit-btn"
+    aria-busy={isSubmitting}
+  >
+    {isSubmitting ? (
+      <>
+        <div className="loading-spinner small"></div>
+        Submitting...
+      </>
+    ) : (
+      <>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19Z" />
+        </svg>
+        Schedule Appointment
+      </>
+    )}
+  </button>
+
+</form>
+
 
               <div className="contact-infoo">
                 <div className="contact-item">
