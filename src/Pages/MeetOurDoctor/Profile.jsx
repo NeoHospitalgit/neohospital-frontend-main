@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "./Profile.css";
 import parse from "html-react-parser";
-import axios from 'axios';
+import axios from "axios";
 import fallbackImage from "../../Assets/manpic.png";
 
 function Profile() {
@@ -18,8 +18,11 @@ function Profile() {
   const [doctorname, setDoctorname] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showAppointmentForm, setShowAppointmentForm] = useState(false); // New state for form visibility
+  const [showAppointmentForm, setShowAppointmentForm] = useState(false);
 
+  const { dr } = useParams();
+
+  // Fetch doctors data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,7 +33,7 @@ function Profile() {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        setNeodoctor(data.doctors);
+        setNeodoctor(data.doctors || []);
       } catch (error) {
         setError(error);
       }
@@ -39,9 +42,12 @@ function Profile() {
     fetchData();
   }, []);
 
-  const { dr } = useParams();
-  const doctor = Neodoctor.find((value) => value.drSlug === dr);
+  // Memoize the selected doctor to prevent unnecessary re-computations
+  const doctor = useMemo(() => {
+    return Neodoctor.find((value) => value.drSlug === dr);
+  }, [Neodoctor, dr]);
 
+  // Update doctor name when doctor is found
   useEffect(() => {
     if (doctor) {
       setDoctorname(doctor.drTitle);
@@ -49,7 +55,7 @@ function Profile() {
   }, [doctor]);
 
   // Set minimum date to today
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   if (error) {
     return (
@@ -101,15 +107,18 @@ function Profile() {
     }
 
     try {
-      const response = await axios.post('https://api.neohospital.com/api/sendmails/send-doctoremail', {
-        name,
-        number,
-        email,
-        booktime,
-        message,
-        doctorname,
-        bookdate
-      });
+      const response = await axios.post(
+        "https://api.neohospital.com/api/sendmails/send-doctoremail",
+        {
+          name,
+          number,
+          email,
+          booktime,
+          message,
+          doctorname,
+          bookdate,
+        }
+      );
 
       if (response.status === 200) {
         setShowSuccessMessage(true);
@@ -125,8 +134,8 @@ function Profile() {
         }, 5000);
       }
     } catch (error) {
-      console.error('Error submitting appointment:', error);
-      alert('Failed to submit appointment request. Please try again.');
+      console.error("Error submitting appointment:", error);
+      alert("Failed to submit appointment request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -143,11 +152,11 @@ function Profile() {
   };
 
   const getDoctorDisplayName = () => {
-    return doctor.drTitle.split('.')[1]?.trim() || doctor.drTitle;
+    return doctor.drTitle.split(".")[1]?.trim() || doctor.drTitle;
   };
 
   const formatQualification = (qualification) => {
-    return qualification.split(',').map((qual, index) => (
+    return qualification.split(",").map((qual, index) => (
       <span key={index} className="qualification-tag">
         {qual.trim()}
       </span>
@@ -157,19 +166,26 @@ function Profile() {
   return (
     <div className="profile-page">
       {/* SEO Meta Tags */}
-      {doctor && (
-        <Helmet>
-          <title>{doctor.drTitle} - Neo Hospital</title>
-          <meta name="description" content={`Book an appointment with ${doctor.drTitle}, ${doctor.drDepartment} at Neo Hospital. ${doctor.drExperience ? `${doctor.drExperience}+ years of experience.` : ''}`} />
-          {doctor.drMetaTags && (
-            <meta name="keywords" content={doctor.drMetaTags} />
-          )}
-          <meta property="og:title" content={`${doctor.drTitle} - Neo Hospital`} />
-          <meta property="og:description" content={`${doctor.drDepartment} specialist with ${doctor.drExperience || 'extensive'} years of experience`} />
-          <meta property="og:type" content="profile" />
-        </Helmet>
-      )}
+      <Helmet>
+        <title>{doctor.drTitle} - Neo Hospital</title>
+        <meta
+          name="description"
+          content={`Book an appointment with ${doctor.drTitle}, ${doctor.drDepartment} at Neo Hospital. ${
+            doctor.drExperience ? `${doctor.drExperience}+ years of experience.` : ""
+          }`}
+        />
+        {doctor.drMetaTags && <meta name="keywords" content={doctor.drMetaTags} />}
+        <meta property="og:title" content={`${doctor.drTitle} - Neo Hospital`} />
+        <meta
+          property="og:description"
+          content={`${doctor.drDepartment} specialist with ${
+            doctor.drExperience || "extensive"
+          } years of experience`}
+        />
+        <meta property="og:type" content="profile" />
+      </Helmet>
 
+      {/* Success Notification */}
       {showSuccessMessage && (
         <div className="success-notification">
           <div className="success-content">
@@ -188,6 +204,7 @@ function Profile() {
         </div>
       )}
 
+      {/* Doctor Header */}
       <div className="doctor-profile-header">
         <div className="container">
           <div className="doctor-header-grid">
@@ -195,7 +212,7 @@ function Profile() {
               <img
                 src={`https://api.neohospital.com/uploads/doctors/${doctor.drImage}`}
                 alt={doctor.drTitle}
-                onError={(e) => e.target.src = fallbackImage}
+                onError={(e) => (e.target.src = fallbackImage)}
                 loading="lazy"
               />
             </div>
@@ -206,9 +223,10 @@ function Profile() {
                 {formatQualification(doctor.drQualification)}
               </div>
               <p className="experience">
-                {doctor.drExperience ? `${doctor.drExperience}+ years experience` : "Experienced Doctor"}
+                {doctor.drExperience
+                  ? `${doctor.drExperience}+ years experience`
+                  : "Experienced Doctor"}
               </p>
-              {/* Add the appointment button here */}
               <button
                 className="hero-appointment-btn"
                 onClick={() => setShowAppointmentForm(true)}
@@ -223,6 +241,7 @@ function Profile() {
         </div>
       </div>
 
+      {/* Main Content - About Section */}
       <main className="main-content">
         <div className="container">
           <div className="content-full">
@@ -236,18 +255,16 @@ function Profile() {
                   </div>
                   About {getDoctorDisplayName()}
                 </h2>
-                <div className="about-text">
-                  {parse(doctor.drDetail)}
-                </div>
+                <div className="about-text">{parse(doctor.drDetail)}</div>
               </div>
             </section>
           </div>
         </div>
       </main>
 
-      {/* Appointment Form Modal */}
+      {/* Appointment Form Modal - Stable key to prevent remounting */}
       {showAppointmentForm && (
-        <div className="appointment-modal">
+        <div className="appointment-modal" key="appointment-modal">
           <div className="appointment-modal-content">
             <button
               className="close-modal"
@@ -271,7 +288,10 @@ function Profile() {
               <div className="appointment-note">
                 <div className="note-icon">ℹ️</div>
                 <div>
-                  <p><strong>Quick Response:</strong> Your appointment will be confirmed within 24 hours after a callback from our team.</p>
+                  <p>
+                    <strong>Quick Response:</strong> Your appointment will be confirmed within 24
+                    hours after a callback from our team.
+                  </p>
                 </div>
               </div>
 
@@ -287,6 +307,7 @@ function Profile() {
                     onChange={(e) => setName(e.target.value)}
                     className="form-input"
                     aria-required="true"
+                    required
                   />
                 </div>
 
@@ -301,6 +322,7 @@ function Profile() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="form-input"
                     aria-required="true"
+                    required
                   />
                 </div>
 
@@ -315,6 +337,7 @@ function Profile() {
                     onChange={(e) => setNumber(e.target.value)}
                     className="form-input"
                     aria-required="true"
+                    required
                   />
                 </div>
 
@@ -331,12 +354,13 @@ function Profile() {
                       min={today}
                       className="form-input"
                       aria-required="true"
+                      required
                     />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="preferred-time">
-                      <span className="required"></span>
+                      Preferred Time <span className="required">*</span>
                     </label>
                     <select
                       id="preferred-time"
@@ -344,6 +368,7 @@ function Profile() {
                       onChange={(e) => setBooktime(e.target.value)}
                       className="form-select"
                       aria-required="true"
+                      required
                     >
                       <option value="">Select time slot</option>
                       <option value="09:00 AM">09:00 AM</option>
@@ -360,7 +385,7 @@ function Profile() {
 
                 <div className="form-group">
                   <label className="form-label" htmlFor="message">
-
+                    Message (Optional)
                   </label>
                   <textarea
                     id="message"
@@ -404,8 +429,6 @@ function Profile() {
                   <div>
                     <div className="contact-label">Emergency Contact</div>
                     <div className="contact-value">0120-4880000</div>
-                    <div className="contact-value">
-                      <div className="contact-value">0120-4880000</div></div>
                   </div>
                 </div>
                 <div className="availability-badge small">
