@@ -8,7 +8,7 @@ function GalleryPage() {
 
   // Define photo and video URLs
   const photos = [
-    "src/Assets/2.jpg",
+    "../src/Assets/2.jpg",
     "src/Assets/3.jpg",
     "src/Assets/4.jpg",
     "src/Assets/5.jpg",
