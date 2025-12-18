@@ -8,15 +8,15 @@ function GalleryPage() {
 
   // Define photo and video URLs
   const photos = [
-    "../src/Assets/2.jpg",
-    "src/Assets/3.jpg",
-    "src/Assets/4.jpg",
-    "src/Assets/5.jpg",
-    "src/Assets/6.jpg",
-    "src/Assets/8.jpg",
-    "src/Assets/9.jpg",
-    "src/Assets/10.jpg",
-    "src/Assets/photo_6204191537839672558_y.jpg",
+     "../../Assets/2.jpg",
+    "../../Assets/3.jpg",
+    "../../Assets/4.jpg",
+    "../../Assets/5.jpg",
+    "../../Assets/6.jpg",
+    "../../Assets/8.jpg",
+    "../../Assets/9.jpg",
+    "../../Assets/10.jpg",
+    "../../Assets/photo_6204191537839672558_y.jpg",
   ];
 
   const videos = [
