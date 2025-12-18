@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./GalleryPage.css";
-import "./Gallery.css";
 
 function GalleryPage() {
-  const [activeTab, setActiveTab] = useState("photos"); // State to manage active tab
-  const [content, setContent] = useState([]); // State to manage content (photos or videos)
-  const [lightboxImage, setLightboxImage] = useState(null); // For displaying the clicked image in a lightbox
+  const [activeTab, setActiveTab] = useState("photos");
+  const [content, setContent] = useState([]);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
-  // Define photo and video URLs
   const photos = [
     "https://i.ibb.co/nqQn9Rpn/2.jpg",
     "https://i.ibb.co/5g8jrYr7/3.jpg",
@@ -28,24 +26,8 @@ function GalleryPage() {
   ];
 
   useEffect(() => {
-    // Shuffle content upon page reload
-    const shuffledPhotos = shuffleArray(photos);
-    const shuffledVideos = shuffleArray(videos);
-    setContent(activeTab === "photos" ? shuffledPhotos : shuffledVideos);
+    setContent(activeTab === "photos" ? photos : videos);
   }, [activeTab]);
-
-  // Function to shuffle array
-  const shuffleArray = (array) => {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [
-        shuffledArray[j],
-        shuffledArray[i],
-      ];
-    }
-    return shuffledArray;
-  };
 
   return (
     <section id="GalleryPage">
@@ -53,7 +35,6 @@ function GalleryPage() {
         <h1 className="about-title">
           <span>Gallery</span>
         </h1>
-        {/* Tab Buttons */}
         <div className="tab-buttons">
           <button
             className={`tab-button ${activeTab === "photos" ? "active" : ""}`}
@@ -68,31 +49,27 @@ function GalleryPage() {
             Videos
           </button>
         </div>
-        {/* Content Grid */}
-        <div className={`content-grid ${activeTab === "photos" ? "photos" : "videos"}`}>
+        <div className={`content-grid ${activeTab}`}>
           {content.map((item, index) => (
             <div className="content-item" key={index}>
               {activeTab === "photos" ? (
                 <img
                   src={item}
+                  alt={`Photo ${index + 1}`}
                   className="gallery-image"
-                  alt={`Gallery ${index}`}
-                  onClick={() => setLightboxImage(item)} /* Open image in lightbox */
+                  onClick={() => setLightboxImage(item)}
                 />
               ) : (
                 <iframe
                   src={item}
-                  title={`Video ${index}`}
+                  title={`Video ${index + 1}`}
                   className="video-embed"
-                  frameBorder="0"
-                  allow="autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen
                 ></iframe>
               )}
+              <p className="media-title">{activeTab === "photos" ? `Photo ${index + 1}` : `Video ${index + 1}`}</p>
             </div>
           ))}
         </div>
-        {/* Lightbox */}
         {lightboxImage && (
           <div className="lightbox" onClick={() => setLightboxImage(null)}>
             <img src={lightboxImage} alt="Full View" className="lightbox-image" />
