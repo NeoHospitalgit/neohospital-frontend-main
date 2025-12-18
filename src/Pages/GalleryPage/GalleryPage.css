@@ -1,104 +1,254 @@
-/* General Styles */
-#GalleryPage {
-  padding: 2rem;
-  background: #f7f7f7;
-  font-family: Arial, sans-serif;
+/* Gallery Section Wrapper */
+.gallery-section-wrapper {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.about-title {
+/* Main Container */
+.gallery-main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Page Heading */
+.gallery-page-heading {
   text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-  text-transform: uppercase;
-  color: #333;
+  margin-bottom: 3rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Tab Buttons */
-.tab-buttons {
+.gallery-heading-text {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.gallery-heading-text::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: #ffd700;
+  border-radius: 2px;
+}
+
+/* Tab Navigation */
+.gallery-tab-navigation {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
-.tab-button {
-  background: #e0e0e0;
-  border: none;
-  padding: 0.75rem 1.25rem;
-  margin: 0 0.5rem;
-  font-size: 1rem;
+.gallery-nav-btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.875rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   text-transform: uppercase;
-  border-radius: 5px;
+  letter-spacing: 1px;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.tab-button.active {
-  background: #007bff;
-  color: #fff;
+.gallery-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Content Grid */
-.content-grid {
+.gallery-nav-btn-active {
+  background: #ffffff;
+  color: #667eea;
+  border-color: #ffffff;
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
+}
+
+/* Media Grid */
+.gallery-media-grid {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  justify-content: center;
-  background: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
-.content-item {
-  text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+/* Gallery Card */
+.gallery-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 15px;
   overflow: hidden;
-  padding: 1rem;
-  background: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
 }
 
-.gallery-image {
+.gallery-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Photo Image */
+.gallery-photo-img {
   width: 100%;
-  height: auto;
+  height: 280px;
+  object-fit: cover;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s ease;
+  display: block;
 }
 
-.gallery-image:hover {
+.gallery-photo-img:hover {
   transform: scale(1.05);
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1);
 }
 
-.media-title {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-  color: #555;
-}
-
-.video-embed {
+/* Video Frame */
+.gallery-video-frame {
   width: 100%;
-  height: 180px;
-  border-radius: 6px;
+  height: 280px;
   border: none;
+  display: block;
+  background: #000000;
 }
 
-/* Lightbox */
-.lightbox {
+/* Card Caption */
+.gallery-card-caption {
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333333;
+  background: #f8f9fa;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Lightbox Overlay */
+.gallery-lightbox-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.95);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
+  cursor: pointer;
+  animation: gallery-fadeIn 0.3s ease;
 }
 
-.lightbox-image {
+@keyframes gallery-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Lightbox Close Button */
+.gallery-lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.gallery-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+/* Lightbox Image */
+.gallery-lightbox-img {
   max-width: 90%;
   max-height: 90%;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+  object-fit: contain;
+  animation: gallery-zoomIn 0.3s ease;
+}
+
+@keyframes gallery-zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gallery-section-wrapper {
+    padding: 2rem 1rem;
+  }
+
+  .gallery-page-heading {
+    font-size: 2rem;
+  }
+
+  .gallery-media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .gallery-nav-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .gallery-lightbox-close {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-media-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-page-heading {
+    font-size: 1.75rem;
+  }
 }
