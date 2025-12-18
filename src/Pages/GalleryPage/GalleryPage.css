@@ -52,7 +52,7 @@
 
 .gallery-nav-btn {
   background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: hsl(0deg 0% 13.93% / 41%);
+  backdrop-filter: gray;
   border: 2px solid rgba(255, 255, 255, 0.3);
   padding: 0.875rem 2rem;
   font-size: 1.1rem;
