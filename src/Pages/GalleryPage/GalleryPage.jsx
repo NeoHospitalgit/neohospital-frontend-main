@@ -19,10 +19,11 @@ function GalleryPage() {
   ];
 
   const videos = [
-    "https://www.youtube.com/embed/Cy76kcBlaoM?si=R7TrnuH_AfQyQ4Q4",
-    "https://www.youtube.com/embed/Cy76kcBlaoM?si=R7TrnuH_AfQyQ4Q4",
-    "https://www.youtube.com/embed/Cy76kcBlaoM?si=R7TrnuH_AfQyQ4Q4",
-    "https://www.youtube.com/embed/Cy76kcBlaoM?si=R7TrnuH_AfQyQ4Q4",
+    "https://youtu.be/i3tBPgnEi4A?si=_ydw3hvuPN6XrUUO",
+    "https://youtu.be/Uei1g_MQSE0?si=ka4fPgyoXIcDx0-m",
+    "https://youtu.be/2e5PAF9nZXs?si=A5PVNa7qIAggsXXc",
+    "https://youtu.be/0sStYe1r-sI?si=dcItLUh_AhjZ1duV",
+    "https://youtu.be/vlQaKlRplts?si=b0BpLQUq8lwHBAQn",
   ];
 
   useEffect(() => {
