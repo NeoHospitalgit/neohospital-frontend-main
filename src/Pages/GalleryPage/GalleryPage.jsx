@@ -8,10 +8,15 @@ function GalleryPage() {
 
   // Define photo and video URLs
   const photos = [
-    "https://picsum.photos/400/200",
-    "https://picsum.photos/400/200",
-    "https://picsum.photos/400/200",
-    "https://picsum.photos/400/200",
+    "src/Assets/2.jpg",
+    "src/Assets/3.jpg",
+    "src/Assets/4.jpg",
+    "src/Assets/5.jpg",
+    "src/Assets/6.jpg",
+    "src/Assets/8.jpg",
+    "src/Assets/9.jpg",
+    "src/Assets/10.jpg",
+    "src/Assets/photo_6204191537839672558_y.jpg",
   ];
 
   const videos = [
