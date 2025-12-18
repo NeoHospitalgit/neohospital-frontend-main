@@ -5,10 +5,11 @@ import "./Gallery.css";
 function GalleryPage() {
   const [activeTab, setActiveTab] = useState("photos"); // State to manage active tab
   const [content, setContent] = useState([]); // State to manage content (photos or videos)
+  const [lightboxImage, setLightboxImage] = useState(null); // For displaying the clicked image in a lightbox
 
   // Define photo and video URLs
   const photos = [
-     "https://i.ibb.co/nqQn9Rpn/2.jpg",
+    "https://i.ibb.co/nqQn9Rpn/2.jpg",
     "https://i.ibb.co/5g8jrYr7/3.jpg",
     "https://i.ibb.co/3yWwX90c/4.jpg",
     "https://i.ibb.co/bRKGWtX8/5.jpg",
@@ -17,7 +18,6 @@ function GalleryPage() {
     "https://i.ibb.co/YB6cYsmv/9.jpg",
     "https://i.ibb.co/1fkCSfPQ/10.jpg",
     "https://i.ibb.co/d44SGb9N/photo-6204191537839672558-y.jpg",
-    "https://i.ibb.co/przRFxSr/photo-extra.jpg",
   ];
 
   const videos = [
@@ -49,72 +49,55 @@ function GalleryPage() {
 
   return (
     <section id="GalleryPage">
-      <div className="container pd">
+      <div className="container">
         <h1 className="about-title">
           <span>Gallery</span>
         </h1>
-      </div>
-      <div className="container pd1">
-        <div className="row">
-          <div className="col-lg-6 d-flex justify-content-center">
-            <button
-              type="button"
-              className={`btn-trans btn-trans ${
-                activeTab === "photos" ? "activebtn" : ""
-              } w-100`}
-              onClick={() => setActiveTab("photos")}
-            >
-              Photos
-            </button>
-          </div>
-          <div className="col-lg-6 d-flex justify-content-center">
-            <button
-              type="button"
-              className={`btn-trans w-100 ${
-                activeTab === "videos" ? "activebtn" : ""
-              }`}
-              onClick={() => setActiveTab("videos")}
-            >
-              Videos
-            </button>
-          </div>
+        {/* Tab Buttons */}
+        <div className="tab-buttons">
+          <button
+            className={`tab-button ${activeTab === "photos" ? "active" : ""}`}
+            onClick={() => setActiveTab("photos")}
+          >
+            Photos
+          </button>
+          <button
+            className={`tab-button ${activeTab === "videos" ? "active" : ""}`}
+            onClick={() => setActiveTab("videos")}
+          >
+            Videos
+          </button>
         </div>
-      </div>
-
-      <div
-        className={`container ${
-          activeTab === "photos" ? "photo active" : "video active"
-        } pd1`}
-      >
-        <div className="row">
+        {/* Content Grid */}
+        <div className={`content-grid ${activeTab === "photos" ? "photos" : "videos"}`}>
           {content.map((item, index) => (
-            <div
-              key={index}
-              className="col-lg-4 d-flex justify-content-center"
-              style={{ minHeight: "210px" }} // Set a fixed height for video containers
-            >
+            <div className="content-item" key={index}>
               {activeTab === "photos" ? (
-                <div className="d-flex flex-column">
-                  <img src={item} className="img-fluid" alt="Gallery" />
-                  <p className="text-center mrgcolor">Title</p>
-                </div>
+                <img
+                  src={item}
+                  className="gallery-image"
+                  alt={`Gallery ${index}`}
+                  onClick={() => setLightboxImage(item)} /* Open image in lightbox */
+                />
               ) : (
-                <div key={index} className="d-flex flex-column ">
-                  <iframe
-                    width="100%"
-                    height="auto"
-                    src={item}
-                    title="YouTube video player"
-                    frameBorder="1"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
-                </div>
+                <iframe
+                  src={item}
+                  title={`Video ${index}`}
+                  className="video-embed"
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               )}
             </div>
           ))}
         </div>
+        {/* Lightbox */}
+        {lightboxImage && (
+          <div className="lightbox" onClick={() => setLightboxImage(null)}>
+            <img src={lightboxImage} alt="Full View" className="lightbox-image" />
+          </div>
+        )}
       </div>
     </section>
   );
