@@ -30,49 +30,58 @@ function GalleryPage() {
   }, [activeTab]);
 
   return (
-    <section id="GalleryPage">
-      <div className="container">
-        <h1 className="about-title">
-          <span>Gallery</span>
+    <section className="gallery-section-wrapper">
+      <div className="gallery-main-container">
+        <h1 className="gallery-page-heading">
+          <span className="gallery-heading-text">Gallery</span>
         </h1>
-        <div className="tab-buttons">
+
+        <div className="gallery-tab-navigation">
           <button
-            className={`tab-button ${activeTab === "photos" ? "active" : ""}`}
+            className={`gallery-nav-btn ${activeTab === "photos" ? "gallery-nav-btn-active" : ""}`}
             onClick={() => setActiveTab("photos")}
           >
             Photos
           </button>
           <button
-            className={`tab-button ${activeTab === "videos" ? "active" : ""}`}
+            className={`gallery-nav-btn ${activeTab === "videos" ? "gallery-nav-btn-active" : ""}`}
             onClick={() => setActiveTab("videos")}
           >
             Videos
           </button>
         </div>
-        <div className={`content-grid ${activeTab}`}>
+
+        <div className={`gallery-media-grid gallery-media-grid-${activeTab}`}>
           {content.map((item, index) => (
-            <div className="content-item" key={index}>
+            <div className="gallery-card" key={index}>
               {activeTab === "photos" ? (
                 <img
                   src={item}
                   alt={`Photo ${index + 1}`}
-                  className="gallery-image"
+                  className="gallery-photo-img"
                   onClick={() => setLightboxImage(item)}
                 />
               ) : (
                 <iframe
                   src={item}
                   title={`Video ${index + 1}`}
-                  className="video-embed"
+                  className="gallery-video-frame"
+                  allowFullScreen
                 ></iframe>
               )}
-              <p className="media-title">{activeTab === "photos" ? `Photo ${index + 1}` : `Video ${index + 1}`}</p>
+              <p className="gallery-card-caption">
+                {activeTab === "photos" ? `Photo ${index + 1}` : `Video ${index + 1}`}
+              </p>
             </div>
           ))}
         </div>
+
         {lightboxImage && (
-          <div className="lightbox" onClick={() => setLightboxImage(null)}>
-            <img src={lightboxImage} alt="Full View" className="lightbox-image" />
+          <div className="gallery-lightbox-overlay" onClick={() => setLightboxImage(null)}>
+            <button className="gallery-lightbox-close" onClick={() => setLightboxImage(null)}>
+              ✕
+            </button>
+            <img src={lightboxImage} alt="Full View" className="gallery-lightbox-img" />
           </div>
         )}
       </div>
