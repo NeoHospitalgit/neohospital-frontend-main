@@ -61,6 +61,16 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
+            <a
+              className="nav-link"
+              href="https://www.neohospital.com/gallery"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Gallery
+            </a>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link" to="/corporate-policies">
               Corporate Policies
             </Link>
@@ -108,6 +118,17 @@ function Header() {
               <Link className="nav-link" to="/blog" onClick={openNav}>
                 BLOG
               </Link>
+            </li>
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                href="https://www.neohospital.com/gallery"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={openNav}
+              >
+                GALLERY
+              </a>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/corporate-policies" onClick={openNav}>
