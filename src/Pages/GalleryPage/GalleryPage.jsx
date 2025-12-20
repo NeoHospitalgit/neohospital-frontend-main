@@ -8,14 +8,14 @@ function GalleryPage() {
 
   const photos = [
     "https://international-violet-ioun74jkgs-a34xpd4k81.edgeone.dev/2.jpg",
-    "https://i.ibb.co/5g8jrYr7/3.jpg",
-    "https://i.ibb.co/3yWwX90c/4.jpg",
-    "https://i.ibb.co/bRKGWtX8/5.jpg",
-    "https://i.ibb.co/xqRCH2Hh/6.jpg",
-    "https://i.ibb.co/ZnWsQ70/8.jpg",
-    "https://i.ibb.co/YB6cYsmv/9.jpg",
-    "https://i.ibb.co/1fkCSfPQ/10.jpg",
-    "https://i.ibb.co/d44SGb9N/photo-6204191537839672558-y.jpg",
+    "https://img.sanishtech.com/u/b52d67078cce2c428b80bc12d9d54ecc.jpg",
+    "https://img.sanishtech.com/u/dff14989125b0cd75b0dba1ce05533c0.jpg",
+    "https://img.sanishtech.com/u/9ccd02c25b7799b5cddc69066f00e12a.jpg",
+    "https://img.sanishtech.com/u/7a0005a81493704186ae280f1fe25387.jpg",
+    "https://img.sanishtech.com/u/7a3c648a498f0ce8fd2cd1f8c92c4cfb.jpg",
+    "https://img.sanishtech.com/u/05f4eccc5c1e94d59f421993d54246e3.jpg",
+    "https://img.sanishtech.com/u/280177d80ef91b932036714b4d0be493.jpg",
+    "https://img.sanishtech.com/u/f8c4c64378d627ad851e37e086803518.jpg",
   ];
 
   const videos = [
