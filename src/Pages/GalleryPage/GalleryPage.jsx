@@ -7,7 +7,7 @@ function GalleryPage() {
   const [lightboxImage, setLightboxImage] = useState(null);
 
   const photos = [
-    "https://i.ibb.co/nqQn9Rpn/2.jpg",
+    "https://international-violet-ioun74jkgs-a34xpd4k81.edgeone.dev/2.jpg",
     "https://i.ibb.co/5g8jrYr7/3.jpg",
     "https://i.ibb.co/3yWwX90c/4.jpg",
     "https://i.ibb.co/bRKGWtX8/5.jpg",
