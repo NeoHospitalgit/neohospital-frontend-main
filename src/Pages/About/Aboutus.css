@@ -61,7 +61,7 @@
 .about-title span::before {
     content: '';
     position: absolute;
-    width: 70%;
+    width: 100%;
     height: 6px;
     background: linear-gradient(to right, #0b4e8d, #046f54);
     border-radius: 8px;
