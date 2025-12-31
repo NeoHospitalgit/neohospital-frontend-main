@@ -2,8 +2,9 @@
   background: linear-gradient(#0db7ad40, #0DB7AD02);
 }
 .titles{
-
-  
+  text-align: center;
+    font-size: 25px;
+    margin-top: 17px;
 }
 
 .departmentarrow .custom-prev-arrow,
