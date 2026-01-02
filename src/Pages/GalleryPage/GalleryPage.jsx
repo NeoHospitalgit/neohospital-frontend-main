@@ -6,9 +6,33 @@ function GalleryPage() {
   const [content, setContent] = useState([]);
   const [lightboxImage, setLightboxImage] = useState(null);
 
- 
-  const photos = Array.from({ length: 23 }, (_, i) => `images/${i + 1}.jpg`);
+const photos = [
+  "images/1.jpg",
+  "images/2.jpg",
+  "images/3.jpg",
+  "images/4.jpg",
+  "images/5.jpg",
+  "images/6.jpg",
+  "images/7.jpg",
+  "images/8.jpg",
+  "images/9.jpg",
+  "images/10.jpg",
+  
+  "images/12.jpg",
+  "images/13.jpg",
+  "images/14.jpg",
+  "images/15.jpg",
+  "images/16.jpg",
+  "images/17.jpg",
+  "images/18.jpg",
+  "images/19.jpg",
+  "images/20.jpg",
+  "images/21.jpg",
+  "images/22.jpg",
+  "images/23.jpg"
+];
 
+ 
   const videos = [
        "https://www.youtube.com/embed/i3tBPgnEi4A",
     "https://www.youtube.com/embed/Uei1g_MQSE0",
