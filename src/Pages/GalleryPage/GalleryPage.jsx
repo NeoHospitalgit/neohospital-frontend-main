@@ -6,17 +6,8 @@ function GalleryPage() {
   const [content, setContent] = useState([]);
   const [lightboxImage, setLightboxImage] = useState(null);
 
-  const photos = [
-    "https://international-violet-ioun74jkgs-a34xpd4k81.edgeone.dev/2.jpg",
-    "https://img.sanishtech.com/u/b52d67078cce2c428b80bc12d9d54ecc.jpg",
-    "https://img.sanishtech.com/u/dff14989125b0cd75b0dba1ce05533c0.jpg",
-    "https://img.sanishtech.com/u/9ccd02c25b7799b5cddc69066f00e12a.jpg",
-    "https://img.sanishtech.com/u/7a0005a81493704186ae280f1fe25387.jpg",
-    "https://img.sanishtech.com/u/7a3c648a498f0ce8fd2cd1f8c92c4cfb.jpg",
-    "https://img.sanishtech.com/u/05f4eccc5c1e94d59f421993d54246e3.jpg",
-    "https://img.sanishtech.com/u/280177d80ef91b932036714b4d0be493.jpg",
-    "https://img.sanishtech.com/u/f8c4c64378d627ad851e37e086803518.jpg",
-  ];
+ 
+  const photos = Array.from({ length: 23 }, (_, i) => `images/${i + 1}.jpg`);
 
   const videos = [
        "https://www.youtube.com/embed/i3tBPgnEi4A",
