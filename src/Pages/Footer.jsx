@@ -336,7 +336,7 @@ function Footer() {
               <div className="row">
                 <div className="col-xl-6 col-lg-6 text-center text-lg-left">
                   <div className="copyright-text">
-                    <p>2025 All rights reserved © by neohospital.com</p>
+                    <p>2026 All rights reserved © by neohospital.com</p>
                   </div>
                 </div>
                 <div className="col-xl-6 col-lg-6 d-none d-lg-block text-right">
