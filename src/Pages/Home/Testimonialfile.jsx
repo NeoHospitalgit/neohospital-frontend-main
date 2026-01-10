@@ -87,7 +87,7 @@ const Testimonialfile = () => {
                     {testimonials.map((testimonial) => (
                       <div key={testimonial.id} className="testimonial-content px-4">
                         <p className="lead fst-italic">"{testimonial.text}"</p>
-                        <div className="mt-4">
+                        <div className="mt-4" style={{ margin: "0 0 0 75px"}}>
                           <strong className="d-block">{testimonial.author}</strong>
                           {testimonial.location && <small className="text-muted">{testimonial.location}</small>}
                         </div>
@@ -104,7 +104,7 @@ const Testimonialfile = () => {
                         src={userreview}
                         alt={`${testimonial.author}'s photo`}
                         className="rounded-circle mb-3"
-                        style={{ width: "70px", height: "70px", objectFit: "cover"}}
+                        style={{ width: "70px", height: "70px", objectFit: "cover" , margin: "0 0 0 75px"}}
                       />
                       <h6 className="mb-1">{testimonial.author}</h6>
                       <div className="text-warning small">
