@@ -18,11 +18,11 @@
 .ClinicalService .about-title span::before {
     content: '';
     position: absolute;
-    width: 75%;
+    width: 100%;
     height: 4px;
     background-color: #0b4e8d;
     border-radius: 8px;
-    left: 0;
+    /* left: 0; */
     bottom: -12px;
 }
 .ClinicalService{
