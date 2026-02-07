@@ -161,12 +161,18 @@ function Profile() {
         <Helmet>
           <title>{doctor.drTitle} - Neo Hospital</title>
           <meta name="description" content={`Book an appointment with ${doctor.drTitle}, ${doctor.drDepartment} at Neo Hospital. ${doctor.drExperience ? `${doctor.drExperience}+ years of experience.` : ''}`} />
-          {doctor.drMetaTags && (
-            <meta name="keywords" content={doctor.drMetaTags} />
+          {doctor.drDepartment && (
+            <meta name="keywords" content={`${doctor.drDepartment} in noida `} />
           )}
           <meta property="og:title" content={`${doctor.drTitle} - Neo Hospital`} />
           <meta property="og:description" content={`${doctor.drDepartment} specialist with ${doctor.drExperience || 'extensive'} years of experience`} />
           <meta property="og:type" content="profile" />
+
+          <meta name="robots" content="index, follow" />
+          <meta name="googlebot" content="index, follow" />
+          <meta name="bingbot" content="index, follow" />
+          <meta name="author" content="Neo Hospital" />
+          <meta name="publisher" content="YRC" />
         </Helmet>
       )}
 
