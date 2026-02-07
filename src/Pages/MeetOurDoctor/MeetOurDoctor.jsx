@@ -9,8 +9,8 @@ function MeetOurDoctor() {
   return (
     <>
       <Helmet>
-        <title>Meet Our Skilled Doctors at Neo Super-Speciality Hospital</title>
-        <meta name="title" content="Meet Our Skilled Doctors at Neo Super-Speciality Hospital" />
+        <title>Meet Our Skilled Doctors at Neo Super-Speciality Hospitals</title>
+        <meta name="title" content="Meet Our Skilled Doctors at Neo Super-Speciality Hospitals" />
         <meta name="description" content="Explore Neo Hospital’s team of expert, experienced doctors and specialists dedicated to providing advanced, compassionate care across all major medical fields." />
 
         <meta name="keywords" content="specialist doctors in Noida, best doctors at Neo Hospital, Neo Hospital medical specialists, expert doctors Noida, top healthcare specialists Noida" />
