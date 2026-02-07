@@ -159,7 +159,7 @@ function Profile() {
       {/* SEO Meta Tags */}
       {doctor && (
         <Helmet>
-          {/* <title>{doctor.drTitle} - Neo Hospital</title> */}
+          <title>{doctor.drTitle} - Neo Hospital</title>
           <meta name="description" content={`Book an appointment with ${doctor.drTitle}, ${doctor.drDepartment} at Neo Hospital. ${doctor.drExperience ? `${doctor.drExperience}+ years of experience.` : ''}`} />
           {doctor.drDepartment && (
             <meta name="keywords" content={`${doctor.drDepartment} in noida `} />
