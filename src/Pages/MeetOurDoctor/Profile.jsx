@@ -200,7 +200,7 @@ function Profile() {
               />
             </div>
             <div className="doctor-info-container">
-              <h1>{doctor.drTitle}sss</h1>
+              <h1>{doctor.drTitle}</h1>
               <p className="specialty">{doctor.drDepartment}</p>
               <div className="qualifications">
                 {formatQualification(doctor.drQualification)}
