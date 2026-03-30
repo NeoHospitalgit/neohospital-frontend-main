@@ -27,9 +27,7 @@ function Card({ doctor }) {
               <div className="face face2">
                 <div className="content">
                    <p
-                    dangerouslySetInnerHTML={{
-                      __html: doctor.drQualification,
-                    }}
+                   REMOVED
                   ></p>
                    <p>{doctor.drTiming}</p>
                   <p>{doctor.drDepartment}</p>
