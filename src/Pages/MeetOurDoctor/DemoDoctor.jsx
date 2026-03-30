@@ -111,10 +111,10 @@ function DemoDoctor() {
                       <Doctorcard
                         doctorpic={doctor.drImage}
                         doctorname={doctor.drTitle}
-                        doctordetails={doctor.drQualification}
+                        {/* doctordetails={doctor.drQualification} */}
                         doctorslug={doctor.drSlug}
                         doctordepartment={doctor.drDepartment}
-                        doctordetails={"TEST DATA"}
+                        
                       />
                     </div>
                   ))}
