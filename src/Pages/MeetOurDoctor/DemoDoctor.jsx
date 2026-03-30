@@ -114,6 +114,7 @@ function DemoDoctor() {
                         doctordetails={doctor.drQualification}
                         doctorslug={doctor.drSlug}
                         doctordepartment={doctor.drDepartment}
+                        doctordetails={"TEST DATA"}
                       />
                     </div>
                   ))}
