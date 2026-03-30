@@ -25,10 +25,10 @@ function Doctorcard(props) {
               </div>
               <div className="face face2">
                 <div className="content">
-                  {/* <p>{parse(props.doctordetails)}</p> */}
-                  {/* <p>{props.doctortime}</p>
+                  <p>{parse(props.doctordetails)}</p> 
+          <p>{props.doctortime}</p>
                  <p>{props.doctorspecialist}</p> 
-                  <p>{props.doctordepartment}</p> */}
+                  <p>{props.doctordepartment}</p> 
                   <div>
                     <button className="text-appointment-btn">📝 Schedule</button>
                   </div>
