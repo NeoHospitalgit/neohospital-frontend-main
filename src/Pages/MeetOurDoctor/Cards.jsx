@@ -26,11 +26,11 @@ function Card({ doctor }) {
               </div>
               <div className="face face2">
                 <div className="content">
-                  <p
+                  {/* <p
                     dangerouslySetInnerHTML={{
                       __html: doctor.drQualification,
                     }}
-                  ></p>
+                  ></p> */}
                   <p>{doctor.drTiming}</p>
                   <p>{doctor.drDepartment}</p>
                   <div>
