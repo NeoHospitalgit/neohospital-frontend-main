@@ -407,37 +407,3 @@
     display: grid;
   }
 }
-.nav-item.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
-  display: none;
-  list-style: none;
-  padding: 10px 0;
-  min-width: 200px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  z-index: 999;
-}
-
-.dropdown-menu li {
-  padding: 8px 15px;
-}
-
-.dropdown-menu li a {
-  color: #000;
-  text-decoration: none;
-}
-
-.dropdown-menu li:hover {
-  background: #f5f5f5;
-}
-
-/* Hover pe open */
-.nav-item.dropdown:hover .dropdown-menu {
-  display: block;
-}
