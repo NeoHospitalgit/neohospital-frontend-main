@@ -22,6 +22,7 @@ import ServiceDetails from "./Pages/Services/servicedetails.jsx";
 import BlogDetails from "./Pages/OurBlog/BlogDetails.jsx";
 import Sitemap from "./Pages/sitemap";
 import CorporatePolicies from "./Pages/Corporate/CorporatePolicies.jsx";
+import BioMedicalReport from "./Pages/BioMedical/BioMedicalReport.jsx";
 
 // manage page routes
 import Login from "./Pages/manage/Login.jsx";
@@ -98,6 +99,7 @@ const App = () => {
           <Route path="/blog" element={<OurBlog />} />
           <Route path="/services" element={<Service />} />
           <Route path="/corporate-policies" element={<CorporatePolicies />} />
+          <Route path="/bio-medical-report" element={<BioMedicalReport />} />
          <Route path="service/:service" element={<ServiceDetails />} />
          <Route path="service/:service/:servicedetail" element={<ServiceDetails />} />
           <Route
