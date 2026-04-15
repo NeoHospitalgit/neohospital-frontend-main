@@ -131,18 +131,14 @@ function Header() {
               </a>
             </li>
             <li className="nav-item">
-              <span className="nav-link">CORPORATE POLICIES</span>
-              <ul className="dropdown-menu">
-                <li>
-                <Link className="nav-link" to="/corporate-policies" onClick={openNav}>
-                  CORPORATE POLICIES
-                </Link>
-                </li>
-                <li>
-                  <Link to="/bio-medical-report" onClick={openNav}>BIO MEDICAL REPORT</Link>
-                </li>
-               
-              </ul>
+              <Link className="nav-link" to="/corporate-policies" onClick={openNav}>
+                CORPORATE POLICIES
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/corporate-policies" onClick={openNav}>
+               BIO MEDICAL REPORT
+              </Link>
             </li>
             
           </ul>
