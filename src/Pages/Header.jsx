@@ -77,7 +77,7 @@ function Header() {
           </li>
            <li className="nav-item">
               <Link className="nav-link" to="/bio-medical-report">
-               Bio Medical Rreport
+               Bio Medical Report
               </Link>
             </li>
         </ul>
