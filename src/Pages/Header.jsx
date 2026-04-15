@@ -75,6 +75,11 @@ function Header() {
               Corporate Policies
             </Link>
           </li>
+           <li className="nav-item">
+              <Link className="nav-link" to="/bio-medical-report" onClick={openNav}>
+               BIO MEDICAL REPORT
+              </Link>
+            </li>
         </ul>
         <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={nbl} />
         <img alt="Neo Super Speciality Hospital" className="neologo" srcSet={nabhlogo} />
