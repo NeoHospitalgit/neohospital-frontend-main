@@ -77,7 +77,7 @@ function Header() {
           </li>
            <li className="nav-item">
               <Link className="nav-link" to="/bio-medical-report" onClick={openNav}>
-               BIO MEDICAL REPORT
+               Bio Medical Rreport
               </Link>
             </li>
         </ul>
