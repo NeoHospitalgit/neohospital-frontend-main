@@ -69,10 +69,10 @@ function BioMedicalReport() {
 
       <section className="policies-section">
       <div className="policies-header">
-        <h1 className="policies-title">Corporate Policies</h1>
+        <h1 className="policies-title">Bio Medical Report</h1>
         <div className="title-underline"></div>
         <p className="policies-description">
-          Our corporate policies reflect our commitment to excellence, transparency, and patient care.
+          Our Bio Medical Report reflect our commitment to excellence, transparency, and patient care.
         </p>
       </div>
 
