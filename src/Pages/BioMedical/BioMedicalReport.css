@@ -101,3 +101,81 @@
     gap: 1.5rem;
   }
 }
+/* ================= TABLE DESIGN ================= */
+
+.table {
+  width: 100%;
+  margin-top: 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  background: linear-gradient(135deg, #0e7c90, #0f766e);
+  color: #fff;
+  padding: 18px 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Rows */
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  padding: 18px 20px;
+  border-bottom: 1px dashed #cbd5e1;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.table-row:hover {
+  background: #f1f5f9;
+  transform: scale(1.01);
+}
+
+/* Text styling */
+.table-row div {
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+/* Download button */
+.download-btn {
+  background: rgba(14, 124, 144, 0.1);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: #0e7c90;
+  color: white;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr;
+    text-align: left;
+    gap: 10px;
+  }
+
+  .table-header {
+    font-size: 1rem;
+  }
+
+  .table-row {
+    padding: 15px;
+  }
+}
