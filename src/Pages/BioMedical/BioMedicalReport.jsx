@@ -5,24 +5,24 @@ import { Helmet } from "react-helmet";
 function BioMedicalReport() {
   const reports = [
    
-   {
-      id: 1,
-      title: "CORPORATE SOCIAL RESPONSIBILITY POLICY",
-      hospital: "Our commitment to maintaining the highest standards of healthcare",
-      file: "/pdfs/corporate.pdf"
-    },
-     {
-      id: 2,
-      title: "VIGIL MECHANISM POLICY",
-      hospital: "A mechanism to report unethical behavior.",
-      file: "/pdfs/vigil.pdf"
-    },
-     {
-      id: 3,
-      title: "ETHICS AT THE CODE",
-      hospital: "Our commitment to ethical practices in all aspects of our operations.",
-      file: "/pdfs/Li.pdf"
-    },
+   // {
+   //    id: 1,
+   //    title: "CORPORATE SOCIAL RESPONSIBILITY POLICY",
+   //    hospital: "Our commitment to maintaining the highest standards of healthcare",
+   //    file: "/pdfs/corporate.pdf"
+   //  },
+   //   {
+   //    id: 2,
+   //    title: "VIGIL MECHANISM POLICY",
+   //    hospital: "A mechanism to report unethical behavior.",
+   //    file: "/pdfs/vigil.pdf"
+   //  },
+   //   {
+   //    id: 3,
+   //    title: "ETHICS AT THE CODE",
+   //    hospital: "Our commitment to ethical practices in all aspects of our operations.",
+   //    file: "/pdfs/Li.pdf"
+   //  },
   ];
 
   return (
