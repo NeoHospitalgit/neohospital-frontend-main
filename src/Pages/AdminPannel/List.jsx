@@ -82,7 +82,7 @@ function List() {
                 <Link to="/manage-testimonials">Manage Testimonials</Link>
               </li>
             </ol>
-          )}
+            )}
 
           <li
             onClick={() => toggleSubMenu("speciality")}
@@ -135,19 +135,37 @@ function List() {
             <Link to="/add-doctors">Doctors</Link>
             <i className="fa fa-caret-down"></i>
           </li>
-          {openMenu === "doctors" && (
-            <ol>
-              <li>
-                <Link to="/add-doctors">Add Doctors</Link>
-              </li>
-              <li>
-                <Link to="/add-home-doctors">Add Home Doctors</Link>
-              </li>
-              <li>
-                <Link to="/manage-doctors">Manage Doctors</Link>
-              </li>
-            </ol>
-          )}
+            {openMenu === "doctors" && (
+              <ol>
+                <li>
+                  <Link to="/add-doctors">Add Doctors</Link>
+                </li>
+                <li>
+                  <Link to="/add-home-doctors">Add Home Doctors</Link>
+                </li>
+                <li>
+                  <Link to="/manage-doctors">Manage Doctors</Link>
+                </li>
+              </ol>
+            )}
+            
+          <li
+            onClick={() => toggleSubMenu("medical-report")}
+            className={openMenu === "medical-report" ? "active" : ""}
+          >
+            <Link to="/add-bio-medical-report">Bio Medical Report</Link>
+            <i className="fa fa-caret-down"></i>
+          </li>
+            {openMenu === "medical-report" && (
+              <ol>
+                <li>
+                  <Link to="/add-bio-medical-report">Add Bio Medical Report</Link>
+                </li>
+                <li>
+                  <Link to="/manage-medical-report">Manage Bio Medical Report</Link>
+                </li>
+              </ol>
+            )}
         </ul>
       </div>
     </div>
