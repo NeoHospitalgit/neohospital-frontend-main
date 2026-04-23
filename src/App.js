@@ -23,7 +23,6 @@ import BlogDetails from "./Pages/OurBlog/BlogDetails.jsx";
 import Sitemap from "./Pages/sitemap";
 import CorporatePolicies from "./Pages/Corporate/CorporatePolicies.jsx";
 import BioMedicalReport from "./Pages/BioMedical/BioMedicalReport.jsx";
-import ManageBioReports from "./Pages/AdminPannel/ManageBioReports.jsx";
 
 // manage page routes
 import Login from "./Pages/manage/Login.jsx";
@@ -61,7 +60,6 @@ import ManageDoctor from "./Pages/AdminPannel/ManageDoctor.jsx";
 
 import ManageServices from "./Pages/AdminPannel/ManageService.jsx";
 import AddService from "./Pages/AdminPannel/AddService.jsx";
-import AddBioMedicalReport from "./Pages/AdminPannel/AddBioMedicalReport.jsx";
 import AddSeviceCate from "./Pages/AdminPannel/AddSeviceCate.jsx";
 import ManageServiceCategory from "./Pages/AdminPannel/ManageServiceCategory.jsx";
 
@@ -150,9 +148,6 @@ const App = () => {
             path="/manage-service-category"
             element={<ManageServiceCategory />}
           />
-          <Route path="/add-bio-medical-report" element={<AddBioMedicalReport />} />
-          <Route path="/add-bio-medical-report/:id" element={<AddBioMedicalReport />} />
-          <Route path="/manage-medical-report" element={<ManageBioReports />} />
         </Routes>
         {!isLoggedIn && <Footer />}
       </div>
