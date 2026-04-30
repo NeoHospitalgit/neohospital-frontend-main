@@ -12,11 +12,25 @@ function DoctorAll() {
         const response = await fetch(
           "https://api.neohospital.com/api/adminv7/view-home-doctors"
         );
+
         if (!response.ok) {
           throw new Error("Failed to fetch doctors");
         }
+
         const data = await response.json();
-        setHomeDoc(data.doctors);
+
+        // ✅ REMOVE DUPLICATES BY NAME (IMPORTANT FIX)
+        const uniqueDoctors = [
+          ...new Map(
+            (data.doctors || []).map((doc) => [
+              doc.drSlug || doc.drTitle, // slug best, fallback title
+              doc,
+            ])
+          ).values(),
+        ];
+
+        setHomeDoc(uniqueDoctors);
+
       } catch (error) {
         setError(error);
       } finally {
@@ -36,23 +50,21 @@ function DoctorAll() {
   }
 
   return (
-    <>
-      <section>
-        <div className="row">
-          {homedoc.slice(0, 4).map((doctor) => (
-            <div key={doctor._id} className="col-md-3">
-              <Doctorcard
-                doctorid={doctor._id}
-                doctorpic={doctor.drImage}
-                doctorname={doctor.drTitle}
-                doctordetails={doctor.drQualification}
-                doctorslug={doctor.drSlug}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-    </>
+    <section>
+      <div className="row">
+        {homedoc.slice(0, 4).map((doctor) => (
+          <div key={doctor._id} className="col-md-3">
+            <Doctorcard
+              doctorid={doctor._id}
+              doctorpic={doctor.drImage}
+              doctorname={doctor.drTitle}
+              doctordetails={doctor.drQualification}
+              doctorslug={doctor.drSlug}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
