@@ -40,18 +40,22 @@ function Footer() {
     setIsSubmitting(true);
 
     // Validate inputs
-    if (!name || !number || !email || !message) {
+    if (!name || !number  || !message) {
       window.alert("Please fill out all fields.");
       setIsSubmitting(false);
       return;
     }
 
     // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      window.alert("Please enter a valid email address.");
-      setIsSubmitting(false);
-      return;
+   // Validate email only if user entered it
+    if (email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!emailRegex.test(email)) {
+        window.alert("Please enter a valid email address.");
+        setIsSubmitting(false);
+        return;
+      }
     }
 
     // Validate phone number format
