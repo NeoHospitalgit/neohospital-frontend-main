@@ -26,13 +26,16 @@ function Contactform() {
       return;
     }
 
-    // Validate email format
+    // Validate email only if user entered it
+  if (email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
     if (!emailRegex.test(email)) {
       window.alert("Please enter a valid email address.");
       setIsSubmitting(false);
       return;
     }
+  }
 
     // Validate phone number format
     // Allow spaces, dashes, and optional country code
