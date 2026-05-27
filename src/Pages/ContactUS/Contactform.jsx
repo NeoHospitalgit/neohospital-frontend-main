@@ -20,7 +20,7 @@ function Contactform() {
     setIsSubmitting(true);
 
     // Validate inputs
-    if (!name || !number || !email || !message) {
+    if (!name || !number || !message) {
       window.alert("Please fill out all fields.");
       setIsSubmitting(false);
       return;
