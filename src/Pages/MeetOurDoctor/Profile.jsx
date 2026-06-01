@@ -86,12 +86,15 @@ function Profile() {
       return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      window.alert("Please enter a valid email address.");
-      setIsSubmitting(false);
-      return;
-    }
+     if (email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(email)) {
+          window.alert("Please enter a valid email address.");
+          setIsSubmitting(false);
+          return;
+        }
+      }
 
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!phoneRegex.test(number)) {
