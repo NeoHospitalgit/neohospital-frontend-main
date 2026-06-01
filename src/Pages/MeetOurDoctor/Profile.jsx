@@ -80,7 +80,7 @@ function Profile() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    if (!name || !number || !email || !booktime || !bookdate) {
+    if (!name || !number || !booktime || !bookdate) {
       window.alert("Please fill out all required fields.");
       setIsSubmitting(false);
       return;
@@ -305,11 +305,11 @@ function Profile() {
             id="email"
             type="email"
             name="email"
-            placeholder="Email Address *"
+            placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="form-input"
-            required
+            
           />
         </div>
 
