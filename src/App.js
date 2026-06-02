@@ -58,7 +58,7 @@ import ManageServiceCategory from "./Pages/AdminPannel/ManageServiceCategory.jsx
 import AddHomeDoctors from "./Pages/AdminPannel/AddHomeDoctors.jsx";
 import ManageHomeDoctors from "./Pages/AdminPannel/ManageHomeDoctors.jsx";
 import DetailsDepartment from "./Pages/OurDepartment/DetailsDepartment.jsx";
-import ManageAppointments from "./Pages/Admin/ManageAppointments";
+import ManageAppointments from "./Pages/AdminPannel/ManageAppointments.jsx";
 const App = () => {
   const { isLoading, isLoggedIn } = useAuth();
 
