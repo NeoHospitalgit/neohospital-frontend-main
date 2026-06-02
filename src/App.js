@@ -58,7 +58,7 @@ import ManageServiceCategory from "./Pages/AdminPannel/ManageServiceCategory.jsx
 import AddHomeDoctors from "./Pages/AdminPannel/AddHomeDoctors.jsx";
 import ManageHomeDoctors from "./Pages/AdminPannel/ManageHomeDoctors.jsx";
 import DetailsDepartment from "./Pages/OurDepartment/DetailsDepartment.jsx";
-
+import ManageAppointments from "./Pages/Admin/ManageAppointments";
 const App = () => {
   const { isLoading, isLoggedIn } = useAuth();
 
@@ -140,6 +140,7 @@ const App = () => {
           <Route path="/add-bio-medical-report" element={isLoggedIn ? <AddBioMedicalReport /> : <Navigate to="/login" />} />
           <Route path="/add-bio-medical-report/:id" element={isLoggedIn ? <AddBioMedicalReport /> : <Navigate to="/login" />} />
           <Route path="/manage-medical-report" element={isLoggedIn ? <ManageBioReports /> : <Navigate to="/login" />} />
+          <Route path="/appointments"  element={isLoggedIn ? <ManageAppointments /> : <Navigate to="/login" />} />
         </Routes>
 
         {!isLoggedIn && <Footer />}
