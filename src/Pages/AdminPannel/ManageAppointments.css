@@ -1,1 +1,72 @@
+/* Heading */
+.addblogform h2 {
+  background: #001a33;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
 
+/* DataTable Top Section */
+.dataTables_wrapper .dt-buttons {
+  margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dt-button {
+  background: #0d6efd !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 8px 15px !important;
+  margin-right: 8px !important;
+  font-size: 14px !important;
+}
+
+.dataTables_wrapper .dt-button:hover {
+  background: #084298 !important;
+}
+
+/* Search Box */
+.dataTables_filter {
+  margin-bottom: 15px;
+}
+
+.dataTables_filter input {
+  border: 1px solid #ddd !important;
+  border-radius: 5px !important;
+  padding: 8px 12px !important;
+  margin-left: 10px !important;
+  min-width: 250px;
+}
+
+/* Table */
+#appointmentTable {
+  width: 100% !important;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#appointmentTable thead th {
+  background: #001a33 !important;
+  color: #fff !important;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+#appointmentTable tbody td {
+  vertical-align: middle;
+}
+
+/* Pagination */
+.dataTables_paginate {
+  margin-top: 15px !important;
+}
+
+.dataTables_paginate .paginate_button {
+  border-radius: 5px !important;
+}
+
+.dataTables_info {
+  padding-top: 15px !important;
+}
