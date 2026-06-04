@@ -33,8 +33,6 @@ Authorization: authorizationToken,
 },
 }
 );
-
-```
   if (response.ok) {
     const data = await response.json();
     setAppointmentsData(data.appointments || []);
@@ -48,7 +46,6 @@ Authorization: authorizationToken,
   console.error(error);
   toast.error("Failed to fetch appointments");
 }
-```
 
 };
 
@@ -61,9 +58,12 @@ if (appointmentsData.length > 0) {
 const table = $("#appointmentTable").DataTable({
 destroy: true,
 pageLength: 25,
+    dom: '<"top-section"Bf>rtip',
 
-```
-    dom: '<"top-section d-flex justify-content-between align-items-center mb-3"Bf>rtip',
+    language: {
+      search: "",
+      searchPlaceholder: "Search Appointments...",
+    },
 
     buttons: [
       {
@@ -88,14 +88,12 @@ pageLength: 25,
     table.destroy();
   };
 }
-```
 
 }, [appointmentsData]);
 
 return (
 <> <TopBarAdmin />
 
-```
   <main>
     <div className="container-fluid">
       <div className="row">
@@ -106,7 +104,6 @@ return (
         <div className="col-md-9 adminright">
           <div className="addblog">
             <div className="addblogform">
-
               <h2>Manage Appointments</h2>
 
               {appointmentsData.length > 0 ? (
@@ -147,7 +144,6 @@ return (
                   No Appointments Found
                 </h3>
               )}
-
             </div>
           </div>
         </div>
@@ -155,7 +151,6 @@ return (
     </div>
   </main>
 </>
-```
 
 );
 }
