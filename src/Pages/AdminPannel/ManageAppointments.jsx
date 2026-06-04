@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import List from "./List";
+import "./ManageAppointments.css";
 import TopBarAdmin from "./TopBarAdmin";
 import { useAuth } from "../../store/auth";
 import { toast } from "react-toastify";
@@ -100,7 +101,7 @@ return (
               {appointmentsData.length > 0 ? (
                 <table
                   id="appointmentTable"
-                  className="table table-dark table-bordered"
+                  className="table table-dark table-bordered table-striped table-hover"
                 >
                   <thead>
                     <tr>
