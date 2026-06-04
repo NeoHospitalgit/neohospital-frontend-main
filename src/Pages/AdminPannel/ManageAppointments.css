@@ -70,3 +70,41 @@
 .dataTables_info {
   padding-top: 15px !important;
 }
+/* Top Controls */
+.dataTables_wrapper .dt-buttons {
+    float: left;
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 12px;
+    width: 250px;
+}
+
+/* Buttons */
+.dt-button {
+    background: #0d6efd !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 8px 14px !important;
+    margin-right: 8px !important;
+    font-size: 14px !important;
+}
+
+.dt-button:hover {
+    background: #084298 !important;
+}
+
+/* Clear Float */
+.dataTables_wrapper .row {
+    margin-bottom: 15px;
+}
