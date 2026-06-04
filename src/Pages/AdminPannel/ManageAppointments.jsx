@@ -5,12 +5,10 @@ import { useAuth } from "../../store/auth";
 import { toast } from "react-toastify";
 
 import $ from "jquery";
-
 import "datatables.net-dt/css/dataTables.dataTables.css";
 import "datatables.net";
 import "datatables.net-buttons";
 import "datatables.net-buttons-dt";
-
 import "datatables.net-buttons/js/buttons.html5";
 import "datatables.net-buttons/js/buttons.print";
 
@@ -35,11 +33,9 @@ Authorization: authorizationToken,
 }
 );
 
-```
   if (response.ok) {
     const data = await response.json();
-
-    setAppointmentsData(data.appointments);
+    setAppointmentsData(data.appointments || []);
   } else if (response.status === 404) {
     setAppointmentsData([]);
     toast.info("No Appointments Found");
@@ -50,7 +46,6 @@ Authorization: authorizationToken,
   console.error(error);
   toast.error("Failed to fetch appointments");
 }
-```
 
 };
 
@@ -80,19 +75,16 @@ title: "Appointments",
 ],
 });
 
-```
   return () => {
     table.destroy();
   };
 }
-```
 
 }, [appointmentsData]);
 
 return (
 <> <TopBarAdmin />
 
-```
   <main>
     <div className="container-fluid">
       <div className="row">
@@ -105,7 +97,7 @@ return (
             <div className="addblogform">
               <h2>Manage Appointments</h2>
 
-              {appointmentsData.length ? (
+              {appointmentsData.length > 0 ? (
                 <table
                   id="appointmentTable"
                   className="table table-dark table-bordered"
@@ -150,7 +142,6 @@ return (
     </div>
   </main>
 </>
-```
 
 );
 }
