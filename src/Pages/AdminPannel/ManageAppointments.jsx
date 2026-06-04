@@ -34,6 +34,7 @@ Authorization: authorizationToken,
 }
 );
 
+```
   if (response.ok) {
     const data = await response.json();
     setAppointmentsData(data.appointments || []);
@@ -47,6 +48,7 @@ Authorization: authorizationToken,
   console.error(error);
   toast.error("Failed to fetch appointments");
 }
+```
 
 };
 
@@ -59,33 +61,41 @@ if (appointmentsData.length > 0) {
 const table = $("#appointmentTable").DataTable({
 destroy: true,
 pageLength: 25,
-dom: "Bfrtip",
-buttons: [
-{
-extend: "excelHtml5",
-title: "Appointments",
-},
-{
-extend: "csvHtml5",
-title: "Appointments",
-},
-{
-extend: "print",
-title: "Appointments",
-},
-],
-});
+
+```
+    dom: '<"top-section d-flex justify-content-between align-items-center mb-3"Bf>rtip',
+
+    buttons: [
+      {
+        extend: "excelHtml5",
+        title: "Appointments",
+        className: "btn btn-success",
+      },
+      {
+        extend: "csvHtml5",
+        title: "Appointments",
+        className: "btn btn-primary",
+      },
+      {
+        extend: "print",
+        title: "Appointments",
+        className: "btn btn-dark",
+      },
+    ],
+  });
 
   return () => {
     table.destroy();
   };
 }
+```
 
 }, [appointmentsData]);
 
 return (
 <> <TopBarAdmin />
 
+```
   <main>
     <div className="container-fluid">
       <div className="row">
@@ -96,12 +106,13 @@ return (
         <div className="col-md-9 adminright">
           <div className="addblog">
             <div className="addblogform">
+
               <h2>Manage Appointments</h2>
 
               {appointmentsData.length > 0 ? (
                 <table
                   id="appointmentTable"
-                  className="table table-dark table-bordered table-striped table-hover"
+                  className="table table-bordered table-striped table-hover"
                 >
                   <thead>
                     <tr>
@@ -136,6 +147,7 @@ return (
                   No Appointments Found
                 </h3>
               )}
+
             </div>
           </div>
         </div>
@@ -143,6 +155,7 @@ return (
     </div>
   </main>
 </>
+```
 
 );
 }
