@@ -1,110 +1,51 @@
-/* Heading */
-.addblogform h2 {
-  background: #001a33;
-  color: #fff;
-  padding: 15px;
-  text-align: center;
-  border-radius: 8px;
-  margin-bottom: 20px;
+.top-section {
+margin-bottom: 20px;
 }
 
-/* DataTable Top Section */
-.dataTables_wrapper .dt-buttons {
-  margin-bottom: 15px;
+.dt-buttons .btn {
+margin-right: 8px !important;
+border-radius: 6px !important;
 }
 
-.dataTables_wrapper .dt-button {
-  background: #0d6efd !important;
-  color: #fff !important;
-  border: none !important;
-  border-radius: 5px !important;
-  padding: 8px 15px !important;
-  margin-right: 8px !important;
-  font-size: 14px !important;
-}
-
-.dataTables_wrapper .dt-button:hover {
-  background: #084298 !important;
-}
-
-/* Search Box */
 .dataTables_filter {
-  margin-bottom: 15px;
+text-align: right !important;
 }
 
 .dataTables_filter input {
-  border: 1px solid #ddd !important;
-  border-radius: 5px !important;
-  padding: 8px 12px !important;
-  margin-left: 10px !important;
-  min-width: 250px;
+border: 1px solid #ddd !important;
+border-radius: 6px !important;
+padding: 8px 12px !important;
+margin-left: 10px !important;
+min-width: 250px;
 }
 
-/* Table */
 #appointmentTable {
-  width: 100% !important;
-  border-radius: 10px;
-  overflow: hidden;
+width: 100% !important;
 }
 
 #appointmentTable thead th {
-  background: #001a33 !important;
-  color: #fff !important;
-  text-transform: uppercase;
-  font-size: 14px;
+background: #001b3d !important;
+color: #fff !important;
+font-weight: 600;
 }
 
 #appointmentTable tbody td {
-  vertical-align: middle;
+vertical-align: middle;
 }
 
-/* Pagination */
 .dataTables_paginate {
-  margin-top: 15px !important;
-}
-
-.dataTables_paginate .paginate_button {
-  border-radius: 5px !important;
+margin-top: 15px;
 }
 
 .dataTables_info {
-  padding-top: 15px !important;
-}
-/* Top Controls */
-.dataTables_wrapper .dt-buttons {
-    float: left;
-    margin-bottom: 15px;
+margin-top: 15px;
 }
 
-.dataTables_wrapper .dataTables_filter {
-    float: right;
-    margin-bottom: 15px;
-}
-
-.dataTables_wrapper .dataTables_filter input {
-    margin-left: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 6px 12px;
-    width: 250px;
-}
-
-/* Buttons */
-.dt-button {
-    background: #0d6efd !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 5px !important;
-    padding: 8px 14px !important;
-    margin-right: 8px !important;
-    font-size: 14px !important;
-}
-
-.dt-button:hover {
-    background: #084298 !important;
-}
-
-/* Clear Float */
-.dataTables_wrapper .row {
-    margin-bottom: 15px;
+.addblogform h2 {
+background: #001b3d;
+color: #fff;
+padding: 15px;
+text-align: center;
+border-radius: 8px;
+margin-bottom: 20px;
 }
