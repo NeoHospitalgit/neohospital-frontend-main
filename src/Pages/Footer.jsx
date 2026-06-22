@@ -350,10 +350,10 @@ function Footer() {
                         <Link to="/">Home</Link>
                       </li>
                       <li>
-                        <Link to="/">Terms</Link>
+                        <Link to="/teams-&-conditions">Terms</Link>
                       </li>
                       <li>
-                        <Link to="/">Privacy Policy</Link>
+                        <Link to="/privacy-policy">Privacy Policy</Link>
                       </li>
                       <li>
                         <Link to="/contact">Contact</Link>
