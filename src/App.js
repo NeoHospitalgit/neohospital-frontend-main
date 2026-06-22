@@ -35,6 +35,8 @@ import Gallery from "./Pages/GalleryPage/Gallery.jsx";
 import Career from "./Pages/CareerPage/Career.jsx";
 import Footer from "./Pages/Footer.jsx";
 import ScrollToTop from "./Pages/ScrollToTop.jsx";
+import PrivacyPolicyPage from "./Pages/PrivacyPolicyPage/PrivacyPolicyPage.jsx";
+import TermsPage from "./Pages/TermsPage/TermsPage.jsx";
 
 // Admin
 import Admin from "./Pages/AdminPannel/Admin.jsx";
@@ -107,7 +109,8 @@ const App = () => {
           <Route path="/logout" element={<Logout />} />
           <Route path="/sitemap.xml" element={<Sitemap />} />
           <Route path="/doctor-details/:dr" element={<DoctorDetails />} />
-          
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/teams-&-conditions" element={<TermsPage />} />
 
           {/* ✅ PROTECTED ADMIN ROUTES */}
           <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
