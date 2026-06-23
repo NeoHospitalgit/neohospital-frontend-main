@@ -428,49 +428,44 @@ ul {
 
 
 /* new */
-/* COPYRIGHT SECTION */
-
 .copyright-area {
-  background: #0d0d0d;
-  padding: 20px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0a0a0a;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .copyright-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 30px;
-  flex-wrap: wrap;
+  gap: 40px;
 }
 
 .copyright-left {
-  flex: 1;
-  min-width: 300px;
+  max-width: 70%;
 }
 
-.copyright-title {
+.hospital-name {
   color: #fff;
   font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
-.company-info {
+.company-details {
   color: #bdbdbd;
   font-size: 13px;
-  line-height: 1.7;
-  margin-bottom: 4px;
+  line-height: 1.6;
 }
 
-.company-info strong {
+.company-details strong {
   color: #fff;
 }
 
 .copyright-right {
   display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
 }
 
 .copyright-right a {
@@ -478,25 +473,29 @@ ul {
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: .3s;
 }
 
 .copyright-right a:hover {
-  color: #00b7b7;
+  color: #00b6b8;
 }
 
-@media (max-width: 768px) {
+/* Mobile */
+@media (max-width: 991px) {
+
   .copyright-wrapper {
     flex-direction: column;
     text-align: center;
   }
 
-  .copyright-right {
-    justify-content: center;
-    margin-top: 10px;
+  .copyright-left {
+    max-width: 100%;
   }
 
-  .company-info {
-    font-size: 12px;
+  .copyright-right {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
   }
 }
