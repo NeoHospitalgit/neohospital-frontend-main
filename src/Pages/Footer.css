@@ -428,10 +428,11 @@ ul {
 
 
 /* new */
-/* Copyright Section */
+/* COPYRIGHT SECTION */
+
 .copyright-area {
-  background: #0b0b0b;
-  padding: 18px 0;
+  background: #0d0d0d;
+  padding: 20px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -448,42 +449,42 @@ ul {
   min-width: 300px;
 }
 
-.copyright-left p {
-  margin: 0;
-  color: #d8d8d8;
-  line-height: 1.7;
+.copyright-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .company-info {
-  margin-top: 6px !important;
+  color: #bdbdbd;
   font-size: 13px;
-  color: #a9a9a9 !important;
+  line-height: 1.7;
+  margin-bottom: 4px;
 }
 
 .company-info strong {
   color: #fff;
-  font-weight: 600;
 }
 
 .copyright-right {
   display: flex;
   gap: 25px;
   flex-wrap: wrap;
-  align-items: center;
 }
 
 .copyright-right a {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   font-size: 14px;
-  transition: 0.3s;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .copyright-right a:hover {
-  color: #00b4b6;
+  color: #00b7b7;
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   .copyright-wrapper {
     flex-direction: column;
