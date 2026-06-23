@@ -341,9 +341,9 @@ function Footer() {
             <div className="container">
               <div className="row">
                 <div className="col-xl-6 col-lg-6 text-center text-lg-left">
-                  <div className="copyright-text">
+                  <div className="copyright-text"> */}
                     {/* <p>2026 All rights reserved © by neohospital.com</p> */}
-                      <p>© 2026 Neo Hospital. Neo Hospital is a brand owned and operated by Muskan Medical Center Private Limited (CIN:U85191UP2012PTC051632 | GSTIN:09AAICM0482D2ZJ). Registered Office: D 170A, SECTOR 50, NOIDA, Gautam Buddha Nagar, Uttar Pradesh, 201301.</p>
+                      {/* <p>© 2026 Neo Hospital. Neo Hospital is a brand owned and operated by Muskan Medical Center Private Limited (CIN:U85191UP2012PTC051632 | GSTIN:09AAICM0482D2ZJ). Registered Office: D 170A, SECTOR 50, NOIDA, Gautam Buddha Nagar, Uttar Pradesh, 201301.</p>
                   </div>
                 </div>
                 <div className="col-xl-6 col-lg-6 d-none d-lg-block text-right">
@@ -365,7 +365,7 @@ function Footer() {
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>  */}
 
     <div className="copyright-area">
   <div className="container">
