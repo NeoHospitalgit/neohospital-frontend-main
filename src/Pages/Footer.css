@@ -425,3 +425,77 @@ ul {
   background-color: #666666;
   cursor: not-allowed;
 }
+
+
+/* new */
+/* Copyright Section */
+.copyright-area {
+  background: #0b0b0b;
+  padding: 18px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.copyright-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.copyright-left {
+  flex: 1;
+  min-width: 300px;
+}
+
+.copyright-left p {
+  margin: 0;
+  color: #d8d8d8;
+  line-height: 1.7;
+}
+
+.company-info {
+  margin-top: 6px !important;
+  font-size: 13px;
+  color: #a9a9a9 !important;
+}
+
+.company-info strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.copyright-right {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.copyright-right a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.copyright-right a:hover {
+  color: #00b4b6;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .copyright-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .copyright-right {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .company-info {
+    font-size: 12px;
+  }
+}
