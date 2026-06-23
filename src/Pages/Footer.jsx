@@ -113,9 +113,7 @@ function Footer() {
                           <br />
                           Gautam Buddh Nagar (U.P) 201301 */}
 
-                          NEO HOSPITAL (A unit of Muskan Medical Center Private Limited) - D 170A, SECTOR 50, NOIDA, 
-                          <br />
-                       Gautam Buddha Nagar, Uttar Pradesh, 201301
+                          NEO HOSPITAL (A unit of Muskan Medical Center Private Limited) - D 170A, SECTOR 50, NOIDA, Gautam Buddha Nagar, Uttar Pradesh, 201301
                         </a>
                       </span>
                     </div>
