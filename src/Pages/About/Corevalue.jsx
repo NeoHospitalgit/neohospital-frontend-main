@@ -6,9 +6,9 @@ function Corevalue() {
           <section id="corevalue">
               <header className="header-design">
 
-  {/* <div className="footer-wave"></div> */}
+   <div className="footer-wave"></div>
 </header>
-{/* <div className="pset">
+<div className="pset">
   <div className="container">
     <div className="row listar-feature-items">
 
@@ -115,7 +115,7 @@ function Corevalue() {
       </div>
     </div>
   </div>
-</div> */}
+</div>
           </section>
       </>
   )
