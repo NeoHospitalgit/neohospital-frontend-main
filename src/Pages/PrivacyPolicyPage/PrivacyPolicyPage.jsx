@@ -11,13 +11,24 @@ function PrivacyPolicyPage() {
       </Helmet>
 
       <section className="policies-section">
-        <div className="policies-header">
+        <<div className="policies-header">
           <h1 className="policies-title">Privacy Policy – Neo Hospital</h1>
+        
           <p className="policies-description">
             At Neo Hospital, we are committed to protecting your personal data
             and ensuring transparency about how your information is collected,
             used, and safeguarded.
           </p>
+        
+          <div className="ownership-notice">
+            <p>
+              <strong>
+                This website (www.neohospital.com) is owned and operated by
+                Muskan Medical Center Private Limited, operating under the brand
+                name "Neo Hospital".
+              </strong>
+            </p>
+          </div>
         </div>
 
         <div className="policy-content">
