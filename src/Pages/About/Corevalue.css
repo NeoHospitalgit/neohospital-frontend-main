@@ -73,3 +73,13 @@
 .company-title:hover span::before {
     width: 80%;
 }
+.company-info-card .company-title {
+    -webkit-animation: fadeIn 1s ease-out;
+    animation: fadeIn 1s ease-out;
+    color: #046f54;
+    font-family: Poppins, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    text-align: center;
+}
