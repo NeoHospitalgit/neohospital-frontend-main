@@ -8,9 +8,10 @@ function Corevalue() {
         <div className="row justify-content-center">
           <div className="col-lg-10">
             <div className="company-info-card">
-              <h2 className="company-info-title">
-                Company Information
-              </h2>
+              <h3 className="company-title">
+                <span> Company Information</span>
+              </h3>
+          
 
               <p className="company-info-text">
                 Neo Hospital is the brand name under which Muskan Medical Center
