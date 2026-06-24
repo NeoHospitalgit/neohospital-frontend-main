@@ -267,14 +267,16 @@ function Contactform() {
                 </div>
                 <div className="contact_info_sec">
                   <h3 className="text-light">Contact Info</h3>
-                  <div className="d-flex info_single align-items-center">
-                    <div>
-                      <i className="fa fa-phone"></i>
-                      <a className="can" href="tel:0120-4880000">
-                        0120-4880000
-                      </a>
-                    </div>
+                
+                  <div className="legal-entity-info mb-3">
+                    <h5 className="text-white mb-2">
+                      Muskan Medical Center Private Limited
+                    </h5>
+                    <p className="text-white mb-0">
+                      (Operating as Neo Hospital)
+                    </p>
                   </div>
+                
                   <div className="d-flex info_single align-items-center">
                     <div>
                       <i className="fa fa-phone"></i>
@@ -283,15 +285,26 @@ function Contactform() {
                       </a>
                     </div>
                   </div>
+                
+                  <div className="d-flex info_single align-items-center">
+                    <div>
+                      <i className="fa fa-phone"></i>
+                      <a className="can" href="tel:0120-4880000">
+                        0120-4880000
+                      </a>
+                    </div>
+                  </div>
+                
                   <div className="d-flex info_single align-items-center">
                     <i className="fa fa-envelope"></i>
                     <span>info@neohospital.com</span>
                   </div>
+                
                   <div className="d-flex info_single align-items-center">
-                    <i className="fa fa-map"></i>
+                    <i className="fa fa-map-marker"></i>
                     <span>
-                      Neo Super Speciality Hospital D-170, 170A, 170B, Sector-50, NOIDA, GAUTAM
-                      BUDDH NAGAR (U.P) 201301
+                      D-170, 170A, 170B, Sector-50, Noida,
+                      Gautam Buddh Nagar (U.P.) 201301
                     </span>
                   </div>
                 </div>
