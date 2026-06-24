@@ -38,19 +38,20 @@ function PrivacyPolicyPage() {
             Technology Act, 2000, and the rules made thereunder.
           </p>
 
-          <h2>1. Introduction</h2>
-          <p>
-            Neo Hospital (“Company”) and its Subsidiary respect your privacy and
-            are dedicated to maintaining the confidentiality of your personal
-            information. This Policy outlines how we collect, store, use, and
-            protect sensitive personal data and information (“SPDI”).
-          </p>
-
-          <p>
-            By accessing or using our website, digital platforms, or availing
-            healthcare services at Neo Hospital, you consent to the terms of
-            this Privacy Policy.
-          </p>
+         <p>
+          Muskan Medical Center Private Limited ("Company"),
+          operating under the brand name "Neo Hospital",
+          respects your privacy and is dedicated to maintaining
+          the confidentiality of your personal information.
+          This Policy outlines how we collect, store, use,
+          and protect sensitive personal data and information ("SPDI").
+        </p>
+        
+        <p>
+          By accessing or using our website, digital platforms, or availing
+          healthcare services at Neo Hospital, you consent to the terms of
+          this Privacy Policy.
+        </p>
 
           <h2>2. Information We Collect</h2>
 
@@ -196,16 +197,18 @@ function PrivacyPolicyPage() {
           </p>
 
           <div className="contact-box">
-            <p><strong>Grievance Officer Name:</strong> Dr. Sachin Arora</p>
-            <p><strong>Designation:</strong> Grievance Officer – Neo Hospital</p>
-            <p><strong>Email:</strong> ms@neohospital.com</p>
-            <p><strong>Phone:</strong> 9953110317</p>
-            <p>
-              <strong>Address:</strong> Neo Hospital, D-170, 170A, 170B,
-              Sector-50, Noida, Gautam Buddh Nagar, UP (201301)
-            </p>
-          </div>
-
+          <p><strong>Grievance Officer Name:</strong> Dr. Sachin Arora</p>
+          <p><strong>Designation:</strong> Grievance Officer – Neo Hospital</p>
+          <p><strong>Email:</strong> ms@neohospital.com</p>
+          <p><strong>Phone:</strong> 9953110317</p>
+          <p>
+            <strong>Address:</strong>
+            Muskan Medical Center Private Limited (Neo Hospital),
+            D-170, 170A, 170B, Sector-50,
+            Noida, Gautam Buddh Nagar,
+            Uttar Pradesh - 201301
+          </p>
+        </div>
           <p>
             The Grievance Officer shall respond to your queries and complaints
             within the statutory timeline prescribed under the Information
