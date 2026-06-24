@@ -15,14 +15,23 @@ function TermsPage() {
           <h1 className="policies-title">
             Terms & Conditions – Neo Hospital
           </h1>
-
+           <div className="ownership-notice">
+            <p>
+              <strong>
+                This website (www.neohospital.com) is owned and operated by
+                Muskan Medical Center Private Limited, operating under the brand
+                name "Neo Hospital".
+              </strong>
+            </p>
+          </div>
           <p className="policies-description">
             Welcome to the website of NEO Hospital. By accessing or using this
             website, you agree to comply with and be bound by the following
             Terms and Conditions.
           </p>
+        
+         
         </div>
-
         <div className="policy-content">
           <p>
             <strong>Effective Date:</strong> June 2026
@@ -35,13 +44,14 @@ function TermsPage() {
 
           <h2>1. Use of the Website</h2>
 
-          <p>
-            The content available on this website is provided for general
-            informational purposes only. While we strive to ensure that the
-            information presented is accurate and up to date, NEO Hospital makes
-            no guarantees regarding the completeness, reliability, or accuracy
-            of the content.
-          </p>
+         <p>
+  The content available on this website is provided for general
+  informational purposes only by Muskan Medical Center Private Limited,
+  operating under the brand name "Neo Hospital". While we strive to
+  ensure that the information presented is accurate and up to date,
+  we make no guarantees regarding the completeness, reliability,
+  or accuracy of the content.
+</p>
 
           <p>
             Your use of any information or materials on this website is entirely
@@ -170,10 +180,33 @@ function TermsPage() {
           <h2>Contact Us</h2>
 
           <div className="contact-box">
-            <p>
-              If you have any questions regarding these Terms and Conditions,
-              please contact us through the details provided on our website.
-            </p>
+           <h2>Contact Us</h2>
+
+<div className="contact-box">
+  <p>
+    If you have any questions regarding these Terms and Conditions,
+    please contact:
+  </p>
+
+  <p>
+    <strong>Muskan Medical Center Private Limited</strong><br />
+    (Operating as Neo Hospital)
+  </p>
+
+  <p>
+    D-170, 170A, 170B, Sector-50,<br />
+    Noida, Gautam Buddh Nagar,<br />
+    Uttar Pradesh - 201301
+  </p>
+
+  <p>
+    Phone: 0120-3120000 / 0120-4880000
+  </p>
+
+  <p>
+    Email: info@neohospital.com
+  </p>
+</div>
           </div>
         </div>
       </section>
