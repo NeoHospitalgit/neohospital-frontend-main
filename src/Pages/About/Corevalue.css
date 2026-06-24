@@ -1,25 +1,44 @@
-
-#corevalue .header-design {
-     background-color: #1b56b0;
-    /* background-image: linear-gradient(326deg, #005961 0%, #005961 74%); */
-    height: 100px;
-    text-align: center;
+.company-info-section {
+  padding: 70px 0;
+  background: #f8f9fa;
 }
 
-/* #corevalue header .footer-wave {
-     height: 125px;
-    left: 0;
-    z-index: 1;
-    bottom: -67px;
-    background: url('../../Assets/Banners/hero-wave.png') repeat-x;
-    animation: wave 10s cubic-bezier(0.44, 0.66, 0.67, 0.37) infinite;
-} */
+.company-info-card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
 
-@keyframes wave {
-  0% {
-    background-position: 0;
+.company-info-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0840d3;
+  margin-bottom: 25px;
+}
+
+.company-info-text {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .company-info-section {
+    padding: 50px 0;
   }
-  100% {
-    background-position: 1440px;
+
+  .company-info-card {
+    padding: 25px;
+  }
+
+  .company-info-title {
+    font-size: 26px;
+  }
+
+  .company-info-text {
+    font-size: 15px;
   }
 }
