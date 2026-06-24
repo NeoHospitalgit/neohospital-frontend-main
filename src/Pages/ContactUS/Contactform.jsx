@@ -303,8 +303,7 @@ function Contactform() {
                   <div className="d-flex info_single align-items-center">
                     <i className="fa fa-map-marker"></i>
                     <span>
-                      D-170, 170A, 170B, Sector-50, Noida,
-                      Gautam Buddh Nagar (U.P.) 201301
+                      D-170A, Sector-50, Noida, Gautam Buddha Nagar, Uttar Pradesh - 201301
                     </span>
                   </div>
                 </div>
