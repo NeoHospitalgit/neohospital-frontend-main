@@ -196,9 +196,7 @@ function PrivacyPolicyPage() {
           <p>
             <strong>Address:</strong>
             Muskan Medical Center Private Limited (Neo Hospital),
-            D-170, 170A, 170B, Sector-50,
-            Noida, Gautam Buddh Nagar,
-            Uttar Pradesh - 201301
+            D-170A, Sector-50, Noida, Gautam Buddha Nagar, Uttar Pradesh - 201301.
           </p>
         </div>
           <p>
