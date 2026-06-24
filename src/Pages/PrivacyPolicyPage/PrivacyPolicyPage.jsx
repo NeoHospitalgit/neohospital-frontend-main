@@ -11,7 +11,7 @@ function PrivacyPolicyPage() {
       </Helmet>
 
       <section className="policies-section">
-        <<div className="policies-header">
+        <div className="policies-header">
           <h1 className="policies-title">Privacy Policy – Neo Hospital</h1>
         
           <p className="policies-description">
