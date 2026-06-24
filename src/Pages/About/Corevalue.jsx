@@ -18,8 +18,7 @@ function Corevalue() {
                 Private Limited operates. Muskan Medical Center Private Limited
                 is a company incorporated under the Companies Act, 2013
                 (CIN: U85191UP2012PTC051632 | GSTIN: 09AAICM0482D2ZJ), with its registered office at
-                D-170, 170A, 170B, Sector-50, Noida, Gautam Buddh Nagar,
-                Uttar Pradesh - 201301.
+              D-170A, Sector-50, Noida, Gautam Buddha Nagar, Uttar Pradesh - 201301.
               </p>
 
               <p className="company-info-text mb-0">
