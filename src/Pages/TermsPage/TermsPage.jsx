@@ -192,9 +192,8 @@ function TermsPage() {
     <strong>Muskan Medical Center Private Limited</strong><br />
     (Operating as Neo Hospital)
   </p>
-
   <p>
-    D-170, 170A, 170B, Sector-50,<br />
+    D-170A, Sector-50,,<br />
     Noida, Gautam Buddh Nagar,<br />
     Uttar Pradesh - 201301
   </p>
