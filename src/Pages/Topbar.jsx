@@ -10,11 +10,11 @@ function Topbar() {
           <div className="icon">
             <i className="fa fa-phone"></i>
             <a>Emergency Number - </a>
-            <a href="tel:01203120000"><span className="emergency-highlight">01203120000</span></a>
+            <a href="tel:01203120000"><span className="emergency-highlight">0120-3120000</span></a>
           </div>
           <div className="icon">
             <i className="fa fa-phone"></i>
-            <a href="tel:01204880088"><span className="emergency-highlight">01204880088</span></a>
+            <a href="tel:01204880088"><span className="emergency-highlight">0120-4880088</span></a>
           </div>
           <div className="icon">
             <i className="fa fa-calendar"></i>
