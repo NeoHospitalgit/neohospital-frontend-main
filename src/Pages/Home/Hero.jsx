@@ -126,7 +126,7 @@ function Hero() {
                   <h3>Emergency Contact</h3>
                   <div className="info-item">
                     <i className="fa fa-phone"></i>
-                    <p> 0120-4880000</p>
+                    <p> 0120-4880088</p>
                   </div>
                   <div className="info-item">
                     <i className="fa fa-ambulance"></i>
