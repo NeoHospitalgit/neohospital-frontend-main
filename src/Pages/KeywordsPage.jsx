@@ -19,7 +19,7 @@ function KeywordsPage() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://api.neohospital.com/api/adminv8/view-seopages"
+          "http://localhost:5001/api/adminv8/view-seopages"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
