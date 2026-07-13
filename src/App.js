@@ -37,6 +37,7 @@ import Footer from "./Pages/Footer.jsx";
 import ScrollToTop from "./Pages/ScrollToTop.jsx";
 import PrivacyPolicyPage from "./Pages/PrivacyPolicyPage/PrivacyPolicyPage.jsx";
 import TermsPage from "./Pages/TermsPage/TermsPage.jsx";
+import KeywordPage from "./Pages/KeywordPage/KeywordPage.jsx";
 
 // Admin
 import Admin from "./Pages/AdminPannel/Admin.jsx";
@@ -61,6 +62,8 @@ import AddHomeDoctors from "./Pages/AdminPannel/AddHomeDoctors.jsx";
 import ManageHomeDoctors from "./Pages/AdminPannel/ManageHomeDoctors.jsx";
 import DetailsDepartment from "./Pages/OurDepartment/DetailsDepartment.jsx";
 import ManageAppointments from "./Pages/AdminPannel/ManageAppointments.jsx";
+import ManageKeywords from "./Pages/AdminPannel/ManageKeywords.jsx";
+import ListKeywordPage from "./Pages/AdminPannel/ListKeywordPage.jsx";
 const App = () => {
   const { isLoading, isLoggedIn } = useAuth();
 
@@ -111,6 +114,7 @@ const App = () => {
           <Route path="/doctor-details/:dr" element={<DoctorDetails />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/teams-&-conditions" element={<TermsPage />} />
+          <Route path="/doctor/:slug" element={<KeywordPage />}/>
 
           {/* ✅ PROTECTED ADMIN ROUTES */}
           <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
@@ -145,6 +149,9 @@ const App = () => {
           <Route path="/add-bio-medical-report/:id" element={isLoggedIn ? <AddBioMedicalReport /> : <Navigate to="/login" />} />
           <Route path="/manage-medical-report" element={isLoggedIn ? <ManageBioReports /> : <Navigate to="/login" />} />
           <Route path="/appointments"  element={isLoggedIn ? <ManageAppointments /> : <Navigate to="/login" />} />
+           <Route path="/add-keywords"  element={isLoggedIn ? <ManageKeywords /> : <Navigate to="/login" />} />
+           <Route path="/list-keywords"  element={isLoggedIn ? <ListKeywordPage /> : <Navigate to="/login" />} />
+           <Route path="/add-keyword/:id" element={isLoggedIn ? <ManageKeywords /> : <Navigate to="/login" />}/>
         </Routes>
 
         {!isLoggedIn && <Footer />}
