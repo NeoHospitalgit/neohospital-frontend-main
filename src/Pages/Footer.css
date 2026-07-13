@@ -499,3 +499,85 @@ ul {
     margin-top: 10px;
   }
 }
+/*=============================
+      Popular Doctor Searches
+==============================*/
+
+.popular-search-section{
+    padding:70px 0;
+    background:#edf9fb;
+}
+
+.section-title{
+    margin-bottom:40px;
+}
+
+.section-title h2{
+    font-size:20px;
+    font-weight:700;
+    color:#14918e;
+    position:relative;
+    display:inline-block;
+    margin-bottom:15px;
+}
+
+.section-title h2::after{
+    content:"";
+    width:70px;
+    height:3px;
+    background:#14918e;
+    position:absolute;
+    left:0;
+    bottom:-12px;
+}
+
+.popular-search-link{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:#006b7d;
+    font-size:15px;
+    font-weight:500;
+    padding:12px 0;
+    transition:.3s;
+}
+
+.popular-search-link i{
+    color:#14918e;
+    font-size:14px;
+}
+
+.popular-search-link:hover{
+    color:#006b7d;
+    padding-left:8px;
+}
+
+.popular-search-link:hover i{
+    color:#006b7d;
+}
+
+@media(max-width:991px){
+
+.popular-search-link{
+    font-size:17px;
+}
+
+}
+
+@media(max-width:767px){
+
+.popular-search-section{
+    padding:50px 0;
+}
+
+.section-title h2{
+    font-size:30px;
+}
+
+.popular-search-link{
+    font-size:16px;
+    padding:8px 0;
+}
+
+}
