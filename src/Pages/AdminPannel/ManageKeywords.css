@@ -1,0 +1,77 @@
+.top-section {
+margin-bottom: 20px;
+}
+
+.dt-buttons .btn {
+margin-right: 8px !important;
+border-radius: 6px !important;
+}
+
+.dataTables_filter {
+text-align: right !important;
+}
+
+.dataTables_filter input {
+border: 1px solid #ddd !important;
+border-radius: 6px !important;
+padding: 8px 12px !important;
+margin-left: 10px !important;
+min-width: 250px;
+}
+
+#appointmentTable {
+width: 100% !important;
+}
+
+#appointmentTable thead th {
+background: #001b3d !important;
+color: #fff !important;
+font-weight: 600;
+}
+
+#appointmentTable tbody td {
+vertical-align: middle;
+}
+
+.dataTables_paginate {
+margin-top: 15px;
+}
+
+.dataTables_info {
+margin-top: 15px;
+}
+
+.addblogform h2 {
+background: #001b3d;
+color: #fff;
+padding: 15px;
+text-align: center;
+border-radius: 8px;
+margin-bottom: 20px;
+}
+
+.top-section{
+    display:flex !important;
+    justify-content:space-between !important;
+    align-items:center !important;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.dataTables_filter{
+    margin:0 !important;
+}
+
+.dataTables_filter label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.dataTables_filter input{
+    width:250px !important;
+}
+
+.dt-buttons{
+    margin:0 !important;
+}
