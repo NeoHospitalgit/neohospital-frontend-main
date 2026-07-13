@@ -180,6 +180,20 @@ function List() {
                 </li>
               </ol>
             )}
+          <li
+            onClick={() => toggleSubMenu("keywords")}
+            className={openMenu === "keywords" ? "active" : ""}
+          >
+            <Link to="/list-keywords">Manage Keyword</Link>
+            <i className="fa fa-caret-down"></i>
+          </li>
+            {openMenu === "keywords" && (
+              <ol>
+                <li>
+                  <Link to="/add-keywords">Add Keyword</Link>
+                </li>
+              </ol>
+            )}
         </ul>
       </div>
     </div>
