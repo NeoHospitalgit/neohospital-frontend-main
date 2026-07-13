@@ -5,8 +5,11 @@ import logo from "../Assets/index/logo.png";
 import { Link } from "react-router-dom";
 import Social from "./Home/Social";
 import axios from 'axios';
-
+import { useAuth } from "../store/auth";
 function Footer() {
+   const { API } = useAuth();
+
+  const [keywords, setKeywords] = useState([]);
   const [Neospecial, setNeospecial] = useState([]);
   const [error, setError] = useState(null);
   const [name, setName] = useState("");
@@ -20,7 +23,7 @@ function Footer() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://api.neohospital.com/api/adminv1/view-category"
+          "http://localhost:5001/api/adminv1/view-category"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -33,8 +36,23 @@ function Footer() {
     };
 
     fetchData();
+     fetchKeywords(); 
   }, []);
+  const fetchKeywords = async () => {
+    try {
+      const response = await fetch(
+        `${API}/api/adminv11/public-keywords`
+      );
 
+      const data = await response.json();
+
+      if (data.success) {
+        setKeywords(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const sendEmail = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -67,7 +85,7 @@ function Footer() {
     }
 
     try {
-      const response = await axios.post('https://api.neohospital.com/api/sendmails/send-contact-email', {
+      const response = await axios.post('http://localhost:5001/api/sendmails/send-contact-email', {
         name,
         number,
         email,
@@ -97,6 +115,34 @@ function Footer() {
   return (
     <>
       <Social />
+      <section className="popular-search-section">
+  <div className="container">
+
+    <div className="section-title">
+      <h2>Popular Doctor Searches</h2>
+    </div>
+
+    <div className="row">
+
+      {keywords.map((item) => (
+        <div
+          className="col-lg-3 col-md-4 col-sm-6 col-12"
+          key={item._id}
+        >
+          <a
+            href={`/doctor/${item.keyword_slug}`}
+            className="popular-search-link"
+          >
+            <i className="fa fa-caret-right"></i>
+            {item.keyword_title}
+          </a>
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>
       <div className="neofooter">
         <footer className="footer-section">
           <div className="container">
@@ -155,7 +201,7 @@ function Footer() {
                 </div>
               </div>
             </div>
-
+           
             <div className="footer-content py-3">
               <div className="row">
                 <div className="col-xl-4 col-lg-4 mb-50">
@@ -337,41 +383,41 @@ function Footer() {
               </div>
             </div>
           </div>
-<div className="copyright-area">
-  <div className="container">
-    <div className="copyright-wrapper">
+          <div className="copyright-area">
+            <div className="container">
+              <div className="copyright-wrapper">
 
-      <div className="copyright-left">
-        <div className="hospital-name">
-          © 2026 Neo Hospital
-        </div>
+                <div className="copyright-left">
+                  <div className="hospital-name">
+                    © 2026 Neo Hospital
+                  </div>
 
-        <div className="company-details">
-          Neo Hospital is a brand owned and operated by
-          <strong> Muskan Medical Center Private Limited</strong>
-        </div>
+                  <div className="company-details">
+                    Neo Hospital is a brand owned and operated by
+                    <strong> Muskan Medical Center Private Limited</strong>
+                  </div>
 
-        <div className="company-details">
-          CIN: U85191UP2012PTC051632 |
-          GSTIN: 09AAICM0482D2ZJ
-        </div>
+                  <div className="company-details">
+                    CIN: U85191UP2012PTC051632 |
+                    GSTIN: 09AAICM0482D2ZJ
+                  </div>
 
-        <div className="company-details">
-          Registered Office: D-170A, Sector-50, Noida,
-          Gautam Buddha Nagar, Uttar Pradesh - 201301
-        </div>
-      </div>
+                  <div className="company-details">
+                    Registered Office: D-170A, Sector-50, Noida,
+                    Gautam Buddha Nagar, Uttar Pradesh - 201301
+                  </div>
+                </div>
 
-      <div className="copyright-right">
-        <Link to="/">Home</Link>
-        <Link to="/teams-&-conditions">Terms</Link>
-        <Link to="/privacy-policy">Privacy Policy</Link>
-        <Link to="/contact">Contact</Link>
-      </div>
+                <div className="copyright-right">
+                  <Link to="/">Home</Link>
+                  <Link to="/teams-&-conditions">Terms</Link>
+                  <Link to="/privacy-policy">Privacy Policy</Link>
+                  <Link to="/contact">Contact</Link>
+                </div>
 
-    </div>
-  </div>
-</div>
+              </div>
+            </div>
+          </div>
 
         </footer>
       </div>
