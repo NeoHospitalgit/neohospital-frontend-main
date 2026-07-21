@@ -6,6 +6,7 @@ import { useAuth } from "../../store/auth";
 import KeywordBanner from "./KeywordBanner";
 import WelcomeSection from "./WelcomeSection";
 import DoctorsSection from "./DoctorsSection";
+import ExpertCTASection from "./ExpertCTASection";
 import ContentSection from "./ContentSection";
 import WhyChooseSection from "./WhyChooseSection";
 import CTASection from "./CTASection";
@@ -80,35 +81,44 @@ function KeywordPage() {
         />
       </Helmet>
 
-      <KeywordBanner
+     <KeywordBanner
         title={keyword.keyword_title}
-        image={`${API}/uploads/blogs/${keyword.banner_image}`}
+        direction={keyword.keyword_description}
+        image={
+          keyword.banner_image
+            ? `${API}/uploads/blogs/${keyword.banner_image}`
+            : ""
+        }
       />
-      <WelcomeSection
-        title={keyword.keyword_title}
-        description={keyword.keyword_description}
-      />
-     {keyword.doctors?.length > 0 && (
-
-    <DoctorsSection
-
-        doctors={keyword.doctors}
-
-        API={API}
-
+    <WelcomeSection
+      title={keyword.welcome_title}
+      description={keyword.welcome_content}
+      canHelpTitle={keyword.can_help}
+      canHelpContent={keyword.can_help_content}
     />
-
-)}
-     
+    {keyword.doctors?.length > 0 && (
+      <DoctorsSection
+        doctors={keyword.doctors}
+        API={API}
+        teamTitle={keyword.team_title}
+        teamContent={keyword.team_content}
+      />
+    )}
+     <ExpertCTASection
+    title={keyword.expert_title}
+    content={keyword.expert_content}
+/>
 
 <ContentSection
   title={keyword.keyword_title}
   content={keyword.keyword_content}
 />
 
-<WhyChooseSection />
-<CTASection />
 
+<CTASection
+  title={keyword.cat_title}
+  content={keyword.cat_content}
+/>
      {keyword.faq?.length > 0 && (
 
     <FAQSection
