@@ -77,7 +77,7 @@ function DoctorsSection({
                     </a>
 
                     <Link
-                      to={`/doctor/${doctor.drSlug || doctor._id}`}
+                      to={`/doctor-details/${doctor.drSlug || doctor._id}`}
                       className="profile-btn"
                     >
                       View Profile
