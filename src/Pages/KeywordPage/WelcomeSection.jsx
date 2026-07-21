@@ -1,7 +1,12 @@
 import React from "react";
 import "./Keyword.css";
-
-function WelcomeSection({ title, description }) {
+import parse from "html-react-parser";
+function WelcomeSection({
+  title,
+  description,
+  canHelpTitle,
+  canHelpContent,
+}) {
   return (
     <section className="welcome-section">
       <div className="container">
@@ -20,9 +25,9 @@ function WelcomeSection({ title, description }) {
               {title}
             </h2>
 
-            <p className="welcome-description">
-              {description}
-            </p>
+           <div className="welcome-description">
+            {description && parse(description)}
+          </div>
 
           </div>
 
@@ -32,21 +37,9 @@ function WelcomeSection({ title, description }) {
 
             <div className="welcome-card">
 
-              <h4>Why Choose NEO?</h4>
+          <h4>{canHelpTitle}</h4>
 
-              <ul>
-
-                <li> Experienced Doctors</li>
-
-                <li> Advanced Technology</li>
-
-                <li> NABH Accredited Hospital</li>
-
-                <li> 24×7 Emergency Care</li>
-
-                <li> Patient-Centric Treatment</li>
-
-              </ul>
+            {canHelpContent && parse(canHelpContent)}
 
             </div>
 
