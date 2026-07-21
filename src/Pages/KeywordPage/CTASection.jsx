@@ -1,26 +1,22 @@
 import React from "react";
 import "./Keyword.css";
+import parse from "html-react-parser";
 
-function CTASection() {
+function CTASection({ title, content }) {
   return (
     <section className="cta-section">
-
       <div className="container">
-
         <div className="cta-box">
 
           <span className="cta-tag">
             Book Your Appointment
           </span>
 
-          <h2>
-            Need Expert Medical Consultation?
-          </h2>
+          <h2>{title}</h2>
 
-          <p>
-            Our experienced specialists are available to provide
-            advanced diagnosis and personalized treatment for every patient.
-          </p>
+          <div className="cta-content">
+            {content && parse(content)}
+          </div>
 
           <div className="cta-buttons">
 
@@ -41,9 +37,7 @@ function CTASection() {
           </div>
 
         </div>
-
       </div>
-
     </section>
   );
 }
