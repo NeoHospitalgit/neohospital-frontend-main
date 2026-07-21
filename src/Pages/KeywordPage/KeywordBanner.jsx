@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Keyword.css";
 
-function KeywordBanner({ title, image }) {
+function KeywordBanner({ title, direction, image }) {
   return (
     <section
       className="keyword-banner"
@@ -31,9 +31,7 @@ function KeywordBanner({ title, image }) {
               </h1>
 
               <p className="keyword-subtitle">
-                Receive expert diagnosis, advanced treatment and
-                compassionate care from our experienced specialists at
-                NEO Super Speciality Hospital.
+               {direction}
               </p>
 
               <div className="keyword-rating">
