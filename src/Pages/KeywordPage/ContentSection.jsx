@@ -16,12 +16,6 @@ function ContentSection({ title, content }) {
           <h2>
             About {title}
           </h2>
-
-          <p>
-            Learn about our expert medical services, advanced treatment
-            options, experienced specialists, and patient-centered care.
-          </p>
-
         </div>
 
         <div className="content-box">
