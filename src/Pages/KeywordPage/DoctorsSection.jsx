@@ -2,8 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaCalendarCheck, FaUserMd } from "react-icons/fa";
 import "./Keyword.css";
+import parse from "html-react-parser";
 
-function DoctorsSection({ doctors, API }) {
+function DoctorsSection({
+  doctors,
+  API,
+  teamTitle,
+  teamContent,
+}) {
   return (
     <section className="doctor-section">
       <div className="container">
@@ -11,17 +17,16 @@ function DoctorsSection({ doctors, API }) {
         <div className="section-heading">
 
           <span className="section-tag">
-            Our Medical Experts
+            Our Teams
           </span>
 
           <h2>
-            Meet Our Doctors
+            {teamTitle}
           </h2>
 
-          <p>
-            Our experienced specialists provide advanced diagnosis,
-            personalized treatment, and compassionate healthcare.
-          </p>
+        
+          {teamContent && parse(teamContent)}
+       
 
         </div>
 
