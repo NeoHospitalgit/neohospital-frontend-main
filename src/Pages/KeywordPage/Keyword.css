@@ -136,13 +136,13 @@
 
     color:#fff;
 
-    padding:16px 36px;
+    padding:8px 36px;
 
     border-radius:50px;
 
     font-weight:700;
 
-    font-size:14px;
+    font-size:13px;
 
     transition:.35s;
 
@@ -230,7 +230,7 @@
     padding:90px 0;
     background:linear-gradient(180deg,#F8FBFD 0%,#FFFFFF 100%);
     overflow:hidden;
-    z-index: 9999;
+    /* z-index: 9999; */
 }
 
 /* Background Shapes */
@@ -261,7 +261,7 @@
 
 .welcome-section .container{
     position:relative;
-    z-index:10;
+    /* z-index:10; */
 }
 
 /* Left */
@@ -1325,13 +1325,14 @@
 
     color:#099767;
 
-    padding:16px 35px;
+    padding:8px 35px;
 
     border-radius:50px;
 
     text-decoration:none;
 
     font-weight:600;
+    font-size: 14px;
 
 }
 
@@ -1529,7 +1530,7 @@
 }
 
 .expert-cta-box {
-    background: linear-gradient(135deg, #0056b3, #00a8e8);
+    background: linear-gradient(135deg, #088f6a, #088f6a);
     color: #fff;
     padding: 60px;
     border-radius: 20px;
