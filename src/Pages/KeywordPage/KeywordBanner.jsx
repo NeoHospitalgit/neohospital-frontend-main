@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Keyword.css";
-
-function KeywordBanner({ title, direction, image }) {
+import AppointmentModal from "../AppointmentModal/AppointmentModal";
+function KeywordBanner({ title, direction, image , doctorname }) {
   return (
     <section
       className="keyword-banner"
@@ -39,23 +39,21 @@ function KeywordBanner({ title, direction, image }) {
                 <span>Trusted by Thousands of Patients</span>
               </div>
 
-              <div className="keyword-btns">
+         <div className="keyword-btns">
 
-                <a
-                  href="/appointment"
-                  className="btn btn-warning"
-                >
-                  📅 Book Appointment
-                </a>
+              <AppointmentModal
+                buttonText="Book Appointment"
+                doctorname={doctorname || title}
+              />
 
-                <a
-                  href="tel:01204880088"
-                  className="btn btn-outline-light"
-                >
-                  📞 Call Now
-                </a>
+            <a
+              href="tel:01204880088"
+              className="btn btn-outline-light"
+            >
+              📞 Call Now
+            </a>
 
-              </div>
+          </div>
 
             </div>
 
