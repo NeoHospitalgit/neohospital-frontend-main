@@ -1,8 +1,9 @@
 import React from "react";
 import "./Keyword.css";
+import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import parse from "html-react-parser";
 
-function CTASection({ title, content }) {
+function CTASection({ title, content, doctorname }) {
   return (
     <section className="cta-section">
       <div className="container">
@@ -20,12 +21,12 @@ function CTASection({ title, content }) {
 
           <div className="cta-buttons">
 
-            <a
-              href="/appointment"
-              className="cta-book-btn"
-            >
-              📅 Book Appointment
-            </a>
+           <div className="cta-book-modal">
+              <AppointmentModal
+                buttonText="Book Appointment"
+                doctorname={doctorname || title}
+              />
+            </div>
 
             <a
               href="tel:01204880088"
