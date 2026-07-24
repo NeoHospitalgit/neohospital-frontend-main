@@ -11,7 +11,9 @@ import ContentSection from "./ContentSection";
 import WhyChooseSection from "./WhyChooseSection";
 import CTASection from "./CTASection";
 import FAQSection from "./FAQSection";
+import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import "./Keyword.css";
+
 
 function KeywordPage() {
   const { slug } = useParams();
@@ -104,21 +106,22 @@ function KeywordPage() {
         teamContent={keyword.team_content}
       />
     )}
-     <ExpertCTASection
-    title={keyword.expert_title}
-    content={keyword.expert_content}
-/>
+    <ExpertCTASection
+      title={keyword.expert_title}
+      content={keyword.expert_content}
+    />
 
-<ContentSection
-  title={keyword.keyword_title}
-  content={keyword.keyword_content}
-/>
+    <ContentSection
+      title={keyword.keyword_title}
+      content={keyword.keyword_content}
+    />
 
 
-<CTASection
-  title={keyword.cat_title}
-  content={keyword.cat_content}
-/>
+    <CTASection
+      title={keyword.cat_title}
+      content={keyword.cat_content}
+    />
+
      {keyword.faq?.length > 0 && (
 
     <FAQSection
