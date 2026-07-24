@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 import "./Keyword.css";
+import AppointmentModal from "../AppointmentModal/AppointmentModal";
 
-function ExpertCTASection({ title, content }) {
+function ExpertCTASection({ title, content , doctorname}) {
   return (
     <section className="expert-cta-section">
       <div className="container">
@@ -19,10 +20,13 @@ function ExpertCTASection({ title, content }) {
           <div className="expert-content">
             {content && parse(content)}
           </div>
-
-          <Link to="/appointment" className="expert-btn">
-            Book Appointment
-          </Link>
+            <div className="cta-book-modal">
+              <AppointmentModal
+                buttonText="Book Appointment"
+                doctorname={doctorname || title}
+              />
+            </div>
+          
 
         </div>
 
