@@ -38,6 +38,7 @@ import ScrollToTop from "./Pages/ScrollToTop.jsx";
 import PrivacyPolicyPage from "./Pages/PrivacyPolicyPage/PrivacyPolicyPage.jsx";
 import TermsPage from "./Pages/TermsPage/TermsPage.jsx";
 import KeywordPage from "./Pages/KeywordPage/KeywordPage.jsx";
+import ProcedurePage from "./Pages/Procedures/ProcedurePage.jsx";
 
 // Admin
 import Admin from "./Pages/AdminPannel/Admin.jsx";
@@ -115,6 +116,7 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/teams-&-conditions" element={<TermsPage />} />
           <Route path="/doctor/:slug" element={<KeywordPage />}/>
+          <Route path="/procedures"  element={<ProcedurePage />}  />
 
           {/* ✅ PROTECTED ADMIN ROUTES */}
           <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
