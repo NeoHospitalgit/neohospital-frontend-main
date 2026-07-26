@@ -1,0 +1,290 @@
+/*==========================================
+LEFT CONTENT
+==========================================*/
+
+.procedure-content{
+    background:#fff;
+    /* border-radius:12px; */
+    padding:18px;
+    /* box-shadow:0 5px 25px rgba(0,0,0,.06); */
+}
+
+/*==========================================
+SECTION
+==========================================*/
+
+.content-section{
+    margin-bottom:55px;
+    padding-bottom:35px;
+    border-bottom:1px solid #ececec;
+}
+
+.content-section:last-child{
+    border-bottom:none;
+    margin-bottom:0;
+    padding-bottom:0;
+}
+
+/*==========================================
+HEADING
+==========================================*/
+
+.content-section h2{
+    font-size:30px;
+    color:#1D3557;
+    font-weight:700;
+    margin-bottom:20px;
+    position:relative;
+    padding-left:18px;
+}
+
+.content-section h2::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:4px;
+    width:5px;
+    height:36px;
+    background:#00A9CE;
+    border-radius:20px;
+}
+
+/*==========================================
+PARAGRAPH
+==========================================*/
+
+.content-section p{
+    font-size:16px;
+    color:#555;
+    line-height:1.9;
+    margin-bottom:18px;
+}
+
+/*==========================================
+UNORDERED LIST
+==========================================*/
+
+.content-section ul{
+    list-style:none;
+    padding:0;
+    margin:25px 0 0;
+}
+
+.content-section ul li{
+    position:relative;
+    padding-left:32px;
+    margin-bottom:16px;
+    color:#444;
+    font-size:16px;
+    line-height:1.8;
+}
+
+.content-section ul li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    top:2px;
+    width:22px;
+    height:22px;
+    background:#E8F8FC;
+    color:#00A9CE;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    font-weight:700;
+}
+
+/*==========================================
+ORDER LIST
+==========================================*/
+
+.content-section ol{
+    counter-reset:step;
+    padding:0;
+    margin-top:25px;
+}
+
+.content-section ol li{
+    list-style:none;
+    position:relative;
+    padding-left:65px;
+    min-height:45px;
+    margin-bottom:22px;
+    line-height:1.8;
+    color:#444;
+}
+
+.content-section ol li::before{
+    counter-increment:step;
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#00A9CE;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+}
+
+.content-section ol li::after{
+    content:"";
+    position:absolute;
+    left:20px;
+    top:42px;
+    width:2px;
+    height:35px;
+    background:#d8edf3;
+}
+
+.content-section ol li:last-child::after{
+    display:none;
+}
+
+/*==========================================
+INFO BOX
+==========================================*/
+
+.info-box{
+    background:#F4FBFD;
+    border-left:5px solid #00A9CE;
+    padding:22px;
+    border-radius:10px;
+    margin:25px 0;
+}
+
+.info-box h4{
+    color:#1D3557;
+    margin-bottom:10px;
+}
+
+.info-box p{
+    margin:0;
+}
+
+/*==========================================
+TABLE
+==========================================*/
+
+.content-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:25px;
+}
+
+.content-table th{
+    background:#00A9CE;
+    color:#fff;
+    padding:15px;
+    text-align:left;
+}
+
+.content-table td{
+    padding:15px;
+    border:1px solid #eee;
+}
+
+.content-table tr:nth-child(even){
+    background:#fafafa;
+}
+
+/*==========================================
+IMAGE
+==========================================*/
+
+.content-image{
+    width:100%;
+    border-radius:12px;
+    margin:30px 0;
+}
+
+/*==========================================
+HIGHLIGHT
+==========================================*/
+
+.highlight{
+    color:#00A9CE;
+    font-weight:600;
+}
+
+/*==========================================
+RESPONSIVE
+==========================================*/
+
+@media(max-width:991px){
+
+.procedure-content{
+padding:30px;
+}
+
+.content-section{
+margin-bottom:40px;
+}
+
+.content-section h2{
+font-size:26px;
+}
+
+}
+
+@media(max-width:576px){
+
+.procedure-content{
+padding:20px;
+}
+
+.content-section h2{
+font-size:22px;
+padding-left:15px;
+}
+
+.content-section h2::before{
+height:28px;
+}
+
+.content-section p,
+.content-section li{
+font-size:15px;
+}
+
+.content-section ol li{
+padding-left:55px;
+}
+
+.content-section ol li::before{
+width:35px;
+height:35px;
+font-size:14px;
+}
+
+.content-section ol li::after{
+left:17px;
+}
+
+}
+.overview-wrapper{
+    display:flex;
+    align-items:flex-start;
+    gap:30px;
+}
+
+.overview-left{
+    flex:1;
+    min-width:0;
+}
+
+.overview-right{
+    width:360px;
+    flex-shrink:0;
+}
+
+.sticky-sidebar{
+    position:sticky;
+    top:90px;
+}
