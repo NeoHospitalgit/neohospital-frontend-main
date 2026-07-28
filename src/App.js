@@ -65,6 +65,10 @@ import DetailsDepartment from "./Pages/OurDepartment/DetailsDepartment.jsx";
 import ManageAppointments from "./Pages/AdminPannel/ManageAppointments.jsx";
 import ManageKeywords from "./Pages/AdminPannel/ManageKeywords.jsx";
 import ListKeywordPage from "./Pages/AdminPannel/ListKeywordPage.jsx";
+
+
+import ManageProcedures from "./Pages/AdminPannel/ManageProcedures.jsx";
+import ListProcedures from "./Pages/AdminPannel/ListProcedures.jsx";
 const App = () => {
   const { isLoading, isLoggedIn } = useAuth();
 
@@ -116,7 +120,7 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/teams-&-conditions" element={<TermsPage />} />
           <Route path="/doctor/:slug" element={<KeywordPage />}/>
-          <Route path="/procedures"  element={<ProcedurePage />}  />
+          <Route path="/procedures/:slug" element={<ProcedurePage />} />
 
           {/* ✅ PROTECTED ADMIN ROUTES */}
           <Route path="/admin" element={isLoggedIn ? <Admin /> : <Navigate to="/login" />} />
@@ -154,6 +158,10 @@ const App = () => {
            <Route path="/add-keywords"  element={isLoggedIn ? <ManageKeywords /> : <Navigate to="/login" />} />
            <Route path="/list-keywords"  element={isLoggedIn ? <ListKeywordPage /> : <Navigate to="/login" />} />
            <Route path="/add-keyword/:id" element={isLoggedIn ? <ManageKeywords /> : <Navigate to="/login" />}/>
+
+          <Route path="/add-procedures"  element={isLoggedIn ? <ManageProcedures /> : <Navigate to="/login" />} />
+           <Route path="/list-procedures"  element={isLoggedIn ? <ListProcedures/> : <Navigate to="/login" />} />
+           <Route path="/add-procedures/:id" element={isLoggedIn ? <ManageProcedures /> : <Navigate to="/login" />}/>
         </Routes>
 
         {!isLoggedIn && <Footer />}
