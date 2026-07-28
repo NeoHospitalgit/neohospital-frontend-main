@@ -16,7 +16,7 @@ import nbl from "../Assets/nbl.png";
 import "./Header.css";
 import Topbar from "./Topbar";
 
-  const API = "http://localhost:5001/api";
+  const API = "https://api.neohospital.com/api";
 const specialities = [
   "Internal Medicine",
   "Neurology",
