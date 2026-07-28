@@ -10,7 +10,7 @@ function ProcedurePage() {
   const { slug } = useParams();
 
   const API =
-    process.env.REACT_APP_API_URL || "http://localhost:5001/api";
+    process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
 
   const [procedure, setProcedure] = useState(null);
   const [loading, setLoading] = useState(true);
