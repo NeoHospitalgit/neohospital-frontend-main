@@ -1,90 +1,94 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./ProcedureSidebar.css";
 
-function ProcedureSidebar() {
-
+function ProcedureSidebar({ procedure }) {
   const [search, setSearch] = useState("");
 
-  const doctors = [
-    {
-      id: 1,
-      image: "https://api.neohospital.com/uploads/doctors/drImage-1765014994822-867739272-drImage-1745319947556-710981232-dr.%20bharat%20nair.png",
-      name: "Dr. BHARAT NAIR",
-      designation: "GASTROSCIENCES",
-      experience: "11+ years experience",
-    },
-    {
-      id: 2,
-      image: "https://api.neohospital.com/uploads/doctors/drImage-1780641403884-698459381.jpeg",
-      name: "DR SANJAY KR. SHARMA",
-      designation: "CARDIOLOGY",
-      experience: "20+ years experience",
-    },
-    {
-      id: 3,
-      image: "https://api.neohospital.com/uploads/doctors/drImage-1780647492490-218653950.jpeg",
-      name: "DR NEHA TYAGI",
-      designation: "NEONATOLOGY & PEADIATRICS",
-      experience: "7+ Years Experience",
-    },
-    {
-      id: 4,
-      image: "https://api.neohospital.com/uploads/doctors/drImage-1780643493850-528080449.png",
-      name: "DR NIHARIKA SINGH",
-      designation: "DENTAL",
-      experience: "12+ Years Experience",
-    },
-    
-  ];
+  const API =
+    process.env.REACT_APP_API_URL || "http://localhost:5001";
 
-  const blogs = [
-    {
-      id: 1,
-      image: "https://api.neohospital.com/uploads/blogs/blog_image-1781173294550-704010669.jpg",
-      title: "Everything About Knee Replacement Surgery",
-      date: "12 Jan 2026",
-    },
-    {
-      id: 2,
-      image: "https://api.neohospital.com/uploads/blogs/blog_image-1781173294550-704010669.jpg",
-      title: "Signs You Need Knee Replacement",
-      date: "18 Jan 2026",
-    },
-    {
-      id: 3,
-      image: "https://api.neohospital.com/uploads/blogs/blog_image-1781173294550-704010669.jpg",
-      title: "Recovery After Knee Surgery",
-      date: "26 Jan 2026",
-    },
-  ];
+  // ==========================
+  // Doctors
+  // ==========================
 
-  const filteredDoctors = doctors.filter((doctor) =>
-    doctor.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const doctors = useMemo(() => {
+    return Array.isArray(procedure?.doctors)
+      ? procedure.doctors
+      : [];
+  }, [procedure]);
+
+ const filteredDoctors = doctors.filter((doctor) => {
+  const doctorName =
+    doctor?.drTitle ||
+    doctor?.doctor_name ||
+    doctor?.name ||
+    "";
+
+  return doctorName
+    .toLowerCase()
+    .includes(search.toLowerCase());
+});
+
+  // ==========================
+  // Doctor Image
+  // ==========================
+
+  const getDoctorImage = (doctor) => {
+  const image = doctor?.drImage || "";
+
+  console.log("Doctor:", doctor);
+  console.log("Doctor Image:", image);
+
+  if (!image) {
+    return "https://via.placeholder.com/90x90?text=Doctor";
+  }
+
+  // Already full URL
+  if (image.startsWith("http")) {
+    return image;
+  }
+
+  // If DB contains uploads/doctors/abc.webp
+  if (image.startsWith("uploads")) {
+    return `${API}/${image}`;
+  }
+
+  // If DB contains /uploads/doctors/abc.webp
+  if (image.startsWith("/uploads")) {
+    return `${API}${image}`;
+  }
+
+  // If DB contains only abc.webp
+  return `${API}/uploads/doctors/${image}`;
+};
 
   return (
     <div className="sticky-sidebar">
 
-      {/* =========================
-          CALLBACK FORM
-      ========================== */}
+      {/* ================================= */}
+      {/* Callback Form */}
+      {/* ================================= */}
 
-      <div className="sidebar-card callback-card">
+      <div className="sidebar-card">
 
         <div className="sidebar-titless">
 
           <span>Need Help?</span>
 
-          <h3>Get a Call Back from Our Health Advisor</h3>
+          <h3>
+            Request a Call Back
+          </h3>
 
           <p>
-            Fill in your details and our healthcare expert will
-            contact you shortly.
+            Our healthcare advisor will contact you shortly.
           </p>
 
         </div>
 
-        <form className="callback-form">
+        <form
+          className="callback-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
 
           <div className="form-group">
             <input
@@ -115,226 +119,182 @@ function ProcedureSidebar() {
           </button>
 
           <p className="privacy">
-            We respect your privacy. Your information is safe with us.
+            Your information is completely secure.
           </p>
 
         </form>
 
       </div>
 
-      {/* =========================
-          EXPERT TEAM
-      ========================== */}
+      {/* ================================= */}
+      {/* Department */}
+      {/* ================================= */}
 
-      <div className="sidebar-card expert-card">
+      {procedure?.department && (
+
+        <div className="sidebar-card">
+
+          <div className="sidebar-titless">
+
+            <span>Department</span>
+
+            <h3>
+              {procedure.department.department_name ||
+                procedure.department.name ||
+                procedure.department.title}
+            </h3>
+
+          </div>
+
+        </div>
+
+      )}
+
+      {/* ================================= */}
+      {/* Doctors */}
+      {/* ================================= */}
+
+      <div className="sidebar-card">
 
         <div className="sidebar-titless">
 
           <span>Doctors</span>
 
-          <h3>Our Expert Team</h3>
+          <h3>
+            Our Specialists
+          </h3>
 
         </div>
+<input
+  type="text"
+  className="doctor-search"
+  placeholder="Search Doctor..."
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+/>
 
-        <input
-          type="text"
-          className="doctor-search"
-          placeholder="Search Doctor..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+<div className="doctor-list">
 
-        <div className="doctor-list">
-                    {filteredDoctors.length > 0 ? (
+  {filteredDoctors.length > 0 ? (
 
-            filteredDoctors.map((doctor) => (
+    filteredDoctors.map((doctor) => {
 
-              <div
-                className="doctor-item"
-                key={doctor.id}
-              >
+      const doctorName =
+        doctor?.drTitle ||
+        doctor?.doctor_name ||
+        doctor?.name ||
+        "Doctor";
 
-                <div className="doctor-imagess">
+      const doctorDepartment =
+        doctor?.drDepartment ||
+        doctor?.designation ||
+        doctor?.speciality ||
+        doctor?.department?.department_name ||
+        "";
 
-                  <img
-                    src={doctor.image}
-                    alt={doctor.name}
-                  />
+      const doctorExperience =
+        doctor?.drExperience ||
+        doctor?.experience;
 
-                </div>
+      return (
 
-                <div className="doctor-content">
+        <div
+          className="doctor-item"
+          key={doctor?._id}
+        >
 
-                  <h4>{doctor.name}</h4>
+          {/* Doctor Image */}
 
-                  <p>{doctor.designation}</p>
+          <div className="doctor-imagess">
 
-                  <span>{doctor.experience}</span>
-
-                 
-
-                </div>
-
-              </div>
-
-            ))
-
-          ) : (
-
-            <div className="no-doctor">
-
-              <p>No doctor found.</p>
-
-            </div>
-
-          )}
-
-        </div>
-
-      </div>
-
-      {/* =========================
-              BLOGS
-      ========================== */}
-
-      <div className="sidebar-card blog-card">
-
-        <div className="sidebar-titless">
-
-          <span>Latest Updates</span>
-
-          <h3>Health Blogs</h3>
-
-        </div>
-
-        <div className="blog-list">
-
-          {blogs.map((blog) => (
-
-            <div
-              className="blog-item"
-              key={blog.id}
-            >
-
-              <div className="blog-image">
-
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                />
-
-              </div>
-
-              <div className="blog-content">
-
-                <h4>
-                  {blog.title}
-                </h4>
-
-                <span>
-                  {blog.date}
-                </span>
-
-              </div>
-
-            </div>
-
-          ))}
-
-        </div>
-
-      </div>
-
-      {/* =========================
-          SECOND OPINION
-      ========================== */}
-
-      <div className="sidebar-card opinion-card">
-
-        <div className="sidebar-titless">
-
-          <span>Expert Advice</span>
-
-          <h3>Get a Second Opinion</h3>
-
-          <p>
-            Share your medical details and receive an expert opinion
-            from our experienced specialists.
-          </p>
-
-        </div>
-
-        <form className="callback-form">
-
-          <div className="form-group">
-
-            <input
-              type="text"
-              placeholder="Your Name"
-            />
+            <img
+            src={getDoctorImage(doctor)}
+            alt={doctorName}
+            onError={(e) => {
+              console.log("Image Failed:", getDoctorImage(doctor));
+              e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
+            }}
+          />
 
           </div>
 
-          <div className="form-group">
+          {/* Doctor Details */}
 
-            <input
-              type="tel"
-              placeholder="Mobile Number"
-            />
+          <div className="doctor-content">
+
+            <h4>{doctorName}</h4>
+
+            {doctorDepartment && (
+              <p>{doctorDepartment}</p>
+            )}
+
+            {doctorExperience && (
+              <span>
+                {doctorExperience} Years Experience
+              </span>
+            )}
+
+            {doctor?.drQualification && (
+              <p className="doctor-qualification">
+                {doctor.drQualification}
+              </p>
+            )}
 
           </div>
 
-          <div className="form-group">
+        </div>
 
-            <input
-              type="text"
-              placeholder="Preferred Time to Call"
-            />
+      );
 
-          </div>
+    })
 
-          <button
-            type="submit"
-            className="sidebar-btn"
-          >
-            Request Second Opinion
-          </button>
+  ) : (
 
-          <p className="privacy">
-            Your details remain confidential and secure.
-          </p>
+    <div className="no-doctor">
+      <p>No doctors available.</p>
+    </div>
 
-        </form>
+  )}
+
+</div>
 
       </div>
-            {/* =========================
-          CONTACT INFO (Optional)
-      ========================== */}
 
-      <div className="sidebar-card contact-cards">
+      {/* ================================= */}
+      {/* Contact */}
+      {/* ================================= */}
+
+      <div className="sidebar-card">
 
         <div className="sidebar-titless">
 
           <span>Need Immediate Help?</span>
 
-          <h3>Talk to Our Healthcare Expert</h3>
+          <h3>
+            Contact NEO Hospital
+          </h3>
 
         </div>
 
         <ul className="contact-list">
 
           <li>
-            📞 <a href="tel:+919999999999">+91 99999 99999</a>
-          </li>
-
-          <li>
-            ✉️ <a href="mailto:info@hospital.com">
-              info@hospital.com
+            📞{" "}
+            <a href="tel:0120-4880088">
+              
+                0120-4880088
             </a>
           </li>
 
           <li>
-            📍 Neo Hospital, Noida
+            ✉️{" "}
+            <a href="mailto:info@neohospital.com">
+              info@neohospital.com
+            </a>
+          </li>
+
+          <li>
+            📍 Noida, Uttar Pradesh
           </li>
 
         </ul>
@@ -342,9 +302,7 @@ function ProcedureSidebar() {
       </div>
 
     </div>
-
   );
-
 }
 
 export default ProcedureSidebar;

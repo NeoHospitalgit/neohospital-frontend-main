@@ -1,78 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaCalendarCheck, FaPhoneAlt } from "react-icons/fa";
+import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import "./ProcedureBanner.css";
 
-// Replace with your banner image
 import BannerImage from "../../Assets/prof.png";
 
-function ProcedureBanner() {
+function ProcedureBanner({ procedure }) {
+  const [showModal, setShowModal] = useState(true);
+
+  // ==========================
+  // API URL
+  // ==========================
+  const API =
+    process.env.REACT_APP_API_URL || "http://localhost:5001";
+
+  // ==========================
+  // Dynamic Data
+  // ==========================
+  const title =
+    procedure?.procedures_title || "Procedure";
+
+  const description =
+    procedure?.procedures_description || "";
+
+  const bannerImage =
+    procedure?.banner_image
+      ? procedure.banner_image.startsWith("http")
+        ? procedure.banner_image
+        : `${API}/${procedure.banner_image.replace(/^\/+/, "")}`
+      : BannerImage;
+
   return (
-    <section className="procedure-banner">
+    <>
+      <section className="procedure-banner">
+        <div className="container">
 
-      <div className="container">
+          {/* Breadcrumb */}
 
-        {/* Breadcrumb */}
-        <div className="procedure-breadcrumb">
-          <Link to="/">Home</Link>
-          <span>/</span>
-          <Link to="/procedures">Procedures</Link>
-          <span>/</span>
-          <strong>Knee Replacement Surgery</strong>
-        </div>
+          <div className="procedure-breadcrumb">
+            <Link to="/">Home</Link>
 
-        <div className="procedure-banner-wrapper">
+            <span>/</span>
 
-          {/* Left Content */}
-          <div className="procedure-banner-content">
+            <Link to="/procedures">
+              Procedures
+            </Link>
 
-            <span className="procedure-badge">
-              NEO Hospital
-            </span>
+            <span>/</span>
 
-            <h1>
-              Best Knee Replacement Surgery in Noida
-            </h1>
+            <strong>{title}</strong>
+          </div>
 
-          
+          <div className="procedure-banner-wrapper">
 
-            <div className="procedure-btns">
+            {/* LEFT */}
 
-              <button className="book-btn">
-                <FaCalendarCheck />
-                Book Appointment
-              </button>
+            <div className="procedure-banner-content">
 
-              <a
-                href="tel:+919268880303"
-                className="call-btn"
-              >
-                <FaPhoneAlt />
-                Call Now
-              </a>
+              <span className="procedure-badge">
+                NEO Hospital
+              </span>
+
+              <h1>{title}</h1>
+
+              {/* {description && (
+                <p>{description}</p>
+              )} */}
+
+              <div className="procedure-btns">
+
+                {showModal && (
+        <AppointmentModal
+          doctorname={title}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+                <a
+                  href="tel:+919268880303"
+                  className="call-btn"
+                >
+                  <FaPhoneAlt />
+                  Call Now
+                </a>
+
+              </div>
+
+            </div>
+
+            {/* RIGHT */}
+
+            <div className="procedure-banner-image">
+
+              <div className="circle-bg"></div>
+
+              <img
+                src={bannerImage}
+                alt={title}
+                onError={(e) => {
+                  e.target.src = BannerImage;
+                }}
+              />
 
             </div>
 
           </div>
 
-          {/* Right Image */}
-
-          <div className="procedure-banner-image">
-
-            <div className="circle-bg"></div>
-
-            <img
-              src={BannerImage}
-              alt="Procedure Banner"
-            />
-
-          </div>
-
         </div>
+      </section>
 
-      </div>
-
-    </section>
+     
+    </>
   );
 }
 

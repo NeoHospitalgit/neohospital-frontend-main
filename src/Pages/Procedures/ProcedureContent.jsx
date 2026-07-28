@@ -1,174 +1,111 @@
 import React from "react";
+import parse from "html-react-parser";
 import "./ProcedureContent.css";
-function ProcedureContent() {
+
+function ProcedureContent({ procedure }) {
+  if (!procedure) return null;
+
+  const content =
+    procedure?.procedures_content ||
+    procedure?.content ||
+    "";
+
+  const title =
+    procedure?.content_title ||
+    procedure?.procedures_title ||
+    "Procedure Details";
+
   return (
     <div className="procedure-content">
 
-      {/* Overview */}
+      {/* Main Content */}
 
       <section className="content-section">
 
-        <h2>Procedure Overview</h2>
+        {/* <h2>{title}</h2> */}
 
-        <p>
-          Knee replacement surgery is a highly successful orthopaedic procedure
-          performed to replace damaged knee joints with artificial implants.
-          The surgery helps relieve chronic pain, improves mobility, and
-          restores quality of life.
-        </p>
-
-        <p>
-          At NEO Hospital, our experienced orthopaedic surgeons perform
-          advanced knee replacement procedures using minimally invasive
-          techniques, modern operation theatres and world-class implants for
-          faster recovery.
-        </p>
+        {content ? (
+          <div className="content-description">
+            {parse(content)}
+          </div>
+        ) : (
+          <p>
+            Procedure details are not available at the
+            moment.
+          </p>
+        )}
 
       </section>
-
-
-      {/* Symptoms */}
-
-      <section className="content-section">
-
-        <h2>Symptoms</h2>
-
-        <ul>
-
-          <li>Persistent knee pain while walking</li>
-
-          <li>Difficulty climbing stairs</li>
-
-          <li>Swelling around the knee joint</li>
-
-          <li>Joint stiffness</li>
-
-          <li>Reduced range of movement</li>
-
-          <li>Pain even during rest</li>
-
-        </ul>
-
-      </section>
-
-
-      {/* Candidate */}
-
-      <section className="content-section">
-
-        <h2>Who is the Right Candidate?</h2>
-
-        <p>
-          Knee replacement is recommended for patients suffering from severe
-          osteoarthritis, rheumatoid arthritis or traumatic knee injuries where
-          medications and physiotherapy no longer provide relief.
-        </p>
-
-        <ul>
-
-          <li>Age above 50 years (generally)</li>
-
-          <li>Severe joint degeneration</li>
-
-          <li>Difficulty performing daily activities</li>
-
-          <li>Failed conservative treatment</li>
-
-        </ul>
-
-      </section>
-
-
-      {/* Contraindications */}
-
-      <section className="content-section">
-
-        <h2>Who Should Avoid This Procedure?</h2>
-
-        <ul>
-
-          <li>Active infection</li>
-
-          <li>Uncontrolled diabetes</li>
-
-          <li>Poor skin condition around knee</li>
-
-          <li>Severe vascular disease</li>
-
-        </ul>
-
-      </section>
-
-
-      {/* Preparation */}
-
-      <section className="content-section">
-
-        <h2>Before the Procedure</h2>
-
-        <p>
-          Before surgery, the doctor performs a detailed examination including
-          blood investigations, X-rays, ECG and other diagnostic tests to
-          evaluate overall fitness for surgery.
-        </p>
-
-        <ul>
-
-          <li>Blood Tests</li>
-
-          <li>X-Ray</li>
-
-          <li>MRI (if required)</li>
-
-          <li>Physician Clearance</li>
-
-          <li>Anaesthesia Assessment</li>
-
-        </ul>
-
-      </section>
-
-
-      {/* Procedure */}
-
-     
-
-
-      {/* Recovery */}
-
-      <section className="content-section">
-
-        <h2>Recovery</h2>
-
-        <p>
-          Patients usually start walking within 24 hours after surgery.
-          Complete recovery depends on age, overall health and physiotherapy.
-        </p>
-
-      </section>
-
 
       {/* Benefits */}
 
-      <section className="content-section">
+      {procedure?.benefits && (
+        <section className="content-section">
 
-        <h2>Benefits</h2>
+          <h2>Benefits</h2>
 
-        <ul>
+          <div className="content-description">
+            {parse(procedure.benefits)}
+          </div>
 
-          <li>Relieves chronic pain</li>
+        </section>
+      )}
 
-          <li>Improves mobility</li>
+      {/* Risks */}
 
-          <li>Better quality of life</li>
+      {procedure?.risks && (
+        <section className="content-section">
 
-          <li>Long-lasting implant</li>
+          <h2>Risks</h2>
 
-          <li>Improved joint function</li>
+          <div className="content-description">
+            {parse(procedure.risks)}
+          </div>
 
-        </ul>
+        </section>
+      )}
 
-      </section>
+      {/* Recovery */}
+
+      {procedure?.recovery && (
+        <section className="content-section">
+
+          <h2>Recovery</h2>
+
+          <div className="content-description">
+            {parse(procedure.recovery)}
+          </div>
+
+        </section>
+      )}
+
+      {/* Preparation */}
+
+      {procedure?.preparation && (
+        <section className="content-section">
+
+          <h2>Preparation Before Procedure</h2>
+
+          <div className="content-description">
+            {parse(procedure.preparation)}
+          </div>
+
+        </section>
+      )}
+
+      {/* After Care */}
+
+      {procedure?.after_care && (
+        <section className="content-section">
+
+          <h2>After Care</h2>
+
+          <div className="content-description">
+            {parse(procedure.after_care)}
+          </div>
+
+        </section>
+      )}
 
     </div>
   );

@@ -1,31 +1,49 @@
 import React from "react";
 import ProcedureContent from "./ProcedureContent";
-import ProcedureSidebar from "./ProcedureSidebar"; // Right sidebar component
+import ProcedureSidebar from "./ProcedureSidebar";
 
 import "./ProcedureOverview.css";
 
-function ProcedureOverview() {
+function ProcedureOverview({ procedure }) {
+  if (!procedure) return null;
+
   return (
     <section className="procedure-overview">
-
       <div className="container">
 
         <div className="overview-wrapper">
 
-          {/* Left Side */}
+          {/* =========================
+              LEFT CONTENT
+          ========================== */}
+
           <div className="overview-left">
-            <ProcedureContent />
+
+            <ProcedureContent
+              procedure={procedure}
+            />
+
           </div>
 
-          {/* Right Side */}
-          <aside className="overview-right">
-            <ProcedureSidebar />
-          </aside>
+          {/* =========================
+              RIGHT SIDEBAR
+          ========================== */}
+
+          <div className="overview-right">
+
+            <div className="sticky-sidebar">
+
+              <ProcedureSidebar
+                procedure={procedure}
+              />
+
+            </div>
+
+          </div>
 
         </div>
 
       </div>
-
     </section>
   );
 }
