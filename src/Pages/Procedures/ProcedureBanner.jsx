@@ -13,7 +13,7 @@ function ProcedureBanner({ procedure }) {
   // API URL
   // ==========================
   const API =
-    process.env.REACT_APP_API_URL || "http://localhost:5001";
+    process.env.REACT_APP_API_URL || "https://api.neohospital.com/";
 
   // ==========================
   // Dynamic Data
