@@ -85,6 +85,7 @@
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+        margin-bottom: 25px;
 }
 
 .book-btn,
