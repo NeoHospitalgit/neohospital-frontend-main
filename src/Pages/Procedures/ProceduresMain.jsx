@@ -5,7 +5,7 @@ import "./ProceduresMain.css";
 
 function ProceduresMain() {
   const API =
-    process.env.REACT_APP_API_URL || "http://localhost:5001/api";
+    process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
 
   const [procedures, setProcedures] = useState([]);
   const [filteredProcedures, setFilteredProcedures] = useState([]);
