@@ -64,9 +64,9 @@ function ProcedureBanner({ procedure }) {
 
               <h1>{title}</h1>
 
-              {/* {description && (
+               {description && (
                 <p>{description}</p>
-              )} */}
+              )} 
 
               <div className="procedure-btns">
 
@@ -77,7 +77,7 @@ function ProcedureBanner({ procedure }) {
         />
       )}
                 <a
-                  href="tel:+919268880303"
+                  href="tel:0120-3120000"
                   className="call-btn"
                 >
                   <FaPhoneAlt />
