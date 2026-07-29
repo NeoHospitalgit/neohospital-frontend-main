@@ -129,9 +129,18 @@ function AppointmentModal({
 
     } catch (error) {
 
-      console.log(error);
+     console.log("Full Error:", error);
 
-      alert("Appointment booking failed.");
+  console.log("Response:", error.response);
+
+  console.log("Request:", error.request);
+
+  console.log("Message:", error.message);
+
+  console.log("Code:", error.code);
+
+  alert("Appointment booking failed.");
+
 
     } finally {
 
