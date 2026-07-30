@@ -1,11 +1,18 @@
 import React, { useMemo, useState } from "react";
+import axios from "axios";
 import "./ProcedureSidebar.css";
 
 function ProcedureSidebar({ procedure }) {
   const [search, setSearch] = useState("");
+  const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [number, setNumber] = useState("");
 
-  const API =
-    process.env.REACT_APP_API_URL || "https://api.neohospital.com";
+const [loading, setLoading] = useState(false);
+const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+ const API =
+    process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
 
   // ==========================
   // Doctors
@@ -36,9 +43,6 @@ function ProcedureSidebar({ procedure }) {
   const getDoctorImage = (doctor) => {
   const image = doctor?.drImage || "";
 
-  console.log("Doctor:", doctor);
-  console.log("Doctor Image:", image);
-
   if (!image) {
     return "https://via.placeholder.com/90x90?text=Doctor";
   }
@@ -61,8 +65,87 @@ function ProcedureSidebar({ procedure }) {
   // If DB contains only abc.webp
   return `${API}/uploads/doctors/${image}`;
 };
+const handleCallback = async (e) => {
 
+  e.preventDefault();
+
+  if (!name || !number) {
+    alert("Please enter Name and Mobile Number.");
+    return;
+  }
+
+  const phoneRegex = /^[6-9]\d{9}$/;
+
+  if (!phoneRegex.test(number)) {
+    alert("Please enter valid mobile number.");
+    return;
+  }
+
+  try {
+
+    setLoading(true);
+    const res = await axios.post(
+      `${API}/api/sendmails/send-doctoremail`,
+      {
+        doctorname:
+          procedure?.procedures_title ||
+          "General Consultation",
+
+        name,
+        email,
+        number,
+
+        message: "Callback Request",
+
+        bookdate: "",
+        booktime: "",
+      }
+    );
+
+    if (res.status === 200) {
+
+      setShowSuccessMessage(true);
+
+      setName("");
+      setEmail("");
+      setNumber("");
+
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 2500);
+
+    }
+
+  } catch (err) {
+
+  alert(err.response?.data?.message || "Unable to submit request.");
+
+  } finally {
+
+    setLoading(false);
+
+  }
+
+};
   return (
+    <>
+      {showSuccessMessage && (
+
+    <div className="appointment-success">
+
+      <div className="appointment-success-box">
+
+        <h3>✅ Callback Request Sent</h3>
+
+        <p>
+          We'll contact you shortly.
+        </p>
+
+      </div>
+
+    </div>
+
+  )}
     <div className="sticky-sidebar">
 
       {/* ================================= */}
@@ -85,37 +168,48 @@ function ProcedureSidebar({ procedure }) {
 
         </div>
 
-        <form
-          className="callback-form"
-          onSubmit={(e) => e.preventDefault()}
-        >
+      <form className="callback-form" onSubmit={handleCallback} >
 
           <div className="form-group">
-            <input
-              type="text"
-              placeholder="Your Name"
-            />
+           <input
+  type="text"
+  placeholder="Your Name"
+  value={name}
+  onChange={(e)=>setName(e.target.value)}
+  required
+/>
           </div>
 
           <div className="form-group">
-            <input
-              type="tel"
-              placeholder="Mobile Number"
-            />
+          <input
+  type="tel"
+  placeholder="Mobile Number"
+  value={number}
+  maxLength={10}
+  onChange={(e)=>
+    setNumber(
+      e.target.value.replace(/\D/g,"")
+    )
+  }
+  required
+/>
           </div>
 
           <div className="form-group">
-            <input
-              type="email"
-              placeholder="Email Address"
-            />
+           <input
+  type="email"
+  placeholder="Email Address"
+  value={email}
+  onChange={(e)=>setEmail(e.target.value)}
+/>
           </div>
 
           <button
             type="submit"
             className="sidebar-btn"
+            disabled={loading}
           >
-            Request Callback
+          {loading ? "Submitting..." : "Request Callback"}
           </button>
 
           <p className="privacy">
@@ -165,98 +259,98 @@ function ProcedureSidebar({ procedure }) {
           </h3>
 
         </div>
-<input
-  type="text"
-  className="doctor-search"
-  placeholder="Search Doctor..."
-  value={search}
-  onChange={(e) => setSearch(e.target.value)}
-/>
-
-<div className="doctor-list">
-
-  {filteredDoctors.length > 0 ? (
-
-    filteredDoctors.map((doctor) => {
-
-      const doctorName =
-        doctor?.drTitle ||
-        doctor?.doctor_name ||
-        doctor?.name ||
-        "Doctor";
-
-      const doctorDepartment =
-        doctor?.drDepartment ||
-        doctor?.designation ||
-        doctor?.speciality ||
-        doctor?.department?.department_name ||
-        "";
-
-      const doctorExperience =
-        doctor?.drExperience ||
-        doctor?.experience;
-
-      return (
-
-        <div
-          className="doctor-item"
-          key={doctor?._id}
-        >
-
-          {/* Doctor Image */}
-
-          <div className="doctor-imagess">
-
-            <img
-            src={getDoctorImage(doctor)}
-            alt={doctorName}
-            onError={(e) => {
-              console.log("Image Failed:", getDoctorImage(doctor));
-              e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
-            }}
+          <input
+            type="text"
+            className="doctor-search"
+            placeholder="Search Doctor..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
 
+          <div className="doctor-list">
+
+            {filteredDoctors.length > 0 ? (
+
+              filteredDoctors.map((doctor) => {
+
+                const doctorName =
+                  doctor?.drTitle ||
+                  doctor?.doctor_name ||
+                  doctor?.name ||
+                  "Doctor";
+
+                const doctorDepartment =
+                  doctor?.drDepartment ||
+                  doctor?.designation ||
+                  doctor?.speciality ||
+                  doctor?.department?.department_name ||
+                  "";
+
+                const doctorExperience =
+                  doctor?.drExperience ||
+                  doctor?.experience;
+
+                return (
+
+                  <div
+                    className="doctor-item"
+                    key={doctor?._id}
+                  >
+
+                    {/* Doctor Image */}
+
+                    <div className="doctor-imagess">
+
+                      <img
+                      src={getDoctorImage(doctor)}
+                      alt={doctorName}
+                      onError={(e) => {
+                       
+                        e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
+                      }}
+                    />
+
+                    </div>
+
+                    {/* Doctor Details */}
+
+                    <div className="doctor-content">
+
+                      <h4>{doctorName}</h4>
+
+                      {doctorDepartment && (
+                        <p>{doctorDepartment}</p>
+                      )}
+
+                      {doctorExperience && (
+                        <span>
+                          {doctorExperience} Years Experience
+                        </span>
+                      )}
+
+                      {doctor?.drQualification && (
+                        <p className="doctor-qualification">
+                          {doctor.drQualification}
+                        </p>
+                      )}
+
+                    </div>
+
+                  </div>
+
+                );
+
+              })
+
+            ) : (
+
+              <div className="no-doctor">
+                <p>No doctors available.</p>
+              </div>
+
+            )}
+
           </div>
-
-          {/* Doctor Details */}
-
-          <div className="doctor-content">
-
-            <h4>{doctorName}</h4>
-
-            {doctorDepartment && (
-              <p>{doctorDepartment}</p>
-            )}
-
-            {doctorExperience && (
-              <span>
-                {doctorExperience} Years Experience
-              </span>
-            )}
-
-            {doctor?.drQualification && (
-              <p className="doctor-qualification">
-                {doctor.drQualification}
-              </p>
-            )}
-
-          </div>
-
-        </div>
-
-      );
-
-    })
-
-  ) : (
-
-    <div className="no-doctor">
-      <p>No doctors available.</p>
-    </div>
-
-  )}
-
-</div>
 
       </div>
 
@@ -302,6 +396,7 @@ function ProcedureSidebar({ procedure }) {
       </div>
 
     </div>
+    </>
   );
 }
 
