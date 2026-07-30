@@ -19,10 +19,10 @@ function CTA({ pageData }) {
             {pageData?.cat_title || "Looking for the Right Treatment?"}
           </h2>
 
-          <p>
+         
             {pageData?.cat_content ||
               "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital."}
-          </p>
+         
 
           <div className="procedure-cta-buttons">
 
