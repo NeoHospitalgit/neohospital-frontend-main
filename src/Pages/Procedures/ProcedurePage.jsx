@@ -4,12 +4,14 @@ import axios from "axios";
 
 import ProcedureBanner from "./ProcedureBanner";
 import ProcedureOverview from "./ProcedureOverview";
+import CTA from "./CTA";
 import ProcedureFAQ from "./ProcedureFAQ";
+
 
 function ProcedurePage() {
   const { slug } = useParams();
 
-  const API =
+ const API =
     process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
 
   const [procedure, setProcedure] = useState(null);
@@ -104,7 +106,7 @@ function ProcedurePage() {
       <ProcedureBanner procedure={procedure} />
 
       <ProcedureOverview procedure={procedure} />
-
+      <CTA pageData={procedure} />
       {procedure?.faq?.length > 0 && (
         <ProcedureFAQ faq={procedure.faq} />
       )}
