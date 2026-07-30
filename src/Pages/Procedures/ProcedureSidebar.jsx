@@ -12,7 +12,7 @@ const [loading, setLoading] = useState(false);
 const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
    const API =
-    process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
+    process.env.REACT_APP_API_URL || "https://api.neohospital.com/";
 
   // ==========================
   // Doctors
