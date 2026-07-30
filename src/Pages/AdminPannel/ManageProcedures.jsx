@@ -32,6 +32,8 @@ function ManageProcedures() {
         department: "",
         doctors: [],
 
+        cat_title: "",
+        cat_content: "",
         // Main Content
         procedures_content: "",
 
@@ -112,7 +114,8 @@ const fetchProcedureData = async () => {
           procedure.doctors
             ? procedure.doctors.map((doc) => doc._id)
             : [],
-
+       cat_title: procedure.cat_title || "",
+cat_content: procedure.cat_content || "",
         procedures_content:
           procedure.procedures_content || "",
 
@@ -494,6 +497,8 @@ const resetForm = () => {
     department: "",
     doctors: [],
 
+     cat_title: "",
+      cat_content: "",
     procedures_content: "",
 
     faq: [
@@ -517,7 +522,12 @@ const resetForm = () => {
 
 };
 
-
+const handleCatContentChange = (value) => {
+  setProceduresData((prev) => ({
+    ...prev,
+    cat_content: value,
+  }));
+};
 
 // =======================
 // Submit Form
@@ -695,6 +705,37 @@ const handleProcedure = (e) => {
                             Hold CTRL (Windows) or CMD (Mac) to select multiple doctors.
                           </small>
 
+                        </div>
+
+                      </div>
+                      {/* ===================== Category Section ===================== */}
+
+                      <h5 className="mb-3 mt-4 border-bottom pb-2">
+                        CTA Section
+                      </h5>
+
+                      <div className="row">
+
+                        <div className="col-md-12 mb-3">
+                          <label className="form-label">CTA Title</label>
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="cat_title"
+                            value={proceduresData.cat_title}
+                            onChange={handleProcedureInput}
+                            placeholder="Enter Category Title"
+                          />
+                        </div>
+
+                        <div className="col-md-12 mb-3">
+                          <label className="form-label">CTA Content</label>
+
+                        <JoditEditor
+                          value={proceduresData.cat_content}
+                          onBlur={handleCatContentChange}
+                        />
                         </div>
 
                       </div>
