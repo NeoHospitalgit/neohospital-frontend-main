@@ -1,0 +1,98 @@
+/*==========================
+ CTA
+==========================*/
+
+.procedure-cta{
+    margin-top:80px;
+    background:linear-gradient(135deg, #099667, #067e69);
+    border-radius:25px;
+    padding:70px 40px;
+    position:relative;
+    overflow:hidden;
+}
+
+.procedure-cta-content{
+    max-width:800px;
+    margin:auto;
+    text-align:center;
+    color:#fff;
+}
+
+.procedure-cta-content span{
+    display:inline-block;
+    margin-bottom:15px;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.procedure-cta-content p{
+    font-size:17px;
+    line-height:30px;
+    margin-bottom:35px;
+}
+
+.procedure-cta-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.cta-btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 35px;
+    border-radius:50px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:#fff;
+    color:#00A9CE;
+}
+
+.btn-primary:hover{
+    background:#F36C28;
+    color:#fff;
+}
+
+.btn-outlines{
+    border:2px solid #fff;
+    color:#fff;
+    background:transparent;
+}
+
+.btn-outlines:hover{
+    background:#fff;
+    color:#00A9CE;
+}
+
+@media(max-width:768px){
+
+.procedure-cta{
+padding:50px 25px;
+}
+
+.procedure-cta-content h2{
+font-size:30px;
+}
+
+.procedure-cta-buttons{
+flex-direction:column;
+}
+
+.cta-btn{
+width:100%;
+justify-content:center;
+}
+
+}
