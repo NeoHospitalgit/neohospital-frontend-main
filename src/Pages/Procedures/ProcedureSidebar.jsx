@@ -12,8 +12,9 @@ const [loading, setLoading] = useState(false);
 const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
    const API =
-    process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
+  process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
 
+const IMAGE_URL = API.replace(/\/api$/, "");
   // ==========================
   // Doctors
   // ==========================
@@ -40,33 +41,30 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   // Doctor Image
   // ==========================
 
-  const getDoctorImage = (doctor) => {
-  const image = doctor?.drImage || "";
-
-  console.log("Doctor:", doctor);
-  console.log("Doctor Image:", image);
+const getDoctorImage = (doctor) => {
+  const image = doctor?.drImage?.trim();
 
   if (!image) {
-    return "https://via.placeholder.com/90x90?text=Doctor";
+    return "/images/doctor-placeholder.png";
   }
 
-  // Already full URL
-  if (image.startsWith("http")) {
+  // Full URL already stored
+  if (image.startsWith("http://") || image.startsWith("https://")) {
     return image;
   }
 
-  // If DB contains uploads/doctors/abc.webp
-  if (image.startsWith("uploads")) {
-    return `${API}/${image}`;
+  // uploads/doctors/abc.webp
+  if (image.startsWith("uploads/")) {
+    return `${IMAGE_URL}/${image}`;
   }
 
-  // If DB contains /uploads/doctors/abc.webp
-  if (image.startsWith("/uploads")) {
-    return `${API}${image}`;
+  // /uploads/doctors/abc.webp
+  if (image.startsWith("/uploads/")) {
+    return `${IMAGE_URL}${image}`;
   }
 
-  // If DB contains only abc.webp
-  return `${API}/uploads/doctors/${image}`;
+  // only filename
+  return `${IMAGE_URL}/uploads/doctors/${image}`;
 };
 const handleCallback = async (e) => {
 
@@ -310,13 +308,17 @@ const handleCallback = async (e) => {
                     <div className="doctor-imagess">
 
                       <img
-                      src={getDoctorImage(doctor)}
-                      alt={doctorName}
-                      onError={(e) => {
-                        console.log("Image Failed:", getDoctorImage(doctor));
-                        e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
-                      }}
-                    />
+  src={getDoctorImage(doctor)}
+  alt={doctorName}
+  loading="lazy"
+  onError={(e) => {
+    console.log("Failed URL:", e.target.src);
+
+    e.target.onerror = null;
+
+    e.target.src = "/images/doctor-placeholder.png";
+  }}
+/>
 
                     </div>
 
