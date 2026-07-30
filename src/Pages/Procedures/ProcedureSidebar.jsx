@@ -11,7 +11,7 @@ const [number, setNumber] = useState("");
 const [loading, setLoading] = useState(false);
 const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
- const API =
+   const API =
     process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
 
   // ==========================
@@ -42,6 +42,9 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const getDoctorImage = (doctor) => {
   const image = doctor?.drImage || "";
+
+  console.log("Doctor:", doctor);
+  console.log("Doctor Image:", image);
 
   if (!image) {
     return "https://via.placeholder.com/90x90?text=Doctor";
@@ -84,6 +87,7 @@ const handleCallback = async (e) => {
   try {
 
     setLoading(true);
+
     const res = await axios.post(
       `${API}/api/sendmails/send-doctoremail`,
       {
@@ -117,6 +121,10 @@ const handleCallback = async (e) => {
     }
 
   } catch (err) {
+
+    console.log("Error:", err);
+  console.log("Response:", err.response);
+  console.log("Data:", err.response?.data);
 
   alert(err.response?.data?.message || "Unable to submit request.");
 
@@ -305,7 +313,7 @@ const handleCallback = async (e) => {
                       src={getDoctorImage(doctor)}
                       alt={doctorName}
                       onError={(e) => {
-                       
+                        console.log("Image Failed:", getDoctorImage(doctor));
                         e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
                       }}
                     />
