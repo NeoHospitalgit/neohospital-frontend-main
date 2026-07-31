@@ -1,79 +1,81 @@
 import React, { useState, useEffect } from "react";
 import List from "./List";
 import TopBarAdmin from "./TopBarAdmin";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/auth";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import JoditEditor from "jodit-react";
 
 function ManageProcedures() {
-  const formatDate = (dateString) => {
-    const procedureDate = new Date(dateString).toISOString().split("T")[0];
-    return `${procedureDate}`;
-  };
 
- 
-      const { id } = useParams();
-      const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-      const { authorizationToken, API } = useAuth();
+  const { authorizationToken, API } = useAuth();
 
-      const API_URL = `${API}/api/adminv12/procedures`;
-
-      const [proceduresData, setProceduresData] = useState({
-
-        // Basic Information
-        procedures_title: "",
-        procedures_slug: "",
-        procedures_description: "",
-
-        // Department
-        department: "",
-        doctors: [],
-
-        cat_title: "",
-        cat_content: "",
-        // Main Content
-        procedures_content: "",
-
-        // FAQ
-        faq: [
-          {
-            question: "",
-            answer: "",
-          },
-        ],
-
-        // SEO
-        seo_title: "",
-        meta_description: "",
-        focus_procedures: "",
-        schema_markup: "",
-
-        // Status
-        procedures_status: true,
-        procedures_addedBy: "",
-
-      });
-
-      const [departments, setDepartments] = useState([]);
-      const [doctors, setDoctors] = useState([]);
-
-      useEffect(() => {
-
-        fetchDepartments();
-
-        if (id) {
-          fetchProcedureData();
-        }
-
-      }, [id]);
+  const API_URL = `${API}/api/adminv12/procedures`;
 
   // =======================
+  // Procedure State
+  // =======================
+  const [proceduresData, setProceduresData] = useState({
+
+    // Basic Information
+    procedures_title: "",
+    procedures_slug: "",
+    procedures_description: "",
+
+    // Department
+    department: "",
+    doctors: [],
+
+    // CTA
+    cat_title: "",
+    cat_content: "",
+
+    // Procedure Content
+    procedures_content: "",
+
+    // FAQ
+    faq: [
+      {
+        question: "",
+        answer: "",
+      },
+    ],
+
+    // SEO
+    seo_head: "",
+
+    // Settings
+    procedures_status: true,
+    procedures_addedBy: "",
+  });
+
+  // =======================
+  // Other States
+  // =======================
+  const [departments, setDepartments] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+  // =======================
+// Initial Load
+// =======================
+useEffect(() => {
+
+  fetchDepartments();
+
+  if (id) {
+    fetchProcedureData();
+  }
+
+}, [id]);
+
+
+// =======================
 // Fetch Single Procedure
 // =======================
 const fetchProcedureData = async () => {
+
   try {
 
     const response = await fetch(`${API_URL}/${id}`, {
@@ -97,25 +99,20 @@ const fetchProcedureData = async () => {
       }
 
       setProceduresData({
-
-        procedures_title:
-          procedure.procedures_title || "",
-
-        procedures_slug:
-          procedure.procedures_slug || "",
-
+        procedures_title: procedure.procedures_title || "",
+        procedures_slug: procedure.procedures_slug || "",
         procedures_description:
           procedure.procedures_description || "",
 
-        department:
-          departmentId,
+        department: departmentId,
 
-        doctors:
-          procedure.doctors
-            ? procedure.doctors.map((doc) => doc._id)
-            : [],
-       cat_title: procedure.cat_title || "",
-cat_content: procedure.cat_content || "",
+        doctors: procedure.doctors
+          ? procedure.doctors.map((doc) => doc._id)
+          : [],
+
+        cat_title: procedure.cat_title || "",
+        cat_content: procedure.cat_content || "",
+
         procedures_content:
           procedure.procedures_content || "",
 
@@ -129,17 +126,7 @@ cat_content: procedure.cat_content || "",
                 },
               ],
 
-        seo_title:
-          procedure.seo_title || "",
-
-        meta_description:
-          procedure.meta_description || "",
-
-        focus_procedures:
-          procedure.focus_procedures || "",
-
-        schema_markup:
-          procedure.schema_markup || "",
+        seo_head: procedure.seo_head || "",
 
         procedures_status:
           procedure.procedures_status !== undefined
@@ -148,7 +135,6 @@ cat_content: procedure.cat_content || "",
 
         procedures_addedBy:
           procedure.procedures_addedBy || "",
-
       });
 
     } else {
@@ -163,8 +149,8 @@ cat_content: procedure.cat_content || "",
     toast.error("Failed to fetch procedure.");
 
   }
-};
 
+};
 // =======================
 // Fetch Departments
 // =======================
@@ -202,8 +188,10 @@ const fetchDepartments = async () => {
   }
 
 };
+
+
 // =======================
-// Fetch Doctors
+// Fetch Doctors By Department
 // =======================
 const fetchDoctors = async (departmentId) => {
 
@@ -253,7 +241,7 @@ const handleProcedureInput = (e) => {
     updatedValue = value === "true";
   }
 
-  // Auto Slug
+  // Auto Generate Slug
   if (name === "procedures_title") {
 
     const slug = value
@@ -281,6 +269,7 @@ const handleProcedureInput = (e) => {
       .replace(/[^\w\s-]/g, "")
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-");
+
   }
 
   // Department Change
@@ -304,6 +293,7 @@ const handleProcedureInput = (e) => {
 
 };
 
+
 // =======================
 // Handle Doctors
 // =======================
@@ -320,6 +310,8 @@ const handleDoctorsChange = (e) => {
   }));
 
 };
+
+
 // =======================
 // Handle FAQ Change
 // =======================
@@ -335,9 +327,6 @@ const handleFaqChange = (index, field, value) => {
   }));
 
 };
-
-
-
 // =======================
 // Add FAQ
 // =======================
@@ -357,7 +346,6 @@ const addFaq = () => {
 };
 
 
-
 // =======================
 // Remove FAQ
 // =======================
@@ -375,15 +363,27 @@ const removeFaq = (index) => {
 };
 
 
-
 // =======================
-// Handle Jodit Content
+// Handle Procedure Content
 // =======================
 const handleContentChange = (content) => {
 
   setProceduresData((prev) => ({
     ...prev,
     procedures_content: content,
+  }));
+
+};
+
+
+// =======================
+// Handle CTA Content
+// =======================
+const handleCatContentChange = (content) => {
+
+  setProceduresData((prev) => ({
+    ...prev,
+    cat_content: content,
   }));
 
 };
@@ -395,16 +395,12 @@ const addProcedure = async () => {
   try {
 
     const response = await fetch(API_URL, {
-
       method: "POST",
-
       headers: {
         Authorization: authorizationToken,
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify(proceduresData),
-
     });
 
     const result = await response.json();
@@ -426,13 +422,11 @@ const addProcedure = async () => {
   } catch (error) {
 
     console.log(error);
-
     toast.error("Failed to add procedure.");
 
   }
 
 };
-
 
 
 // =======================
@@ -443,16 +437,12 @@ const updateProcedure = async () => {
   try {
 
     const response = await fetch(`${API_URL}/${id}`, {
-
       method: "PUT",
-
       headers: {
         Authorization: authorizationToken,
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify(proceduresData),
-
     });
 
     const result = await response.json();
@@ -474,13 +464,11 @@ const updateProcedure = async () => {
   } catch (error) {
 
     console.log(error);
-
     toast.error("Failed to update procedure.");
 
   }
 
 };
-
 
 
 // =======================
@@ -490,17 +478,23 @@ const resetForm = () => {
 
   setProceduresData({
 
+    // Basic Information
     procedures_title: "",
     procedures_slug: "",
     procedures_description: "",
 
+    // Department
     department: "",
     doctors: [],
 
-     cat_title: "",
-      cat_content: "",
+    // CTA Section
+    cat_title: "",
+    cat_content: "",
+
+    // Procedure Content
     procedures_content: "",
 
+    // FAQ
     faq: [
       {
         question: "",
@@ -508,11 +502,10 @@ const resetForm = () => {
       },
     ],
 
-    seo_title: "",
-    meta_description: "",
-    focus_procedures: "",
-    schema_markup: "",
+    // SEO
+    seo_head: "",
 
+    // Settings
     procedures_status: true,
     procedures_addedBy: "",
 
@@ -522,12 +515,6 @@ const resetForm = () => {
 
 };
 
-const handleCatContentChange = (value) => {
-  setProceduresData((prev) => ({
-    ...prev,
-    cat_content: value,
-  }));
-};
 
 // =======================
 // Submit Form
@@ -547,469 +534,462 @@ const handleProcedure = (e) => {
   }
 
 };
-
-  return (
-    <>
-      <TopBarAdmin />
-      <main>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-3 adminleft">
-              <div>
-                <List />
-              </div>
-            </div>
-            <div className="col-md-9 adminright">
-              <div className="addblog">
-                <div>
-                  <div className="addblogform">
-                    <h2>{id ? "Update Procedure" : "Add Procedure"}</h2>
-                    
-                    <form onSubmit={handleProcedure}>
-
-                      {/* =========================
-                          Basic Information
-                      ========================== */}
-
-                      <h5 className="border-bottom pb-2 mb-4">
-                        Basic Information
-                      </h5>
-
-                      <div className="row">
-
-                        <div className="col-md-6 mb-3">
-
-                          <label className="form-label">
-                            Procedure Title
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="procedures_title"
-                            value={proceduresData.procedures_title}
-                            onChange={handleProcedureInput}
-                            placeholder="Enter Procedure Title"
-                            required
-                          />
-
-                        </div>
-
-                        <div className="col-md-6 mb-3">
-
-                          <label className="form-label">
-                            Procedure Slug
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="procedures_slug"
-                            value={proceduresData.procedures_slug}
-                            onChange={handleProcedureInput}
-                            placeholder="Enter Procedure Slug"
-                            required
-                          />
-
-                        </div>
-
-                        <div className="col-md-12 mb-4">
-
-                          <label className="form-label">
-                            Short Description
-                          </label>
-
-                          <textarea
-                            rows="4"
-                            className="form-control"
-                            name="procedures_description"
-                            value={proceduresData.procedures_description}
-                            onChange={handleProcedureInput}
-                            placeholder="Enter Short Description"
-                          />
-
-                        </div>
-
-                      </div>
-
-                      {/* =========================
-                          Department
-                      ========================== */}
-
-                      <h5 className="border-bottom pb-2 mb-4">
-                        Department & Doctors
-                      </h5>
-
-                      <div className="row">
-
-                        <div className="col-md-6 mb-4">
-
-                          <label className="form-label">
-                            Department
-                          </label>
-
-                          <select
-                            className="form-control"
-                            name="department"
-                            value={proceduresData.department}
-                            onChange={handleProcedureInput}
-                          >
-
-                            <option value="">
-                              Select Department
-                            </option>
-
-                            {departments.map((department) => (
-
-                              <option
-                                key={department._id}
-                                value={department._id}
-                              >
-                                {department.title}
-                              </option>
-
-                            ))}
-
-                          </select>
-
-                        </div>
-
-                        <div className="col-md-6 mb-4">
-
-                          <label className="form-label">
-                            Doctors
-                          </label>
-
-                          <select
-                            multiple
-                            className="form-control"
-                            value={proceduresData.doctors}
-                            onChange={handleDoctorsChange}
-                            style={{ minHeight: "220px" }}
-                          >
-
-                            {doctors.map((doctor) => (
-
-                              <option
-                                key={doctor._id}
-                                value={doctor._id}
-                              >
-                                {doctor.drTitle}
-                              </option>
-
-                            ))}
-
-                          </select>
-
-                          <small className="text-muted">
-                            Hold CTRL (Windows) or CMD (Mac) to select multiple doctors.
-                          </small>
-
-                        </div>
-
-                      </div>
-                      {/* ===================== Category Section ===================== */}
-
-                      <h5 className="mb-3 mt-4 border-bottom pb-2">
-                        CTA Section
-                      </h5>
-
-                      <div className="row">
-
-                        <div className="col-md-12 mb-3">
-                          <label className="form-label">CTA Title</label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="cat_title"
-                            value={proceduresData.cat_title}
-                            onChange={handleProcedureInput}
-                            placeholder="Enter Category Title"
-                          />
-                        </div>
-
-                        <div className="col-md-12 mb-3">
-                          <label className="form-label">CTA Content</label>
-
-                        <JoditEditor
-                          value={proceduresData.cat_content}
-                          onBlur={handleCatContentChange}
-                        />
-                        </div>
-
-                      </div>
-
-                      {/* =========================
-                          Procedure Content
-                      ========================== */}
-
-                      <h5 className="border-bottom pb-2 mb-4">
-                        Procedure Content
-                      </h5>
-
-                      <div className="mb-5">
-
-                        <JoditEditor
-                          value={proceduresData.procedures_content}
-                          onChange={handleContentChange}
-                        />
-
-                      </div>
-                                      {/* =========================
-                          SEO Details
-                      ========================== */}
-
-                      <h5 className="border-bottom pb-2 mb-4">
-                        SEO Details
-                      </h5>
-
-                      <div className="row">
-
-                        <div className="col-md-12 mb-3">
-
-                          <label className="form-label">
-                            SEO Title
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="seo_title"
-                            value={proceduresData.seo_title}
-                            onChange={handleProcedureInput}
-                            placeholder="Enter SEO Title"
-                          />
-
-                        </div>
-
-                        <div className="col-md-12 mb-3">
-
-                          <label className="form-label">
-                            Meta Description
-                          </label>
-
-                          <textarea
-                            rows="4"
-                            className="form-control"
-                            name="meta_description"
-                            value={proceduresData.meta_description}
-                            onChange={handleProcedureInput}
-                            placeholder="Enter Meta Description"
-                          />
-
-                        </div>
-
-                        <div className="col-md-6 mb-3">
-
-                          <label className="form-label">
-                            Focus Procedure
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="focus_procedures"
-                            value={proceduresData.focus_procedures}
-                            onChange={handleProcedureInput}
-                            placeholder="Focus Procedure"
-                          />
-
-                        </div>
-
-                        <div className="col-md-6 mb-3">
-
-                          <label className="form-label">
-                            Schema Markup
-                          </label>
-
-                          <textarea
-                            rows="4"
-                            className="form-control"
-                            name="schema_markup"
-                            value={proceduresData.schema_markup}
-                            onChange={handleProcedureInput}
-                            placeholder="Paste JSON-LD Schema"
-                          />
-
-                        </div>
-
-                      </div>
-
-                      {/* =========================
-                          FAQ
-                      ========================== */}
-
-                      <h5 className="border-bottom pb-2 mb-4 mt-5">
-                        FAQ
-                      </h5>
-
-                      {proceduresData.faq.map((item, index) => (
-
-                        <div
-                          className="card border mb-4"
-                          key={index}
-                        >
-
-                          <div className="card-body">
-
-                            <div className="mb-3">
-
-                              <label className="form-label">
-                                {/* Question {index + 1} */}
-                              </label>
-
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Question"
-                                value={item.question}
-                                onChange={(e) =>
-                                  handleFaqChange(
-                                    index,
-                                    "question",
-                                    e.target.value
-                                  )
-                                }
-                              />
-
-                            </div>
-
-                            <div className="mb-3">
-
-                              <label className="form-label">
-                                {/* Answer */}
-                              </label>
-
-                              <textarea
-                                rows="4"
-                                placeholder="Answer"
-                                className="form-control"
-                                value={item.answer}
-                                onChange={(e) =>
-                                  handleFaqChange(
-                                    index,
-                                    "answer",
-                                    e.target.value
-                                  )
-                                }
-                              />
-
-                            </div>
-
-                            <div className="d-flex gap-2">
-
-                              {proceduresData.faq.length > 1 && (
-
-                                <button
-                                  type="button"
-                                  className="btn btn-danger"
-                                  onClick={() => removeFaq(index)}
-                                >
-                                  Remove
-                                </button>
-
-                              )}
-
-                              {index === proceduresData.faq.length - 1 && (
-
-                                <button
-                                  type="button"
-                                  className="btn btn-success"
-                                  onClick={addFaq}
-                                >
-                                  + Add FAQ
-                                </button>
-
-                              )}
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      ))}
-
-                      {/* =========================
-                          Settings
-                      ========================== */}
-
-                      <h5 className="border-bottom pb-2 mb-4 mt-5">
-                        Settings
-                      </h5>
-
-                      <div className="row">
-
-                        <div className="col-md-6 mb-3">
-
-                          <label className="form-label">
-                            Status
-                          </label>
-
-                          <select
-                            className="form-control"
-                            name="procedures_status"
-                            value={String(proceduresData.procedures_status)}
-                            onChange={handleProcedureInput}
-                          >
-                            <option value="true">Active</option>
-                            <option value="false">Inactive</option>
-                          </select>
-
-                        </div>
-
-                        <div className="col-md-6 mb-3">
-
-                          <label className="form-label">
-                            Added By
-                          </label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="procedures_addedBy"
-                            value={proceduresData.procedures_addedBy}
-                            onChange={handleProcedureInput}
-                            placeholder="Enter User Name"
-                          />
-
-                        </div>
-
-                      </div>
-
-                      <hr />
-
-                      <div className="text-end mt-4">
-
-                        <button
-                          type="button"
-                          className="btn btn-secondary me-2"
-                          onClick={() => navigate("/list-procedures")}
-                        >
-                          Cancel
-                        </button>
-
-                        <button
-                          type="submit"
-                          className="btn btn-primary"
-                        >
-                          {id ? "Update Procedure" : "Add Procedure"}
-                        </button>
-
-                      </div>
-
-                    </form>
+return (
+  <>
+    <TopBarAdmin />
+
+    <main>
+      <div className="container-fluid">
+        <div className="row">
+
+          {/* Left Sidebar */}
+          <div className="col-md-3 adminleft">
+            <List />
+          </div>
+
+          {/* Right Content */}
+          <div className="col-md-9 adminright">
+
+            <div className="addblog">
+              <div className="addblogform">
+
+                <h2>
+                  {id ? "Update Procedure" : "Add Procedure"}
+                </h2>
+
+                <form onSubmit={handleProcedure}>
+
+                  {/* =========================
+                      Basic Information
+                  ========================== */}
+
+                  <h5 className="border-bottom pb-2 mb-4">
+                    Basic Information
+                  </h5>
+
+                  <div className="row">
+
+                    <div className="col-md-6 mb-3">
+
+                      <label className="form-label">
+                        Procedure Title
+                      </label>
+
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="procedures_title"
+                        value={proceduresData.procedures_title}
+                        onChange={handleProcedureInput}
+                        placeholder="Enter Procedure Title"
+                        required
+                      />
+
+                    </div>
+
+                    <div className="col-md-6 mb-3">
+
+                      <label className="form-label">
+                        Procedure Slug
+                      </label>
+
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="procedures_slug"
+                        value={proceduresData.procedures_slug}
+                        onChange={handleProcedureInput}
+                        placeholder="Enter Procedure Slug"
+                        required
+                      />
+
+                    </div>
+
+                    <div className="col-md-12 mb-4">
+
+                      <label className="form-label">
+                        Short Description
+                      </label>
+
+                      <textarea
+                        rows="4"
+                        className="form-control"
+                        name="procedures_description"
+                        value={proceduresData.procedures_description}
+                        onChange={handleProcedureInput}
+                        placeholder="Enter Short Description"
+                      />
+
+                    </div>
 
                   </div>
-                </div>
+                                    {/* =========================
+                      Department & Doctors
+                  ========================== */}
+
+                  <h5 className="border-bottom pb-2 mb-4">
+                    Department & Doctors
+                  </h5>
+
+                  <div className="row">
+
+                    {/* Department */}
+                    <div className="col-md-6 mb-4">
+
+                      <label className="form-label">
+                        Department
+                      </label>
+
+                      <select
+                        className="form-control"
+                        name="department"
+                        value={proceduresData.department}
+                        onChange={handleProcedureInput}
+                      >
+
+                        <option value="">
+                          Select Department
+                        </option>
+
+                        {departments.map((department) => (
+
+                          <option
+                            key={department._id}
+                            value={department._id}
+                          >
+                            {department.title}
+                          </option>
+
+                        ))}
+
+                      </select>
+
+                    </div>
+
+                    {/* Doctors */}
+                    <div className="col-md-6 mb-4">
+
+                      <label className="form-label">
+                        Doctors
+                      </label>
+
+                      <select
+                        multiple
+                        className="form-control"
+                        value={proceduresData.doctors}
+                        onChange={handleDoctorsChange}
+                        style={{ minHeight: "220px" }}
+                      >
+
+                        {doctors.map((doctor) => (
+
+                          <option
+                            key={doctor._id}
+                            value={doctor._id}
+                          >
+                            {doctor.drTitle}
+                          </option>
+
+                        ))}
+
+                      </select>
+
+                      <small className="text-muted">
+                        Hold CTRL (Windows) or CMD (Mac) to select multiple doctors.
+                      </small>
+
+                    </div>
+
+                  </div>
+                                    {/* =====================
+                      CTA Section
+                  ===================== */}
+
+                  <h5 className="mb-3 mt-4 border-bottom pb-2">
+                    CTA Section
+                  </h5>
+
+                  <div className="row">
+
+                    <div className="col-md-12 mb-3">
+
+                      <label className="form-label">
+                        CTA Title
+                      </label>
+
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="cat_title"
+                        value={proceduresData.cat_title}
+                        onChange={handleProcedureInput}
+                        placeholder="Enter CTA Title"
+                      />
+
+                    </div>
+
+                    <div className="col-md-12 mb-4">
+
+                      <label className="form-label">
+                        CTA Content
+                      </label>
+
+                      <JoditEditor
+                        value={proceduresData.cat_content}
+                        onChange={handleCatContentChange}
+                      />
+
+                    </div>
+
+                  </div>
+
+                  {/* =========================
+                      Procedure Content
+                  ========================== */}
+
+                  <h5 className="border-bottom pb-2 mb-4">
+                    Procedure Content
+                  </h5>
+
+                  <div className="mb-5">
+
+                    <JoditEditor
+                      value={proceduresData.procedures_content}
+                      onChange={handleContentChange}
+                    />
+
+                  </div>
+                                    {/* =========================
+                      Complete SEO Head
+                  ========================== */}
+
+                  <h5 className="border-bottom pb-2 mb-4">
+                    Complete SEO Head
+                  </h5>
+
+                  <div className="row">
+
+                    <div className="col-md-12 mb-4">
+
+                      <label className="form-label fw-bold">
+                        SEO Head Code
+                      </label>
+
+                      <textarea
+                        rows="18"
+                        className="form-control"
+                        name="seo_head"
+                        value={proceduresData.seo_head}
+                        onChange={handleProcedureInput}
+                        placeholder={`<title>Best Procedure</title>
+
+<meta name="description" content="">
+
+<meta name="keywords" content="">
+
+<link rel="canonical" href="">
+
+<meta property="og:title" content="">
+
+<meta property="og:description" content="">
+
+<meta property="og:image" content="">
+
+<meta property="og:url" content="">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title" content="">
+
+<meta name="twitter:description" content="">
+
+<meta name="twitter:image" content="">
+
+<script type="application/ld+json">
+
+{
+
+}
+
+</script>`}
+                      />
+
+                      <small className="text-muted">
+                        Paste complete HTML Head code (Title, Meta Tags,
+                        Canonical, Open Graph, Twitter Card and JSON-LD Schema).
+                      </small>
+
+                    </div>
+
+                  </div>
+
+                  {/* =========================
+                      FAQ
+                  ========================== */}
+
+                  <h5 className="border-bottom pb-2 mb-4 mt-5">
+                    FAQ
+                  </h5>
+
+                  {proceduresData.faq.map((item, index) => (
+
+                    <div
+                      className="card border mb-4"
+                      key={index}
+                    >
+
+                      <div className="card-body">
+
+                        <div className="mb-3">
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Question"
+                            value={item.question}
+                            onChange={(e) =>
+                              handleFaqChange(
+                                index,
+                                "question",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                        </div>
+
+                        <div className="mb-3">
+
+                          <textarea
+                            rows="4"
+                            className="form-control"
+                            placeholder="Answer"
+                            value={item.answer}
+                            onChange={(e) =>
+                              handleFaqChange(
+                                index,
+                                "answer",
+                                e.target.value
+                              )
+                            }
+                          />
+
+                        </div>
+
+                        <div className="d-flex gap-2">
+
+                          {proceduresData.faq.length > 1 && (
+
+                            <button
+                              type="button"
+                              className="btn btn-danger"
+                              onClick={() => removeFaq(index)}
+                            >
+                              Remove
+                            </button>
+
+                          )}
+
+                          {index === proceduresData.faq.length - 1 && (
+
+                            <button
+                              type="button"
+                              className="btn btn-success"
+                              onClick={addFaq}
+                            >
+                              + Add FAQ
+                            </button>
+
+                          )}
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+                                    {/* =========================
+                      Settings
+                  ========================== */}
+
+                  <h5 className="border-bottom pb-2 mb-4 mt-5">
+                    Settings
+                  </h5>
+
+                  <div className="row">
+
+                    <div className="col-md-6 mb-3">
+
+                      <label className="form-label">
+                        Status
+                      </label>
+
+                      <select
+                        className="form-control"
+                        name="procedures_status"
+                        value={String(proceduresData.procedures_status)}
+                        onChange={handleProcedureInput}
+                      >
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                      </select>
+
+                    </div>
+
+                    <div className="col-md-6 mb-3">
+
+                      <label className="form-label">
+                        Added By
+                      </label>
+
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="procedures_addedBy"
+                        value={proceduresData.procedures_addedBy}
+                        onChange={handleProcedureInput}
+                        placeholder="Enter User Name"
+                      />
+
+                    </div>
+
+                  </div>
+
+                  <hr />
+
+                  <div className="text-end mt-4">
+
+                    <button
+                      type="button"
+                      className="btn btn-secondary me-2"
+                      onClick={() => navigate("/list-procedures")}
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                    >
+                      {id ? "Update Procedure" : "Add Procedure"}
+                    </button>
+
+                  </div>
+
+                </form>
+
               </div>
             </div>
+
           </div>
         </div>
-      </main>
-    </>
-  );
+      </div>
+    </main>
+
+  </>
+);
+
 }
 
 export default ManageProcedures;
