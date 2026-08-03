@@ -70,18 +70,8 @@ function KeywordPage() {
   return (
     <>
       <Helmet>
-        <title>{keyword.seo_title}</title>
-
-        <meta
-          name="description"
-          content={keyword.meta_description}
-        />
-
-        <meta
-          name="keywords"
-          content={keyword.focus_keyword}
-        />
-      </Helmet>
+        {keyword.seo_head && parse(keyword.seo_head)}
+     </Helmet>
 
      <KeywordBanner
         title={keyword.keyword_title}
