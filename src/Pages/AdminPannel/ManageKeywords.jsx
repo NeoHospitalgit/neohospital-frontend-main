@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
 import List from "./List";
 import TopBarAdmin from "./TopBarAdmin";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/auth";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import JoditEditor from "jodit-react";
 
 function ManageKeywords() {
   const formatDate = (dateString) => {
-    const keywordDate = new Date(dateString).toISOString().split("T")[0];
-    return `${keywordDate}`;
+    const keywordDate = new Date(dateString)
+      .toISOString()
+      .split("T")[0];
+    return keywordDate;
   };
 
   const { id } = useParams();
-  const { authorizationToken, API } = useAuth();
   const navigate = useNavigate();
-const API_URL = `${API}/api/adminv11/keywords`;
+  const { authorizationToken, API } = useAuth();
+
+  const API_URL = `${API}/api/adminv11/keywords`;
 
   const [keywordData, setKeywordData] = useState({
     // =========================
@@ -57,7 +59,7 @@ const API_URL = `${API}/api/adminv11/keywords`;
     cat_content: "",
 
     // =========================
-    // Department & Doctors
+    // Department
     // =========================
     department: "",
     doctors: [],
@@ -86,10 +88,7 @@ const API_URL = `${API}/api/adminv11/keywords`;
     // =========================
     // SEO
     // =========================
-    seo_title: "",
-    meta_description: "",
-    focus_keyword: "",
-    schema_markup: "",
+    seo_head: "",
 
     // =========================
     // Status
@@ -97,8 +96,10 @@ const API_URL = `${API}/api/adminv11/keywords`;
     keyword_addedBy: "",
     keyword_status: true,
   });
+
   const [departments, setDepartments] = useState([]);
   const [doctors, setDoctors] = useState([]);
+
   useEffect(() => {
     fetchDepartments();
 
@@ -106,152 +107,164 @@ const API_URL = `${API}/api/adminv11/keywords`;
       fetchKeywordData();
     }
   }, [id]);
-
   const fetchKeywordData = async () => {
-    try {
-      const response = await fetch(
-        `${API}/api/adminv11/keywords/${id}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: authorizationToken,
-          },
-        }
-      );
-
-      if (response.ok) {
-        const result = await response.json();
-        const keyword = result.data;
-
-        const departmentId =
-          keyword.department?._id || keyword.department;
-
-        // Edit mode me doctors load karo
-        if (departmentId) {
-          await fetchDoctors(departmentId);
-        }
-
-        setKeywordData({
-          // =========================
-          // Basic Information
-          // =========================
-          keyword_title: keyword.keyword_title || "",
-          keyword_slug: keyword.keyword_slug || "",
-          keyword_description: keyword.keyword_description || "",
-
-          // =========================
-          // Welcome Section
-          // =========================
-          welcome_title: keyword.welcome_title || "",
-          welcome_content: keyword.welcome_content || "",
-
-          // =========================
-          // Can Help Section
-          // =========================
-          can_help: keyword.can_help || "",
-          can_help_content: keyword.can_help_content || "",
-
-          // =========================
-          // Team Section
-          // =========================
-          team_title: keyword.team_title || "",
-          team_content: keyword.team_content || "",
-
-          // =========================
-          // Expert Section
-          // =========================
-          expert_title: keyword.expert_title || "",
-          expert_content: keyword.expert_content || "",
-
-          // =========================
-          // Category Section
-          // =========================
-          cat_title: keyword.cat_title || "",
-          cat_content: keyword.cat_content || "",
-
-          // =========================
-          // Department
-          // =========================
-          department: departmentId || "",
-
-          // =========================
-          // Doctors
-          // =========================
-          doctors:
-            keyword.doctors?.map((doctor) => doctor._id) || [],
-
-          // =========================
-          // Banner
-          // =========================
-          banner_image: keyword.banner_image || null,
-          banner_imageALT: keyword.banner_imageALT || "",
-
-          // =========================
-          // Main Content
-          // =========================
-          keyword_content: keyword.keyword_content || "",
-
-          // =========================
-          // FAQ
-          // =========================
-          faq:
-            keyword.faq && keyword.faq.length > 0
-              ? keyword.faq
-              : [
-                  {
-                    question: "",
-                    answer: "",
-                  },
-                ],
-
-          // =========================
-          // SEO
-          // =========================
-          seo_title: keyword.seo_title || "",
-          meta_description: keyword.meta_description || "",
-          focus_keyword: keyword.focus_keyword || "",
-          schema_markup: keyword.schema_markup || "",
-
-          // =========================
-          // Status
-          // =========================
-          keyword_addedBy: keyword.keyword_addedBy || "",
-          keyword_status:
-            keyword.keyword_status !== undefined
-              ? keyword.keyword_status
-              : true,
-        });
-      } else {
-        const jsonResponse = await response.json();
-        toast.error(jsonResponse.message);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to fetch keyword");
-    }
-  };
-  const fetchDepartments = async () => {
-    try {
-      const response = await fetch(`${API}/api/adminv1/view-category`, {
+  try {
+    const response = await fetch(
+      `${API}/api/adminv11/keywords/${id}`,
+      {
         method: "GET",
         headers: {
           Authorization: authorizationToken,
         },
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setDepartments(data.category || []);
-      } else {
-        toast.error(data.message || "Department not found");
       }
-    } catch (error) {
-      console.error("Fetch Department Error:", error);
-      toast.error("Failed to fetch departments");
+    );
+
+    if (!response.ok) {
+      const jsonResponse = await response.json();
+      toast.error(jsonResponse.message);
+      return;
     }
-  };
-  const fetchDoctors = async (departmentId) => {
+
+    const result = await response.json();
+    const keyword = result.data;
+
+    const departmentId =
+      keyword.department?._id || keyword.department || "";
+
+    // Load Doctors
+    if (departmentId) {
+      await fetchDoctors(departmentId);
+    }
+
+    setKeywordData({
+      // =========================
+      // Basic Information
+      // =========================
+      keyword_title: keyword.keyword_title || "",
+      keyword_slug: keyword.keyword_slug || "",
+      keyword_description: keyword.keyword_description || "",
+
+      // =========================
+      // Welcome Section
+      // =========================
+      welcome_title: keyword.welcome_title || "",
+      welcome_content: keyword.welcome_content || "",
+
+      // =========================
+      // Can Help Section
+      // =========================
+      can_help: keyword.can_help || "",
+      can_help_content: keyword.can_help_content || "",
+
+      // =========================
+      // Team Section
+      // =========================
+      team_title: keyword.team_title || "",
+      team_content: keyword.team_content || "",
+
+      // =========================
+      // Expert Section
+      // =========================
+      expert_title: keyword.expert_title || "",
+      expert_content: keyword.expert_content || "",
+
+      // =========================
+      // Category Section
+      // =========================
+      cat_title: keyword.cat_title || "",
+      cat_content: keyword.cat_content || "",
+
+      // =========================
+      // Department
+      // =========================
+      department: departmentId,
+
+      // =========================
+      // Doctors
+      // =========================
+      doctors:
+        keyword.doctors?.map((doctor) => doctor._id) || [],
+
+      // =========================
+      // Banner
+      // =========================
+      banner_image: keyword.banner_image || null,
+      banner_imageALT: keyword.banner_imageALT || "",
+
+      // =========================
+      // Main Content
+      // =========================
+      keyword_content: keyword.keyword_content || "",
+
+      // =========================
+      // FAQ
+      // =========================
+      faq:
+        keyword.faq && keyword.faq.length
+          ? keyword.faq
+          : [
+              {
+                question: "",
+                answer: "",
+              },
+            ],
+
+      // =========================
+      // SEO
+      // =========================
+      seo_head: keyword.seo_head || "",
+
+      // =========================
+      // Status
+      // =========================
+      keyword_addedBy: keyword.keyword_addedBy || "",
+      keyword_status:
+        keyword.keyword_status !== undefined
+          ? keyword.keyword_status
+          : true,
+    });
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to fetch keyword");
+  }
+};
+// =========================
+// Fetch Departments
+// =========================
+const fetchDepartments = async () => {
+  try {
+    const response = await fetch(
+      `${API}/api/adminv1/view-category`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: authorizationToken,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setDepartments(data.category || []);
+    } else {
+      toast.error(data.message || "Department not found");
+    }
+  } catch (error) {
+    console.error("Fetch Department Error:", error);
+    toast.error("Failed to fetch departments");
+  }
+};
+
+// =========================
+// Fetch Doctors
+// =========================
+const fetchDoctors = async (departmentId) => {
+  if (!departmentId) {
+    setDoctors([]);
+    return;
+  }
+
   try {
     const response = await fetch(
       `${API}/api/adminv2/department/${departmentId}`,
@@ -266,46 +279,37 @@ const API_URL = `${API}/api/adminv11/keywords`;
     const data = await response.json();
 
     if (response.ok) {
-      setDoctors(data.doctors);
+      setDoctors(data.doctors || []);
     } else {
       setDoctors([]);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     setDoctors([]);
   }
-  };
+};
+
+// =========================
+// Handle Input
+// =========================
 const handleKeywordInput = (e) => {
   const { name, value } = e.target;
 
-  const transformedValue =
-    name === "keyword_status"
-      ? value === "true"
-      : value;
+  let finalValue = value;
 
-  const modifiedValue =
-    name === "keyword_slug"
-      ? value
-          .toLowerCase()
-          .replace(/[^\w\s]/gi, "")
-          .replace(/\s+/g, "-")
-      : transformedValue;
+  // Boolean
+  if (name === "keyword_status") {
+    finalValue = value === "true";
+  }
 
-  setKeywordData((prev) => ({
-    ...prev,
-    [name]: modifiedValue,
-  }));
-
-  // Auto Generate Slug
-  if (name === "keyword_title") {
-    setKeywordData((prev) => ({
-      ...prev,
-      keyword_title: value,
-      keyword_slug: value
-        .toLowerCase()
-        .replace(/[^\w\s]/gi, "")
-        .replace(/\s+/g, "-"),
-    }));
+  // Manual Slug
+  if (name === "keyword_slug") {
+    finalValue = value
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
   }
 
   // Department Change
@@ -317,141 +321,212 @@ const handleKeywordInput = (e) => {
       department: value,
       doctors: [],
     }));
-  }
-};
 
+    return;
+  }
+
+  // Auto Slug
+  if (name === "keyword_title") {
+    const slug = value
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+
+    setKeywordData((prev) => ({
+      ...prev,
+      keyword_title: value,
+      keyword_slug: slug,
+    }));
+
+    return;
+  }
+
+  setKeywordData((prev) => ({
+    ...prev,
+    [name]: finalValue,
+  }));
+};
+// =========================
+// Doctors Change
+// =========================
 const handleDoctorsChange = (e) => {
-  const values = [...e.target.selectedOptions].map(
+  const selectedDoctors = Array.from(
+    e.target.selectedOptions,
     (option) => option.value
   );
 
-  setKeywordData({
-    ...keywordData,
-    doctors: values,
-  });
+  setKeywordData((prev) => ({
+    ...prev,
+    doctors: selectedDoctors,
+  }));
 };
-const handleFileChange = (e) => {
-  setKeywordData({
-    ...keywordData,
-    banner_image: e.target.files[0],
-  });
-};
-const handleFaqChange = (index, field, value) => {
-  const updatedFaq = [...keywordData.faq];
-  updatedFaq[index][field] = value;
 
-  setKeywordData({
-    ...keywordData,
-    faq: updatedFaq,
+// =========================
+// Banner Image
+// =========================
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+
+  setKeywordData((prev) => ({
+    ...prev,
+    banner_image: file || null,
+  }));
+};
+
+// =========================
+// FAQ Change
+// =========================
+const handleFaqChange = (index, field, value) => {
+  setKeywordData((prev) => {
+    const updatedFaq = [...prev.faq];
+
+    updatedFaq[index] = {
+      ...updatedFaq[index],
+      [field]: value,
+    };
+
+    return {
+      ...prev,
+      faq: updatedFaq,
+    };
   });
 };
+
+// =========================
+// Add FAQ
+// =========================
 const addFaq = () => {
-  setKeywordData({
-    ...keywordData,
+  setKeywordData((prev) => ({
+    ...prev,
     faq: [
-      ...keywordData.faq,
+      ...prev.faq,
       {
         question: "",
         answer: "",
       },
     ],
-  });
+  }));
 };
+
+// =========================
+// Remove FAQ
+// =========================
 const removeFaq = (index) => {
-  const updatedFaq = [...keywordData.faq];
-  updatedFaq.splice(index, 1);
+  setKeywordData((prev) => {
+    const updatedFaq = prev.faq.filter(
+      (_, i) => i !== index
+    );
 
-  setKeywordData({
-    ...keywordData,
-    faq: updatedFaq,
+    return {
+      ...prev,
+      faq:
+        updatedFaq.length > 0
+          ? updatedFaq
+          : [
+              {
+                question: "",
+                answer: "",
+              },
+            ],
+    };
   });
 };
-  const handleQualificationChange = (newContent) => {
-    setKeywordData({
-      ...keywordData,
-      keyword_content: newContent,
-    });
-  };
 
+// =========================
+// Main Content Editor
+// =========================
+const handleQualificationChange = (content) => {
+  setKeywordData((prev) => ({
+    ...prev,
+    keyword_content: content,
+  }));
+};
+// =========================
+// Add Keyword
+// =========================
 const addKeyword = async () => {
   try {
     const formData = new FormData();
 
-    // =========================
     // Basic Information
-    // =========================
     formData.append("keyword_title", keywordData.keyword_title);
     formData.append("keyword_slug", keywordData.keyword_slug);
     formData.append("keyword_description", keywordData.keyword_description);
 
-    // =========================
     // Welcome Section
-    // =========================
     formData.append("welcome_title", keywordData.welcome_title);
     formData.append("welcome_content", keywordData.welcome_content);
 
-    // =========================
     // Can Help Section
-    // =========================
     formData.append("can_help", keywordData.can_help);
     formData.append("can_help_content", keywordData.can_help_content);
 
-    // =========================
     // Team Section
-    // =========================
     formData.append("team_title", keywordData.team_title);
     formData.append("team_content", keywordData.team_content);
 
-    // =========================
     // Expert Section
-    // =========================
     formData.append("expert_title", keywordData.expert_title);
     formData.append("expert_content", keywordData.expert_content);
 
-    // =========================
     // Category Section
-    // =========================
     formData.append("cat_title", keywordData.cat_title);
     formData.append("cat_content", keywordData.cat_content);
 
-    // =========================
-    // Department & Doctors
-    // =========================
+    // Department
     formData.append("department", keywordData.department);
-    formData.append("doctors", JSON.stringify(keywordData.doctors));
 
-    // =========================
+    // Doctors
+    formData.append(
+      "doctors",
+      JSON.stringify(keywordData.doctors)
+    );
+
     // Banner
-    // =========================
     if (keywordData.banner_image) {
-      formData.append("banner_image", keywordData.banner_image);
+      formData.append(
+        "banner_image",
+        keywordData.banner_image
+      );
     }
 
-    formData.append("banner_imageALT", keywordData.banner_imageALT);
+    formData.append(
+      "banner_imageALT",
+      keywordData.banner_imageALT
+    );
 
-    // =========================
     // Main Content
-    // =========================
-    formData.append("keyword_content", keywordData.keyword_content);
+    formData.append(
+      "keyword_content",
+      keywordData.keyword_content
+    );
 
-    // =========================
     // FAQ
-    // =========================
-    formData.append("faq", JSON.stringify(keywordData.faq));
+    formData.append(
+      "faq",
+      JSON.stringify(keywordData.faq)
+    );
 
     // =========================
-    // SEO
+    // SEO (Updated)
     // =========================
-    formData.append("seo_title", keywordData.seo_title);
-    formData.append("meta_description", keywordData.meta_description);
-    formData.append("focus_keyword", keywordData.focus_keyword);
-    formData.append("schema_markup", keywordData.schema_markup);
+    formData.append(
+      "seo_head",
+      keywordData.seo_head
+    );
 
-    // =========================
     // Status
-    // =========================
-    formData.append("keyword_addedBy", keywordData.keyword_addedBy);
-    formData.append("keyword_status", keywordData.keyword_status);
+    formData.append(
+      "keyword_addedBy",
+      keywordData.keyword_addedBy
+    );
+
+    formData.append(
+      "keyword_status",
+      keywordData.keyword_status
+    );
 
     const response = await fetch(API_URL, {
       method: "POST",
@@ -464,77 +539,67 @@ const addKeyword = async () => {
     const jsonResponse = await response.json();
 
     if (response.ok) {
-      toast.success(jsonResponse.message);
+      toast.success(
+        jsonResponse.message ||
+          "Keyword Added Successfully"
+      );
+
       resetForm();
+
       navigate("/list-keywords");
     } else {
-      toast.error(jsonResponse.message);
+      toast.error(
+        jsonResponse.message ||
+          "Failed to Add Keyword"
+      );
     }
   } catch (error) {
     console.error("Add Keyword Error:", error);
-    toast.error("Failed to add keyword");
+    toast.error("Failed to Add Keyword");
   }
 };
-
+// =========================
+// Reset Form
+// =========================
 const resetForm = () => {
   setKeywordData({
-    // =========================
     // Basic Information
-    // =========================
     keyword_title: "",
     keyword_slug: "",
     keyword_description: "",
 
-    // =========================
     // Welcome Section
-    // =========================
     welcome_title: "",
     welcome_content: "",
 
-    // =========================
     // Can Help Section
-    // =========================
     can_help: "",
     can_help_content: "",
 
-    // =========================
     // Team Section
-    // =========================
     team_title: "",
     team_content: "",
 
-    // =========================
     // Expert Section
-    // =========================
     expert_title: "",
     expert_content: "",
 
-    // =========================
     // Category Section
-    // =========================
     cat_title: "",
     cat_content: "",
 
-    // =========================
-    // Department & Doctors
-    // =========================
+    // Department
     department: "",
     doctors: [],
 
-    // =========================
     // Banner
-    // =========================
     banner_image: null,
     banner_imageALT: "",
 
-    // =========================
     // Main Content
-    // =========================
     keyword_content: "",
 
-    // =========================
     // FAQ
-    // =========================
     faq: [
       {
         question: "",
@@ -542,100 +607,98 @@ const resetForm = () => {
       },
     ],
 
-    // =========================
     // SEO
-    // =========================
-    seo_title: "",
-    meta_description: "",
-    focus_keyword: "",
-    schema_markup: "",
+    seo_head: "",
 
-    // =========================
     // Status
-    // =========================
     keyword_addedBy: "",
     keyword_status: true,
   });
+
+  setDoctors([]);
 };
+// =========================
+// Update Keyword
+// =========================
 const updateKeyword = async () => {
   try {
     const formData = new FormData();
 
-    // =========================
-    // Basic Information
-    // =========================
+    // Basic
     formData.append("keyword_title", keywordData.keyword_title);
     formData.append("keyword_slug", keywordData.keyword_slug);
     formData.append("keyword_description", keywordData.keyword_description);
 
-    // =========================
-    // Welcome Section
-    // =========================
+    // Welcome
     formData.append("welcome_title", keywordData.welcome_title);
     formData.append("welcome_content", keywordData.welcome_content);
 
-    // =========================
-    // Can Help Section
-    // =========================
+    // Can Help
     formData.append("can_help", keywordData.can_help);
     formData.append("can_help_content", keywordData.can_help_content);
 
-    // =========================
-    // Team Section
-    // =========================
+    // Team
     formData.append("team_title", keywordData.team_title);
     formData.append("team_content", keywordData.team_content);
 
-    // =========================
-    // Expert Section
-    // =========================
+    // Expert
     formData.append("expert_title", keywordData.expert_title);
     formData.append("expert_content", keywordData.expert_content);
 
-    // =========================
-    // Category Section
-    // =========================
+    // Category
     formData.append("cat_title", keywordData.cat_title);
     formData.append("cat_content", keywordData.cat_content);
 
-    // =========================
-    // Department & Doctors
-    // =========================
+    // Department
     formData.append("department", keywordData.department);
-    formData.append("doctors", JSON.stringify(keywordData.doctors));
 
-    // =========================
+    // Doctors
+    formData.append(
+      "doctors",
+      JSON.stringify(keywordData.doctors)
+    );
+
     // Banner
-    // =========================
     if (keywordData.banner_image instanceof File) {
-      formData.append("banner_image", keywordData.banner_image);
+      formData.append(
+        "banner_image",
+        keywordData.banner_image
+      );
     }
 
-    formData.append("banner_imageALT", keywordData.banner_imageALT);
+    formData.append(
+      "banner_imageALT",
+      keywordData.banner_imageALT
+    );
 
-    // =========================
     // Main Content
-    // =========================
-    formData.append("keyword_content", keywordData.keyword_content);
+    formData.append(
+      "keyword_content",
+      keywordData.keyword_content
+    );
 
-    // =========================
     // FAQ
-    // =========================
-    formData.append("faq", JSON.stringify(keywordData.faq));
+    formData.append(
+      "faq",
+      JSON.stringify(keywordData.faq)
+    );
 
-    // =========================
     // SEO
-    // =========================
-    formData.append("seo_title", keywordData.seo_title);
-    formData.append("meta_description", keywordData.meta_description);
-    formData.append("focus_keyword", keywordData.focus_keyword);
-    formData.append("schema_markup", keywordData.schema_markup);
+    formData.append(
+      "seo_head",
+      keywordData.seo_head
+    );
 
-    // =========================
     // Status
-    // =========================
-    formData.append("keyword_addedBy", keywordData.keyword_addedBy);
-    formData.append("keyword_status", keywordData.keyword_status);
+    formData.append(
+      "keyword_addedBy",
+      keywordData.keyword_addedBy
+    );
+
+    formData.append(
+      "keyword_status",
+      keywordData.keyword_status
+    );
 
     const response = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
@@ -648,23 +711,37 @@ const updateKeyword = async () => {
     const jsonResponse = await response.json();
 
     if (response.ok) {
-      toast.success(jsonResponse.message);
+      toast.success(
+        jsonResponse.message ||
+          "Keyword Updated Successfully"
+      );
+
       resetForm();
+
       navigate("/list-keywords");
     } else {
-      toast.error(jsonResponse.message);
+      toast.error(
+        jsonResponse.message ||
+          "Failed to Update Keyword"
+      );
     }
   } catch (error) {
     console.error("Update Keyword Error:", error);
-    toast.error("Failed to update keyword");
+    toast.error("Failed to Update Keyword");
   }
 };
-
+// =========================
+// Submit Form
+// =========================
 const handleKeyword = (e) => {
   e.preventDefault();
-  id ? updateKeyword() : addKeyword();
-};
 
+  if (id) {
+    updateKeyword();
+  } else {
+    addKeyword();
+  }
+};
   return (
     <>
       <TopBarAdmin />
@@ -904,194 +981,176 @@ const handleKeyword = (e) => {
 
                        {/* ===================== Team Section ===================== */}
 
-<h5 className="mb-3 mt-4 border-bottom pb-2">
-  Team Section
-</h5>
+                      <h5 className="mb-3 mt-4 border-bottom pb-2">
+                        Team Section
+                      </h5>
 
+                      <div className="row">
+
+                        <div className="col-md-12 mb-3">
+                          <label className="form-label">Team Title</label>
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="team_title"
+                            value={keywordData.team_title}
+                            onChange={handleKeywordInput}
+                            placeholder="Enter Team Title"
+                          />
+                        </div>
+
+                        <div className="col-md-12 mb-3">
+                          <label className="form-label">Team Content</label>
+
+                          <JoditEditor
+                            value={keywordData.team_content}
+                            onChange={(value) =>
+                              setKeywordData({
+                                ...keywordData,
+                                team_content: value,
+                              })
+                            }
+                          />
+                        </div>
+
+                      </div>
+
+                      {/* ===================== Expert Section ===================== */}
+
+                      <h5 className="mb-3 mt-4 border-bottom pb-2">
+                        Expert Section
+                      </h5>
+
+                    <div className="row">
+
+                      <div className="col-md-12 mb-3">
+                        <label className="form-label">Expert Title</label>
+
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="expert_title"
+                          value={keywordData.expert_title}
+                          onChange={handleKeywordInput}
+                          placeholder="Enter Expert Title"
+                        />
+                      </div>
+
+                      <div className="col-md-12 mb-3">
+                        <label className="form-label">Expert Content</label>
+
+                        <JoditEditor
+                          value={keywordData.expert_content}
+                          onChange={(value) =>
+                            setKeywordData({
+                              ...keywordData,
+                              expert_content: value,
+                            })
+                          }
+                        />
+                      </div>
+
+                    </div>
+
+                    {/* ===================== Category Section ===================== */}
+
+                    <h5 className="mb-3 mt-4 border-bottom pb-2">
+                      Category Section
+                    </h5>
+
+                    <div className="row">
+
+                      <div className="col-md-12 mb-3">
+                        <label className="form-label">Category Title</label>
+
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="cat_title"
+                          value={keywordData.cat_title}
+                          onChange={handleKeywordInput}
+                          placeholder="Enter Category Title"
+                        />
+                      </div>
+
+                      <div className="col-md-12 mb-3">
+                        <label className="form-label">Category Content</label>
+
+                        <JoditEditor
+                          value={keywordData.cat_content}
+                          onChange={(value) =>
+                            setKeywordData({
+                              ...keywordData,
+                              cat_content: value,
+                            })
+                          }
+                        />
+                      </div>
+
+                    </div>
+
+                {/* ===================== Main Page Content ===================== */}
+
+                <h5 className="mb-3 mt-4 border-bottom pb-2">
+                  Main Page Content
+                </h5>
+
+                <div className="mb-4">
+
+                  <JoditEditor
+                    value={keywordData.keyword_content}
+                    onChange={(value) =>
+                      setKeywordData({
+                        ...keywordData,
+                        keyword_content: value,
+                      })
+                    }
+                  />
+
+                </div>
+
+                {/* ===================== SEO Head ===================== */}
+
+<h5 className="mb-3 mt-4 border-bottom pb-2">
+  SEO Head
+</h5>
 <div className="row">
-
   <div className="col-md-12 mb-3">
-    <label className="form-label">Team Title</label>
 
-    <input
-      type="text"
-      className="form-control"
-      name="team_title"
-      value={keywordData.team_title}
-      onChange={handleKeywordInput}
-      placeholder="Enter Team Title"
-    />
-  </div>
-
-  <div className="col-md-12 mb-3">
-    <label className="form-label">Team Content</label>
-
-    <JoditEditor
-      value={keywordData.team_content}
-      onChange={(value) =>
-        setKeywordData({
-          ...keywordData,
-          team_content: value,
-        })
-      }
-    />
-  </div>
-
-</div>
-
-{/* ===================== Expert Section ===================== */}
-
-<h5 className="mb-3 mt-4 border-bottom pb-2">
-  Expert Section
-</h5>
-
-<div className="row">
-
-  <div className="col-md-12 mb-3">
-    <label className="form-label">Expert Title</label>
-
-    <input
-      type="text"
-      className="form-control"
-      name="expert_title"
-      value={keywordData.expert_title}
-      onChange={handleKeywordInput}
-      placeholder="Enter Expert Title"
-    />
-  </div>
-
-  <div className="col-md-12 mb-3">
-    <label className="form-label">Expert Content</label>
-
-    <JoditEditor
-      value={keywordData.expert_content}
-      onChange={(value) =>
-        setKeywordData({
-          ...keywordData,
-          expert_content: value,
-        })
-      }
-    />
-  </div>
-
-</div>
-
-{/* ===================== Category Section ===================== */}
-
-<h5 className="mb-3 mt-4 border-bottom pb-2">
-  Category Section
-</h5>
-
-<div className="row">
-
-  <div className="col-md-12 mb-3">
-    <label className="form-label">Category Title</label>
-
-    <input
-      type="text"
-      className="form-control"
-      name="cat_title"
-      value={keywordData.cat_title}
-      onChange={handleKeywordInput}
-      placeholder="Enter Category Title"
-    />
-  </div>
-
-  <div className="col-md-12 mb-3">
-    <label className="form-label">Category Content</label>
-
-    <JoditEditor
-      value={keywordData.cat_content}
-      onChange={(value) =>
-        setKeywordData({
-          ...keywordData,
-          cat_content: value,
-        })
-      }
-    />
-  </div>
-
-</div>
-
-{/* ===================== Main Page Content ===================== */}
-
-<h5 className="mb-3 mt-4 border-bottom pb-2">
-  Main Page Content
-</h5>
-
-<div className="mb-4">
-
-  <JoditEditor
-    value={keywordData.keyword_content}
-    onChange={(value) =>
-      setKeywordData({
-        ...keywordData,
-        keyword_content: value,
-      })
-    }
-  />
-
-</div>
-{/* ===================== SEO Details ===================== */}
-
-<h5 className="mb-3 mt-4 border-bottom pb-2">
-  SEO Details
-</h5>
-
-<div className="row">
-
-  <div className="col-md-12 mb-3">
-    <label className="form-label">SEO Title</label>
-
-    <input
-      type="text"
-      className="form-control"
-      name="seo_title"
-      value={keywordData.seo_title}
-      onChange={handleKeywordInput}
-      placeholder="Enter SEO Title"
-    />
-  </div>
-
-  <div className="col-md-12 mb-3">
-    <label className="form-label">Meta Description</label>
+    <label className="form-label">
+      SEO Head Tags
+    </label>
 
     <textarea
-      rows="4"
       className="form-control"
-      name="meta_description"
-      value={keywordData.meta_description}
+      name="seo_head"
+      rows={15}
+      value={keywordData.seo_head}
       onChange={handleKeywordInput}
-      placeholder="Enter Meta Description"
+      placeholder={`Paste complete SEO Head HTML here...
+
+Example:
+
+<title>Best Cardiologist in Noida</title>
+
+<meta name="description" content="...">
+
+<link rel="canonical" href="...">
+
+<meta property="og:title" content="...">
+
+<script type="application/ld+json">
+...
+</script>`}
     />
+
+    <small className="text-muted">
+      Paste complete HTML Head tags like Title, Meta Tags,
+      Canonical, Open Graph, Twitter Card and JSON-LD Schema.
+    </small>
+
   </div>
-
-  <div className="col-md-6 mb-3">
-    <label className="form-label">Focus Keyword</label>
-
-    <input
-      type="text"
-      className="form-control"
-      name="focus_keyword"
-      value={keywordData.focus_keyword}
-      onChange={handleKeywordInput}
-      placeholder="Enter Focus Keyword"
-    />
-  </div>
-
-  <div className="col-md-6 mb-3">
-    <label className="form-label">Schema Markup</label>
-
-    <textarea
-      rows="4"
-      className="form-control"
-      name="schema_markup"
-      value={keywordData.schema_markup}
-      onChange={handleKeywordInput}
-      placeholder="Paste JSON-LD Schema Markup"
-    />
-  </div>
-
 </div>
 
 {/* ===================== FAQ ===================== */}
@@ -1105,7 +1164,7 @@ const handleKeyword = (e) => {
 
     <div className="mb-3">
       <label className="form-label">
-        Question {index + 1}
+        
       </label>
 
       <input
@@ -1121,7 +1180,7 @@ const handleKeyword = (e) => {
 
     <div className="mb-3">
       <label className="form-label">
-        Answer
+        
       </label>
 
       <textarea
