@@ -64,86 +64,11 @@ const BlogDetails = () => {
       );
   };
 
-  // Function to parse SEO tags from blog_seo field
-  const parseSeoTags = (seoString) => {
-    if (!seoString) return [];
-    
-    // Split by % and filter out empty strings
-    const tags = seoString.split('%').filter(tag => tag.trim() !== '');
-    
-    return tags.map(tag => {
-      const trimmedTag = tag.trim();
-      
-      // Remove opening and closing angle brackets if present
-      if (trimmedTag.startsWith('<') && trimmedTag.endsWith('>')) {
-        return trimmedTag.slice(1, -1);
-      }
-      
-      return trimmedTag;
-    });
-  };
-
-  // Function to render SEO tags in Helmet
-  const renderSeoTags = (seoTags) => {
-    return seoTags.map((tag, index) => {
-      // Handle different types of tags
-      if (tag.startsWith('title>')) {
-        const titleContent = tag.replace('title>', '').replace('</title', '');
-        return <title key={index}>{titleContent}</title>;
-      }
-      
-      if (tag.startsWith('meta ')) {
-        // Parse meta tag attributes
-        const metaMatch = tag.match(/meta\s+(.+)/);
-        if (metaMatch) {
-          const attributes = {};
-          const attrString = metaMatch[1];
-          
-          // Simple regex to extract name/property and content
-          const nameMatch = attrString.match(/(?:name|property)=["']([^"']+)["']/);
-          const contentMatch = attrString.match(/content=["']([^"']+)["']/);
-          
-          if (nameMatch && contentMatch) {
-            if (attrString.includes('property=')) {
-              attributes.property = nameMatch[1];
-            } else {
-              attributes.name = nameMatch[1];
-            }
-            attributes.content = contentMatch[1];
-            
-            return <meta key={index} {...attributes} />;
-          }
-        }
-      }
-      
-      if (tag.startsWith('link ')) {
-        // Parse link tag attributes
-        const linkMatch = tag.match(/link\s+(.+)/);
-        if (linkMatch) {
-          const attributes = {};
-          const attrString = linkMatch[1];
-          
-          const relMatch = attrString.match(/rel=["']([^"']+)["']/);
-          const hrefMatch = attrString.match(/href=["']([^"']+)["']/);
-          
-          if (relMatch) attributes.rel = relMatch[1];
-          if (hrefMatch) attributes.href = hrefMatch[1];
-          
-          if (Object.keys(attributes).length > 0) {
-            return <link key={index} {...attributes} />;
-          }
-        }
-      }
-      
-      return null;
-    }).filter(Boolean);
-  };
-
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://api.neohospital.com/api/adminv3/view-blogs");
+        const response = await fetch("http://localhost:5001/api/adminv3/view-blogs");
         if (!response.ok) throw new Error("Failed to fetch blogs");
         const data = await response.json();
         const sortedBlo = data.Blog.sort(
@@ -176,42 +101,79 @@ const BlogDetails = () => {
 
   if (!blog) return <div>Blog not found</div>;
 
-  // Parse SEO tags from blog_seo field
-  const seoTags = parseSeoTags(blog.blog_seo);
-
   return (
     <>
-      {blog && (
-        <Helmet>
-          {/* Custom SEO tags from blog_seo field */}
-          {seoTags.length > 0 ? (
-            renderSeoTags(seoTags)
-          ) : (
-            // Fallback to default SEO tags if no custom tags are provided
-            <>
-              <title>{blog.blog_title} | NEO Hospital</title>
-              <meta name="title" content={`${blog.blog_title} | NEO Hospital`} />
-              <meta 
-                name="description" 
-                content={blog.blog_meta_description || `Read about ${blog.blog_title} at NEO Hospital, one of the Best Hospitals in Noida.`} 
-              />
-              <meta 
-                name="keywords" 
-                content={blog.blog_meta_keywords || "NEO Hospital, Best Hospital in Noida"} 
-              />
-              <link rel="canonical" href={`https://www.neohospital.com/blog/${blog.blog_slug}`} />
-              <meta property="og:title" content={`${blog.blog_title} | NEO Hospital`} />
-              <meta 
-                property="og:description" 
-                content={blog.blog_meta_description || `Read about ${blog.blog_title} at NEO Hospital, one of the Best Hospitals in Noida.`} 
-              />
-              <meta name="author" content="Neo Hospital" />
-              <meta name="language" content="en-us" />
-              <meta name="robots" content="INDEX,FOLLOW" />
-            </>
-          )}
-        </Helmet>
+     {blog && (
+  <Helmet>
+    {blog.blog_seo &&
+    blog.blog_seo.trim() !== ""
+      ? parse(blog.blog_seo)
+      : (
+        <>
+          <title>{blog.blog_title} | NEO Hospital</title>
+
+          <meta
+            name="title"
+            content={`${blog.blog_title} | NEO Hospital`}
+          />
+
+          <meta
+            name="description"
+            content={
+              blog.blog_meta_description ||
+              `Read about ${blog.blog_title} at NEO Hospital, one of the Best Hospitals in Noida.`
+            }
+          />
+
+          <meta
+            name="keywords"
+            content={
+              blog.blog_meta_keywords ||
+              "NEO Hospital"
+            }
+          />
+
+          <link
+            rel="canonical"
+            href={`https://www.neohospital.com/blog/${blog.blog_slug}`}
+          />
+
+          <meta
+            property="og:title"
+            content={`${blog.blog_title} | NEO Hospital`}
+          />
+
+          <meta
+            property="og:description"
+            content={
+              blog.blog_meta_description ||
+              `Read about ${blog.blog_title} at NEO Hospital.`
+            }
+          />
+
+          <meta
+            property="og:url"
+            content={`https://www.neohospital.com/blog/${blog.blog_slug}`}
+          />
+
+          <meta
+            property="og:type"
+            content="article"
+          />
+
+          <meta
+            name="author"
+            content="NEO Hospital"
+          />
+
+          <meta
+            name="robots"
+            content="index,follow"
+          />
+        </>
       )}
+  </Helmet>
+)}
       
       <section className="container NeoBlog">
         <h3 className="dt-title">
@@ -227,7 +189,7 @@ const BlogDetails = () => {
           <div className="col-md-8">
             <main>
               <img
-                src={`https://api.neohospital.com/uploads/blogs/${blog.blog_image}`}
+                src={`http://localhost:5001/uploads/blogs/${blog.blog_image}`}
                 alt={blog.blog_title}
                 className="img-fluid"
               />
