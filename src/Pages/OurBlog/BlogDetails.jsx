@@ -68,7 +68,7 @@ const BlogDetails = () => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5001/api/adminv3/view-blogs");
+        const response = await fetch("https://api.neohospital.com/api/adminv3/view-blogs");
         if (!response.ok) throw new Error("Failed to fetch blogs");
         const data = await response.json();
         const sortedBlo = data.Blog.sort(
@@ -189,7 +189,7 @@ const BlogDetails = () => {
           <div className="col-md-8">
             <main>
               <img
-                src={`http://localhost:5001/uploads/blogs/${blog.blog_image}`}
+                src={`https://api.neohospital.com/uploads/blogs/${blog.blog_image}`}
                 alt={blog.blog_title}
                 className="img-fluid"
               />
