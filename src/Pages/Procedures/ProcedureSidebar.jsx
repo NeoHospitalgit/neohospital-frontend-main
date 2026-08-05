@@ -87,7 +87,7 @@ const handleCallback = async (e) => {
     setLoading(true);
 
     const res = await axios.post(
-      `${API}/api/sendmails/send-doctoremail`,
+      `${API}/sendmails/send-doctoremail`,
       {
         doctorname:
           procedure?.procedures_title ||
