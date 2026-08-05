@@ -23,7 +23,7 @@ function Footer() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5001/api/adminv1/view-category"
+          "https://api.neohospital.com/api/adminv1/view-category"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
