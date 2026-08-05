@@ -290,6 +290,7 @@ function AddDoctor() {
                           required
                           type="text"
                           className="form-control"
+                          placeholder="Doctor's Name"
                         />
                       </div>
                     </div>
@@ -307,6 +308,7 @@ function AddDoctor() {
                           required
                           type="text"
                           className="form-control"
+                          placeholder="Slug"
                         />
                       </div>
                       <div className="col-md-6">
@@ -322,6 +324,7 @@ function AddDoctor() {
                           required
                           type="text"
                           className="form-control"
+                           placeholder="Doctor's Timing"
                         />
                       </div>
                     </div>
@@ -342,6 +345,7 @@ function AddDoctor() {
                           required
                           type="number"
                           className="form-control"
+                           placeholder="Doctor's Experience (Years)"
                         />
                       </div>
                       <div className="col-md-6">
@@ -382,6 +386,7 @@ function AddDoctor() {
                           required
                           type="text"
                           className="form-control"
+                           placeholder="Doctor's Qualification"
                         />
                       </div>
                     </div>
@@ -415,6 +420,7 @@ function AddDoctor() {
                           rows={4}
                           placeholder="Enter meta tags for SEO (e.g., meta description, keywords, etc.)&#10;Example: Best cardiologist in Delhi, Heart specialist, Cardiac care expert"
                           className="form-control"
+                          
                         />
                         <small className="form-text text-muted">
                           Add relevant keywords and meta information for better SEO
