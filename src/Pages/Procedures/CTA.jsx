@@ -4,7 +4,6 @@ import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import "./ProceduresPage.css";
 
 function CTA({ pageData }) {
-    console.log('tert',pageData);
   const [showAppointment, setShowAppointment] = useState(false);
 
   return (
