@@ -24,7 +24,7 @@ function BlogCard(props) {
         </div>
         <div className="card-body">
           <span className="card-badge card-badge-blue">Blog</span>
-          <h2>{props.title}</h2>
+          <h2>{props.title} ss</h2>
           {/* Displaying truncated description */}
           {/* <p className="card-subtitle">{truncatedDescription}</p> */}
           <div className="Readmore">
