@@ -26,8 +26,14 @@ function BlogAll() {
         }
 
         const data = await response.json();
-        console.log("Blog API response:", data);
+      console.log("Blog API response:", data);
 
+console.table(
+  data.Blog.map(blog => ({
+    title: blog.blog_title,
+    status: blog.blog_status,
+  }))
+);
         // Support multiple possible response shapes defensively
         let blogs = [];
         if (Array.isArray(data)) {
