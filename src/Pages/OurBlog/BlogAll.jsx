@@ -26,14 +26,8 @@ function BlogAll() {
         }
 
         const data = await response.json();
-      console.log("Blog API response:", data);
 
-console.table(
-  data.Blog.map(blog => ({
-    title: blog.blog_title,
-    status: blog.blog_status,
-  }))
-);
+
         // Support multiple possible response shapes defensively
         let blogs = [];
         if (Array.isArray(data)) {
@@ -50,15 +44,26 @@ console.table(
           blogs = firstArray || [];
         }
 
-        const sortedBlogs = blogs.slice().sort(
+       const activeBlogs = blogs.filter(
+          (blog) => blog.blog_status === true
+        );
+
+        const sortedBlogs = activeBlogs.slice().sort(
           (a, b) =>
             new Date(b.blog_date || b.date || b.created_at) -
             new Date(a.blog_date || a.date || a.created_at)
         );
 
-        if (mounted) {
-          setNeoblog(sortedBlogs);
-        }
+        console.log("All API Blogs:", blogs.length);
+        console.log("Active Blogs:", activeBlogs.length);
+        console.log(
+          "Inactive Blogs:",
+          blogs.filter((blog) => blog.blog_status === false)
+        );
+
+       if (mounted) {
+        setNeoblog(sortedBlogs);
+      }
       } catch (err) {
         if (err.name !== "AbortError") {
           console.error("Error fetching blogs:", err);
