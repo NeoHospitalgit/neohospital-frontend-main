@@ -19,8 +19,13 @@ function CTA({ pageData }) {
           </h2>
 
          
-            {pageData?.cat_content ||
-              "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital."}
+           <div
+  dangerouslySetInnerHTML={{
+    __html:
+      pageData?.cat_content ||
+      "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital.",
+  }}
+/>
          
 
           <div className="procedure-cta-buttons">
