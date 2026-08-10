@@ -118,7 +118,7 @@ const App = () => {
           <Route path="/sitemap.xml" element={<Sitemap />} />
           <Route path="/doctor-details/:dr" element={<DoctorDetails />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/teams-&-conditions" element={<TermsPage />} />
+          <Route path="/terms-and-conditions" element={<TermsPage />} />
           <Route path="/doctor/:slug" element={<KeywordPage />}/>
           <Route path="/procedures" element={<ProceduresMain />} />
           <Route path="/procedures/:slug" element={<ProcedurePage />} />
