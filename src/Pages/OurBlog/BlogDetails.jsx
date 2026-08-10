@@ -193,7 +193,7 @@ const BlogDetails = () => {
                 alt={blog.blog_title}
                 className="img-fluid"
               />
-               <div className="author-info">
+               <div className="author-info mt-5">
              <h6 className="author-name">Author: {blog.blog_auther}</h6>
             </div>
               <h1 className="blogtitle">{blog.blog_title}</h1>
