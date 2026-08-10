@@ -63,13 +63,13 @@ function Addblog() {
   const handleBlogInput = (e) => {
     const { name, value } = e.target;
     const transformedValue = name === "blog_status" ? value === "true" : value;
-    const modifiedValue =
-      name === "blog_slug"
-        ? value
-            .toLowerCase()
-            .replace(/[^\w\s]/gi, "")
-            .replace(/\s+/g, "-")
-        : transformedValue;
+   const modifiedValue =name === "blog_slug"
+    ? value
+        .toLowerCase()
+        .replace(/[^a-z0-9-\s]/gi, "") // hyphen allow
+        .replace(/\s+/g, "-")          // space => hyphen
+        .replace(/-+/g, "-")           // multiple hyphen => single
+    : transformedValue;
 
     setBlogsData({
       ...blogsData,
@@ -171,9 +171,6 @@ function Addblog() {
   const updateBlog = async () => {
     try {
       const formData = new FormData();
-      // Object.entries(blogsData).forEach(([key, value]) => {
-      //   formData.append(key, value);
-      // });
 
       formData.append("blog_title", blogsData.blog_title);
       formData.append("blog_slug", blogsData.blog_slug);
@@ -362,14 +359,14 @@ function Addblog() {
                           <select
                             name="blog_status"
                             autoComplete="off"
-                            value={blogsData.blog_status ? "1" : "0"}
+                            value={blogsData.blog_status ? "true" : "false"}
                             onChange={handleBlogInput}
                             id="blog_status"
                             required
                             className="form-control"
                           >
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                            <option value="true">Active</option>
+                            <option value="false">Inactive</option>
                           </select>
                         </div>
                         <div className="col-md-6">
