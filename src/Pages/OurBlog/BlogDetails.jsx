@@ -194,7 +194,7 @@ const BlogDetails = () => {
                 className="img-fluid"
               />
                <div className="author-info mt-2">
-             <h6 className="author-name">Author: {blog.blog_auther}</h6>
+             <h6 className="author-name">Reviewed by {blog.blog_auther}</h6>
             </div>
               <h1 className="blogtitle">{blog.blog_title}</h1>
               <div className="description">{parse(blog.blog_content)}</div>
