@@ -19,11 +19,9 @@ function CTA({ pageData }) {
           </h2>
 
          
-           <p>
-  {pageData?.cat_content
-    ? pageData.cat_content.replace(/<[^>]*>/g, "")
-    : "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital."}
-</p>
+            {pageData?.cat_content ||
+              "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital."}
+        
          
 
           <div className="procedure-cta-buttons">
