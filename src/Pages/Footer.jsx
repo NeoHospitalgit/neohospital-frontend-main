@@ -410,7 +410,7 @@ function Footer() {
 
                 <div className="copyright-right">
                   <Link to="/">Home</Link>
-                  <Link to="/teams-&-conditions">Terms</Link>
+                  <Link to="/terms-and-conditions">Terms</Link>
                   <Link to="/privacy-policy">Privacy Policy</Link>
                   <Link to="/contact">Contact</Link>
                 </div>
