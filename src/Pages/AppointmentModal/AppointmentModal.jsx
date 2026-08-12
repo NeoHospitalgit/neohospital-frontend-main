@@ -82,8 +82,7 @@ function AppointmentModal({
     try {
 
       setIsSubmitting(true);
-console.log("API =", API);
-console.log("URL =", `${API}/api/sendmails/send-doctoremail`);
+
       const response = await axios.post(
 
         `${API}/api/sendmails/send-doctoremail`,
@@ -130,7 +129,8 @@ console.log("URL =", `${API}/api/sendmails/send-doctoremail`);
 
     } catch (error) {
 
-     console.log("Full Error:", error);
+      
+  console.log("Full Error:", error);
 
   console.log("Response:", error.response);
 
