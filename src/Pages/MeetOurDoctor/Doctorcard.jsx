@@ -1,44 +1,96 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import parse from "html-react-parser";
 import fallbackImage from "../../Assets/manpic.png";
+import { useAuth } from "../../store/auth";
 
 function Doctorcard(props) {
+  const { API } = useAuth();
+
+  const imageUrl = props.doctorpic
+    ? `${API}/uploads/doctors/${props.doctorpic}`
+    : fallbackImage;
+
   return (
-    <>
-      <section className="doclinks">
-        <Link to={`/doctor-details/${props.doctorslug}`}>
-          <div className="doctorcard">
-            <div className="card">
-              <div className="face face1">
-                <div className="content">
-                  {props.doctorpic ? (
-                    <img
-                      src={`https://api.neohospital.com/uploads/doctors/${props.doctorpic}`}
-                      alt={props.doctorname}
-                    />
-                  ) : (
-                    <img src={fallbackImage} alt="NEO Hospital Doctors" />
-                  )}
-                  <h3>{props.doctorname}</h3>
-                </div>
+    <section className="doclinks">
+      <Link
+        to={`/doctor-details/${props.doctorslug}`}
+      >
+        <div className="doctorcard">
+
+          <div className="card">
+
+            {/* =========================
+                FRONT
+            ========================= */}
+
+            <div className="face face1">
+
+              <div className="content">
+
+                <img
+                  src={imageUrl}
+                  alt={
+                    props.doctorname ||
+                    "NEO Hospital Doctor"
+                  }
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      fallbackImage;
+                  }}
+                />
+
+                <h3>
+                  {props.doctorname}
+                </h3>
+
               </div>
-              <div className="face face2">
-                <div className="content">
-                  {/* <p>{parse(props.doctordetails)}</p>  */}
-          <p>{props.doctortime}</p>
-                 <p>{props.doctorspecialist}</p> 
-                  <p>{props.doctordepartment}</p> 
-                  <div>
-                    <button className="text-appointment-btn">📝 Schedule</button>
-                  </div>
-                </div>
-              </div>
+
             </div>
+
+            {/* =========================
+                DETAILS
+            ========================= */}
+
+            <div className="face face2">
+
+              <div className="content">
+
+                {props.doctortime && (
+                  <p>
+                    {props.doctortime}
+                  </p>
+                )}
+
+                {props.doctorspecialist && (
+                  <p>
+                    {props.doctorspecialist}
+                  </p>
+                )}
+
+                {props.doctordepartment && (
+                  <p>
+                    {props.doctordepartment}
+                  </p>
+                )}
+
+                <div>
+                  <button
+                    type="button"
+                    className="text-appointment-btn"
+                  >
+                    📝 Schedule
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
-        </Link>
-      </section>
-    </>
+
+        </div>
+      </Link>
+    </section>
   );
 }
 

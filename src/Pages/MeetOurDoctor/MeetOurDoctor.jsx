@@ -1,42 +1,104 @@
+import React, { useEffect, useState } from "react";
+import "./MeetOurDoctor.css";
+import Doctorsbanner from "./Doctorsbanner";
 
-import "./MeetOurDoctor.css"
-import Doctorsbanner from "./Doctorsbanner"
+import DemoDoctor from "./DemoDoctor";
 import { Helmet } from "react-helmet";
-// import DoctorAll from './DoctorAll';
-import Corevalue from "../About/Corevalue";
-import DemoDoctor from './DemoDoctor';
+import parse from "html-react-parser";
+
+import { useAuth } from "../../store/auth";
+
 function MeetOurDoctor() {
+  const { API } = useAuth();
+
+  const [seo, setSeo] = useState(null);
+
+  // =====================================
+  // Fetch About SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        console.log(
+          "Header API Response:",
+          data
+        );
+
+        // =====================================
+        // Find doctors SEO Record
+        // =====================================
+
+        const doctorsSeo = Array.isArray(
+          data?.header
+        )
+          ? data.header.find(
+              (item) =>
+                item?.page
+                  ?.trim()
+                  ?.toLowerCase() ===
+                "doctors"
+            )
+          : null;
+
+        console.log(
+          "About SEO:",
+          doctorsSeo
+        );
+
+        if (!cancelled) {
+          setSeo(doctorsSeo || null);
+        }
+
+      } catch (error) {
+        if (!cancelled) {
+          console.error(
+            "doctors SEO Error:",
+            error
+          );
+
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+
+  }, [API]);
   return (
     <>
-      <Helmet>
-        <title>Meet Our Skilled Doctors at Neo Super-Speciality Hospital</title>
-        <meta name="title" content="Meet Our Skilled Doctors at Neo Super-Speciality Hospital" />
-        <meta name="description" content="Explore Neo Hospital’s team of expert, experienced doctors and specialists dedicated to providing advanced, compassionate care across all major medical fields." />
-
-        <meta name="keywords" content="specialist doctors in Noida, best doctors at Neo Hospital, Neo Hospital medical specialists, expert doctors Noida, top healthcare specialists Noida" />
-        <link rel="canonical" href="https://www.neohospital.com/doctors" />
-
-        <meta name="DC.Title" content="Meet Our Skilled Doctors at Neo Super-Speciality Hospital" />
-        <meta name="DC.Subject" content="Explore Neo Hospital’s team of expert, experienced doctors and specialists dedicated to providing advanced, compassionate care across all major medical fields." />
-
-        <meta property="og:title" content="Meet Our Skilled Doctors at Neo Super-Speciality Hospital" />
-        <meta property="og:description" content="Explore Neo Hospital’s team of expert, experienced doctors and specialists dedicated to providing advanced, compassionate care across all major medical fields." />
-
-        <meta name="language" content="en-us" />
-        <meta name="coverage" content="Global" />
-        <meta name="robots" content="INDEX,FOLLOW" />
-        <meta name="GOOGLEBOT" content="INDEX, FOLLOW" />
-        <meta name="doc-type" content="Webpage" />
-        <meta name="revisit-after" content="7 days" />
-      </Helmet>
-
+     {seo?.tagdata && (
+        <Helmet>
+          {parse(seo.tagdata)}
+        </Helmet>
+      )}
       <Doctorsbanner />
+
       <section className="Meetourdoctor container mt-5">
-        
         <DemoDoctor />
       </section>
     </>
   );
 }
 
-export default MeetOurDoctor
+export default MeetOurDoctor;

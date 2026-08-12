@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Doctorcard from "./Doctorcard";
+import { useAuth } from "../../store/auth";
 
 function DemoDoctor() {
+  const { API } = useAuth();
+
   const [doctors, setDoctors] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -9,120 +12,252 @@ function DemoDoctor() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredDoctors, setFilteredDoctors] = useState([]);
 
+  // =====================================
+  // Fetch Doctors + Categories
+  // =====================================
+
   useEffect(() => {
+    if (!API) return;
+
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://api.neohospital.com/api/adminv2/view-doctors"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch doctors");
+        setIsLoading(true);
+        setError(null);
+
+        const [doctorsResponse, categoriesResponse] =
+          await Promise.all([
+            fetch(`${API}/api/doctors/view-doctors`),
+            fetch(`${API}/api/categories/view-category`),
+          ]);
+
+        const doctorsData = await doctorsResponse.json();
+        const categoriesData = await categoriesResponse.json();
+
+        if (!doctorsResponse.ok) {
+          throw new Error(
+            doctorsData?.message ||
+              "Failed to fetch doctors"
+          );
         }
-        const data = await response.json();
-        setDoctors(data.doctors);
-        setFilteredDoctors(data.doctors); // Initialize filteredDoctors with all doctors
+
+        if (!categoriesResponse.ok) {
+          throw new Error(
+            categoriesData?.message ||
+              "Failed to fetch categories"
+          );
+        }
+
+        const doctorList =
+          doctorsData?.doctors || [];
+
+        const categoryList =
+          categoriesData?.category || [];
+
+        setDoctors(doctorList);
+        setFilteredDoctors(doctorList);
+        setCategories(categoryList);
       } catch (error) {
+        console.error(
+          "Doctors page API error:",
+          error
+        );
+
         setError(error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(
-          "https://api.neohospital.com/api/adminv1/view-category"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        const data = await response.json();
-        setCategories(data.category);
-      } catch (error) {
-        setError(error);
-      }
-    };
-
     fetchData();
-    fetchCategories();
-  }, []);
+  }, [API]);
+
+  // =====================================
+  // Search Doctors
+  // =====================================
 
   useEffect(() => {
-    // Filter doctors based on search query
+    const search = searchQuery
+      .trim()
+      .toLowerCase();
+
+    if (!search) {
+      setFilteredDoctors(doctors);
+      return;
+    }
+
     const filtered = doctors.filter((doctor) =>
-      doctor.drTitle.toLowerCase().includes(searchQuery.toLowerCase())
+      doctor.drTitle
+        ?.toLowerCase()
+        .includes(search)
     );
+
     setFilteredDoctors(filtered);
   }, [searchQuery, doctors]);
+
+  // =====================================
+  // Search Change
+  // =====================================
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
+  // =====================================
+  // Loading
+  // =====================================
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center py-5">
+        <h3>Loading doctors...</h3>
+      </div>
+    );
   }
+
+  // =====================================
+  // Error
+  // =====================================
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div className="text-center py-5">
+        <h3 className="text-danger">
+          Unable to load doctors.
+        </h3>
+
+        <p>{error.message}</p>
+      </div>
+    );
   }
 
+  // =====================================
+  // Render
+  // =====================================
+
   return (
-    <>
-      <section className="doctorpage">
-        <div>
-          <div className="row">
-            <div className="col-md-8">
-              <h1 className="about-title">Meet Our Doctors</h1>
-            </div>
-            <div className="col-md-4">
-              <form className="search-bar form-inline my-2 my-lg-0">
-                <input
-                  className="form-control mr-sm-2"
-                  type="search"
-                  placeholder="Search doctors"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                />
-              </form>
-            </div>
+    <section className="doctorpage">
+
+      {/* Header */}
+      <div>
+        <div className="row align-items-center">
+
+          <div className="col-md-8">
+            <h1 className="about-title">
+              Meet Our Doctors
+            </h1>
           </div>
-          <p className="about-description">
-            Neo Super Speciality Hospital places paramount importance on patient care, seamlessly
-            merging cutting-edge medical advancements with heartfelt compassion.
-            Our foundational principle is to craft an experience where every
-            patient feels supported, efficient, and valued.
-          </p>
+
+          <div className="col-md-4">
+            <form
+              className="search-bar form-inline my-2 my-lg-0"
+              onSubmit={(e) =>
+                e.preventDefault()
+              }
+            >
+              <input
+                className="form-control mr-sm-2"
+                type="search"
+                placeholder="Search doctors"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+            </form>
+          </div>
+
         </div>
-        {categories
-          .filter((category) =>
-            filteredDoctors.some(
-              (doctor) => doctor.drDepartment === category.title
-            )
+
+        <p className="about-description">
+          Neo Super Speciality Hospital places
+          paramount importance on patient care,
+          seamlessly merging cutting-edge medical
+          advancements with heartfelt compassion.
+          Our foundational principle is to craft
+          an experience where every patient feels
+          supported, efficient, and valued.
+        </p>
+      </div>
+
+      {/* No Doctors */}
+      {filteredDoctors.length === 0 && (
+        <div className="text-center py-5">
+          <h3>No doctors found.</h3>
+        </div>
+      )}
+
+      {/* Doctors by Department */}
+      {categories
+        .filter((category) =>
+          filteredDoctors.some(
+            (doctor) =>
+              doctor.drDepartment ===
+              category.title
           )
-          .map((category) => (
-            <div key={category.id}>
-              <h2>{category.title}</h2>
-              <div className="row">
-                {filteredDoctors
-                  .filter((doctor) => doctor.drDepartment === category.title)
-                  .map((doctor) => (
-                    <div className="col-md-3" key={doctor.id}>
-                      <Doctorcard
-                        doctorpic={doctor.drImage}
-                        doctorname={doctor.drTitle}
-                        doctordetails={doctor.drQualification}
-                        doctorslug={doctor.drSlug}
-                        doctordepartment={doctor.drDepartment}
-                        
-                      />
-                    </div>
-                  ))}
-              </div>
+        )
+        .map((category) => (
+
+          <div
+            key={
+              category._id ||
+              category.id ||
+              category.title
+            }
+          >
+
+            <h2>{category.title}</h2>
+
+            <div className="row">
+
+              {filteredDoctors
+                .filter(
+                  (doctor) =>
+                    doctor.drDepartment ===
+                    category.title
+                )
+                .map((doctor) => (
+
+                  <div
+                    className="col-md-3"
+                    key={
+                      doctor._id ||
+                      doctor.id ||
+                      doctor.drSlug
+                    }
+                  >
+
+                    <Doctorcard
+                      doctorpic={
+                        doctor.drImage
+                      }
+                      doctorname={
+                        doctor.drTitle
+                      }
+                      doctordetails={
+                        doctor.drQualification
+                      }
+                      doctorslug={
+                        doctor.drSlug
+                      }
+                      doctordepartment={
+                        doctor.drDepartment
+                      }
+                      doctortime={
+                        doctor.drTiming
+                      }
+                      doctorspecialist={
+                        doctor.drQualification
+                      }
+                    />
+
+                  </div>
+
+                ))}
+
             </div>
-          ))}
-      </section>
-    </>
+
+          </div>
+
+        ))}
+    </section>
   );
 }
 
