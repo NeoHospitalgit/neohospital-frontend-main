@@ -5,28 +5,39 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [userRole, setUserRole] = useState("");
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // const API = "http://localhost:5001";
   const API = "https://api.neohospital.com";
 
-  const authorizationToken = `Bearer ${token}`;
+  const authorizationToken = token ? `Bearer ${token}` : "";
 
+  // Store Token
   const storeTokenInLS = (serverToken) => {
     setToken(serverToken);
     localStorage.setItem("token", serverToken);
   };
 
+  // Logout
   const logoutUser = () => {
     setToken("");
+    setUser(null);
+    setUserRole("");
     localStorage.removeItem("token");
   };
 
+  // Authenticate User
   const userAuthentication = async () => {
+    // No token => don't call API
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
       setIsLoading(true);
+
       const response = await fetch(`${API}/api/auth/user`, {
         method: "GET",
         headers: {
@@ -36,13 +47,18 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
+
         setUser(data.userData);
         setUserRole(data.userData.username);
+        setError(null);
       } else {
-        setError("Error fetching user data");
+        // Invalid/Expired Token
+        logoutUser();
+        setError("Session expired. Please login again.");
       }
     } catch (error) {
-      setError("Error fetching user data");
+      logoutUser();
+      setError("Unable to authenticate user.");
     } finally {
       setIsLoading(false);
     }
@@ -50,12 +66,12 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     userAuthentication();
-  }, []);
+  }, [token]);
 
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: !!token,
+        isLoggedIn: !!user,
         storeTokenInLS,
         logoutUser,
         user,
@@ -73,8 +89,10 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
   const authContextValue = useContext(AuthContext);
+
   if (!authContextValue) {
-    throw new Error("useAuth used outside of the Provider");
+    throw new Error("useAuth must be used inside AuthProvider");
   }
+
   return authContextValue;
 };
