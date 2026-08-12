@@ -11,7 +11,7 @@ function OurServicecards() {
   //   const fetchData = async () => {
   //     try {
   //       const response = await fetch(
-  //         "https://api.neohospital.com/api/adminv5/manage-service-category"
+  //         "http://localhost:5001/api/adminv5/manage-service-category"
   //       );
   //       if (!response.ok) {
   //         throw new Error("Failed to fetch data");
