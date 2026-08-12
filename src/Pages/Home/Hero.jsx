@@ -126,7 +126,7 @@ function Hero() {
                   <h3>Emergency Contact</h3>
                   <div className="info-item">
                     <i className="fa fa-phone"></i>
-                    <p> 0120-4880088</p>
+                    <p> 0120-4880000</p>
                   </div>
                   <div className="info-item">
                     <i className="fa fa-ambulance"></i>
@@ -135,11 +135,11 @@ function Hero() {
                   <div className="info-divider"></div>
                   <h3>Hospital Hours</h3>
                   <div className="info-item">
-                   <i class="fa fa-hospital-o"></i>
+                   <i className="fa fa-hospital-o"></i>
                     <p>24/7 Services Available</p>
                   </div>
 {/*                   <div className="info-item">
-                    <i class="fa fa-user-md"></i>
+                    <i className="fa fa-user-md"></i>
                     <p>24/7 Available OPD </p>
                   </div> */}
                   <div className="info-divider"></div>

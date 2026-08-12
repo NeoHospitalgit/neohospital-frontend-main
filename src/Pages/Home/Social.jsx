@@ -14,7 +14,7 @@ function Social() {
       </div>
       <div>
         <a href="https://twitter.com/neo_hospital" className="fixed-twitter text-light" target="_blank">
-          <i class="fa-brands fa-x-twitter"></i> <span>Twitter</span>
+          <i className="fa-brands fa-x-twitter"></i> <span>Twitter</span>
         </a>
       </div>
       {/* <div>
