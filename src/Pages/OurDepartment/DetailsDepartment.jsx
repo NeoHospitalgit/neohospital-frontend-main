@@ -7,18 +7,19 @@ import { Helmet } from "react-helmet";
 import "./DetailsDepartment.css";
 import Header from "../Header";
 import Footer from "../Footer";
-
+import { useAuth } from "../../store/auth";
 function DetailsDepartment() {
   const [Neospecial, setNeospecial] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+ const { API } = useAuth();
   useEffect(() => {
+     if (!API) return;
     const fetchData = async () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://api.neohospital.com/api/adminv1/view-category"
+           `${API}/api/categories/view-category`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -127,7 +128,7 @@ function DetailsDepartment() {
               <div className="department-header">
                 <div className="department-image-container">
                   <img
-                    src={`https://api.neohospital.com/uploads/categories/${departments.image}`}
+                    src={`${API}/uploads/categories/${departments.image}`}
                     alt={departments.title}
                     className="department-image"
                     loading="lazy"

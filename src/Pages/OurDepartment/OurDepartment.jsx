@@ -1,32 +1,96 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Ourdepartmentbanner from "./Ourdepartmentbanner";
 import Corevalue from "../About/Corevalue";
 import Ourdepartmentcards from "./Ourdepartmentcards";
 import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
+
+import { useAuth } from "../../store/auth";
 function OurDepartment() {
+  const { API } = useAuth();
+
+  const [seo, setSeo] = useState(null);
+
+  // =====================================
+  // Fetch Department SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        console.log(
+          "Header API Response:",
+          data
+        );
+
+        // =====================================
+        // Find Department SEO Record
+        // =====================================
+
+        const departmentSeo = Array.isArray(
+          data?.header
+        )
+          ? data.header.find(
+              (item) =>
+                item?.page
+                  ?.trim()
+                  ?.toLowerCase() ===
+                "specialities"
+            )
+          : null;
+
+        console.log(
+          "Department SEO:",
+          departmentSeo
+        );
+
+        if (!cancelled) {
+          setSeo(departmentSeo || null);
+        }
+
+      } catch (error) {
+        if (!cancelled) {
+          console.error(
+            "Department SEO Error:",
+            error
+          );
+
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+
+  }, [API]);
+
   return (
     <>
-      <Helmet>
-       <title>Best Super Speciality Hospital in Noida | NEO Hospital</title>
-      <meta name="title" content="Best Super Speciality Hospital in Noida | NEO Hospital" />
-      <meta name="description" content="NEO Hospital is a leading super speciality hospital in Noida offering advanced treatments, modern technology, and comprehensive healthcare for patients of all ages." />
-      
-      <meta name="keywords" content="multi-speciality hospital Noida, medical specialities in Noida, super speciality hospital Noida, specialist doctors Noida, advanced healthcare Noida" />
-      <link rel="canonical" href="https://www.neohospital.com/specialities" />
-      
-      <meta name="DC.Title" content="Best Super Speciality Hospital in Noida | NEO Hospital" />
-      <meta name="DC.Subject" content="NEO Hospital is a leading super speciality hospital in Noida offering advanced treatments, modern technology, and comprehensive healthcare for patients of all ages." />
-      
-      <meta property="og:title" content="Best Super Speciality Hospital in Noida | NEO Hospital" />
-      <meta property="og:description" content="NEO Hospital is a leading super speciality hospital in Noida offering advanced treatments, modern technology, and comprehensive healthcare for patients of all ages." />
-      
-      <meta name="language" content="en-us" />
-      <meta name="coverage" content="Global" />
-      <meta name="robots" content="INDEX,FOLLOW" />
-      <meta name="GOOGLEBOT" content="INDEX, FOLLOW" />
-      <meta name="doc-type" content="Webpage" />
-      <meta name="revisit-after" content="7 days" />
-      </Helmet>
+       {seo?.tagdata && (
+        <Helmet>
+          {parse(seo.tagdata)}
+        </Helmet>
+      )}
 
       <Ourdepartmentbanner />
 {/*       <Corevalue /> */}

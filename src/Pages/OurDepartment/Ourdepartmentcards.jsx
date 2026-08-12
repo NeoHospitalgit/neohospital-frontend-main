@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import DepartmentCard from "./DepartmentCard";
 import "./departmentcard.css";
+import { useAuth } from "../../store/auth";
 
 function Ourdepartmentcards() {
   const [Neospecial, setNeospecial] = useState([]); // Neospecial state to store API data
   const [error, setError] = useState(null); // State to handle errors
-
+  const { API } = useAuth();
   useEffect(() => {
+      if (!API) return;
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://api.neohospital.com/api/adminv1/view-category"
+           `${API}/api/categories/view-category`
         );
 
         if (!response.ok) {
@@ -49,7 +51,7 @@ function Ourdepartmentcards() {
         {filteredCategories.map((value, index) => (
           <div key={index} className="col-lg-3 col-md-6 department-responsive">
             <DepartmentCard
-              blogimage={`https://api.neohospital.com/uploads/categories/${value.image}`}
+              blogimage={`http://localhost:5001/uploads/categories/${value.image}`}
               title={value.title}
               departmentslug={value.slug}
             />
@@ -65,7 +67,7 @@ function Ourdepartmentcards() {
                 className="col-4 lg-2 col-md-3 col-12 department-responsive"
               >
                 <DepartmentCard
-                  blogimage={`https://api.neohospital.com/uploads/categories/${value.image}`}
+                  blogimage={`${API}/uploads/categories/${value.image}`}
                   title={value.title}
                   departmentslug={value.slug}
                 />
