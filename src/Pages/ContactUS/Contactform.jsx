@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "./Contactform.css";
 import axios from 'axios';
+import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
 
+import { useAuth } from "../../store/auth";
 function Contactform() {
+    const { API } = useAuth();
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -48,8 +52,7 @@ function Contactform() {
     }
 
     try {
-      const response = await axios.post('https://api.neohospital.com/api/sendmails/send-contact-email', {
-        // const response = await axios.post('http://localhost:5001/api/sendmails/send-contact-email', {
+      const response = await axios.post(`${API}/api/sendmails/send-contact-email`, {
         name,
         number,
         email,
