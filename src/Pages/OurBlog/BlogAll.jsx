@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./OurBlog.css";
 import BlogCard from "./BlogCard";
+import { useAuth } from "../../store/auth";
 
 function BlogAll() {
+  const { API } = useAuth();
+
   const [neoblog, setNeoblog] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
+    if (!API) return;
+
     const controller = new AbortController();
 
     const fetchData = async () => {
@@ -17,19 +21,24 @@ function BlogAll() {
         setError(null);
 
         const response = await fetch(
-          "https://api.neohospital.com/api/adminv3/view-blogs",
-          { signal: controller.signal }
+          `${API}/api/blogs/view-blogs`,
+          {
+            method: "GET",
+            signal: controller.signal,
+          }
         );
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data (status ${response.status})`);
-        }
 
         const data = await response.json();
 
+        if (!response.ok) {
+          throw new Error(
+            data?.message ||
+              `Failed to fetch blogs (${response.status})`
+          );
+        }
 
-        // Support multiple possible response shapes defensively
         let blogs = [];
+
         if (Array.isArray(data)) {
           blogs = data;
         } else if (Array.isArray(data.Blog)) {
@@ -38,51 +47,64 @@ function BlogAll() {
           blogs = data.blogs;
         } else if (Array.isArray(data.data)) {
           blogs = data.data;
-        } else {
-          // fallback: find first array value inside the response object
-          const firstArray = Object.values(data).find((v) => Array.isArray(v));
-          blogs = firstArray || [];
         }
 
-       const activeBlogs = blogs.filter(
+        // Only active blogs on public website
+        const activeBlogs = blogs.filter(
           (blog) => blog.blog_status === true
         );
 
-        const sortedBlogs = activeBlogs.slice().sort(
+        // Latest blogs first
+        const sortedBlogs = [...activeBlogs].sort(
           (a, b) =>
-            new Date(b.blog_date || b.date || b.created_at) -
-            new Date(a.blog_date || a.date || a.created_at)
+            new Date(
+              b.blog_date ||
+                b.date ||
+                b.created_at
+            ) -
+            new Date(
+              a.blog_date ||
+                a.date ||
+                a.created_at
+            )
         );
 
-        console.log("All API Blogs:", blogs.length);
-        console.log("Active Blogs:", activeBlogs.length);
-        console.log(
-          "Inactive Blogs:",
-          blogs.filter((blog) => blog.blog_status === false)
-        );
-
-       if (mounted) {
-        setNeoblog(sortedBlogs);
-      }
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          console.error("Error fetching blogs:", err);
-          if (mounted) setError(err.message || "Unknown error");
+        if (!controller.signal.aborted) {
+          setNeoblog(sortedBlogs);
         }
+
+      } catch (err) {
+        if (err.name === "AbortError") {
+          return;
+        }
+
+        console.error(
+          "Error fetching blogs:",
+          err
+        );
+
+        setError(
+          err.message || "Unable to load blogs."
+        );
+
       } finally {
-        if (mounted) setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchData();
 
     return () => {
-      mounted = false;
       controller.abort();
     };
-  }, []);
+  }, [API]);
 
-  // Loader UI
+  // =====================================
+  // Loading
+  // =====================================
+
   if (loading) {
     return (
       <div className="loader-container">
@@ -92,19 +114,21 @@ function BlogAll() {
     );
   }
 
-  // Error UI with retry
+  // =====================================
+  // Error
+  // =====================================
+
   if (error) {
     return (
       <div className="loader-container">
-        <p style={{ color: "red" }}>Error loading blogs: {error}</p>
+        <p style={{ color: "red" }}>
+          Error loading blogs: {error}
+        </p>
+
         <button
-          onClick={() => {
-            setLoading(true);
-            setError(null);
-            // simple retry by re-running effect: change state to force fetch
-            // (a more robust approach would be to extract fetchData and call it directly)
-            window.location.reload();
-          }}
+          onClick={() =>
+            window.location.reload()
+          }
         >
           Retry
         </button>
@@ -112,8 +136,11 @@ function BlogAll() {
     );
   }
 
-  // Empty state
-  if (!neoblog || neoblog.length === 0) {
+  // =====================================
+  // Empty
+  // =====================================
+
+  if (neoblog.length === 0) {
     return (
       <div className="loader-container">
         <p>No blogs found.</p>
@@ -121,23 +148,37 @@ function BlogAll() {
     );
   }
 
+  // =====================================
+  // Render
+  // =====================================
+
   return (
     <div className="row">
-      {neoblog.map((value, index) => {
-        const key = value.id || value._id || value.blog_id || value.blog_slug || index;
-        return (
-          <div className="col-md-3" key={key}>
-            <BlogCard
-              blogimage={`https://api.neohospital.com/uploads/blogs/${value.blog_image}`}
-              title={value.blog_title}
-              description={value.blog_content}
-              blogslug={value.blog_slug}
-              author={value.blog_auther}
-              blogdate={value.blog_date}
-            />
-          </div>
-        );
-      })}
+      {neoblog.map((value, index) => (
+        <div
+          className="col-md-3"
+          key={
+            value._id ||
+            value.id ||
+            value.blog_id ||
+            value.blog_slug ||
+            index
+          }
+        >
+          <BlogCard
+            blogimage={
+              value.blog_image
+                ? `${API}/uploads/blogs/${value.blog_image}`
+                : ""
+            }
+            title={value.blog_title}
+            description={value.blog_content}
+            blogslug={value.blog_slug}
+            author={value.blog_auther}
+            blogdate={value.blog_date}
+          />
+        </div>
+      ))}
     </div>
   );
 }
