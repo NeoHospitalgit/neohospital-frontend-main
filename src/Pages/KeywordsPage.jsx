@@ -2,7 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import parse from "html-react-parser";
-
+import { useAuth } from "../store/auth";
 const Hero = lazy(() => import("../Pages/Home/Hero"));
 const Info = lazy(() => import("../Pages/Home/Info"));
 const BookAppointment = lazy(() => import("../Pages/Home/BookAppointment"));
@@ -14,13 +14,11 @@ function KeywordsPage() {
   const [keywordsPage, setKeywordsPage] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-
+ const { API } = useAuth();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5001/api/adminv8/view-seopages"
-        );
+        const response = await fetch( `${API}/api/adminv8/view-seopages`);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }

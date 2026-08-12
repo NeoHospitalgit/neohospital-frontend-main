@@ -15,8 +15,11 @@ import nbl from "../Assets/nbl.png";
 
 import "./Header.css";
 import Topbar from "./Topbar";
+import { useAuth } from "../store/auth";
 
-  const API = "https://api.neohospital.com/api";
+  
+
+
 const specialities = [
   "Internal Medicine",
   "Neurology",
@@ -51,7 +54,7 @@ const specialities = [
 ];
 
 function Header() {
-
+  const { API } = useAuth();
   const [nav, setNav] = useState(false);
 
   const [megaMenu, setMegaMenu] = useState(false);
@@ -84,7 +87,7 @@ function Header() {
   const loadProcedures = async () => {
     try {
 
-     const res = await axios.get(`${API}/adminv12/public-procedures`);
+     const res = await axios.get(`${API}/api/procedures/public-procedures`);
 
       if (res.data.success) {
         setProcedures(res.data.data);

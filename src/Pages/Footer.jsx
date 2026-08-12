@@ -19,29 +19,39 @@ function Footer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSpecialties, setShowSpecialties] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://api.neohospital.com/api/adminv1/view-category"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setNeospecial(data.category);
-      } catch (error) {
-        setError(error);
-      }
-    };
 
-    fetchData();
-     fetchKeywords(); 
-  }, []);
+  useEffect(() => {
+  if (!API) return;
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${API}/api/categories/view-category`
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data?.message || "Failed to fetch categories"
+        );
+      }
+
+      setNeospecial(data?.category || []);
+    } catch (error) {
+      console.error("Category API Error:", error);
+      setError(error);
+    }
+  };
+
+  fetchData();
+  fetchKeywords();
+
+}, [API]);
   const fetchKeywords = async () => {
     try {
       const response = await fetch(
-        `${API}/api/adminv11/public-keywords`
+        `${API}/api/keywords/public-keywords`
       );
 
       const data = await response.json();
@@ -85,7 +95,7 @@ function Footer() {
     }
 
     try {
-      const response = await axios.post('https://api.neohospital.com/api/sendmails/send-contact-email', {
+      const response = await axios.post(`${API}/api/sendmails/send-contact-email`, {
         name,
         number,
         email,
@@ -109,7 +119,7 @@ function Footer() {
 
   const toggleSpecialties = () => {
     setShowSpecialties(!showSpecialties);
- 
+    console.log("Toggle clicked, new state:", !showSpecialties);
   };
 
   return (
