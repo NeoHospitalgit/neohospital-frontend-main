@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import Aboutus from "./Aboutus";
 import Corevalue from "./Corevalue";
 import Chooseus from "./Chooseus";
@@ -6,11 +6,95 @@ import { Aboutseo } from "../SeoContent";
 import { Helmet } from "react-helmet";
 import parse from "html-react-parser";
 import './About.css';
-
+import { useAuth } from "../../store/auth";
 function About() {
+  const { API } = useAuth();
+
+  const [seo, setSeo] = useState(null);
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        console.log(
+          "Header API Response:",
+          data
+        );
+
+        // =====================================
+        // Find About SEO Record
+        // =====================================
+
+        const aboutSeo = Array.isArray(
+          data?.header
+        )
+          ? data.header.find(
+              (item) =>
+                item?.page
+                  ?.trim()
+                  ?.toLowerCase() ===
+                "about"
+            )
+          : null;
+
+        console.log(
+          "About SEO:",
+          aboutSeo
+        );
+
+        if (!cancelled) {
+          setSeo(aboutSeo || null);
+        }
+
+      } catch (error) {
+        if (!cancelled) {
+          console.error(
+            "About SEO Error:",
+            error
+          );
+
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+
+  }, [API]);
   return (
     <div className="about-container">
-      <Helmet>{parse(Aboutseo.meetafamily)}</Helmet>
+      {/* =====================================
+          ABOUT SEO
+      ===================================== */}
+
+      {seo?.tagdata && (
+        <Helmet>
+          {parse(seo.tagdata)}
+        </Helmet>
+      )}
+
+      {/* =====================================
+          ABOUT PAGE CONTENT
+      ===================================== */}
       
       {/* Video Hero Section */}
       <section className="video-hero">
@@ -25,9 +109,10 @@ function About() {
       
       <Aboutus />
       <Chooseus />
-<Corevalue />
+    <Corevalue />
     </div>
   );
 }
 
 export default About;
+
