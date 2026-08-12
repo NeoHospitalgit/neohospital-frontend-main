@@ -122,7 +122,7 @@ function CareerForm() {
 
           <div className="row">
             <div className="col-lg-8">
-              <table class="table ">
+              <table className="table ">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
