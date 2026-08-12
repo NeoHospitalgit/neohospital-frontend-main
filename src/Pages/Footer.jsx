@@ -95,7 +95,7 @@ function Footer() {
     }
 
     try {
-      const response = await axios.post(`${API}/api/sendmails/send-contact-email`, {
+      const response = await axios.post(`https://api.neohospital.com/api/sendmails/send-contact-email`, {
         name,
         number,
         email,
