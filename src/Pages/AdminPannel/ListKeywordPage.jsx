@@ -11,7 +11,7 @@ function ListKeywordPage() {
 
   const getKeywords = async () => {
     try {
-      const response = await fetch(`${API}/api/adminv11/view-keywords`, {
+      const response = await fetch(`${API}/api/adminv11/keywords`, {
         method: "GET",
         headers: {
           Authorization: authorizationToken,

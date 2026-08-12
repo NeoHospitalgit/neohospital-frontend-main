@@ -180,7 +180,7 @@ function List() {
                 </li>
               </ol>
             )}
-          <li
+            <li
             onClick={() => toggleSubMenu("keywords")}
             className={openMenu === "keywords" ? "active" : ""}
           >
@@ -194,7 +194,8 @@ function List() {
                 </li>
               </ol>
             )}
-           <li
+
+            <li
             onClick={() => toggleSubMenu("procedures")}
             className={openMenu === "procedures" ? "active" : ""}
           >

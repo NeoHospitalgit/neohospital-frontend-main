@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import List from "./List";
 import TopBarAdmin from "./TopBarAdmin";
 import { Link } from "react-router-dom";
@@ -9,54 +9,103 @@ function ManageDoctor() {
   const [viewDoctorsData, setViewDoctorsData] = useState([]);
   const { authorizationToken, API } = useAuth();
 
-  const getViewDoctorsData = async () => {
+  // =====================================
+  // Get Doctors
+  // =====================================
+  const getViewDoctorsData = useCallback(async () => {
+    // Wait until token is available
+    if (!authorizationToken) {
+      console.log("Authorization token not available yet");
+      return;
+    }
+
     try {
-      const response = await fetch(`${API}/api/adminv2/view-doctors`, {
-        method: "GET",
-        headers: {
-          Authorization: authorizationToken,
-        },
-      });
+      const response = await fetch(
+        `${API}/api/adminv2/view-doctors`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: authorizationToken,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      console.log("Doctors API Status:", response.status);
+      console.log("Doctors API Response:", data);
 
       if (response.ok) {
-        const data = await response.json();
-        setViewDoctorsData(data.doctors);
+        setViewDoctorsData(data.doctors || []);
+      } else if (response.status === 401) {
+        toast.error("Session expired. Please login again.");
+        setViewDoctorsData([]);
       } else if (response.status === 404) {
         setViewDoctorsData([]);
         toast.info("No Doctor found");
       } else {
-        throw new Error("Failed to fetch doctor data");
+        setViewDoctorsData([]);
+        toast.error(data?.message || "Failed to fetch doctor data");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Doctor API Error:", error);
       toast.error("Failed to fetch doctor data");
     }
-  };
+  }, [API, authorizationToken]);
 
+  // =====================================
+  // Load Doctors After Token Is Available
+  // =====================================
   useEffect(() => {
-    getViewDoctorsData();
-  }, []);
+    if (authorizationToken) {
+      getViewDoctorsData();
+    }
+  }, [authorizationToken, getViewDoctorsData]);
 
+  // =====================================
+  // Delete Doctor
+  // =====================================
   const deleteDoctorById = async (id) => {
+    if (!authorizationToken) {
+      toast.error("Please login again.");
+      return;
+    }
+
     try {
-      const response = await fetch(`${API}/api/adminv2/doctors/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: authorizationToken,
-        },
-      });
+      const response = await fetch(
+        `${API}/api/adminv2/doctors/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: authorizationToken,
+          },
+        }
+      );
+
+      const data = await response.json();
+
       if (response.ok) {
+        toast.success(data?.message || "Doctor deleted successfully");
+
+        // Reload doctors
         getViewDoctorsData();
-        toast.success("Doctor deleted successfully");
+      } else if (response.status === 401) {
+        toast.error("Session expired. Please login again.");
       } else {
-        toast.error("Failed to delete doctor");
+        toast.error(
+          data?.message || "Failed to delete doctor"
+        );
       }
     } catch (error) {
-      console.error(error);
+      console.error("Delete Doctor Error:", error);
       toast.error("Failed to delete doctor");
     }
   };
 
+  // =====================================
+  // Confirm Delete
+  // =====================================
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
       deleteDoctorById(id);
@@ -66,26 +115,37 @@ function ManageDoctor() {
   return (
     <>
       <TopBarAdmin />
+
       <main>
         <div className="container-fluid">
           <div className="row">
+
             <div className="col-md-3 adminleft">
               <List />
             </div>
+
             <div className="col-md-9 adminright">
               <div className="addblog">
                 <div className="addblogform">
+
                   <h2>
                     Manage Doctor
-                    <Link to="/add-doctors" className="btn btn-light ss">
+
+                    <Link
+                      to="/add-doctors"
+                      className="btn btn-light ss"
+                    >
                       Add Doctor
                     </Link>
                   </h2>
-                  {viewDoctorsData.length ? (
+
+                  {viewDoctorsData.length > 0 ? (
+
                     <table className="table table-dark">
+
                       <thead>
                         <tr>
-                          <th scope="col">id</th>
+                          <th scope="col">ID</th>
                           <th scope="col">Doctor Name</th>
                           <th scope="col">Department</th>
                           <th scope="col">Timing</th>
@@ -95,48 +155,83 @@ function ManageDoctor() {
                           <th scope="col">Delete</th>
                         </tr>
                       </thead>
+
                       <tbody>
+
                         {viewDoctorsData.map((doctor, index) => (
+
                           <tr key={doctor._id}>
-                            <td className="ptd">{index + 1}</td>
-                            <td className="ptd">{doctor.drTitle}</td>
-                            <td className="ptd">{doctor.drDepartment}</td>
-                            <td className="ptd">{doctor.drTiming}</td>
-                            <td className="ptd">{doctor.drExperience}</td>
+
+                            <td className="ptd">
+                              {index + 1}
+                            </td>
+
+                            <td className="ptd">
+                              {doctor.drTitle}
+                            </td>
+
+                            <td className="ptd">
+                              {doctor.drDepartment}
+                            </td>
+
+                            <td className="ptd">
+                              {doctor.drTiming}
+                            </td>
+
+                            <td className="ptd">
+                              {doctor.drExperience}
+                            </td>
+
                             <td>
                               <img
                                 src={`${API}/uploads/doctors/${doctor.drImage}`}
-                                width="50px"
+                                width="50"
                                 height="auto"
-                                alt="Category Image"
+                                alt={doctor.drTitle || "Doctor"}
                               />
                             </td>
 
                             <td className="updatebtn pbtn">
-                              <Link to={`/add-doctors/${doctor._id}`}>
+                              <Link
+                                to={`/add-doctors/${doctor._id}`}
+                              >
                                 <i className="fa fa-edit text-light"></i>
                               </Link>
                             </td>
+
                             <td className="deletebtn pbtn">
+
                               <button
                                 className="btn"
-                                onClick={() => handleDelete(doctor._id)}
+                                onClick={() =>
+                                  handleDelete(doctor._id)
+                                }
                               >
                                 Delete
                               </button>
+
                             </td>
+
                           </tr>
+
                         ))}
+
                       </tbody>
+
                     </table>
+
                   ) : (
+
                     <h3 className="text-danger text-center py-5">
                       No Doctor found
                     </h3>
+
                   )}
+
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </main>

@@ -70,13 +70,13 @@ function GetCategory() {
       <TopBarAdmin />
       <main>
         <div className="container-fluid">
-          <div class="row">
-            <div class="col-md-3 adminleft">
+          <div className="row">
+            <div className="col-md-3 adminleft">
               <div>
                 <List />
               </div>
             </div>
-            <div class="col-md-9 adminright">
+            <div className="col-md-9 adminright">
               <div className="addblog">
                 <div>
                   <div className="addblogform">
@@ -92,7 +92,7 @@ function GetCategory() {
                     >
                       <div className="row mt-4">
                         <div className="col-md-6">
-                          <label for="title" class="form-label">
+                          <label for="title" className="form-label">
                             Category's Name
                           </label>
                           <input
@@ -103,11 +103,11 @@ function GetCategory() {
                             id="title"
                             required
                             type="text"
-                            class="form-control"
+                            className="form-control"
                           />
                         </div>
                         <div className="col-md-6">
-                          <label for="slug" class="form-label">
+                          <label for="slug" className="form-label">
                             Category Slug
                           </label>
                           <input
@@ -118,7 +118,7 @@ function GetCategory() {
                             id="slug"
                             required
                             type="text"
-                            class="form-control"
+                            className="form-control"
                           />
                         </div>
                       </div>

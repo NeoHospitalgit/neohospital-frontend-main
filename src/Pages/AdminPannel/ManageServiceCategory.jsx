@@ -73,7 +73,7 @@ function ManageCategory() {
         <TopBarAdmin />
         <div className="container-fluid">
           <div className="row">
-            <div class="col-md-3 adminleft">
+            <div className="col-md-3 adminleft">
               <div>
                 <List />
               </div>
