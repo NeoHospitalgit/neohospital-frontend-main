@@ -6,13 +6,11 @@ import ProcedureBanner from "./ProcedureBanner";
 import ProcedureOverview from "./ProcedureOverview";
 import CTA from "./CTA";
 import ProcedureFAQ from "./ProcedureFAQ";
-
+import { useAuth } from "../../store/auth";
 function ProcedurePage() {
   const { slug } = useParams();
-
-  const API =
-    process.env.REACT_APP_API_URL ||
-    "https://api.neohospital.com/api";
+const { API } = useAuth();
+ 
 
   const [procedure, setProcedure] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -85,7 +83,7 @@ function ProcedurePage() {
       setProcedure(null);
 
       const { data } = await axios.get(
-        `${API}/adminv12/slug/${slug}`
+        `${API}/api/procedures/slug/${slug}`
       );
 
       if (data?.success && data?.data) {

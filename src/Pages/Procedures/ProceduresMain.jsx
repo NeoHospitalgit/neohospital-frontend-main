@@ -1,162 +1,228 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaStethoscope, FaSearch, FaArrowRight } from "react-icons/fa";
+import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
 import "./ProceduresMain.css";
+import { useAuth } from "../../store/auth";
+
 
 function ProceduresMain() {
-  const API =
-    process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
+     const { API } = useAuth();
+ 
 
   const [procedures, setProcedures] = useState([]);
   const [filteredProcedures, setFilteredProcedures] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const [seo, setSeo] = useState(null);
+
+  // =====================================
+  // Fetch Procedures
+  // =====================================
+
   useEffect(() => {
+    if (!API) return;
+    const fetchProcedures = async () => {
+      try {
+        setLoading(true);
+
+        const response = await fetch(
+          `${API}/api/procedures/public-procedures`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch procedures: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        console.log(
+          "Procedures API Response:",
+          data
+        );
+
+        const list = Array.isArray(data)
+          ? data
+          : data?.data || [];
+
+        setProcedures(list);
+        setFilteredProcedures(list);
+
+        const seoData =
+          data?.seo_head ||
+          data?.tagdata ||
+          data?.seo ||
+          null;
+
+        if (seoData) {
+          setSeo(seoData);
+        }
+
+      } catch (error) {
+        console.error(
+          "Procedures Error:",
+          error
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProcedures();
-  }, []);
+  }, [API]);
 
-  const fetchProcedures = async () => {
-    try {
-      setLoading(true);
+  // =====================================
+  // Filter Procedures
+  // =====================================
 
-      const response = await fetch(
-        `${API}/adminv12/public-procedures`
-      );
-
-      const data = await response.json();
-
-      const list = Array.isArray(data)
-        ? data
-        : data?.data || [];
-
-      setProcedures(list);
-      setFilteredProcedures(list);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useMemo(() => {
+  useEffect(() => {
     if (!search.trim()) {
       setFilteredProcedures(procedures);
       return;
     }
 
-    const keyword = search.toLowerCase();
+    const keyword =
+      search.toLowerCase().trim();
 
-    const result = procedures.filter((item) =>
-      item?.procedures_title
-        ?.toLowerCase()
-        .includes(keyword)
+    const result = procedures.filter(
+      (item) =>
+        item?.procedures_title
+          ?.toLowerCase()
+          .includes(keyword)
     );
 
     setFilteredProcedures(result);
+
   }, [search, procedures]);
 
+  // =====================================
+  // Render
+  // =====================================
+
   return (
-    <section className="procedures-page">
+    <>
+      {/* =====================================
+          PROCEDURES SEO
+      ===================================== */}
 
-      <div className="container">
+      {seo && (
+        <Helmet>
+          {parse(seo)}
+        </Helmet>
+      )}
 
-        {/* Heading */}
+      <section className="procedures-page">
 
-        <div className="procedure-heading">
+        <div className="container">
 
-          <div>
+          {/* =====================================
+              Heading
+          ===================================== */}
 
-            <span>NEO Hospital</span>
+          <div className="procedure-heading">
 
-            <h2>Find By Procedures</h2>
+            <div>
+              <span>
+                NEO Hospital
+              </span>
+
+              <h2>
+                Find By Procedures
+              </h2>
+            </div>
+
+            <div className="total-procedure">
+              {filteredProcedures.length}{" "}
+              Procedures
+            </div>
 
           </div>
 
-          <div className="total-procedure">
-            {filteredProcedures.length} Procedures
+          {/* =====================================
+              Search
+          ===================================== */}
+
+          <div className="procedure-search-box">
+
+            <FaSearch />
+
+            <input
+              type="text"
+              placeholder="Search Procedure..."
+              value={search}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
+            />
+
           </div>
+
+          {/* =====================================
+              Loading
+          ===================================== */}
+
+          {loading ? (
+
+            <div className="procedure-loading">
+              Loading Procedures...
+            </div>
+
+          ) : (
+
+            <div className="procedure-grid">
+
+              {filteredProcedures.length > 0 ? (
+
+                filteredProcedures.map(
+                  (item) => (
+
+                    <Link
+                      key={item._id}
+                      to={`/procedures/${item.procedures_slug}`}
+                      className="procedure-card"
+                    >
+
+                      <div className="procedure-icon">
+                        <FaStethoscope />
+                      </div>
+
+                      <div className="procedure-info">
+
+                        <h3>
+                          {item.procedures_title}
+                        </h3>
+
+                      </div>
+
+                      <div className="procedure-arrow">
+                        <FaArrowRight />
+                      </div>
+
+                    </Link>
+
+                  )
+                )
+
+              ) : (
+
+                <div className="no-procedure">
+                  No Procedure Found
+                </div>
+
+              )}
+
+            </div>
+
+          )}
 
         </div>
 
-        {/* Search */}
-
-        <div className="procedure-search-box">
-
-          <FaSearch />
-
-          <input
-            type="text"
-            placeholder="Search Procedure..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-          />
-
-        </div>
-
-        {/* Loading */}
-
-        {loading ? (
-          <div className="procedure-loading">
-            Loading Procedures...
-          </div>
-        ) : (
-
-          <div className="procedure-grid">
-
-            {filteredProcedures.length > 0 ? (
-
-              filteredProcedures.map((item) => (
-
-                <Link
-                  key={item._id}
-                  to={`/procedures/${item.procedures_slug}`}
-                  className="procedure-card"
-                >
-
-                  <div className="procedure-icon">
-
-                    <FaStethoscope />
-
-                  </div>
-
-                  <div className="procedure-info">
-
-                    <h3>
-                      {item.procedures_title}
-                    </h3>
-
-                  </div>
-
-                  <div className="procedure-arrow">
-
-                    <FaArrowRight />
-
-                  </div>
-
-                </Link>
-
-              ))
-
-            ) : (
-
-              <div className="no-procedure">
-
-                No Procedure Found
-
-              </div>
-
-            )}
-
-          </div>
-
-        )}
-
-      </div>
-
-    </section>
+      </section>
+    </>
   );
 }
 

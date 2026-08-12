@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from "react";
 import axios from "axios";
 import "./ProcedureSidebar.css";
-
+import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
+import { useAuth } from "../../store/auth";
 function ProcedureSidebar({ procedure }) {
   const [search, setSearch] = useState("");
   const [name, setName] = useState("");
@@ -10,11 +12,9 @@ const [number, setNumber] = useState("");
 
 const [loading, setLoading] = useState(false);
 const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+     const { API } = useAuth();
+ 
 
-   const API =
-  process.env.REACT_APP_API_URL || "https://api.neohospital.com/api";
-
-const IMAGE_URL = API.replace(/\/api$/, "");
   // ==========================
   // Doctors
   // ==========================
@@ -41,30 +41,30 @@ const IMAGE_URL = API.replace(/\/api$/, "");
   // Doctor Image
   // ==========================
 
-const getDoctorImage = (doctor) => {
-  const image = doctor?.drImage?.trim();
+  const getDoctorImage = (doctor) => {
+  const image = doctor?.drImage || "";
 
   if (!image) {
-    return "/images/doctor-placeholder.png";
+    return "https://via.placeholder.com/90x90?text=Doctor";
   }
 
-  // Full URL already stored
-  if (image.startsWith("http://") || image.startsWith("https://")) {
+  // Already full URL
+  if (image.startsWith("http")) {
     return image;
   }
 
-  // uploads/doctors/abc.webp
-  if (image.startsWith("uploads/")) {
-    return `${IMAGE_URL}/${image}`;
+  // If DB contains uploads/doctors/abc.webp
+  if (image.startsWith("uploads")) {
+    return `${API}/${image}`;
   }
 
-  // /uploads/doctors/abc.webp
-  if (image.startsWith("/uploads/")) {
-    return `${IMAGE_URL}${image}`;
+  // If DB contains /uploads/doctors/abc.webp
+  if (image.startsWith("/uploads")) {
+    return `${API}${image}`;
   }
 
-  // only filename
-  return `${IMAGE_URL}/uploads/doctors/${image}`;
+  // If DB contains only abc.webp
+  return `${API}/uploads/doctors/${image}`;
 };
 const handleCallback = async (e) => {
 
@@ -85,9 +85,8 @@ const handleCallback = async (e) => {
   try {
 
     setLoading(true);
-
     const res = await axios.post(
-      `${API}/sendmails/send-doctoremail`,
+      `${API}/api/sendmails/send-doctoremail`,
       {
         doctorname:
           procedure?.procedures_title ||
@@ -119,10 +118,6 @@ const handleCallback = async (e) => {
     }
 
   } catch (err) {
-
-    console.log("Error:", err);
-  console.log("Response:", err.response);
-  console.log("Data:", err.response?.data);
 
   alert(err.response?.data?.message || "Unable to submit request.");
 
@@ -308,17 +303,13 @@ const handleCallback = async (e) => {
                     <div className="doctor-imagess">
 
                       <img
-  src={getDoctorImage(doctor)}
-  alt={doctorName}
-  loading="lazy"
-  onError={(e) => {
-    console.log("Failed URL:", e.target.src);
-
-    e.target.onerror = null;
-
-    e.target.src = "/images/doctor-placeholder.png";
-  }}
-/>
+                      src={getDoctorImage(doctor)}
+                      alt={doctorName}
+                      onError={(e) => {
+                       
+                        e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
+                      }}
+                    />
 
                     </div>
 

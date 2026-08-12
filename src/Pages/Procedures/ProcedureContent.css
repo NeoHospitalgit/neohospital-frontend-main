@@ -4,13 +4,9 @@ LEFT CONTENT
 
 .procedure-content{
     background:#fff;
-    
+    /* border-radius:12px; */
     padding:18px;
-    height: 1638px;
-    background: #fff;
-    overflow-y: auto;
-    overflow-x: hidden;
-  
+    /* box-shadow:0 5px 25px rgba(0,0,0,.06); */
 }
 
 /*==========================================

@@ -4,6 +4,7 @@ import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import "./ProceduresPage.css";
 
 function CTA({ pageData }) {
+    console.log('tert',pageData);
   const [showAppointment, setShowAppointment] = useState(false);
 
   return (
@@ -22,7 +23,6 @@ function CTA({ pageData }) {
             {pageData?.cat_content ||
               "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital."}
         
-         
 
           <div className="procedure-cta-buttons">
 

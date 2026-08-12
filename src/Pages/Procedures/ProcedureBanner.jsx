@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaCalendarCheck, FaPhoneAlt } from "react-icons/fa";
 import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import "./ProcedureBanner.css";
-
+import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
+import { useAuth } from "../../store/auth";
 import BannerImage from "../../Assets/prof.png";
 
 function ProcedureBanner({ procedure }) {
   const [showModal, setShowModal] = useState(true);
-
+  const { API } = useAuth();
   // ==========================
   // API URL
   // ==========================
-  const API =
-    process.env.REACT_APP_API_URL || "https://api.neohospital.com/";
+
 
   // ==========================
   // Dynamic Data
@@ -64,9 +65,9 @@ function ProcedureBanner({ procedure }) {
 
               <h1>{title}</h1>
 
-               {description && (
+              {/* {description && (
                 <p>{description}</p>
-              )} 
+              )} */}
 
               <div className="procedure-btns">
 
@@ -77,7 +78,7 @@ function ProcedureBanner({ procedure }) {
         />
       )}
                 <a
-                  href="tel:0120-3120000"
+                  href="tel:+919268880303"
                   className="call-btn"
                 >
                   <FaPhoneAlt />
