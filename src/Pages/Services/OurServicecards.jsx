@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./Servicecard.css";
-
+import { useAuth } from "../../store/auth";
 function OurServicecards() {
   const [NeoService, setNeoService] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const { API } = useAuth();
   useEffect(() => {
+      if (!API) return;
     const fetchData = async () => {
+      
       try {
         const response = await fetch(
-          "https://api.neohospital.com/api/adminv5/manage-service-category"
+          `${API}/api/service-categories/view-service-categories`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        console.log('Received data:', data.servicescategories); // Add this line
         setNeoService(data.servicescategories);
         setLoading(false);
       } catch (error) {
@@ -30,11 +31,7 @@ function OurServicecards() {
   }, []);
 
   const { service } = useParams();
-  console.log("URL parameter:", service); // Debug URL parameter
-  console.log("Available services:", NeoService); // Debug available services
-  
   const Service = NeoService.find((value) => {
-    console.log("Comparing:", value.slug, service); // Debug comparison
     return value.slug === service;
   });
 
@@ -107,7 +104,7 @@ function OurServicecards() {
           >
             <div className="card-image-container">
               <img
-                src={`https://api.neohospital.com/uploads/Service/${value.image}`}
+                src={`${API}/uploads/Service/${value.image}`}
                 className="card-image"
                 alt={value.altImg || value.title}
                 loading="lazy"

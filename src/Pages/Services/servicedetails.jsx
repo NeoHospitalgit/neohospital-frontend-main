@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Corevalue from "../About/Corevalue";
 import "./clinicalservice.css";
+import { Helmet } from "react-helmet";
 import parse from "html-react-parser";
+
+import { useAuth } from "../../store/auth";
 
 function ServiceDetails() {
   const [neoServicedetailslast, setNeoServicedetailslast] = useState([]);
@@ -10,12 +13,13 @@ function ServiceDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { service, servicedetail } = useParams();
-
+  const { API } = useAuth();
   useEffect(() => {
     const fetchServiceDetails = async () => {
+        if (!API) return;
       try {
         const response = await fetch(
-          "https://api.neohospital.com/api/adminv6/manage-service"
+          `${API}/api/services/view-services`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch service details");
@@ -87,7 +91,7 @@ function ServiceDetails() {
                   {neoServicedetails.map((value) => (
                     <div key={value.id}>
                       <img
-                        src={`https://api.neohospital.com/uploads/Service/${value.image}`}
+                        src={`${API}/uploads/Service/${value.image}`}
                         className="img-fluid"
                       />
                       <p>{parse(value.serviceDetail)}</p>
