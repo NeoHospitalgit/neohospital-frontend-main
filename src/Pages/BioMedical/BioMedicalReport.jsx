@@ -5,83 +5,128 @@ import { useAuth } from "../../store/auth";
 
 function BioMedicalReport() {
   const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const { API } = useAuth();
 
-  // ================= FETCH DATA =================
   const fetchReports = async () => {
     try {
-      const res = await fetch(
-        `${API}/api/adminv10/manage-medical-report`
-      );
+      setLoading(true);
 
-      if (!res.ok) throw new Error("Failed");
+      const res = await fetch(
+        `${API}/api/adminv10/public-medical-reports`,
+        {
+          method: "GET",
+        }
+      );
 
       const data = await res.json();
 
-      setReports(data.biomedical || []);
+      console.log("Bio Medical Status:", res.status);
+      console.log("Bio Medical Response:", data);
+
+      if (!res.ok) {
+        throw new Error(
+          data?.message || "Failed to fetch Bio Medical Reports"
+        );
+      }
+
+      setReports(data?.data || data?.biomedical || []);
     } catch (err) {
-      console.error("ERROR:", err);
+      console.error("Bio Medical Report Error:", err);
+      setReports([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchReports();
-  }, []);
+    if (API) {
+      fetchReports();
+    }
+  }, [API]);
+
+  // Backend URL
+  const BACKEND_URL = API?.replace("/api", "");
 
   return (
     <>
       <Helmet>
-        <title>Bio Medical Reports</title>
+        <title>Bio Medical Reports | NEO Hospital</title>
       </Helmet>
 
       <section className="policies-section">
+
         <div className="policies-header">
-          <h1 className="policies-title">Bio Medical Report</h1>
+          <h1 className="policies-title">
+            Bio Medical Report
+          </h1>
+
           <p className="policies-description">
-            Our Bio Medical Reports reflect our commitment to excellence,
-            transparency, and patient care.
+            Our Bio Medical Reports reflect our commitment
+            to excellence, transparency, and patient care.
           </p>
         </div>
 
-        <div className="table">
-          {/* Header */}
-          <div className="table-header">
-            <div>Reports</div>
-            <div>Hospital</div>
-            <div>Download</div>
+        {loading ? (
+          <div className="table-row">
+            <div>Loading Reports...</div>
           </div>
+        ) : (
+          <div className="table">
 
-          {/* Rows */}
-          {reports.length > 0 ? (
-            reports.map((item) => (
-              <div className="table-row" key={item._id}>
-                <div>{item.reporttitle}</div>
-
-                <div>{item.hospital}</div>
-
-                <div>
-                  {item.image && (
-                    <button
-                      className="download-btn"
-                      onClick={() =>
-                        window.open(
-                          `${API}/uploads/report/${item.image}`,
-                          "_blank"
-                        )
-                      }
-                    >
-                      ⬇
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="table-row">
-              <div colSpan="3">No Reports Available</div>
+            {/* Header */}
+            <div className="table-header">
+              <div>Reports</div>
+              <div>Hospital</div>
+              <div>Download</div>
             </div>
-          )}
-        </div>
+
+            {/* Rows */}
+            {reports.length > 0 ? (
+              reports.map((item) => (
+                <div
+                  className="table-row"
+                  key={item._id}
+                >
+
+                  <div>
+                    {item.reporttitle || "-"}
+                  </div>
+
+                  <div>
+                    {item.hospital || "-"}
+                  </div>
+
+                  <div>
+                    {item.image ? (
+                      <button
+                        type="button"
+                        className="download-btn"
+                        onClick={() =>
+                          window.open(
+                            `${BACKEND_URL}/uploads/report/${item.image}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        ⬇
+                      </button>
+                    ) : (
+                      "-"
+                    )}
+                  </div>
+
+                </div>
+              ))
+            ) : (
+              <div className="table-row">
+                <div>No Reports Available</div>
+              </div>
+            )}
+
+          </div>
+        )}
       </section>
     </>
   );
