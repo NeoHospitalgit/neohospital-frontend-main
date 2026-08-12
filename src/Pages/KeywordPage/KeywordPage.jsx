@@ -42,7 +42,7 @@ function KeywordPage() {
       console.log("Keyword Slug:", slug);
 
       const response = await fetch(
-        `${API}/api/adminv11/keyword/${slug}`
+        `${API}/api/keywords/keyword/${slug}`
       );
 
       const data = await response.json();
@@ -50,9 +50,6 @@ function KeywordPage() {
       console.log("Keyword API Response:", data);
 
       if (response.ok && data?.success && data?.data) {
-        // API data is stored first.
-        // Helmet will automatically update SEO
-        // when keyword state changes.
         setKeyword(data.data);
       } else {
         setKeyword(null);

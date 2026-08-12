@@ -1,49 +1,97 @@
 import React from "react";
+import {
+  FaUserMd,
+  FaHospital,
+  FaHeartbeat,
+  FaAmbulance,
+  FaAward,
+  FaStethoscope,
+} from "react-icons/fa";
 import "./Keyword.css";
-import parse from "html-react-parser";
-function WelcomeSection({
-  title,
-  description,
-  canHelpTitle,
-  canHelpContent,
-}) {
+
+function WhyChooseSection() {
+  const features = [
+    {
+      icon: <FaUserMd />,
+      title: "Expert Doctors",
+      description:
+        "Highly experienced specialists providing world-class medical care.",
+    },
+    {
+      icon: <FaHospital />,
+      title: "Advanced Technology",
+      description:
+        "Modern equipment and advanced diagnostic facilities.",
+    },
+    {
+      icon: <FaHeartbeat />,
+      title: "Patient-Centric Care",
+      description:
+        "Personalized treatment plans focused on every patient's needs.",
+    },
+    {
+      icon: <FaAmbulance />,
+      title: "24×7 Emergency",
+      description:
+        "Round-the-clock emergency and critical care services.",
+    },
+    {
+      icon: <FaAward />,
+      title: "NABH Accredited",
+      description:
+        "Committed to maintaining the highest standards of healthcare.",
+    },
+    {
+      icon: <FaStethoscope />,
+      title: "Comprehensive Treatment",
+      description:
+        "Complete diagnosis, treatment, and follow-up under one roof.",
+    },
+  ];
+
   return (
-    <section className="welcome-section">
+    <section className="why-section">
       <div className="container">
 
-        <div className="row align-items-center">
+        <div className="section-heading">
+          <span className="section-tag">
+            Why Choose Us
+          </span>
 
-          {/* Left Content */}
+          <h2>
+            Why Choose NEO Hospital?
+          </h2>
 
-          <div className="col-lg-8">
+          <p>
+            We combine experienced doctors, advanced technology,
+            and compassionate care to provide the best possible
+            treatment for every patient.
+          </p>
+        </div>
 
-            <span className="welcome-tag">
-              Welcome to NEO Super Speciality Hospital
-            </span>
+        <div className="row">
 
-            <h2 className="welcome-title">
-              {title}
-            </h2>
+          {features.map((item, index) => (
+            <div className="col-lg-4 col-md-6 mb-4" key={index}>
 
-           <div className="welcome-description">
-            {description && parse(description)}
-          </div>
+              <div className="why-card">
 
-          </div>
+                <div className="why-icon">
+                  {item.icon}
+                </div>
 
-          {/* Right Card */}
+                <h4>
+                  {item.title}
+                </h4>
 
-          <div className="col-lg-4">
+                <p>
+                  {item.description}
+                </p>
 
-            <div className="welcome-card">
-
-          <h4>{canHelpTitle}</h4>
-
-            {canHelpContent && parse(canHelpContent)}
+              </div>
 
             </div>
-
-          </div>
+          ))}
 
         </div>
 
@@ -52,4 +100,4 @@ function WelcomeSection({
   );
 }
 
-export default WelcomeSection;
+export default WhyChooseSection;
