@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/teams-&-conditions",
+      "destination": "/terms-and-conditions",
+      "permanent": true
+    },
+    {
       "source": "/(.*)",
       "has": [
         {
