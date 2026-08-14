@@ -1,0 +1,68 @@
+.not-found-page {
+  min-height: 55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 20px;
+  background: #f8fbfd;
+}
+
+.not-found-card {
+  width: 100%;
+  max-width: 650px;
+  text-align: center;
+  background: #ffffff;
+  padding: 55px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.not-found-number {
+  font-size: 90px;
+  line-height: 1;
+  font-weight: 800;
+  color: #00a9ce;
+  margin-bottom: 15px;
+}
+
+.not-found-card h1 {
+  font-size: 34px;
+  margin-bottom: 15px;
+  color: #1d3557;
+}
+
+.not-found-card p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.not-found-home-btn {
+  display: inline-block;
+  padding: 13px 28px;
+  background: #00a9ce;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.not-found-home-btn:hover {
+  background: #008eac;
+  color: #fff;
+}
+
+@media (max-width: 576px) {
+  .not-found-card {
+    padding: 40px 20px;
+  }
+
+  .not-found-number {
+    font-size: 70px;
+  }
+
+  .not-found-card h1 {
+    font-size: 27px;
+  }
+}

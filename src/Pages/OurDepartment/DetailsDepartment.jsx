@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import "./DetailsDepartment.css";
 import Header from "../Header";
 import Footer from "../Footer";
+import NotFound from "../NotFound";
 import { useAuth } from "../../store/auth";
 function DetailsDepartment() {
   const [Neospecial, setNeospecial] = useState([]);
@@ -63,20 +64,9 @@ function DetailsDepartment() {
     );
   }
 
-  if (!departments) {
-    return (
-      <div className="not-found-container">
-        <div className="not-found-content">
-          <h2>Department Not Found</h2>
-          <p>The department you're looking for doesn't exist or has been moved.</p>
-          <Link to="/" className="back-home-btn">
-            Back to Home
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
+if (!departments) {
+  return <NotFound />;
+}
   return (
     <>
        {/* Place Header at the very top */}
