@@ -1,20 +1,63 @@
 {
-  "redirects": [
+  "version": 2,
+  "routes": [
     {
-      "source": "/teams-&-conditions",
-      "destination": "/terms-and-conditions",
-      "permanent": true
+      "src": "^/doctor/best-pulmonology-in-noida/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/doctor/best-pulmonologists-in-noida"
+      }
     },
     {
-      "source": "/(.*)",
+      "src": "^/doctor/best-dental-in-noida/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/doctor/best-dentists-in-noida"
+      }
+    },
+    {
+      "src": "^/teams-&-conditions/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/terms-and-conditions"
+      }
+    },
+    {
+      "src": "^/(.*)$",
       "has": [
         {
           "type": "host",
           "value": "neohospital.com"
         }
       ],
-      "destination": "https://www.neohospital.com/$1",
-      "permanent": true
+      "status": 301,
+      "headers": {
+        "Location": "https://www.neohospital.com/$1"
+      }
+    },
+    {
+      "src": "/(about|specialities|doctors|contact|blog|services|corporate-policies|bio-medical-report|international-patient|gallery|career|login|logout|privacy-policy|terms-and-conditions|procedures)/?$",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(pulmonology|dental|gynaecology|dietetics|neurology|dermatology|anaesthesiology|emergency-medicine|gastrosciences|ent|clinical-psychology|orthopedics|nephrology|neurosurgery|clinical-laboratory|opthalmology|internal-medicine|cardiology|psychiatry|cosmetic-plastic-surgery|radiology|oncology-surgery|occupational-therapy|medical-oncology|urology|neonatology-peadiatrics|general-laparoscopic-surgery|audiologist-and-speech-therapist|physiotherapy|cath-lab|cardiothoracic-vascular-surgery|pediatric-gastroenterology)/?$",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(blog|service|treatment|doctor|doctor-details|procedures)/.*",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(admin|add-header|manage-header|add-testimonials|manage-testimonials|add-seopages|manage-seopages|add-blog|manage-blog|add-specialities|manage-specialities|add-doctors|manage-doctors|add-home-doctors|manage-home-doctors|manage-service|add-service|add-service-category|manage-service-category|add-bio-medical-report|manage-medical-report|appointments|add-keywords|list-keywords|add-keyword|add-procedures|list-procedures)/.*",
+      "dest": "/index.html"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "status": 404,
+      "dest": "/index.html"
     }
   ]
 }
