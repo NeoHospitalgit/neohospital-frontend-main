@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 import BlogBanner from "./BlogBanner";
 import Corevalue from "../About/Corevalue";
 import { useAuth } from "../../store/auth";
-
+import NotFound from "../NotFound";
 import "./OurBlog.css";
 
 const BlogDetails = () => {
@@ -258,18 +258,21 @@ const BlogDetails = () => {
   // =====================================
   // Loading
   // =====================================
-
-  if (loading) {
-    return (
-      <div className="loader-container">
-        <div className="spinner"></div>
-
-        <p>
-          Loading blog content...
-        </p>
+if (loading) {
+  return (
+    <div className="loading-spinner-container">
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">
+          Loading...
+        </span>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
+if (error || !blog) {
+  return <NotFound />;
+}
 
   // =====================================
   // API Error

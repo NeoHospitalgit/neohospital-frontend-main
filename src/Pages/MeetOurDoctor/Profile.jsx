@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 import "./Profile.css";
 import parse from "html-react-parser";
 import axios from "axios";
-
+import NotFound from "../NotFound";
 import { useAuth } from "../../store/auth";
 
 import fallbackImage from "../../Assets/manpic.png";
@@ -22,6 +22,9 @@ function Profile() {
 
   const [error, setError] =
     useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
 
   const [name, setName] =
     useState("");
@@ -61,11 +64,17 @@ function Profile() {
 
   useEffect(() => {
 
-    if (!API) return;
+    if (!API) {
+      setLoading(false);
+      return;
+    }
 
     const fetchData = async () => {
 
       try {
+
+        setLoading(true);
+        setError(null);
 
         const response = await fetch(
           `${API}/api/doctors/view-doctors`
@@ -87,12 +96,17 @@ function Profile() {
 
       } catch (error) {
 
-        console.error(
-          "Doctor profile API error:",
-          error
-        );
+  console.error(
+    "Doctor profile API error:",
+    error
+  );
 
-        setError(error);
+  setError(error);
+  setNeodoctor([]);
+
+} finally {
+
+        setLoading(false);
 
       }
 
@@ -138,64 +152,51 @@ function Profile() {
   // Error
   // =====================================
 
-  if (error) {
+// =====================================
+// Loading
+// =====================================
 
+if (loading) {
+  return (
+    <div className="loading-spinner-container">
+      <div className="spinner-border" role="status">
+        <span className="visually-hidden">
+          Loading...
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// =====================================
+// Doctor Not Found
+// =====================================
+
+if (!loading && (!doctor || error)) {
+  return <NotFound />;
+}
+  // =====================================
+  // Loading
+  // =====================================
+
+  if (loading) {
     return (
-      <div className="error-container">
-
-        <div className="error-card">
-
-          <div className="error-icon">
-            ⚠️
-          </div>
-
-          <h2>
-            Something went wrong
-          </h2>
-
-          <p>
-            We couldn't load the doctor's
-            information. Please try again
-            later.
-          </p>
-
-          <button
-            onClick={() =>
-              window.location.reload()
-            }
-            className="retry-btn"
-          >
-            Try Again
-          </button>
-
+      <div className="loading-spinner-container">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">
+            Loading...
+          </span>
         </div>
-
       </div>
     );
   }
 
   // =====================================
-  // Loading
+  // Doctor Not Found
   // =====================================
 
   if (!doctor) {
-
-    return (
-      <div className="loading-container">
-
-        <div className="loading-spinner"></div>
-
-        <h3>
-          Loading doctor information...
-        </h3>
-
-        <p>
-          Please wait while we fetch
-          the details
-        </p>
-
-      </div>
-    );
+    return <NotFound />;
   }
 
   // =====================================

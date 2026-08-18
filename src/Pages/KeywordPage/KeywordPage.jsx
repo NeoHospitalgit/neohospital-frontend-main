@@ -12,7 +12,7 @@ import ExpertCTASection from "./ExpertCTASection";
 import ContentSection from "./ContentSection";
 import CTASection from "./CTASection";
 import FAQSection from "./FAQSection";
-
+import NotFound from "../NotFound";
 import "./Keyword.css";
 
 function KeywordPage() {
@@ -83,6 +83,9 @@ function KeywordPage() {
     );
   }
 
+  if (!keyword) {
+    return <NotFound />;
+  }
   // =====================================
   // Error / Not Found
   // =====================================

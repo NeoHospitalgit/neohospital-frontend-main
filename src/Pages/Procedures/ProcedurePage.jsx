@@ -7,6 +7,7 @@ import ProcedureOverview from "./ProcedureOverview";
 import CTA from "./CTA";
 import ProcedureFAQ from "./ProcedureFAQ";
 import { useAuth } from "../../store/auth";
+import NotFound from "../NotFound";
 function ProcedurePage() {
   const { slug } = useParams();
 const { API } = useAuth();
@@ -146,7 +147,9 @@ const { API } = useAuth();
       </div>
     );
   }
-
+  if (error || !procedure) {
+    return <NotFound />;
+  }
   // =====================================
   // Error
   // =====================================
