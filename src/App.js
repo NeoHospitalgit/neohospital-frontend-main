@@ -20,7 +20,6 @@ import OurBlog from "./Pages/OurBlog/OurBlog.jsx";
 import Service from "./Pages/Services/OurService.jsx";
 import ServiceDetails from "./Pages/Services/servicedetails.jsx";
 import BlogDetails from "./Pages/OurBlog/BlogDetails.jsx";
-import Sitemap from "./Pages/sitemap";
 import CorporatePolicies from "./Pages/Corporate/CorporatePolicies.jsx";
 import BioMedicalReport from "./Pages/BioMedical/BioMedicalReport.jsx";
 import ManageBioReports from "./Pages/AdminPannel/ManageBioReports.jsx";
@@ -115,8 +114,7 @@ const App = () => {
           <Route path="/treatment/:keywordspage" element={<KeywordsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/sitemap.xml" element={<Sitemap />} />
-          <Route path="/doctor-details/:dr" element={<DoctorDetails />} />
+<Route path="/doctor-details/:dr" element={<DoctorDetails />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-and-conditions" element={<TermsPage />} />
           <Route path="/doctor/:slug" element={<KeywordPage />}/>
