@@ -391,10 +391,12 @@ if (!loading && (!doctor || error)) {
       {/* =====================================
           SEO
       ===================================== */}
-
       <Helmet>
-
-        <title>
+  {doctor.drMetaTags?.trim() ? (
+    parse(doctor.drMetaTags)
+  ) : (
+    <>
+     <title>
           {doctor.drTitle} - Neo Hospital
         </title>
 
@@ -461,8 +463,9 @@ if (!loading && (!doctor || error)) {
           rel="canonical"
           href={`https://www.neohospital.com/doctor-details/${doctor.drSlug}`}
         />
-
-      </Helmet>
+    </>
+  )}
+</Helmet>
 
       {/* =====================================
           SUCCESS MESSAGE
