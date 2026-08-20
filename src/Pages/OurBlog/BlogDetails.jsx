@@ -145,7 +145,7 @@ const BlogDetails = () => {
         // IMPORTANT:
         // Public API - No admin API here
         const response = await fetch(
-          `${API}/api/blogs/view-blogs`,
+          `${API}/api/blogs/view-blog/${blogSlug}`,
           {
             method: "GET",
             signal: controller.signal,
