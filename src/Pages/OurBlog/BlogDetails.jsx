@@ -137,107 +137,123 @@ const BlogDetails = () => {
     const controller =
       new AbortController();
 
-    const fetchBlogs = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+   const fetchBlogs = async () => {
+  try {
+    setLoading(true);
+    setError(null);
 
-        // IMPORTANT:
-        // Public API - No admin API here
-        const response = await fetch(
-          `${API}/api/blogs/view-blog/${blogSlug}`,
-          {
-            method: "GET",
-            signal: controller.signal,
-          }
-        );
+    // =====================================
+    // Fetch CURRENT BLOG - Full Data
+    // =====================================
 
-        const data =
-          await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data?.message ||
-              `Failed to fetch blogs (${response.status})`
-          );
-        }
-
-        // =====================================
-        // Handle API Response
-        // =====================================
-
-        let blogList = [];
-
-        if (Array.isArray(data)) {
-          blogList = data;
-        } else if (
-          Array.isArray(data.Blog)
-        ) {
-          blogList = data.Blog;
-        } else if (
-          Array.isArray(data.blogs)
-        ) {
-          blogList = data.blogs;
-        } else if (
-          Array.isArray(data.data)
-        ) {
-          blogList = data.data;
-        }
-
-        // =====================================
-        // Only Active Blogs
-        // =====================================
-
-        const activeBlogs =
-          blogList.filter(
-            (blog) =>
-              blog.blog_status === true
-          );
-
-        // =====================================
-        // Sort Latest First
-        // =====================================
-
-        const sortedBlogs =
-          [...activeBlogs].sort(
-            (a, b) =>
-              new Date(
-                b.blog_date ||
-                  b.created_at
-              ) -
-              new Date(
-                a.blog_date ||
-                  a.created_at
-              )
-          );
-
-        if (!controller.signal.aborted) {
-          setBlogs(sortedBlogs);
-        }
-
-      } catch (error) {
-        if (
-          error.name === "AbortError"
-        ) {
-          return;
-        }
-
-        console.error(
-          "Blog Details API Error:",
-          error
-        );
-
-        setError(
-          error.message ||
-            "Unable to load blogs."
-        );
-
-      } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false);
-        }
+    const response = await fetch(
+      `${API}/api/blogs/view-blog/${encodeURIComponent(blogSlug)}`,
+      {
+        method: "GET",
+        signal: controller.signal,
       }
-    };
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data?.message ||
+          `Failed to fetch blog (${response.status})`
+      );
+    }
+
+    // Detail API returns:
+    // { Blog: { ... } }
+
+    const currentBlog = data?.Blog;
+
+    if (!currentBlog) {
+      throw new Error("Blog not found");
+    }
+
+    if (currentBlog.blog_status !== true) {
+      throw new Error("Blog not found");
+    }
+
+    // =====================================
+    // Fetch RELATED BLOGS - Lightweight
+    // =====================================
+
+    const listResponse = await fetch(
+      `${API}/api/blogs/view-blogs`,
+      {
+        method: "GET",
+        signal: controller.signal,
+      }
+    );
+
+    const listData = await listResponse.json();
+
+    let blogList = [];
+
+    if (Array.isArray(listData)) {
+      blogList = listData;
+    } else if (Array.isArray(listData?.Blog)) {
+      blogList = listData.Blog;
+    } else if (Array.isArray(listData?.blogs)) {
+      blogList = listData.blogs;
+    } else if (Array.isArray(listData?.data)) {
+      blogList = listData.data;
+    }
+
+    // =====================================
+    // Only Active Related Blogs
+    // =====================================
+
+    const relatedBlogs = blogList
+      .filter(
+        (blog) =>
+          blog.blog_status === true &&
+          blog.blog_slug !== currentBlog.blog_slug
+      )
+      .sort(
+        (a, b) =>
+          new Date(
+            b.blog_date || b.createdAt
+          ) -
+          new Date(
+            a.blog_date || a.createdAt
+          )
+      );
+
+    // =====================================
+    // Set Current + Related Blogs
+    // =====================================
+
+    if (!controller.signal.aborted) {
+      setBlogs([
+        currentBlog,
+        ...relatedBlogs,
+      ]);
+    }
+
+  } catch (error) {
+    if (error.name === "AbortError") {
+      return;
+    }
+
+    console.error(
+      "Blog Details API Error:",
+      error
+    );
+
+    setError(
+      error.message ||
+        "Unable to load blog."
+    );
+
+  } finally {
+    if (!controller.signal.aborted) {
+      setLoading(false);
+    }
+  }
+};
 
     fetchBlogs();
 
