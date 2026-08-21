@@ -73,8 +73,13 @@ const API_ENDPOINTS = {
   blogs: `${API_BASE}/api/blogs/view-blogs`,
   doctors: `${API_BASE}/api/doctors/view-doctors`,
   categories: `${API_BASE}/api/categories/view-category`,
-  procedures: `${API_BASE}/api/adminv12/view-procedures`,
-  keywords: `${API_BASE}/api/adminv11/keywords`,
+
+  // PUBLIC PROCEDURES
+  procedures: `${API_BASE}/api/procedures/public-procedures`,
+
+  // PUBLIC SPECIALIST / KEYWORD PAGES
+  keywords: `${API_BASE}/api/keywords/public-keywords`,
+
   seoPages: `${API_BASE}/api/adminv8/view-seopages`
 };
 
