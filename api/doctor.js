@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     }
 
     // ==========================================
-    // FETCH DOCTORS
+    // FETCH DOCTORS FROM CMS / API
     // ==========================================
 
     const apiResponse = await fetch(
@@ -20,114 +20,71 @@ export default async function handler(req, res) {
     );
 
     if (!apiResponse.ok) {
+      console.error(
+        "Doctors API failed:",
+        apiResponse.status
+      );
+
       return serveNotFoundPage(req, res);
     }
 
     const data = await apiResponse.json();
 
-    const doctors = Array.isArray(data?.doctors)
-      ? data.doctors
-      : Array.isArray(data)
-      ? data
-      : Array.isArray(data?.data)
-      ? data.data
-      : [];
+    // ==========================================
+    // SUPPORT DIFFERENT API RESPONSE STRUCTURES
+    // ==========================================
+
+    let doctors = [];
+
+    if (Array.isArray(data?.doctors)) {
+      doctors = data.doctors;
+    } else if (Array.isArray(data)) {
+      doctors = data;
+    } else if (Array.isArray(data?.data)) {
+      doctors = data.data;
+    } else if (Array.isArray(data?.Doctors)) {
+      doctors = data.Doctors;
+    }
+
+    // ==========================================
+    // FIND DOCTOR BY SLUG
+    // ==========================================
 
     const doctor = doctors.find(
       (item) =>
-        item.drSlug === slug ||
-        item.doctor_slug === slug ||
-        item.doctorSlug === slug ||
-        item.slug === slug
+        item?.drSlug === slug ||
+        item?.doctor_slug === slug ||
+        item?.doctorSlug === slug ||
+        item?.slug === slug
     );
 
-    // Doctor does not exist
+    // ==========================================
+    // DOCTOR NOT FOUND
+    // ==========================================
+
     if (!doctor) {
+      console.error(
+        "Doctor not found for slug:",
+        slug
+      );
+
       return serveNotFoundPage(req, res);
     }
 
     // ==========================================
-    // DOCTOR SEO
+    // IMPORTANT:
+    // drMetaTags is the existing CMS SEO source.
+    // We will use the exact SEO HTML stored
+    // against the doctor.
     // ==========================================
 
-    const doctorName =
-      doctor.drName ||
-      doctor.doctor_name ||
-      doctor.doctorName ||
-      doctor.name ||
-      "Doctor";
-
-    const specialization =
-      doctor.specialization ||
-      doctor.speciality ||
-      doctor.specialty ||
-      doctor.department ||
-      "";
-
-    const seoTitle =
-      doctor.seo_title ||
-      doctor.meta_title ||
-      doctor.seoTitle ||
-      `${doctorName}${
-        specialization
-          ? ` - ${specialization}`
-          : ""
-      } | NEO Hospital`;
-
-    const seoDescription =
-      doctor.meta_description ||
-      doctor.metaDescription ||
-      doctor.seo_description ||
-      doctor.seoDescription ||
-      `Consult ${doctorName}${
-        specialization
-          ? `, ${specialization}`
-          : ""
-      } at NEO Hospital. View profile, expertise, treatments and appointment details.`;
-
-    const canonicalUrl =
-      `https://www.neohospital.com/doctor-details/${slug}`;
+    const doctorMetaTags =
+      typeof doctor.drMetaTags === "string"
+        ? doctor.drMetaTags.trim()
+        : "";
 
     // ==========================================
-    // DOCTOR IMAGE
-    // ==========================================
-
-    const rawImage =
-      doctor.drImage ||
-      doctor.doctor_image ||
-      doctor.doctorImage ||
-      doctor.image ||
-      doctor.profile_image ||
-      doctor.profileImage ||
-      "";
-
-    let doctorImage = "";
-
-    if (rawImage) {
-      const imageValue =
-        String(rawImage);
-
-      if (
-        /^https?:\/\//i.test(
-          imageValue
-        )
-      ) {
-        doctorImage =
-          imageValue.replace(
-            /^http:\/\//i,
-            "https://"
-          );
-      } else {
-        doctorImage =
-          `https://api.neohospital.com/uploads/doctors/${imageValue.replace(
-            /^\/+/,
-            ""
-          )}`;
-      }
-    }
-
-    // ==========================================
-    // LOAD REACT INDEX
+    // LOAD REACT APPLICATION
     // ==========================================
 
     const host =
@@ -138,12 +95,16 @@ export default async function handler(req, res) {
       req.headers["x-forwarded-proto"] ||
       "https";
 
-    const response =
-      await fetch(
-        `${protocol}://${host}/index.html`
-      );
+    const response = await fetch(
+      `${protocol}://${host}/index.html`
+    );
 
     if (!response.ok) {
+      console.error(
+        "Failed to load index.html:",
+        response.status
+      );
+
       return res
         .status(500)
         .send(
@@ -155,32 +116,77 @@ export default async function handler(req, res) {
       await response.text();
 
     // ==========================================
-    // REMOVE STATIC SEO
+    // REMOVE STATIC SEO FROM INDEX.HTML
     // ==========================================
 
     html =
       removeExistingSeo(html);
 
     // ==========================================
-    // SERVER SIDE DOCTOR SEO
+    // SERVER-SIDE DOCTOR SEO
     // ==========================================
 
-    const seoTags = `
+    if (doctorMetaTags) {
+      html = injectIntoHead(
+        html,
+        doctorMetaTags
+      );
+    } else {
+      // ========================================
+      // FALLBACK SEO
+      // Only used if drMetaTags is empty.
+      // ========================================
+
+      const doctorName =
+        doctor.drTitle ||
+        doctor.drName ||
+        doctor.doctor_name ||
+        doctor.name ||
+        "Doctor";
+
+      const department =
+        doctor.drDepartment ||
+        doctor.specialization ||
+        doctor.speciality ||
+        doctor.specialty ||
+        "";
+
+      const fallbackTitle =
+        `${doctorName}${
+          department
+            ? ` - ${department}`
+            : ""
+        } | NEO Hospital`;
+
+      const fallbackDescription =
+        `Consult ${doctorName}${
+          department
+            ? `, ${department}`
+            : ""
+        } at NEO Hospital. View doctor profile, expertise, qualifications and appointment details.`;
+
+      const canonicalUrl =
+        `https://www.neohospital.com/doctor-details/${slug}`;
+
+      const fallbackImage =
+        getDoctorImage(doctor);
+
+      const fallbackTags = `
 <title>${escapeHtml(
-      seoTitle
-    )}</title>
+        fallbackTitle
+      )}</title>
 
 <meta
   name="title"
   content="${escapeAttr(
-    seoTitle
+    fallbackTitle
   )}"
 >
 
 <meta
   name="description"
   content="${escapeAttr(
-    seoDescription
+    fallbackDescription
   )}"
 >
 
@@ -201,10 +207,7 @@ export default async function handler(req, res) {
   )}"
 >
 
-
-<!-- ================================= -->
-<!-- OPEN GRAPH -->
-<!-- ================================= -->
+<!-- Open Graph -->
 
 <meta
   property="og:type"
@@ -214,14 +217,14 @@ export default async function handler(req, res) {
 <meta
   property="og:title"
   content="${escapeAttr(
-    seoTitle
+    fallbackTitle
   )}"
 >
 
 <meta
   property="og:description"
   content="${escapeAttr(
-    seoDescription
+    fallbackDescription
   )}"
 >
 
@@ -238,25 +241,20 @@ export default async function handler(req, res) {
 >
 
 ${
-  doctorImage
+  fallbackImage
     ? `
 <meta
   property="og:image"
   content="${escapeAttr(
-    doctorImage
+    fallbackImage
   )}"
 >
 
 <meta
   property="og:image:secure_url"
   content="${escapeAttr(
-    doctorImage
+    fallbackImage
   )}"
->
-
-<meta
-  property="og:image:type"
-  content="image/jpeg"
 >
 
 <meta
@@ -269,10 +267,7 @@ ${
     : ""
 }
 
-
-<!-- ================================= -->
-<!-- TWITTER / X -->
-<!-- ================================= -->
+<!-- Twitter -->
 
 <meta
   name="twitter:card"
@@ -282,24 +277,24 @@ ${
 <meta
   name="twitter:title"
   content="${escapeAttr(
-    seoTitle
+    fallbackTitle
   )}"
 >
 
 <meta
   name="twitter:description"
   content="${escapeAttr(
-    seoDescription
+    fallbackDescription
   )}"
 >
 
 ${
-  doctorImage
+  fallbackImage
     ? `
 <meta
   name="twitter:image"
   content="${escapeAttr(
-    doctorImage
+    fallbackImage
   )}"
 >
 
@@ -312,48 +307,12 @@ ${
 `
     : ""
 }
-
-
-<!-- ================================= -->
-<!-- PROFILE -->
-<!-- ================================= -->
-
-<meta
-  property="profile:first_name"
-  content="${escapeAttr(
-    doctorName
-  )}"
->
-
-${
-  specialization
-    ? `
-<meta
-  property="article:section"
-  content="${escapeAttr(
-    specialization
-  )}"
->
-`
-    : ""
-}
 `;
 
-    // ==========================================
-    // INJECT SEO INTO HEAD
-    // ==========================================
-
-    if (
-      /<\/head>/i.test(html)
-    ) {
-      html =
-        html.replace(
-          /<\/head>/i,
-          `${seoTags}\n</head>`
-        );
-    } else {
-      html =
-        `${seoTags}\n${html}`;
+      html = injectIntoHead(
+        html,
+        fallbackTags
+      );
     }
 
     // ==========================================
@@ -375,7 +334,6 @@ ${
     return res.send(html);
 
   } catch (error) {
-
     console.error(
       "Doctor SSR SEO error:",
       error
@@ -390,11 +348,33 @@ ${
 
 
 // ==========================================
-// REMOVE EXISTING SEO TAGS
+// INJECT SEO INTO <HEAD>
+// ==========================================
+
+function injectIntoHead(
+  html,
+  seoTags
+) {
+  if (
+    /<\/head>/i.test(html)
+  ) {
+    return html.replace(
+      /<\/head>/i,
+      `${seoTags}\n</head>`
+    );
+  }
+
+  return `${seoTags}\n${html}`;
+}
+
+
+// ==========================================
+// REMOVE EXISTING STATIC SEO
 // ==========================================
 
 function removeExistingSeo(html) {
 
+  // Remove title
   html =
     html.replace(
       /<title\b[^>]*>[\s\S]*?<\/title>/gi,
@@ -403,6 +383,7 @@ function removeExistingSeo(html) {
 
   const patterns = [
 
+    // Standard meta
     /<meta\b[^>]*\bname=["']title["'][^>]*>/gi,
 
     /<meta\b[^>]*\bname=["']description["'][^>]*>/gi,
@@ -413,14 +394,19 @@ function removeExistingSeo(html) {
 
     /<meta\b[^>]*\bname=["']author["'][^>]*>/gi,
 
-    /<meta\b[^>]*\bname=["']twitter:[^"']+["'][^>]*>/gi,
-
+    // Open Graph
     /<meta\b[^>]*\bproperty=["']og:[^"']+["'][^>]*>/gi,
 
-    /<meta\b[^>]*\bproperty=["']profile:[^"']+["'][^>]*>/gi,
+    // Twitter
+    /<meta\b[^>]*\bname=["']twitter:[^"']+["'][^>]*>/gi,
 
+    // Article
     /<meta\b[^>]*\bproperty=["']article:[^"']+["'][^>]*>/gi,
 
+    // Profile
+    /<meta\b[^>]*\bproperty=["']profile:[^"']+["'][^>]*>/gi,
+
+    // Canonical
     /<link\b[^>]*\brel=["']canonical["'][^>]*>/gi,
   ];
 
@@ -439,13 +425,54 @@ function removeExistingSeo(html) {
 
 
 // ==========================================
-// ESCAPE HTML
+// DOCTOR IMAGE FALLBACK
+// ==========================================
+
+function getDoctorImage(
+  doctor
+) {
+
+  const image =
+    doctor?.drImage ||
+    doctor?.doctor_image ||
+    doctor?.doctorImage ||
+    doctor?.image ||
+    doctor?.profile_image ||
+    doctor?.profileImage ||
+    "";
+
+  if (!image) {
+    return "";
+  }
+
+  const value =
+    String(image);
+
+  if (
+    /^https?:\/\//i.test(
+      value
+    )
+  ) {
+    return value.replace(
+      /^http:\/\//i,
+      "https://"
+    );
+  }
+
+  return `https://api.neohospital.com/uploads/doctors/${value.replace(
+    /^\/+/,
+    ""
+  )}`;
+}
+
+
+// ==========================================
+// HTML ESCAPE
 // ==========================================
 
 function escapeHtml(
   value = ""
 ) {
-
   return String(value)
     .replace(
       /&/g,
@@ -463,13 +490,12 @@ function escapeHtml(
 
 
 // ==========================================
-// ESCAPE ATTRIBUTE
+// ATTRIBUTE ESCAPE
 // ==========================================
 
 function escapeAttr(
   value = ""
 ) {
-
   return escapeHtml(value)
     .replace(
       /"/g,
@@ -509,16 +535,16 @@ async function serveNotFoundPage(
 
     if (!response.ok) {
 
+      res.status(404);
+
       res.setHeader(
         "X-Robots-Tag",
         "noindex, nofollow"
       );
 
-      return res
-        .status(404)
-        .send(
-          "Not Found"
-        );
+      return res.send(
+        "Not Found"
+      );
     }
 
     const html =
@@ -552,15 +578,15 @@ async function serveNotFoundPage(
       error
     );
 
+    res.status(404);
+
     res.setHeader(
       "X-Robots-Tag",
       "noindex, nofollow"
     );
 
-    return res
-      .status(404)
-      .send(
-        "Not Found"
-      );
+    return res.send(
+      "Not Found"
+    );
   }
 }
