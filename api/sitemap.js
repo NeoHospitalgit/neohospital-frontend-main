@@ -1,12 +1,18 @@
 /**
  * Dynamic XML sitemap for NEO Hospital
  *
- * This endpoint is served at:
- *   https://www.neohospital.com/sitemap.xml
+ * Served at:
+ * https://www.neohospital.com/sitemap.xml
  *
- * It pulls the current public CMS data from the NEO Hospital API,
- * so published content is added automatically and unpublished/deleted
- * content is excluded.
+ * Dynamic sources:
+ * - Blogs
+ * - Doctors
+ * - Specialities
+ * - Procedures
+ * - Specialist / Keyword landing pages
+ * - SEO / Treatment pages
+ *
+ * Specialist pages are NOT hard-coded.
  */
 
 const API_BASE = "https://api.neohospital.com";
@@ -28,7 +34,7 @@ const STATIC_URLS = [
   { path: "/privacy-policy", priority: "0.40", changefreq: "yearly" },
   { path: "/terms-and-conditions", priority: "0.40", changefreq: "yearly" },
 
-  // Current public speciality routes that are served directly by React.
+  // Public speciality pages
   { path: "/pulmonology", priority: "0.80", changefreq: "weekly" },
   { path: "/dental", priority: "0.80", changefreq: "weekly" },
   { path: "/gynaecology", priority: "0.80", changefreq: "weekly" },
@@ -72,6 +78,11 @@ const API_ENDPOINTS = {
   seoPages: `${API_BASE}/api/adminv8/view-seopages`
 };
 
+
+// =====================================
+// HELPERS
+// =====================================
+
 function escapeXml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -81,30 +92,70 @@ function escapeXml(value) {
     .replace(/'/g, "&apos;");
 }
 
-function firstArray(payload, keys = []) {
-  if (Array.isArray(payload)) return payload;
 
-  for (const key of keys) {
-    if (Array.isArray(payload?.[key])) return payload[key];
+function firstArray(payload, keys = []) {
+
+  if (Array.isArray(payload)) {
+    return payload;
   }
 
-  if (Array.isArray(payload?.data)) return payload.data;
-  if (Array.isArray(payload?.result)) return payload.result;
+  for (const key of keys) {
+    if (Array.isArray(payload?.[key])) {
+      return payload[key];
+    }
+  }
+
+  if (Array.isArray(payload?.data)) {
+    return payload.data;
+  }
+
+  if (Array.isArray(payload?.result)) {
+    return payload.result;
+  }
 
   return [];
 }
 
+
 function isActive(item, fields) {
-  const field = fields.find((name) => item?.[name] !== undefined);
 
-  // If the API does not expose a status field, keep the item.
-  // This avoids accidentally removing valid public doctors/categories.
-  if (!field) return true;
+  const field = fields.find(
+    (name) =>
+      item?.[name] !== undefined &&
+      item?.[name] !== null
+  );
 
-  return item[field] === true || item[field] === 1 || item[field] === "true";
+  // No status field = keep record
+  if (!field) {
+    return true;
+  }
+
+  const value = item[field];
+
+  if (value === true || value === 1) {
+    return true;
+  }
+
+  if (typeof value === "string") {
+
+    return [
+      "true",
+      "1",
+      "active",
+      "published",
+      "publish",
+      "enabled"
+    ].includes(
+      value.toLowerCase().trim()
+    );
+  }
+
+  return false;
 }
 
+
 function getLastModified(item) {
+
   const value =
     item?.updatedAt ||
     item?.updated_at ||
@@ -113,236 +164,754 @@ function getLastModified(item) {
     item?.createdAt ||
     item?.created_at;
 
-  if (!value) return undefined;
+  if (!value) {
+    return undefined;
+  }
 
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return undefined;
 
-  return date.toISOString().slice(0, 10);
+  if (Number.isNaN(date.getTime())) {
+    return undefined;
+  }
+
+  return date
+    .toISOString()
+    .slice(0, 10);
 }
 
+
 function addUrl(map, path, options = {}) {
-  if (!path || typeof path !== "string") return;
 
-  let cleanPath = path.trim();
+  if (
+    !path ||
+    typeof path !== "string"
+  ) {
+    return;
+  }
 
-  if (!cleanPath) return;
+  let cleanPath =
+    path.trim();
 
-  if (/^https?:\/\//i.test(cleanPath)) {
+  if (!cleanPath) {
+    return;
+  }
+
+  if (
+    /^https?:\/\//i.test(
+      cleanPath
+    )
+  ) {
+
     try {
-      const parsed = new URL(cleanPath);
-      if (parsed.hostname !== "www.neohospital.com" && parsed.hostname !== "neohospital.com") {
+
+      const parsed =
+        new URL(cleanPath);
+
+      if (
+        parsed.hostname !==
+          "www.neohospital.com" &&
+        parsed.hostname !==
+          "neohospital.com"
+      ) {
         return;
       }
-      cleanPath = parsed.pathname || "/";
+
+      cleanPath =
+        parsed.pathname || "/";
+
     } catch {
       return;
     }
   }
 
-  if (!cleanPath.startsWith("/")) cleanPath = `/${cleanPath}`;
-
-  // Remove duplicate trailing slash except for "/".
-  if (cleanPath.length > 1) {
-    cleanPath = cleanPath.replace(/\/+$/, "");
+  if (
+    !cleanPath.startsWith("/")
+  ) {
+    cleanPath =
+      `/${cleanPath}`;
   }
 
-  const existing = map.get(cleanPath);
+  if (
+    cleanPath.length > 1
+  ) {
+    cleanPath =
+      cleanPath.replace(
+        /\/+$/,
+        ""
+      );
+  }
 
-  // Prefer the entry containing a real lastmod date.
-  if (!existing || (!existing.lastmod && options.lastmod)) {
-    map.set(cleanPath, {
-      path: cleanPath,
-      priority: options.priority || existing?.priority || "0.50",
-      changefreq: options.changefreq || existing?.changefreq || "monthly",
-      lastmod: options.lastmod || existing?.lastmod
-    });
+  const existing =
+    map.get(cleanPath);
+
+  if (
+    !existing ||
+    (!existing.lastmod &&
+      options.lastmod)
+  ) {
+
+    map.set(
+      cleanPath,
+      {
+        path: cleanPath,
+
+        priority:
+          options.priority ||
+          existing?.priority ||
+          "0.50",
+
+        changefreq:
+          options.changefreq ||
+          existing?.changefreq ||
+          "monthly",
+
+        lastmod:
+          options.lastmod ||
+          existing?.lastmod
+      }
+    );
   }
 }
 
+
 async function fetchJson(url) {
+
   try {
-    const response = await fetch(url, {
-      headers: { Accept: "application/json" }
-    });
+
+    const response =
+      await fetch(
+        url,
+        {
+          headers: {
+            Accept:
+              "application/json"
+          }
+        }
+      );
 
     if (!response.ok) {
-      console.warn(`Sitemap source failed: ${response.status} ${url}`);
+
+      console.warn(
+        `Sitemap source failed: ${response.status} ${url}`
+      );
+
       return null;
     }
 
     return await response.json();
+
   } catch (error) {
-    console.warn(`Sitemap source error: ${url}`, error?.message || error);
+
+    console.warn(
+      `Sitemap source error: ${url}`,
+      error?.message ||
+        error
+    );
+
     return null;
   }
 }
 
+
+// =====================================
+// SLUG EXTRACTORS
+// =====================================
+
 function extractBlogSlug(item) {
-  return item?.blog_slug || item?.slug || item?.blogSlug;
+
+  return (
+    item?.blog_slug ||
+    item?.blogSlug ||
+    item?.slug
+  );
 }
+
 
 function extractDoctorSlug(item) {
-  return item?.drSlug || item?.doctor_slug || item?.slug || item?.dr_slug;
+
+  return (
+    item?.drSlug ||
+    item?.doctor_slug ||
+    item?.doctorSlug ||
+    item?.dr_slug ||
+    item?.slug
+  );
 }
+
 
 function extractCategorySlug(item) {
-  return item?.slug || item?.category_slug || item?.categorySlug;
+
+  return (
+    item?.slug ||
+    item?.category_slug ||
+    item?.categorySlug
+  );
 }
+
 
 function extractProcedureSlug(item) {
-  return item?.procedures_slug || item?.procedure_slug || item?.procedureSlug || item?.slug;
+
+  return (
+    item?.procedures_slug ||
+    item?.procedure_slug ||
+    item?.procedureSlug ||
+    item?.slug
+  );
 }
+
+
+/*
+ * Specialist / keyword landing page slug.
+ *
+ * Example:
+ * best-cardiologists-in-noida
+ * best-orthopedist-in-noida
+ * best-gastroenterologist-in-noida
+ * best-dentists-in-noida
+ * best-pulmonologists-in-noida
+ *
+ * No individual specialist URL is hard-coded.
+ */
 
 function extractKeywordSlug(item) {
-  return item?.keyword_slug || item?.slug || item?.keywordSlug;
+
+  const value =
+    item?.keyword_slug ||
+    item?.keywordSlug ||
+    item?.keyword_slug_url ||
+    item?.url_slug ||
+    item?.page_slug ||
+    item?.slug;
+
+  if (!value) {
+    return "";
+  }
+
+  return String(value)
+    .trim()
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "")
+    .replace(
+      /^doctor\//i,
+      ""
+    );
 }
+
 
 function extractSeoPageSlug(item) {
-  return item?.pageurl || item?.slug || item?.page_url;
+
+  return (
+    item?.pageurl ||
+    item?.page_url ||
+    item?.seo_slug ||
+    item?.seoSlug ||
+    item?.slug
+  );
 }
 
-export default async function handler(req, res) {
+
+// =====================================
+// HANDLER
+// =====================================
+
+export default async function handler(
+  req,
+  res
+) {
+
   try {
-    const results = await Promise.all(
-      Object.entries(API_ENDPOINTS).map(async ([name, url]) => [
-        name,
-        await fetchJson(url)
-      ])
-    );
 
-    const payloads = Object.fromEntries(results);
-    const urls = new Map();
+    const results =
+      await Promise.all(
+        Object.entries(
+          API_ENDPOINTS
+        ).map(
+          async ([name, url]) => [
+            name,
+            await fetchJson(url)
+          ]
+        )
+      );
 
-    // Static pages.
-    for (const item of STATIC_URLS) {
-      addUrl(urls, item.path, item);
+    const payloads =
+      Object.fromEntries(
+        results
+      );
+
+    const urls =
+      new Map();
+
+
+    // =====================================
+    // STATIC CORE PAGES
+    // =====================================
+
+    for (
+      const item of STATIC_URLS
+    ) {
+
+      addUrl(
+        urls,
+        item.path,
+        item
+      );
     }
 
-    // Blogs.
-    const blogs = firstArray(payloads.blogs, ["Blog", "blogs", "blog"]);
-    for (const blog of blogs) {
-      if (!isActive(blog, ["blog_status", "status", "isPublished", "published"])) continue;
 
-      const slug = extractBlogSlug(blog);
-      if (!slug) continue;
+    // =====================================
+    // BLOGS
+    // =====================================
 
-      addUrl(urls, `/blog/${encodeURIComponent(slug)}`, {
-        lastmod: getLastModified(blog),
-        changefreq: "monthly",
-        priority: "0.70"
-      });
+    const blogs =
+      firstArray(
+        payloads.blogs,
+        [
+          "Blog",
+          "blogs",
+          "blog"
+        ]
+      );
+
+    for (
+      const blog of blogs
+    ) {
+
+      if (
+        !isActive(
+          blog,
+          [
+            "blog_status",
+            "status",
+            "isPublished",
+            "published"
+          ]
+        )
+      ) {
+        continue;
+      }
+
+      const slug =
+        extractBlogSlug(
+          blog
+        );
+
+      if (!slug) {
+        continue;
+      }
+
+      addUrl(
+        urls,
+        `/blog/${encodeURIComponent(
+          slug
+        )}`,
+        {
+          lastmod:
+            getLastModified(
+              blog
+            ),
+          changefreq:
+            "monthly",
+          priority:
+            "0.70"
+        }
+      );
     }
 
-    // Doctors.
-    const doctors = firstArray(payloads.doctors, ["doctors", "Doctors", "doctor"]);
-    for (const doctor of doctors) {
-      if (!isActive(doctor, ["drStatus", "doctor_status", "status", "isActive", "active"])) continue;
 
-      const slug = extractDoctorSlug(doctor);
-      if (!slug) continue;
+    // =====================================
+    // DOCTORS
+    // =====================================
 
-      addUrl(urls, `/doctor-details/${encodeURIComponent(slug)}`, {
-        lastmod: getLastModified(doctor),
-        changefreq: "monthly",
-        priority: "0.80"
-      });
+    const doctors =
+      firstArray(
+        payloads.doctors,
+        [
+          "doctors",
+          "Doctors",
+          "doctor"
+        ]
+      );
+
+    for (
+      const doctor of doctors
+    ) {
+
+      if (
+        !isActive(
+          doctor,
+          [
+            "drStatus",
+            "doctor_status",
+            "status",
+            "isActive",
+            "active"
+          ]
+        )
+      ) {
+        continue;
+      }
+
+      const slug =
+        extractDoctorSlug(
+          doctor
+        );
+
+      if (!slug) {
+        continue;
+      }
+
+      addUrl(
+        urls,
+        `/doctor-details/${encodeURIComponent(
+          slug
+        )}`,
+        {
+          lastmod:
+            getLastModified(
+              doctor
+            ),
+          changefreq:
+            "monthly",
+          priority:
+            "0.80"
+        }
+      );
     }
 
-    // Specialities / departments.
-    const categories = firstArray(payloads.categories, ["category", "categories"]);
-    for (const category of categories) {
-      if (!isActive(category, ["status", "category_status", "isActive", "active"])) continue;
 
-      const slug = extractCategorySlug(category);
-      if (!slug) continue;
+    // =====================================
+    // SPECIALITIES
+    // =====================================
 
-      addUrl(urls, `/${encodeURIComponent(slug)}`, {
-        lastmod: getLastModified(category),
-        changefreq: "weekly",
-        priority: "0.80"
-      });
+    const categories =
+      firstArray(
+        payloads.categories,
+        [
+          "category",
+          "categories",
+          "Category",
+          "Categories"
+        ]
+      );
+
+    for (
+      const category of categories
+    ) {
+
+      if (
+        !isActive(
+          category,
+          [
+            "status",
+            "category_status",
+            "isActive",
+            "active"
+          ]
+        )
+      ) {
+        continue;
+      }
+
+      const slug =
+        extractCategorySlug(
+          category
+        );
+
+      if (!slug) {
+        continue;
+      }
+
+      addUrl(
+        urls,
+        `/${encodeURIComponent(
+          slug
+        )}`,
+        {
+          lastmod:
+            getLastModified(
+              category
+            ),
+          changefreq:
+            "weekly",
+          priority:
+            "0.80"
+        }
+      );
     }
 
-    // Procedures.
-    const procedures = firstArray(payloads.procedures, ["procedures", "procedure", "data"]);
-    for (const procedure of procedures) {
-      if (!isActive(procedure, ["procedures_status", "procedure_status", "status", "isActive", "active"])) continue;
 
-      const slug = extractProcedureSlug(procedure);
-      if (!slug) continue;
+    // =====================================
+    // PROCEDURES
+    // =====================================
 
-      addUrl(urls, `/procedures/${encodeURIComponent(slug)}`, {
-        lastmod: getLastModified(procedure),
-        changefreq: "monthly",
-        priority: "0.75"
-      });
+    const procedures =
+      firstArray(
+        payloads.procedures,
+        [
+          "procedures",
+          "procedure",
+          "Procedures",
+          "Procedure",
+          "data"
+        ]
+      );
+
+    for (
+      const procedure of procedures
+    ) {
+
+      if (
+        !isActive(
+          procedure,
+          [
+            "procedures_status",
+            "procedure_status",
+            "status",
+            "isActive",
+            "active"
+          ]
+        )
+      ) {
+        continue;
+      }
+
+      const slug =
+        extractProcedureSlug(
+          procedure
+        );
+
+      if (!slug) {
+        continue;
+      }
+
+      addUrl(
+        urls,
+        `/procedures/${encodeURIComponent(
+          slug
+        )}`,
+        {
+          lastmod:
+            getLastModified(
+              procedure
+            ),
+          changefreq:
+            "monthly",
+          priority:
+            "0.75"
+        }
+      );
     }
 
-    // Doctor/specialist keyword landing pages.
-    const keywords = firstArray(payloads.keywords, ["data", "keywords"]);
-    for (const keyword of keywords) {
-      if (!isActive(keyword, ["keyword_status", "status", "isActive", "active"])) continue;
 
-      const slug = extractKeywordSlug(keyword);
-      if (!slug) continue;
+    // =====================================
+    // SPECIALIST / KEYWORD PAGES
+    // DYNAMIC
+    // =====================================
 
-      addUrl(urls, `/doctor/${encodeURIComponent(slug)}`, {
-        lastmod: getLastModified(keyword),
-        changefreq: "monthly",
-        priority: "0.75"
-      });
+    const keywords =
+      firstArray(
+        payloads.keywords,
+        [
+          "data",
+          "keywords",
+          "Keyword",
+          "Keywords",
+          "keyword"
+        ]
+      );
+
+    for (
+      const keyword of keywords
+    ) {
+
+      const slug =
+        extractKeywordSlug(
+          keyword
+        );
+
+      if (!slug) {
+        continue;
+      }
+
+      if (
+        !isActive(
+          keyword,
+          [
+            "keyword_status",
+            "status",
+            "isActive",
+            "active",
+            "published",
+            "isPublished"
+          ]
+        )
+      ) {
+        continue;
+      }
+
+      addUrl(
+        urls,
+        `/doctor/${encodeURIComponent(
+          slug
+        )}`,
+        {
+          lastmod:
+            getLastModified(
+              keyword
+            ),
+          changefreq:
+            "weekly",
+          priority:
+            "0.80"
+        }
+      );
     }
 
-    // Older SEO/treatment landing pages already supported by the React app.
-    const seoPages = firstArray(payloads.seoPages, ["seopages", "seoPages", "data"]);
-    for (const page of seoPages) {
-      if (!isActive(page, ["status", "page_status", "isActive", "active"])) continue;
 
-      const slug = extractSeoPageSlug(page);
-      if (!slug) continue;
+    // =====================================
+    // SEO / TREATMENT PAGES
+    // =====================================
 
-      addUrl(urls, `/treatment/${encodeURIComponent(slug)}`, {
-        lastmod: getLastModified(page),
-        changefreq: "monthly",
-        priority: "0.65"
-      });
+    const seoPages =
+      firstArray(
+        payloads.seoPages,
+        [
+          "seopages",
+          "seoPages",
+          "SEO",
+          "data"
+        ]
+      );
+
+    for (
+      const page of seoPages
+    ) {
+
+      if (
+        !isActive(
+          page,
+          [
+            "status",
+            "page_status",
+            "isActive",
+            "active",
+            "published",
+            "isPublished"
+          ]
+        )
+      ) {
+        continue;
+      }
+
+      const slug =
+        extractSeoPageSlug(
+          page
+        );
+
+      if (!slug) {
+        continue;
+      }
+
+      addUrl(
+        urls,
+        `/treatment/${encodeURIComponent(
+          slug
+        )}`,
+        {
+          lastmod:
+            getLastModified(
+              page
+            ),
+          changefreq:
+            "monthly",
+          priority:
+            "0.65"
+        }
+      );
     }
 
-    const xmlUrls = Array.from(urls.values())
-      .sort((a, b) => a.path.localeCompare(b.path))
-      .map((item) => {
-        const lastmod = item.lastmod
-          ? `\n    <lastmod>${escapeXml(item.lastmod)}</lastmod>`
-          : "";
 
-        return `  <url>
-    <loc>https://www.neohospital.com${escapeXml(item.path)}</loc>${lastmod}
+    // =====================================
+    // BUILD XML
+    // =====================================
+
+    const xmlUrls =
+      Array.from(
+        urls.values()
+      )
+        .sort(
+          (a, b) =>
+            a.path.localeCompare(
+              b.path
+            )
+        )
+        .map(
+          (item) => {
+
+            const lastmod =
+              item.lastmod
+                ? `\n    <lastmod>${escapeXml(
+                    item.lastmod
+                  )}</lastmod>`
+                : "";
+
+            return `  <url>
+    <loc>https://www.neohospital.com${escapeXml(
+      item.path
+    )}</loc>${lastmod}
     <changefreq>${item.changefreq}</changefreq>
     <priority>${item.priority}</priority>
   </url>`;
-      })
-      .join("\n");
+          }
+        )
+        .join("\n");
 
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+
+    const xml =
+      `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${xmlUrls}
 </urlset>`;
 
+
+    // =====================================
+    // RESPONSE
+    // =====================================
+
     res.status(200);
-    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+
+    res.setHeader(
+      "Content-Type",
+      "application/xml; charset=utf-8"
+    );
+
     res.setHeader(
       "Cache-Control",
       "public, s-maxage=3600, stale-while-revalidate=86400"
     );
-    res.setHeader("X-Sitemap-URL-Count", String(urls.size));
 
-    return res.send(xml);
+    res.setHeader(
+      "X-Sitemap-URL-Count",
+      String(urls.size)
+    );
+
+    return res.send(
+      xml
+    );
+
   } catch (error) {
-    console.error("Sitemap generation error:", error);
+
+    console.error(
+      "Sitemap generation error:",
+      error
+    );
 
     res.status(500);
-    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+
+    res.setHeader(
+      "Content-Type",
+      "application/xml; charset=utf-8"
+    );
 
     return res.send(
       `<?xml version="1.0" encoding="UTF-8"?>
