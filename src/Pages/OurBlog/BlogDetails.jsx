@@ -171,6 +171,9 @@ const BlogDetails = () => {
 
         const currentCategory = getBlogCategory(currentBlog);
 
+        // Related Articles:
+        // same speciality/category, active only, current blog excluded,
+        // latest first, maximum 4.
         const sameCategoryBlogs = blogList
           .filter((item) => {
             if (
@@ -226,6 +229,25 @@ const BlogDetails = () => {
   }, [API, blogSlug]);
 
   const blog = blogs.find((item) => item?.blog_slug === blogSlug);
+
+  // Latest Blogs:
+  // Use every active blog returned by the API, exclude the current article,
+  // and sort newest first. There is intentionally NO slice(0, 5).
+  const latestBlogs = [...blogs]
+    .filter(
+      (item) =>
+        item?.blog_status === true &&
+        item?.blog_slug !== blogSlug
+    )
+    .sort(
+      (a, b) =>
+        new Date(
+          b?.blog_date || b?.createdAt || b?.created_at || 0
+        ) -
+        new Date(
+          a?.blog_date || a?.createdAt || a?.created_at || 0
+        )
+    );
 
   if (loading) {
     return (
@@ -330,8 +352,6 @@ const BlogDetails = () => {
               <div className="description">
                 {parse(blog.blog_content || "")}
               </div>
-
-            
             </main>
           </div>
 
@@ -401,72 +421,77 @@ const BlogDetails = () => {
                 </Link>
               </h3>
 
-              <div className="sidebar my-5">
-                {blogs
-                  .filter((item) => item?.blog_slug !== blog.blog_slug)
-                  .slice(0, 5)
-                  .map((value) => (
-                    <div
-                      key={value._id || value.blog_slug}
-                      className="card-body"
-                    >
-                      <h2>
-                        <Link to={`/blog/${value.blog_slug}`}>
-                          {value.blog_title}
-                        </Link>
-                      </h2>
-                      <hr />
-                    </div>
-                  ))}
+              <div
+                className="sidebar my-5 latest-blogs-list"
+                aria-label="Latest Blogs"
+              >
+                {latestBlogs.map((value) => (
+                  <div
+                    key={value._id || value.blog_slug}
+                    className="card-body"
+                  >
+                    <h2>
+                      <Link to={`/blog/${value.blog_slug}`}>
+                        {value.blog_title}
+                      </Link>
+                    </h2>
+                    <hr />
+                  </div>
+                ))}
               </div>
             </aside>
           </div>
-           <div className="col-md-12">
-              {relatedBlogs.length > 0 && (
-                <section
-                  className="related-articles"
-                  aria-labelledby="related-articles-title"
-                >
-                  <div className="related-articles-heading">
-                    <span className="related-articles-kicker">
-                      You may also like
-                    </span>
-                    <h2 id="related-articles-title">
-                      Related Articles
-                    </h2>
-                    <p>
-                      More helpful articles from the same speciality.
-                    </p>
-                  </div>
 
-                  <div className="row related-articles-grid">
-                    {relatedBlogs.map((value, index) => (
-                      <div
-                        className="col-lg-4 col-md-6 col-12 related-article-col"
-                        key={
-                          value._id ||
-                          value.blog_slug ||
-                          index
+          {/* Related Articles are intentionally full-width and placed
+              after the article/sidebar row so they appear below the blog. */}
+          <div className="col-md-12">
+            {relatedBlogs.length > 0 && (
+              <section
+                className="related-articles"
+                aria-labelledby="related-articles-title"
+              >
+                <div className="related-articles-heading">
+                  <span className="related-articles-kicker">
+                    You may also like
+                  </span>
+
+                  <h2 id="related-articles-title">
+                    Related Articles
+                  </h2>
+
+                  <p>
+                    More helpful articles from the same speciality.
+                  </p>
+                </div>
+
+                <div className="row related-articles-grid">
+                  {relatedBlogs.map((value, index) => (
+                    <div
+                      className="col-lg-4 col-md-6 col-12 related-article-col"
+                      key={
+                        value._id ||
+                        value.blog_slug ||
+                        index
+                      }
+                    >
+                      <BlogCard
+                        blogimage={
+                          value.blog_image
+                            ? `${API}/uploads/blogs/${value.blog_image}`
+                            : ""
                         }
-                      >
-                        <BlogCard
-                          blogimage={
-                            value.blog_image
-                              ? `${API}/uploads/blogs/${value.blog_image}`
-                              : ""
-                          }
-                          title={value.blog_title}
-                          description={value.blog_content}
-                          blogslug={value.blog_slug}
-                          author={value.blog_auther}
-                          blogdate={value.blog_date}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              )}
-            </div>
+                        title={value.blog_title}
+                        description={value.blog_content}
+                        blogslug={value.blog_slug}
+                        author={value.blog_auther}
+                        blogdate={value.blog_date}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
         </div>
       </section>
     </>
