@@ -331,50 +331,7 @@ const BlogDetails = () => {
                 {parse(blog.blog_content || "")}
               </div>
 
-              {relatedBlogs.length > 0 && (
-                <section
-                  className="related-articles"
-                  aria-labelledby="related-articles-title"
-                >
-                  <div className="related-articles-heading">
-                    <span className="related-articles-kicker">
-                      You may also like
-                    </span>
-                    <h2 id="related-articles-title">
-                      Related Articles
-                    </h2>
-                    <p>
-                      More helpful articles from the same speciality.
-                    </p>
-                  </div>
-
-                  <div className="row related-articles-grid">
-                    {relatedBlogs.map((value, index) => (
-                      <div
-                        className="col-lg-4 col-md-6 col-12 related-article-col"
-                        key={
-                          value._id ||
-                          value.blog_slug ||
-                          index
-                        }
-                      >
-                        <BlogCard
-                          blogimage={
-                            value.blog_image
-                              ? `${API}/uploads/blogs/${value.blog_image}`
-                              : ""
-                          }
-                          title={value.blog_title}
-                          description={value.blog_content}
-                          blogslug={value.blog_slug}
-                          author={value.blog_auther}
-                          blogdate={value.blog_date}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              )}
+            
             </main>
           </div>
 
@@ -464,6 +421,52 @@ const BlogDetails = () => {
               </div>
             </aside>
           </div>
+           <div className="col-md-12">
+              {relatedBlogs.length > 0 && (
+                <section
+                  className="related-articles"
+                  aria-labelledby="related-articles-title"
+                >
+                  <div className="related-articles-heading">
+                    <span className="related-articles-kicker">
+                      You may also like
+                    </span>
+                    <h2 id="related-articles-title">
+                      Related Articles
+                    </h2>
+                    <p>
+                      More helpful articles from the same speciality.
+                    </p>
+                  </div>
+
+                  <div className="row related-articles-grid">
+                    {relatedBlogs.map((value, index) => (
+                      <div
+                        className="col-lg-4 col-md-6 col-12 related-article-col"
+                        key={
+                          value._id ||
+                          value.blog_slug ||
+                          index
+                        }
+                      >
+                        <BlogCard
+                          blogimage={
+                            value.blog_image
+                              ? `${API}/uploads/blogs/${value.blog_image}`
+                              : ""
+                          }
+                          title={value.blog_title}
+                          description={value.blog_content}
+                          blogslug={value.blog_slug}
+                          author={value.blog_auther}
+                          blogdate={value.blog_date}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </div>
         </div>
       </section>
     </>
