@@ -350,6 +350,7 @@
 }
 
 .department-doctor-card {
+  width: 260px;
   position: relative;
   display: flex;
   flex-direction: column;
