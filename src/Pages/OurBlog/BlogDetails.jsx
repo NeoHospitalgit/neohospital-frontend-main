@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 
 import BlogBanner from "./BlogBanner";
 import Corevalue from "../About/Corevalue";
+import BlogCard from "./BlogCard";
 import { useAuth } from "../../store/auth";
 import NotFound from "../NotFound";
 import "./OurBlog.css";
@@ -15,6 +16,7 @@ const BlogDetails = () => {
   const { blogs: blogSlug } = useParams();
 
   const [blogs, setBlogs] = useState([]);
+  const [relatedBlogs, setRelatedBlogs] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -25,16 +27,7 @@ const BlogDetails = () => {
     message: "",
   });
 
-  const {
-    name,
-    number,
-    email,
-    message,
-  } = formData;
-
-  // =====================================
-  // Form Change
-  // =====================================
+  const { name, number, email, message } = formData;
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -43,68 +36,38 @@ const BlogDetails = () => {
     }));
   };
 
-  // =====================================
-  // Send Enquiry
-  // =====================================
-
   const sendEmail = (e) => {
     e.preventDefault();
 
-    // Validate fields
-    if (
-      !name ||
-      !number ||
-      !email ||
-      !message
-    ) {
+    if (!name || !number || !email || !message) {
       alert("Please fill out all fields.");
       return;
     }
 
-    // Validate email
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
-      alert(
-        "Please enter a valid email address."
-      );
+      alert("Please enter a valid email address.");
       return;
     }
 
-    // Validate phone
-    const phoneRegex =
-      /^[6-9]\d{9}$/;
+    const phoneRegex = /^[6-9]\d{9}$/;
 
     if (!phoneRegex.test(number)) {
-      alert(
-        "Please enter a valid Indian phone number."
-      );
+      alert("Please enter a valid Indian phone number.");
       return;
     }
-
-    const YOUR_SERVICE_ID =
-      "service_mst5kgs";
-
-    const YOUR_TEMPLATE_ID =
-      "template_qafkoxl";
-
-    const YOUR_USER_ID =
-      "L921BkCJFmULbhjBW";
 
     emailjs
       .sendForm(
-        YOUR_SERVICE_ID,
-        YOUR_TEMPLATE_ID,
+        "service_mst5kgs",
+        "template_qafkoxl",
         e.target,
-        YOUR_USER_ID
+        "L921BkCJFmULbhjBW"
       )
       .then(
         () => {
-          alert(
-            "Your enquiry has been sent successfully!"
-          );
-
+          alert("Your enquiry has been sent successfully!");
           setFormData({
             name: "",
             number: "",
@@ -112,241 +75,182 @@ const BlogDetails = () => {
             message: "",
           });
         },
-        (error) => {
-          console.error(
-            "EmailJS Error:",
-            error
-          );
-
-          alert(
-            "Failed to send enquiry. Please try again later."
-          );
+        (err) => {
+          console.error("EmailJS Error:", err);
+          alert("Failed to send enquiry. Please try again later.");
         }
       );
   };
 
-  // =====================================
-  // Fetch Public Blogs
-  // =====================================
-
   useEffect(() => {
-    if (!API) {
-      return;
-    }
+    if (!API || !blogSlug) return;
 
-    const controller =
-      new AbortController();
+    const controller = new AbortController();
 
-   const fetchBlogs = async () => {
-  try {
-    setLoading(true);
-    setError(null);
+    const getBlogCategory = (item) => {
+      const raw =
+        item?.blog_category ||
+        item?.blog_speciality ||
+        item?.speciality ||
+        item?.speciality_name ||
+        item?.specialityName ||
+        item?.category ||
+        item?.category_name ||
+        item?.categoryName ||
+        item?.department ||
+        item?.department_name ||
+        item?.departmentName;
 
-    // =====================================
-    // Fetch CURRENT BLOG - Full Data
-    // =====================================
-
-    const response = await fetch(
-      `${API}/api/blogs/view-blog/${encodeURIComponent(blogSlug)}`,
-      {
-        method: "GET",
-        signal: controller.signal,
+      if (raw && typeof raw === "object") {
+        return (
+          raw.title ||
+          raw.name ||
+          raw.category_name ||
+          raw.speciality_name ||
+          raw.slug ||
+          ""
+        );
       }
-    );
 
-    const data = await response.json();
+      return typeof raw === "string" ? raw.trim() : "";
+    };
 
-    if (!response.ok) {
-      throw new Error(
-        data?.message ||
-          `Failed to fetch blog (${response.status})`
-      );
-    }
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        setRelatedBlogs([]);
 
-    // Detail API returns:
-    // { Blog: { ... } }
+        const response = await fetch(
+          `${API}/api/blogs/view-blog/${encodeURIComponent(blogSlug)}`,
+          {
+            method: "GET",
+            signal: controller.signal,
+          }
+        );
 
-    const currentBlog = data?.Blog;
+        const data = await response.json();
 
-    if (!currentBlog) {
-      throw new Error("Blog not found");
-    }
+        if (!response.ok) {
+          throw new Error(
+            data?.message || `Failed to fetch blog (${response.status})`
+          );
+        }
 
-    if (currentBlog.blog_status !== true) {
-      throw new Error("Blog not found");
-    }
+        const currentBlog = data?.Blog;
 
-    // =====================================
-    // Fetch RELATED BLOGS - Lightweight
-    // =====================================
+        if (!currentBlog || currentBlog.blog_status !== true) {
+          throw new Error("Blog not found");
+        }
 
-    const listResponse = await fetch(
-      `${API}/api/blogs/view-blogs`,
-      {
-        method: "GET",
-        signal: controller.signal,
-      }
-    );
+        const listResponse = await fetch(`${API}/api/blogs/view-blogs`, {
+          method: "GET",
+          signal: controller.signal,
+        });
 
-    const listData = await listResponse.json();
+        const listData = await listResponse.json();
 
-    let blogList = [];
+        if (!listResponse.ok) {
+          throw new Error(
+            listData?.message ||
+              `Failed to fetch blogs (${listResponse.status})`
+          );
+        }
 
-    if (Array.isArray(listData)) {
-      blogList = listData;
-    } else if (Array.isArray(listData?.Blog)) {
-      blogList = listData.Blog;
-    } else if (Array.isArray(listData?.blogs)) {
-      blogList = listData.blogs;
-    } else if (Array.isArray(listData?.data)) {
-      blogList = listData.data;
-    }
+        let blogList = [];
 
-    // =====================================
-    // Only Active Related Blogs
-    // =====================================
+        if (Array.isArray(listData)) {
+          blogList = listData;
+        } else if (Array.isArray(listData?.Blog)) {
+          blogList = listData.Blog;
+        } else if (Array.isArray(listData?.blogs)) {
+          blogList = listData.blogs;
+        } else if (Array.isArray(listData?.data)) {
+          blogList = listData.data;
+        }
 
-    const relatedBlogs = blogList
-      .filter(
-        (blog) =>
-          blog.blog_status === true &&
-          blog.blog_slug !== currentBlog.blog_slug
-      )
-      .sort(
-        (a, b) =>
-          new Date(
-            b.blog_date || b.createdAt
-          ) -
-          new Date(
-            a.blog_date || a.createdAt
+        const currentCategory = getBlogCategory(currentBlog);
+
+        const sameCategoryBlogs = blogList
+          .filter((item) => {
+            if (
+              !item ||
+              item.blog_status !== true ||
+              item.blog_slug === currentBlog.blog_slug
+            ) {
+              return false;
+            }
+
+            if (!currentCategory) return false;
+
+            const itemCategory = getBlogCategory(item);
+
+            return (
+              itemCategory &&
+              itemCategory.toLowerCase() === currentCategory.toLowerCase()
+            );
+          })
+          .sort(
+            (a, b) =>
+              new Date(
+                b.blog_date || b.createdAt || b.created_at || 0
+              ) -
+              new Date(
+                a.blog_date || a.createdAt || a.created_at || 0
+              )
           )
-      );
+          .slice(0, 4);
 
-    // =====================================
-    // Set Current + Related Blogs
-    // =====================================
+        if (!controller.signal.aborted) {
+          setBlogs([currentBlog, ...blogList]);
+          setRelatedBlogs(sameCategoryBlogs);
+        }
+      } catch (err) {
+        if (err.name === "AbortError") return;
 
-    if (!controller.signal.aborted) {
-      setBlogs([
-        currentBlog,
-        ...relatedBlogs,
-      ]);
-    }
+        console.error("Blog Details API Error:", err);
 
-  } catch (error) {
-    if (error.name === "AbortError") {
-      return;
-    }
-
-    console.error(
-      "Blog Details API Error:",
-      error
-    );
-
-    setError(
-      error.message ||
-        "Unable to load blog."
-    );
-
-  } finally {
-    if (!controller.signal.aborted) {
-      setLoading(false);
-    }
-  }
-};
+        if (!controller.signal.aborted) {
+          setError(err.message || "Unable to load blog.");
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      }
+    };
 
     fetchBlogs();
 
-    return () => {
-      controller.abort();
-    };
-  }, [API]);
+    return () => controller.abort();
+  }, [API, blogSlug]);
 
-  // =====================================
-  // Find Current Blog
-  // =====================================
+  const blog = blogs.find((item) => item?.blog_slug === blogSlug);
 
-  const blog = blogs.find(
-    (item) =>
-      item.blog_slug === blogSlug
-  );
-
-  // =====================================
-  // Loading
-  // =====================================
-if (loading) {
-  return (
-    <div className="loading-spinner-container">
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">
-          Loading...
-        </span>
-      </div>
-    </div>
-  );
-}
-
-if (error || !blog) {
-  return <NotFound />;
-}
-
-  // =====================================
-  // API Error
-  // =====================================
-
-  if (error) {
+  if (loading) {
     return (
-      <div className="loader-container">
-        <p style={{ color: "red" }}>
-          Error loading blog: {error}
-        </p>
-
-        <button
-          onClick={() =>
-            window.location.reload()
-          }
-        >
-          Retry
-        </button>
+      <div className="loading-spinner-container">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
       </div>
     );
   }
 
-  // =====================================
-  // Blog Not Found
-  // =====================================
-
-  if (!blog) {
-    return (
-      <div className="loader-container">
-        <p>
-          Blog not found.
-        </p>
-      </div>
-    );
+  if (error || !blog) {
+    return <NotFound />;
   }
 
-  // =====================================
-  // SEO Data
-  // =====================================
-
-  const pageTitle =
-    `${blog.blog_title} | NEO Hospital`;
+  const pageTitle = `${blog.blog_title} | NEO Hospital`;
 
   const metaDescription =
     blog.blog_meta_description ||
     `Read about ${blog.blog_title} at NEO Hospital, one of the Best Hospitals in Noida.`;
 
-  const metaKeywords =
-    blog.blog_meta_keywords ||
-    "NEO Hospital";
+  const metaKeywords = blog.blog_meta_keywords || "NEO Hospital";
 
   const canonicalUrl =
     `https://www.neohospital.com/blog/${blog.blog_slug}`;
-
-  // =====================================
-  // Blog Image
-  // =====================================
 
   const blogImage = blog.blog_image
     ? `${API}/uploads/blogs/${blog.blog_image}`
@@ -354,234 +258,142 @@ if (error || !blog) {
 
   return (
     <>
-      {/* =====================================
-          DYNAMIC SEO
-      ===================================== */}
-
       <Helmet>
-        {blog.blog_seo &&
-        blog.blog_seo.trim() !== "" ? (
+        {blog.blog_seo && blog.blog_seo.trim() !== "" ? (
           parse(blog.blog_seo)
         ) : (
           <>
-            <title>
-              {pageTitle}
-            </title>
+            <title>{pageTitle}</title>
+            <meta name="title" content={pageTitle} />
+            <meta name="description" content={metaDescription} />
+            <meta name="keywords" content={metaKeywords} />
+            <link rel="canonical" href={canonicalUrl} />
 
-            <meta
-              name="title"
-              content={pageTitle}
-            />
+            <meta property="og:title" content={pageTitle} />
+            <meta property="og:description" content={metaDescription} />
+            <meta property="og:url" content={canonicalUrl} />
+            <meta property="og:type" content="article" />
 
-            <meta
-              name="description"
-              content={metaDescription}
-            />
+            {blogImage && <meta property="og:image" content={blogImage} />}
 
-            <meta
-              name="keywords"
-              content={metaKeywords}
-            />
-
-            <link
-              rel="canonical"
-              href={canonicalUrl}
-            />
-
-            {/* Open Graph */}
-
-            <meta
-              property="og:title"
-              content={pageTitle}
-            />
-
-            <meta
-              property="og:description"
-              content={metaDescription}
-            />
-
-            <meta
-              property="og:url"
-              content={canonicalUrl}
-            />
-
-            <meta
-              property="og:type"
-              content="article"
-            />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={pageTitle} />
+            <meta name="twitter:description" content={metaDescription} />
 
             {blogImage && (
-              <meta
-                property="og:image"
-                content={blogImage}
-              />
+              <meta name="twitter:image" content={blogImage} />
             )}
 
-            {/* Twitter */}
-
-            <meta
-              name="twitter:card"
-              content="summary_large_image"
-            />
-
-            <meta
-              name="twitter:title"
-              content={pageTitle}
-            />
-
-            <meta
-              name="twitter:description"
-              content={metaDescription}
-            />
-
-            {blogImage && (
-              <meta
-                name="twitter:image"
-                content={blogImage}
-              />
-            )}
-
-            {/* Robots */}
-
-            <meta
-              name="robots"
-              content="index,follow"
-            />
-
-            <meta
-              name="googlebot"
-              content="index,follow"
-            />
-
+            <meta name="robots" content="index,follow" />
+            <meta name="googlebot" content="index,follow" />
             <meta
               name="author"
-              content={
-                blog.blog_auther ||
-                "NEO Hospital"
-              }
+              content={blog.blog_auther || "NEO Hospital"}
             />
           </>
         )}
       </Helmet>
 
-      {/* =====================================
-          BLOG BANNER
-      ===================================== */}
-
       <BlogBanner />
-
-      {/* =====================================
-          BLOG INTRO
-      ===================================== */}
 
       <section className="container NeoBlog">
         <h3 className="dt-title">
-          <span>
-            Informative Blogs
-          </span>
-
+          <span>Informative Blogs</span>
           <p className="dt-description">
-            Our mission is to provide
-            better reach to our patients
-            by providing quality health
-            care at a reasonable price.
+            Our mission is to provide better reach to our patients by
+            providing quality health care at a reasonable price.
           </p>
         </h3>
       </section>
 
-      {/* =====================================
-          BLOG DETAILS
-      ===================================== */}
-
       <section className="container NeoBlogDetails blog_side_form">
-
         <div className="row">
-
-          {/* =====================================
-              MAIN BLOG
-          ===================================== */}
-
           <div className="col-md-8">
-
             <main>
-
-              {/* Blog Image */}
-
               {blogImage && (
                 <img
                   src={blogImage}
-                  alt={
-                    blog.blog_title
-                  }
+                  alt={blog.blog_title}
                   className="img-fluid"
                   loading="eager"
                 />
               )}
 
-              {/* Author */}
-
               <div className="author-info">
                 <h6 className="author-name">
-                  Author:{" "}
-                  {blog.blog_auther ||
-                    "NEO Hospital"}
+                  Author: {blog.blog_auther || "NEO Hospital"}
                 </h6>
               </div>
 
-              {/* Blog Title */}
-
-              <h1 className="blogtitle">
-                {blog.blog_title}
-              </h1>
-
-              {/* Blog Content */}
+              <h1 className="blogtitle">{blog.blog_title}</h1>
 
               <div className="description">
-                {parse(
-                  blog.blog_content ||
-                    ""
-                )}
+                {parse(blog.blog_content || "")}
               </div>
 
-            </main>
+              {relatedBlogs.length > 0 && (
+                <section
+                  className="related-articles"
+                  aria-labelledby="related-articles-title"
+                >
+                  <div className="related-articles-heading">
+                    <span className="related-articles-kicker">
+                      You may also like
+                    </span>
+                    <h2 id="related-articles-title">
+                      Related Articles
+                    </h2>
+                    <p>
+                      More helpful articles from the same speciality.
+                    </p>
+                  </div>
 
+                  <div className="row related-articles-grid">
+                    {relatedBlogs.map((value, index) => (
+                      <div
+                        className="col-lg-4 col-md-6 col-12 related-article-col"
+                        key={
+                          value._id ||
+                          value.blog_slug ||
+                          index
+                        }
+                      >
+                        <BlogCard
+                          blogimage={
+                            value.blog_image
+                              ? `${API}/uploads/blogs/${value.blog_image}`
+                              : ""
+                          }
+                          title={value.blog_title}
+                          description={value.blog_content}
+                          blogslug={value.blog_slug}
+                          author={value.blog_auther}
+                          blogdate={value.blog_date}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </main>
           </div>
 
-          {/* =====================================
-              SIDEBAR
-          ===================================== */}
-
           <div className="col-md-4">
-
-            {/* Contact */}
-
             <h3 className="dt-title">
-              <span>
-                Contact Us
-              </span>
+              <span>Contact Us</span>
             </h3>
 
             <div className="blogform my-3">
-
-              <form
-                onSubmit={sendEmail}
-              >
-
-                {/* Name */}
-
+              <form onSubmit={sendEmail}>
                 <input
                   type="text"
                   className="form-control form-group input"
                   placeholder="Name"
                   name="name"
                   value={name}
-                  onChange={
-                    handleChange
-                  }
+                  onChange={handleChange}
                   required
                 />
-
-                {/* Phone */}
 
                 <input
                   type="tel"
@@ -589,13 +401,9 @@ if (error || !blog) {
                   placeholder="Phone Number"
                   name="number"
                   value={number}
-                  onChange={
-                    handleChange
-                  }
+                  onChange={handleChange}
                   required
                 />
-
-                {/* Email */}
 
                 <input
                   type="email"
@@ -603,110 +411,60 @@ if (error || !blog) {
                   placeholder="Email"
                   name="email"
                   value={email}
-                  onChange={
-                    handleChange
-                  }
+                  onChange={handleChange}
                   required
                 />
-
-                {/* Message */}
 
                 <textarea
                   className="form-control form-group input"
                   placeholder="Message"
                   name="message"
                   value={message}
-                  onChange={
-                    handleChange
-                  }
+                  onChange={handleChange}
                   required
                 ></textarea>
 
-                <br />
-
-                <button
-                  type="submit"
-                  className="contact_form_submit"
-                >
+                <button type="submit" className="contact_form_submit">
                   Send
                 </button>
-
               </form>
-
             </div>
 
             <br />
-
             <hr />
-
             <br />
 
-            {/* =====================================
-                RELATED BLOGS
-            ===================================== */}
-
             <aside>
-
               <h3 className="dt-title d-flex flex-row justify-content-between align-items-center">
-
-                <span>
-                  Blogs
-                </span>
+                <span>Latest Blogs</span>
 
                 <Link to="/blog">
                   View All
                   <i className="fa-solid fa-arrow-right-from-bracket mx-2"></i>
                 </Link>
-
               </h3>
 
               <div className="sidebar my-5">
-
                 {blogs
-                  .filter(
-                    (item) =>
-                      item.blog_slug !==
-                      blog.blog_slug
-                  )
-                  .slice(0, 15)
-                  .map(
-                    (value) => (
-
-                      <div
-                        key={
-                          value._id ||
-                          value.blog_slug
-                        }
-                        className="card-body"
-                      >
-
-                        <h2>
-
-                          <Link
-                            to={`/blog/${value.blog_slug}`}
-                          >
-                            {
-                              value.blog_title
-                            }
-                          </Link>
-
-                        </h2>
-
-                        <hr />
-
-                      </div>
-
-                    )
-                  )}
-
+                  .filter((item) => item?.blog_slug !== blog.blog_slug)
+                  .slice(0, 5)
+                  .map((value) => (
+                    <div
+                      key={value._id || value.blog_slug}
+                      className="card-body"
+                    >
+                      <h2>
+                        <Link to={`/blog/${value.blog_slug}`}>
+                          {value.blog_title}
+                        </Link>
+                      </h2>
+                      <hr />
+                    </div>
+                  ))}
               </div>
-
             </aside>
-
           </div>
-
         </div>
-
       </section>
     </>
   );
