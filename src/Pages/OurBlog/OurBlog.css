@@ -209,10 +209,46 @@
 
 
 /* =========================================
+   Latest Blogs
+   ========================================= */
+
+.latest-blogs-list {
+  max-height: 620px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  scrollbar-width: thin;
+}
+
+.latest-blogs-list .card-body {
+  padding: 10px 0;
+}
+
+.latest-blogs-list .card-body h2 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.latest-blogs-list .card-body a {
+  text-decoration: none;
+}
+
+.latest-blogs-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.latest-blogs-list::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #cbd8dc;
+}
+
+/* =========================================
    Related Articles
    ========================================= */
 
 .related-articles {
+  width: 100%;
   margin-top: 55px;
   padding-top: 32px;
   border-top: 1px solid #e4ebee;
@@ -235,7 +271,6 @@
 .related-articles-heading h2 {
   margin: 0 0 7px;
   color: #172932;
-  font-family: inherit;
   font-size: 28px;
   font-weight: 800;
 }
@@ -243,7 +278,6 @@
 .related-articles-heading p {
   margin: 0;
   color: #718087;
-  font-family: inherit;
   font-size: 13px;
   line-height: 1.6;
 }
@@ -261,6 +295,10 @@
 }
 
 @media (max-width: 767px) {
+  .latest-blogs-list {
+    max-height: 500px;
+  }
+
   .related-articles {
     margin-top: 40px;
     padding-top: 25px;
