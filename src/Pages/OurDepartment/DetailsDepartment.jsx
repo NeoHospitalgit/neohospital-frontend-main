@@ -353,13 +353,7 @@ function DetailsDepartment() {
                                   )}
 
                                   <div className="doctor-actions">
-                                    <Link
-                                      to={profilePath}
-                                      className="book-doctor-btn"
-                                    >
-                                      <span>Book Appointment</span>
-                                      <i className="fa fa-arrow-right"></i>
-                                    </Link>
+                                    
 
                                     {doctorSlug && (
                                       <Link
