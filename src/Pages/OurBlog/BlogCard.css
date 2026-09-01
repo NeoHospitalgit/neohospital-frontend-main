@@ -1,0 +1,190 @@
+/* =========================================
+   NEO Blog Card
+   Scoped classes prevent old/global CSS
+   from hiding the card content.
+   ========================================= */
+
+.neo-blog-card {
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e3eaed;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(24, 55, 65, .08);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.neo-blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 13px 30px rgba(24, 55, 65, .13);
+}
+
+.neo-blog-card-image-link {
+  display: block;
+  text-decoration: none !important;
+}
+
+.neo-blog-card-image {
+  width: 100%;
+  height: 235px;
+  overflow: hidden;
+  background: #edf3f5;
+}
+
+.neo-blog-card-image img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.neo-blog-card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #0b8581;
+  font-size: 35px;
+}
+
+.neo-blog-card-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 16px 17px 17px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: #fff !important;
+  color: #24353e !important;
+}
+
+.neo-blog-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+
+.neo-blog-card-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: #e8f7f5;
+  color: #087d79;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: .6px;
+}
+
+.neo-blog-card-date {
+  color: #7a888f;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.neo-blog-card-date i {
+  margin-right: 4px;
+  color: #0db7ad;
+}
+
+.neo-blog-card-title {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden !important;
+  height: auto !important;
+  min-height: 44px;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  color: #172932 !important;
+  font-family: inherit !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+.neo-blog-card-title a {
+  color: inherit !important;
+  text-decoration: none !important;
+  font-size: inherit !important;
+}
+
+.neo-blog-card-title a:hover {
+  color: #087d79 !important;
+}
+
+.neo-blog-card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin: 0 0 14px;
+  color: #6a7980;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.neo-blog-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 11px;
+  border-top: 1px solid #edf1f2;
+}
+
+.neo-blog-card-author {
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #7a888f;
+  font-size: 10px;
+}
+
+.neo-blog-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #087d79 !important;
+  font-size: 12px !important;
+  font-weight: 800;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.neo-blog-read-more i {
+  transition: transform .2s ease;
+}
+
+.neo-blog-read-more:hover {
+  color: #005e5b !important;
+}
+
+.neo-blog-read-more:hover i {
+  transform: translateX(3px);
+}
+
+@media (max-width: 575px) {
+  .neo-blog-card-image {
+    height: 210px;
+  }
+
+  .neo-blog-card-title {
+    font-size: 16px !important;
+  }
+}
