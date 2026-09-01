@@ -16,7 +16,7 @@ function BlogAll() {
   const BLOGS_PER_PAGE = 12;
 
   useEffect(() => {
-    if (!API) return; 
+    if (!API) return;
     const controller = new AbortController();
 
     const fetchData = async () => {
