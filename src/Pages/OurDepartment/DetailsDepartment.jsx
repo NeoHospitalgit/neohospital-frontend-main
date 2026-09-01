@@ -1,97 +1,45 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React from "react";
+import { useParams } from "react-router-dom";
 import parse from "html-react-parser";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "./DetailsDepartment.css";
+import Header from "../Header";
+import Footer from "../Footer";
 import NotFound from "../NotFound";
 import { useAuth } from "../../store/auth";
-import fallbackImage from "../../Assets/manpic.png";
-
 function DetailsDepartment() {
-  const { API } = useAuth();
-  const { departid } = useParams();
-
-  const [departments, setDepartments] = useState([]);
-  const [doctors, setDoctors] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [doctorLoading, setDoctorLoading] = useState(true);
+  const [Neospecial, setNeospecial] = useState([]);
   const [error, setError] = useState(null);
-
+  const [loading, setLoading] = useState(true);
+ const { API } = useAuth();
   useEffect(() => {
-    if (!API) return;
-
-    let cancelled = false;
-
-    const fetchDepartmentData = async () => {
+     if (!API) return;
+    const fetchData = async () => {
       try {
         setLoading(true);
-        setDoctorLoading(true);
-        setError(null);
-
-        const response = await fetch(`${API}/api/categories/view-category`);
-        const data = await response.json();
-
+        const response = await fetch(
+           `${API}/api/categories/view-category`
+        );
         if (!response.ok) {
-          throw new Error(data?.message || "Failed to fetch departments");
+          throw new Error("Failed to fetch data");
         }
-
-        const categoryList = Array.isArray(data?.category) ? data.category : [];
-
-        if (cancelled) return;
-
-        setDepartments(categoryList);
-
-        const currentDepartment = categoryList.find(
-          (item) => item?.slug === departid
-        );
-
-        if (!currentDepartment) {
-          setDoctorLoading(false);
-          return;
-        }
-
-        const doctorResponse = await fetch(
-          `${API}/api/adminv2/department/${currentDepartment._id}`
-        );
-        const doctorData = await doctorResponse.json();
-
-        if (!doctorResponse.ok) {
-          throw new Error(
-            doctorData?.message || "Failed to fetch department doctors"
-          );
-        }
-
-        if (!cancelled) {
-          setDoctors(
-            Array.isArray(doctorData?.doctors) ? doctorData.doctors : []
-          );
-        }
-      } catch (err) {
-        console.error("Department page error:", err);
-        if (!cancelled) {
-          setError(err);
-          setDoctors([]);
-        }
+        const data = await response.json();
+        setNeospecial(data.category);
+      } catch (error) {
+        setError(error);
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-          setDoctorLoading(false);
-        }
+        setLoading(false);
       }
     };
+    fetchData();
+  }, []);
 
-    fetchDepartmentData();
+  const { departid } = useParams();
+  const departments = Neospecial.find((value) => value.slug === departid);
 
-    return () => {
-      cancelled = true;
-    };
-  }, [API, departid]);
-
-  const department = useMemo(
-    () => departments.find((item) => item?.slug === departid),
-    [departments, departid]
-  );
-
+  // Function to handle phone call
   const handleCallNow = () => {
     window.location.href = "tel:0120-4880000";
   };
@@ -105,232 +53,114 @@ function DetailsDepartment() {
     );
   }
 
-  if (error && !department) {
+  if (error) {
     return (
       <div className="error-container">
         <div className="error-message">
           <h2>Oops! Something went wrong</h2>
-          <p>We couldn't load the department information.</p>
+          <p>We couldn't load the department information. Please try again later.</p>
         </div>
       </div>
     );
   }
 
-  if (!department) return <NotFound />;
-
+if (!departments) {
+  return <NotFound />;
+}
   return (
     <>
+       {/* Place Header at the very top */}
       <Helmet>
-        {parse(
-          department?.seo_tag ||
-            department?.seo_head ||
-            department?.seotags ||
-            department?.tagdata ||
+          {parse(
+            departments?.seo_tag ||
+            departments?.seo_head ||
+            departments?.seotags ||
+            departments?.tagdata ||
             ""
-        )}
-      </Helmet>
-
-      <section className="department-page">
+          )}
+        </Helmet>
+      
+      {/* Main Content */}
+      <section className="main-content">
         <div className="container">
-          <div className="department-layout">
-
-            <aside className="department-sidebar">
+          <div className="content-grid">
+            
+            {/* Sidebar */}
+            <aside className="sidebar">
               <div className="sidebar-card">
-                <div className="sidebar-heading">
-                  <span>NEO Hospital</span>
-                  <h3>Specialities</h3>
-                </div>
-
+                <h3 className="sidebar-title">All Departments</h3>
                 <div className="departments-list">
-                  {departments.map((value) => (
+                  {Neospecial.map((value, index) => (
                     <Link
-                      key={value?._id || value?.slug}
-                      to={`/${value.slug}`}
-                      className={`department-link ${
-                        value.slug === departid ? "active" : ""
-                      }`}
+                      key={index}
+                      to={`https://www.neohospital.com/${value.slug}`}
+                      className={`department-link ${value.slug === departid ? 'active' : ''}`}
                     >
-                      <span className="department-link-icon">
-                        <i className="fa fa-stethoscope"></i>
-                      </span>
-                      <span className="department-name">{value.title}</span>
-                      <i className="fa fa-angle-right department-link-arrow"></i>
+                      <div className="department-item">
+                        <span className="department-icon">
+                          <i className="fa fa-stethoscope"></i>
+                        </span>
+                        <span className="department-name">{value.title}</span>
+                        <span className="arrow">
+                          <i className="fa fa-chevron-right"></i>
+                        </span>
+                      </div>
                     </Link>
                   ))}
                 </div>
               </div>
 
-              <div className="sidebar-contact">
-                <div className="contact-icon">
+              {/* Contact Card */}
+              <div className="contact-card">
+                <h4>Need Help?</h4>
+                <p>Contact our specialists for more information</p>
+                <button className="contact-btn" onClick={handleCallNow}>
                   <i className="fa fa-phone"></i>
-                </div>
-                <h4>Need expert care?</h4>
-                <p>Speak with our hospital team for assistance.</p>
-                <button onClick={handleCallNow}>
-                  <i className="fa fa-phone"></i>
-                  Call 0120-4880000
+                  Call Now
                 </button>
               </div>
             </aside>
 
-            <main className="department-main">
-
-              <div className="department-hero">
-                <img
-                  src={`${API}/uploads/categories/${department.image}`}
-                  alt={department.title}
-                  className="department-hero-image"
-                />
-                <div className="department-hero-overlay"></div>
-                <div className="department-hero-content">
-                  <span className="hero-kicker">NEO Hospital • Specialist Care</span>
-                  <h1>{department.title}</h1>
-                  <p>
-                    Expert care from our dedicated {department.title.toLowerCase()} specialists.
-                  </p>
+            {/* Main Content Area */}
+            <main className="main-section">
+              <div className="department-header">
+                <div className="department-image-container">
+                  <img
+                    src={`${API}/uploads/categories/${departments.image}`}
+                    alt={departments.title}
+                    className="department-image"
+                    loading="lazy"
+                  />
+                  <div className="image-overlay">
+                    <span className="department-badge">{departments.title}</span>
+                  </div>
                 </div>
               </div>
 
               <div className="department-content">
+                <div className="content-header">
+                  <h2>ABOUT {departments.title}</h2>
+                  <div className="content-divider"></div>
+                </div>
+                
+                <div className="content-body">
+                  {parse(departments.content)}
+                </div>
 
-                <section className="about-department">
-                  <div className="section-label">About the Department</div>
-                  <h2>{department.title} Care at NEO Hospital</h2>
-                  <div className="section-line"></div>
-                  <div className="content-body">
-                    {parse(department.content || "")}
-                  </div>
-                </section>
-
-                <section
-                  className="department-doctors"
-                  aria-labelledby="department-doctors-title"
-                >
-                  <div className="doctors-section-header">
-                    <div>
-                      <span className="section-label">Meet Our Specialists</span>
-                      <h2 id="department-doctors-title">
-                        Our {department.title} Doctors
-                      </h2>
-                      <div className="section-line"></div>
-                    </div>
-                    {doctors.length > 0 && (
-                      <div className="doctor-count">
-                        <strong>{doctors.length}</strong>
-                        <span>{doctors.length === 1 ? "Specialist" : "Specialists"}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {doctorLoading ? (
-                    <div className="doctor-list-loading">
-                      <div className="loading-spinner small"></div>
-                      <span>Loading our specialists...</span>
-                    </div>
-                  ) : doctors.length > 0 ? (
-                    <div className="department-doctor-grid">
-                      {doctors.map((doctor) => {
-                        const doctorName = doctor?.drTitle || "NEO Hospital Doctor";
-                        const doctorSlug = doctor?.drSlug;
-                        const designation =
-                          doctor?.drDesignation ||
-                          doctor?.drSpecialist ||
-                          doctor?.drDepartment ||
-                          "Specialist";
-                        const qualification = doctor?.drQualification;
-                        const image = doctor?.drImage
-                          ? `${API}/uploads/doctors/${doctor.drImage}`
-                          : fallbackImage;
-                        const profilePath = doctorSlug
-                          ? `/doctor-details/${doctorSlug}`
-                          : "/doctors";
-
-                        return (
-                          <article
-                            className="department-doctor-card"
-                            key={doctor?._id || doctorSlug || doctorName}
-                          >
-                            <div className="doctor-photo-wrap">
-                              <img
-                                src={image}
-                                alt={`${doctorName}, ${designation}`}
-                                className="doctor-photo"
-                                loading="lazy"
-                                onError={(event) => {
-                                  event.currentTarget.src = fallbackImage;
-                                }}
-                              />
-                              <span className="doctor-specialist-badge">
-                                <i className="fa fa-check-circle"></i>
-                                Verified Specialist
-                              </span>
-                            </div>
-
-                            <div className="doctor-card-content">
-                              <span className="doctor-department">
-                                {department.title}
-                              </span>
-
-                              <h3>{doctorName}</h3>
-
-                              <p className="doctor-designation">
-                                {designation}
-                              </p>
-
-                              {qualification && (
-                                <p className="doctor-qualification">
-                                  {qualification}
-                                </p>
-                              )}
-
-                              {doctor?.drExperience && (
-                                <p className="doctor-experience">
-                                  <i className="fa fa-briefcase"></i>
-                                  {doctor.drExperience}+ years experience
-                                </p>
-                              )}
-
-                              <div className="doctor-actions">
-                                <Link
-                                  to={profilePath}
-                                  className="book-doctor-btn"
-                                >
-                                  <span>Book Appointment</span>
-                                  <i className="fa fa-arrow-right"></i>
-                                </Link>
-
-                                {doctorSlug && (
-                                  <Link
-                                    to={profilePath}
-                                    className="view-profile-btn"
-                                  >
-                                    View Profile
-                                  </Link>
-                                )}
-                              </div>
-                            </div>
-                          </article>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="no-doctors-message">
-                      <div className="no-doctors-icon">
-                        <i className="fa fa-user-md"></i>
-                      </div>
-                      <h3>Specialists coming soon</h3>
-                      <p>
-                        Doctor information for this department will be updated soon.
-                      </p>
-                    </div>
-                  )}
-                </section>
-
+                {/* Action Buttons */}
+                <div className="action-buttons">
+                  <Link to="/doctors" className="btn btn-secondary">
+                    <i className="fa fa-user-md"></i>
+                    View Doctors
+                  </Link>
+                </div>
               </div>
             </main>
           </div>
         </div>
       </section>
+      {/* Quick Stats Section (if any) */}
+      {/* Place Footer at the very bottom */}
     </>
   );
 }
