@@ -183,14 +183,13 @@ function Admin() {
                     <h4>
                       Doctors Active :{" "}
                       <span>
-                      {loading
+                         {loading
                           ? "..."
                           : counts.doctorDeactive}
                       </span>
                     </h4>
 
-                    
-                    </h4>
+                   
                   </div>
                 </div>
 
