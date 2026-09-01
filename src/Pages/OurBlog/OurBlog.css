@@ -308,3 +308,45 @@
     font-size: 23px;
   }
 }
+
+/* Show maximum 15 Latest Blogs at once, then scroll */
+.latest-blogs-list {
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 8px;
+}
+
+/* Each item gets a predictable height so 15 items fit cleanly. */
+.latest-blogs-list .card-body {
+  min-height: 58px;
+  box-sizing: border-box;
+}
+
+/* Related Articles: keep the section compact when there are 3-4 cards.
+   On smaller screens, allow horizontal/vertical scrolling instead of
+   pushing the whole page excessively long. */
+.related-articles-grid {
+  max-height: 470px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  scrollbar-width: thin;
+}
+
+.related-articles-grid::-webkit-scrollbar,
+.latest-blogs-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.related-articles-grid::-webkit-scrollbar-thumb,
+.latest-blogs-list::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #cbd8dc;
+}
+
+@media (max-width: 767px) {
+  .related-articles-grid {
+    max-height: 620px;
+  }
+}
