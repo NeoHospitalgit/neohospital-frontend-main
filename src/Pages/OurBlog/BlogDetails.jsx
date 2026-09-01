@@ -17,6 +17,7 @@ const BlogDetails = () => {
 
   const [blogs, setBlogs] = useState([]);
   const [relatedBlogs, setRelatedBlogs] = useState([]);
+  const [relatedSlide, setRelatedSlide] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -207,6 +208,7 @@ const BlogDetails = () => {
         if (!controller.signal.aborted) {
           setBlogs([currentBlog, ...blogList]);
           setRelatedBlogs(sameCategoryBlogs);
+          setRelatedSlide(0);
         }
       } catch (err) {
         if (err.name === "AbortError") return;
@@ -464,31 +466,78 @@ const BlogDetails = () => {
                   </p>
                 </div>
 
-                <div className="row related-articles-grid">
-                  {relatedBlogs.map((value, index) => (
-                    <div
-                      className="col-lg-4 col-md-6 col-12 related-article-col"
-                      key={
-                        value._id ||
-                        value.blog_slug ||
-                        index
-                      }
-                    >
-                      <BlogCard
-                        blogimage={
-                          value.blog_image
-                            ? `${API}/uploads/blogs/${value.blog_image}`
-                            : ""
+                <div className="related-articles-slider">
+                    {relatedBlogs.length > 3 && (
+                      <button
+                        type="button"
+                        className="related-slider-arrow related-slider-prev"
+                        onClick={() =>
+                          setRelatedSlide((slide) =>
+                            Math.max(0, slide - 1)
+                          )
                         }
-                        title={value.blog_title}
-                        description={value.blog_content}
-                        blogslug={value.blog_slug}
-                        author={value.blog_auther}
-                        blogdate={value.blog_date}
-                      />
+                        disabled={relatedSlide === 0}
+                        aria-label="Previous related articles"
+                      >
+                        <i className="fa fa-chevron-left"></i>
+                      </button>
+                    )}
+
+                    <div className="related-articles-viewport">
+                      <div
+                        className="related-articles-track"
+                        style={{
+                          transform: `translateX(-${relatedSlide * 100}%)`,
+                        }}
+                      >
+                        {relatedBlogs.map((value, index) => (
+                          <div
+                            className="related-article-slide"
+                            key={
+                              value._id ||
+                              value.blog_slug ||
+                              index
+                            }
+                          >
+                            <BlogCard
+                              blogimage={
+                                value.blog_image
+                                  ? `${API}/uploads/blogs/${value.blog_image}`
+                                  : ""
+                              }
+                              title={value.blog_title}
+                              description={value.blog_content}
+                              blogslug={value.blog_slug}
+                              author={value.blog_auther}
+                              blogdate={value.blog_date}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  ))}
-                </div>
+
+                    {relatedBlogs.length > 3 && (
+                      <button
+                        type="button"
+                        className="related-slider-arrow related-slider-next"
+                        onClick={() =>
+                          setRelatedSlide((slide) =>
+                            Math.min(
+                              Math.ceil(relatedBlogs.length / 3) - 1,
+                              slide + 1
+                            )
+                          )
+                        }
+                        disabled={
+                          relatedSlide >=
+                          Math.ceil(relatedBlogs.length / 3) - 1
+                        }
+                        aria-label="Next related articles"
+                      >
+                        <i className="fa fa-chevron-right"></i>
+                      </button>
+                    )}
+                  </div>
               </section>
             )}
           </div>
