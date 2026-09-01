@@ -191,33 +191,7 @@ function DetailsDepartment() {
             </aside>
 
             <main className="main-section">
-              <div className="department-header">
-                <div className="department-image-container">
-                  <img
-                    src={`${API}/uploads/categories/${department.image}`}
-                    alt={department.title}
-                    className="department-image"
-                    loading="lazy"
-                  />
-                  <div className="image-overlay">
-                    <span className="department-badge">
-                      {department.title}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="department-content">
-                <div className="content-header">
-                  <h1>ABOUT {department.title}</h1>
-                  <div className="content-divider"></div>
-                </div>
-
-                <div className="content-body">
-                  {parse(department.content || "")}
-                </div>
-
-                {/* Client requirement:
+               {/* Client requirement:
                     Show the department's complete doctor team near the top,
                     with photo, name, designation, profile and booking actions.
                     The old generic "View Doctors" -> /doctors CTA is removed. */}
@@ -328,6 +302,33 @@ function DetailsDepartment() {
                     </div>
                   )}
                 </section>
+              <div className="department-header">
+                <div className="department-image-container">
+                  <img
+                    src={`${API}/uploads/categories/${department.image}`}
+                    alt={department.title}
+                    className="department-image"
+                    loading="lazy"
+                  />
+                  <div className="image-overlay">
+                    <span className="department-badge">
+                      {department.title}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="department-content">
+                <div className="content-header">
+                  <h1>ABOUT {department.title}</h1>
+                  <div className="content-divider"></div>
+                </div>
+
+                <div className="content-body">
+                  {parse(department.content || "")}
+                </div>
+
+               
               </div>
             </main>
           </div>
