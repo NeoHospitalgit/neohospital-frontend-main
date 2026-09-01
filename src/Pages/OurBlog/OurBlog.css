@@ -354,3 +354,98 @@
   overflow: visible !important;
   padding-right: 0;
 }
+
+/* =========================================
+   Related Articles Slider
+   ========================================= */
+
+.related-articles-slider {
+  position: relative;
+  width: 100%;
+  padding: 0 42px;
+}
+
+.related-articles-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.related-articles-track {
+  display: flex;
+  width: 100%;
+  transition: transform .35s ease;
+  will-change: transform;
+}
+
+.related-article-slide {
+  flex: 0 0 33.333333%;
+  width: 33.333333%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.related-article-slide .neo-blog-card {
+  width: 100%;
+}
+
+.related-slider-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  width: 38px;
+  height: 38px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  border: 1px solid #dce6e9;
+  border-radius: 50%;
+  background: #fff;
+  color: #087d79;
+  box-shadow: 0 5px 16px rgba(20,55,65,.12);
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.related-slider-arrow:hover:not(:disabled) {
+  background: #0db7ad;
+  border-color: #0db7ad;
+  color: #fff;
+}
+
+.related-slider-arrow:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.related-slider-prev {
+  left: 0;
+}
+
+.related-slider-next {
+  right: 0;
+}
+
+@media (max-width: 991px) {
+  .related-article-slide {
+    flex-basis: 50%;
+    width: 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  .related-articles-slider {
+    padding: 0 35px;
+  }
+
+  .related-article-slide {
+    flex-basis: 100%;
+    width: 100%;
+    padding: 0 4px;
+  }
+
+  .related-slider-arrow {
+    width: 34px;
+    height: 34px;
+  }
+}
