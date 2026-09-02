@@ -104,7 +104,7 @@ const Specialty = () => {
               />
             </div>
             <h3>{specialty.title}</h3>
-            <p>{specialty.description}</p>
+            
             <Link to={`https://www.neohospital.com/${specialty.link}`} className="know-more-btn">
               Know More
               <svg

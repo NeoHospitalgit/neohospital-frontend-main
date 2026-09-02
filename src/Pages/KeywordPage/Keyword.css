@@ -216,10 +216,10 @@
 }
 
 .contact-buttons .btn{
-    flex:1;
-    border-radius:10px;
-    font-weight:600;
-        padding: 10px 22px !important;
+    border-radius: 10px;
+    flex: 1 1;
+    font-weight: 600;
+    padding: 6px 19px !important;
 }
 /*==========================================
     Welcome Section

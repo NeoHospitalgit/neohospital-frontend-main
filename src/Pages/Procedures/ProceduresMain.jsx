@@ -40,11 +40,6 @@ function ProceduresMain() {
 
         const data = await response.json();
 
-        console.log(
-          "Procedures API Response:",
-          data
-        );
-
         const list = Array.isArray(data)
           ? data
           : data?.data || [];

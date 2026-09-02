@@ -37,42 +37,6 @@ function CareerForm() {
       return;
     }
 
-    // try {
-    //   var transporter = nodemailer.createTransport({
-    //     service: "gmail",
-    //     auth: {
-    //       user: "smtpmail556@gmail.com",
-    //       pass: "lygerpmdlbrqrehi",
-    //     },
-    //   });
-
-    //   // Compose email message
-    //   var mailOptions = {
-    //     from: email,
-    //     to: "krapter.dev@gmail.com",
-    //     subject: "Job Application From Neo Super Speciality Hospital",
-    //     html: `
-    //       <p>Name: ${name}</p>
-    //       <p>Phone Number: ${number}</p>
-    //       <p>Email: ${email}</p>
-    //       <p>Address: ${address}</p>
-    //       <p>Qualification: ${qualification}</p>
-    //       <p>Experience: ${experience}</p>
-    //       <p>Apply for: ${apply}</p>
-    //       <p>Message: ${message}</p>
-    //     `,
-    //   };
-
-    // Send email
-
-    // transporter.sendMail(mailOptions, function (error, info) {
-    //   if (error) {
-    //     console.log(error);
-    //   } else {
-    //     console.log("Email sent: " + info.response);
-    //   }
-    // });
-
     setName("");
     setNumber("");
     setEmail("");

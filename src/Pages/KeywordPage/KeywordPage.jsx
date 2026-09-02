@@ -39,15 +39,12 @@ function KeywordPage() {
       setError("");
       setKeyword(null);
 
-      console.log("Keyword Slug:", slug);
 
       const response = await fetch(
         `${API}/api/keywords/keyword/${slug}`
       );
 
       const data = await response.json();
-
-      console.log("Keyword API Response:", data);
 
       if (response.ok && data?.success && data?.data) {
         setKeyword(data.data);
@@ -106,9 +103,14 @@ function KeywordPage() {
           DYNAMIC SEO
           ===================================== */}
 
-      {keyword.seo_head && (
+      {(keyword?.seo_head || keyword?.seo_tag || keyword?.seotags || keyword?.tagdata) && (
         <Helmet>
-          {parse(keyword.seo_head)}
+          {parse(
+            keyword?.seo_head ||
+            keyword?.seo_tag ||
+            keyword?.seotags ||
+            keyword?.tagdata
+          )}
         </Helmet>
       )}
 

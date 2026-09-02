@@ -1,6 +1,7 @@
-.vercel
-.env*
+@"
+.vercel/
 node_modules/
-.env
-.env.local
+build/
+.env*
 *.log
+"@ | Set-Content .gitignore

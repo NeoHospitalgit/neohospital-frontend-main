@@ -22,9 +22,6 @@ function BioMedicalReport() {
 
       const data = await res.json();
 
-      console.log("Bio Medical Status:", res.status);
-      console.log("Bio Medical Response:", data);
-
       if (!res.ok) {
         throw new Error(
           data?.message || "Failed to fetch Bio Medical Reports"

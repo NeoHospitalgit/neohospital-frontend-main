@@ -119,7 +119,6 @@ function Footer() {
 
   const toggleSpecialties = () => {
     setShowSpecialties(!showSpecialties);
-    console.log("Toggle clicked, new state:", !showSpecialties);
   };
 
   return (

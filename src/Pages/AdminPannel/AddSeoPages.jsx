@@ -36,7 +36,7 @@ function AddSeoPages() {
       if (response.ok) {
         const { seopages } = await response.json();
         setSeoPagesData(seopages);
-        console.log(seopages);
+       
       } else {
         const jsonResponse = await response.json();
         const message = jsonResponse.message;

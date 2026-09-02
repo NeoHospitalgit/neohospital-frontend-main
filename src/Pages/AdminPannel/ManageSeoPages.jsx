@@ -21,7 +21,7 @@ function ManageSeoPages() {
       if (response.ok) {
         const data = await response.json();
         setViewSeoPages(data.seopages);
-        console.log(data.seopages);
+       
       }
     } catch (error) {
       console.log(error);

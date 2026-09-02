@@ -37,11 +37,6 @@ function OurService() {
 
         const data = await response.json();
 
-        console.log(
-          "Header API Response:",
-          data
-        );
-
         // =====================================
         // Find Service SEO Record
         // =====================================
@@ -57,11 +52,6 @@ function OurService() {
                 "services"
             )
           : null;
-
-        console.log(
-          "Service SEO:",
-          aboutSeo
-        );
 
         if (!cancelled) {
           setSeo(aboutSeo || null);

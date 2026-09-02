@@ -37,11 +37,6 @@ function Contact() {
 
         const data = await response.json();
 
-        console.log(
-          "Header API Response:",
-          data
-        );
-
         // =====================================
         // Find About SEO Record
         // =====================================
@@ -57,11 +52,6 @@ function Contact() {
                 "contact"
             )
           : null;
-
-        console.log(
-          "About SEO:",
-          contactSeo
-        );
 
         if (!cancelled) {
           setSeo(contactSeo || null);

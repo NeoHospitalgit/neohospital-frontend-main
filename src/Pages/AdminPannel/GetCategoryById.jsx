@@ -50,7 +50,7 @@ function GetCategory() {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+       
         toast.success("Category added successfully");
         setCategoryData({
           title: "",

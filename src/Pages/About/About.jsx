@@ -31,8 +31,6 @@ function About() {
 
         const data = await response.json();
 
-        console.log("Header API Response:", data);
-
         // Find About SEO Record
         const aboutSeo = Array.isArray(data?.header)
           ? data.header.find(
@@ -40,8 +38,6 @@ function About() {
                 item?.page?.trim()?.toLowerCase() === "about"
             )
           : null;
-
-        console.log("About SEO:", aboutSeo);
 
         if (!cancelled) {
           setSeo(aboutSeo || null);

@@ -20,10 +20,6 @@ function Complaints() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // In a real application, you would send this data to your server
-    console.log('Form submitted:', formData);
-    
     // Show success message
     alert(`Thank you ${formData.name}, your complaint has been submitted.`);
     

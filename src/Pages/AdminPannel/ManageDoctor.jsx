@@ -15,7 +15,6 @@ function ManageDoctor() {
   const getViewDoctorsData = useCallback(async () => {
     // Wait until token is available
     if (!authorizationToken) {
-      console.log("Authorization token not available yet");
       return;
     }
 
@@ -32,9 +31,6 @@ function ManageDoctor() {
       );
 
       const data = await response.json();
-
-      console.log("Doctors API Status:", response.status);
-      console.log("Doctors API Response:", data);
 
       if (response.ok) {
         setViewDoctorsData(data.doctors || []);

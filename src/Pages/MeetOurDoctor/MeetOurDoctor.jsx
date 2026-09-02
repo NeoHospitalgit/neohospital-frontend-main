@@ -36,10 +36,7 @@ function MeetOurDoctor() {
 
         const data = await response.json();
 
-        console.log(
-          "Header API Response:",
-          data
-        );
+       
 
         // =====================================
         // Find doctors SEO Record
@@ -57,10 +54,7 @@ function MeetOurDoctor() {
             )
           : null;
 
-        console.log(
-          "About SEO:",
-          doctorsSeo
-        );
+      
 
         if (!cancelled) {
           setSeo(doctorsSeo || null);

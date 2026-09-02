@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/auth";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet";
 import "./Login.css";
 
 export const Login = () => {
@@ -21,6 +22,7 @@ export const Login = () => {
 
   const handleInput = (e) => {
     const { name, value } = e.target;
+
     setUser((prevUser) => ({
       ...prevUser,
       [name]: value,
@@ -29,6 +31,7 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await fetch(`${API}/api/auth/login`, {
         method: "POST",
@@ -42,13 +45,19 @@ export const Login = () => {
 
       if (response.ok) {
         storeTokenInLS(res_data.token);
-        setUser({ email: "", password: "" });
+
+        setUser({
+          email: "",
+          password: "",
+        });
+
         toast.success("Login successful");
         navigate("/admin");
       } else {
         const errorMessage = res_data.extraDetails
           ? res_data.extraDetails
           : res_data.message || "Invalid credentials";
+
         toast.error(errorMessage);
       }
     } catch (error) {
@@ -58,59 +67,80 @@ export const Login = () => {
   };
 
   return (
-    <section className="AdminLoginForm">
-      <div className="row">
-        <div className="col-md-4"></div>
-        <div className="col-md-4">
-          <div className="LoginForm">
-            <form onSubmit={handleSubmit}>
-              <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="email">
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control"
-                  name="email"
-                  value={user.email}
-                  onChange={handleInput}
-                  required
-                />
-              </div>
+    <>
+      <Helmet>
+        <title>Admin Login | NEO Hospital</title>
+        <meta
+          name="robots"
+          content="noindex, nofollow"
+        />
+      </Helmet>
 
-              <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  className="form-control"
-                  name="password"
-                  value={user.password}
-                  onChange={handleInput}
-                  required
-                />
-              </div>
-              <div className="row mb-4">
-                <div className="col">
-                  {/* <a href="#">Forgot password?</a> */}
+      <section className="AdminLoginForm">
+        <div className="row">
+          <div className="col-md-4"></div>
+
+          <div className="col-md-4">
+            <div className="LoginForm">
+              <form onSubmit={handleSubmit}>
+                <div className="form-outline mb-4">
+                  <label
+                    className="form-label"
+                    htmlFor="email"
+                  >
+                    Email address
+                  </label>
+
+                  <input
+                    type="email"
+                    id="email"
+                    className="form-control"
+                    name="email"
+                    value={user.email}
+                    onChange={handleInput}
+                    required
+                  />
                 </div>
-              </div>
 
-              <button
-                type="submit"
-                className="btn btn-primary btn-block mb-4 signin"
-              >
-                Sign in
-              </button>
-            </form>
+                <div className="form-outline mb-4">
+                  <label
+                    className="form-label"
+                    htmlFor="password"
+                  >
+                    Password
+                  </label>
+
+                  <input
+                    type="password"
+                    id="password"
+                    className="form-control"
+                    name="password"
+                    value={user.password}
+                    onChange={handleInput}
+                    required
+                  />
+                </div>
+
+                <div className="row mb-4">
+                  <div className="col">
+                    {/* <a href="#">Forgot password?</a> */}
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block mb-4 signin"
+                >
+                  Sign in
+                </button>
+              </form>
+            </div>
           </div>
+
+          <div className="col-md-4"></div>
         </div>
-        <div className="col-md-4"></div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
