@@ -1,4 +1,5 @@
 import React from "react";
+import "./MeetOurDoctor.css";
 import { Link } from "react-router-dom";
 import fallbackImage from "../../Assets/manpic.png";
 import { useAuth } from "../../store/auth";

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkneohospital=self.webpackChunkneohospital||[]).push([[3150],{3150:function(e,t,n){n.r(t);var u=n(2791),o=n(7689),s=n(2054),a=n(184);t.default=function(){var e=(0,s.aC)().logoutUser;return(0,u.useEffect)((function(){e()}),[e]),(0,a.jsx)(o.Fg,{to:"/"})}}}]);
+//# sourceMappingURL=3150.210bd9fc.chunk.js.map
