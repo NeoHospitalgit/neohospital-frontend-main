@@ -86,7 +86,7 @@ const { API } = useAuth();
                       <img
                         src={`${API}/uploads/Service/${value.image}`}
                         className="img-fluid"
-                      />
+                       width="600" height="400" />
                       <p>{parse(value.serviceDetail)}</p>
                     </div>
                   ))}

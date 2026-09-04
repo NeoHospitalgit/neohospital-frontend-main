@@ -8,7 +8,7 @@ function Supportservices() {
   return (
     <>
       <section className="bannerimg">
-        <img src={patientservice} alt="" srcSet="" className="img-fluid" />
+        <img src={patientservice} alt="" srcSet="" className="img-fluid"  width="1600" height="400" />
       </section>
       <Corevalue />
 
@@ -26,7 +26,7 @@ function Supportservices() {
           </div>
           <div className="col-md-8">
             <div>
-              <img src={Supportservicesimg} alt="" className="img-fluid" />
+              <img src={Supportservicesimg} alt="" className="img-fluid"  width="1998" height="1000" />
               <div>
                 <h3 className="about-title mt-4">
                   <span>Profession Services</span>

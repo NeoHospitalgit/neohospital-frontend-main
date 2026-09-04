@@ -467,6 +467,26 @@ export default async function handler(
     // BLOGS
     // =====================================
 
+    // Redirected/merged blog URLs must not appear in the sitemap.
+    const EXCLUDED_BLOG_SLUGS = new Set([
+      "refractive-errors-explained-myopia-hyperopia-astigmatism-made-simple",
+      "understanding-irregular-periods-expert-advice-from-a-gynecologist",
+      "best-neurology-treatment-for-headache-migraine-nerve-disorders",
+      "exploring-the-phases-of-migraine",
+      "navigating-kidney-stone-passage-and-preventing-recurrence-with-top-nephrologist-in-noida",
+      "clearing-the-way-to-clean-skin-psoriasis-causes-symptoms-and-treatment",
+      "decoding-digestive-health-a-guide-to-gastroenterologists-and-when-to-consult-the-best-gastroenterologists-in-noida",
+      "understanding-hyperpigmentation-causes-treatments-and-prevention-strategies",
+      "best-dermatologist-in-noida-a-closer-look-at-skin-health-services",
+      "why-more-people-are-searching-for-skin-specialists-in-noida-in-2026",
+      "power-of-early-detection-in-cardiovascular-disorders",
+      "know-your-risk-for-heart-disease-tips-to-keep-cardiovascular-issues",
+      "effective-tips-to-keep-your-heart-healthy",
+      "world-heart-day-empowering-communities-to-take-control-of-their-heart-health",
+      "best-orthopaedic-doctor-in-noida-for-knee-pain-back-pain-joint-problems",
+      "advanced-treatments-for-joint-pain-fractures-and-sports-injuries"
+    ]);
+
     const blogs =
       firstArray(
         payloads.blogs,
@@ -501,6 +521,15 @@ export default async function handler(
         );
 
       if (!slug) {
+        continue;
+      }
+
+      // Do not include source blogs that permanently redirect to merged blogs.
+      if (
+        EXCLUDED_BLOG_SLUGS.has(
+          String(slug).trim()
+        )
+      ) {
         continue;
       }
 

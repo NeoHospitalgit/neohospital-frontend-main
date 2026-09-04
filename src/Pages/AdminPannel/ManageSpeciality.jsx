@@ -28,7 +28,7 @@ function ManageCategory() {
         throw new Error("Failed to fetch Speciality data");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -47,7 +47,7 @@ function ManageCategory() {
         toast.error("Failed to delete Speciality");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

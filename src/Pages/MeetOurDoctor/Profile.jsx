@@ -521,16 +521,16 @@ if (!loading && (!doctor || error)) {
 
             <div className="doctor-image-container">
 
-              <img
-                src={doctorImage}
-                alt={doctor.drTitle}
-                onError={(e) => {
-                  e.currentTarget.src =
-                    fallbackImage;
-                }}
-                loading="lazy"
-              />
-
+             <img
+              src={doctorImage}
+              alt={doctor.drTitle}
+              width="400"
+              height="300"
+              onError={(e) => {
+                e.currentTarget.src = fallbackImage;
+              }}
+              loading="lazy"
+            />
             </div>
 
             <div className="doctor-info-container">

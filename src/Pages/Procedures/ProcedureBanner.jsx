@@ -95,9 +95,11 @@ function ProcedureBanner({ procedure }) {
 
               <div className="circle-bg"></div>
 
-              <img
+             <img
                 src={bannerImage}
                 alt={title}
+                width="400"
+                height="300"
                 onError={(e) => {
                   e.target.src = BannerImage;
                 }}

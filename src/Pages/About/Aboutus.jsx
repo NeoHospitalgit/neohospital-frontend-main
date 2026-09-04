@@ -27,7 +27,7 @@ At Neo Super Specialty Hospital, we’re not just treating patients—we’re bu
         <div className="about-section" id="about">
           <div className="row">
             <div className="col-md-5">
-              <img src={Doctor} alt="Doctor Group" className="img-fluid" />
+              <img src={Doctor} alt="Doctor Group" className="img-fluid"  width="525" height="476" />
             </div>
             <div className="col-md-7">
               <div className="ourmission">

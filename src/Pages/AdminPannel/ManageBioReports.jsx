@@ -27,7 +27,7 @@ function ManageBioReports() {
         setReports(data.biomedical || []);
       }
     } catch (error) {
-      console.log(error);
+      
       toast.error("Failed to fetch reports");
     }
   };
@@ -52,7 +52,7 @@ function ManageBioReports() {
         toast.error("Failed to delete report");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -118,7 +118,7 @@ function ManageBioReports() {
                                       src={`${API}/uploads/report/${item.image}`}
                                       width="60"
                                       alt="report"
-                                    />
+                                     height="400" />
                                   ) : (
                                     /* PDF */
                                     <a

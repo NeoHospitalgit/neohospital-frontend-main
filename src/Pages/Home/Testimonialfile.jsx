@@ -76,7 +76,7 @@ const Testimonialfile = () => {
             <div className="row align-items-center">
               {/* Left Image */}
               <div className="col-lg-4 col-md-5 mb-4 mb-md-0">
-                <img src={feedbackpic} className="img-fluid rounded shadow" alt="Happy patient giving feedback" />
+                <img src={feedbackpic} className="img-fluid rounded shadow" alt="Happy patient giving feedback"  width="2000" height="2000" />
               </div>
 
               {/* Right Slider Area */}
@@ -105,7 +105,7 @@ const Testimonialfile = () => {
                         alt={`${testimonial.author}'s photo`}
                         className="rounded-circle mb-3"
                         style={{ width: "70px", height: "70px", objectFit: "cover" , margin: "0 0 0 75px"}}
-                      />
+                       width="100" height="100" />
                       <h6 className="mb-1">{testimonial.author}</h6>
                       <div className="text-warning small">
                         {[...Array(5)].map((_, i) => (

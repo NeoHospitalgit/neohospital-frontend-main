@@ -340,7 +340,7 @@ const BlogDetails = () => {
                   alt={blog.blog_title}
                   className="img-fluid"
                   loading="eager"
-                />
+                 width="100%" height="300" />
               )}
 
               <div className="author-info">

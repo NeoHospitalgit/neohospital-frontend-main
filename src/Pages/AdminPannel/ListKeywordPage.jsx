@@ -27,7 +27,7 @@ function ListKeywordPage() {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      
       toast.error("Failed to fetch keywords");
     }
   };
@@ -50,7 +50,7 @@ function ListKeywordPage() {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -121,7 +121,7 @@ function ListKeywordPage() {
                               src={`${API}/uploads/blogs/${item.banner_image}`}
                               alt={item.banner_imageALT}
                               width="60"
-                            />
+                             height="400" />
                           ) : (
                             "-"
                           )}

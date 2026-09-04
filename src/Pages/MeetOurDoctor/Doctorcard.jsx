@@ -13,11 +13,8 @@ function Doctorcard(props) {
 
   return (
     <section className="doclinks">
-      <Link
-        to={`/doctor-details/${props.doctorslug}`}
-      >
+      <Link to={`/doctor-details/${props.doctorslug}`}>
         <div className="doctorcard">
-
           <div className="card">
 
             {/* =========================
@@ -25,27 +22,24 @@ function Doctorcard(props) {
             ========================= */}
 
             <div className="face face1">
-
               <div className="content">
-
                 <img
                   src={imageUrl}
                   alt={
                     props.doctorname ||
                     "NEO Hospital Doctor"
                   }
+                  width="400"
+                  height="300"
                   onError={(e) => {
-                    e.currentTarget.src =
-                      fallbackImage;
+                    e.currentTarget.src = fallbackImage;
                   }}
                 />
 
                 <h3>
                   {props.doctorname}
                 </h3>
-
               </div>
-
             </div>
 
             {/* =========================
@@ -53,7 +47,6 @@ function Doctorcard(props) {
             ========================= */}
 
             <div className="face face2">
-
               <div className="content">
 
                 {props.doctortime && (
@@ -84,11 +77,9 @@ function Doctorcard(props) {
                 </div>
 
               </div>
-
             </div>
 
           </div>
-
         </div>
       </Link>
     </section>
@@ -96,3 +87,4 @@ function Doctorcard(props) {
 }
 
 export default Doctorcard;
+

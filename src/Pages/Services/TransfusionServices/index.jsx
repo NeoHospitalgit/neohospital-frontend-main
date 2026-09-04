@@ -8,7 +8,7 @@ function Transfusionservices() {
   return (
     <>
       <section className="bannerimg">
-        <img src={patientservice} alt="" srcset="" className="img-fluid" />
+        <img src={patientservice} alt="" srcset="" className="img-fluid"  width="1600" height="400" />
       </section>
       <Corevalue />
 
@@ -26,7 +26,7 @@ function Transfusionservices() {
           </div>
           <div className="col-md-8">
             <div>
-              <img src={Transfusionservicesimg} alt="" className="img-fluid" />
+              <img src={Transfusionservicesimg} alt="" className="img-fluid"  width="1999" height="975" />
               <div>
                 <h3 className="about-title mt-4">
                   <span>Transfusion Services</span>

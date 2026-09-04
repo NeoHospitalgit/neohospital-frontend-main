@@ -60,7 +60,7 @@ function Footer() {
         setKeywords(data.data);
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
   const sendEmail = async (e) => {
@@ -217,7 +217,7 @@ function Footer() {
                   <div className="footer-widget">
                     <div className="footer-logo">
                       <Link to="/">
-                        <img src={logo} className="img-fluid" alt="logo" />
+                        <img src={logo} className="img-fluid" alt="logo"  width="500" height="500" />
                       </Link>
                     </div>
                     <div className="footer-text">

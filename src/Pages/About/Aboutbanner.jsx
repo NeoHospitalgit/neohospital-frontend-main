@@ -10,7 +10,7 @@ function Aboutbanner() {
             alt=""
             srcSet=""
             className="banner-img"
-          />
+           width="1920" height="600" />
         </div>
       </section>
     </>

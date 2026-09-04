@@ -23,7 +23,7 @@ function ManageHeader() {
         setViewHeaderData(data.header);
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -42,7 +42,7 @@ function ManageHeader() {
         toast.error("Failed to delete Header");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

@@ -28,7 +28,7 @@ function Manageblog() {
         throw new Error("Failed to fetch blogs data");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -47,7 +47,7 @@ function Manageblog() {
         toast.error("Failed to delete blogs");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

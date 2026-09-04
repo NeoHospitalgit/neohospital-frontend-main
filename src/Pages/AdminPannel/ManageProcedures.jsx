@@ -145,7 +145,7 @@ const fetchProcedureData = async () => {
 
   } catch (error) {
 
-    console.log(error);
+    
     toast.error("Failed to fetch procedure.");
 
   }
@@ -182,7 +182,7 @@ const fetchDepartments = async () => {
 
   } catch (error) {
 
-    console.log(error);
+    
     toast.error("Failed to fetch departments.");
 
   }
@@ -221,7 +221,7 @@ const fetchDoctors = async (departmentId) => {
 
   } catch (error) {
 
-    console.log(error);
+    
     setDoctors([]);
 
   }
@@ -421,7 +421,7 @@ const addProcedure = async () => {
 
   } catch (error) {
 
-    console.log(error);
+    
     toast.error("Failed to add procedure.");
 
   }
@@ -463,7 +463,7 @@ const updateProcedure = async () => {
 
   } catch (error) {
 
-    console.log(error);
+    
     toast.error("Failed to update procedure.");
 
   }

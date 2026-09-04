@@ -8,7 +8,7 @@ function ClinicalServices() {
   return (
     <>
       <section className="bannerimg">
-        <img src={patientservice} alt="" srcSet="" className="img-fluid" />
+        <img src={patientservice} alt="" srcSet="" className="img-fluid"  width="1600" height="400" />
       </section>
       <Corevalue />
 
@@ -26,7 +26,7 @@ function ClinicalServices() {
           </div>
           <div className="col-md-8">
             <div>
-              <img src={clinicalserviceimg} alt="" className="img-fluid" />
+              <img src={clinicalserviceimg} alt="" className="img-fluid"  width="1998" height="1000" />
               
               <p className="mt-4">
                 Clinical services generally refer to the range of healthcare

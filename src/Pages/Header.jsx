@@ -94,7 +94,7 @@ function Header() {
       }
 
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -113,7 +113,7 @@ function Header() {
             src={logo}
             alt="Neo Super Speciality Hospital"
             className="neologo"
-          />
+           width="300" height="100" />
         </Link>
 
         <ul className="navbar-items">
@@ -334,13 +334,13 @@ function Header() {
           src={nbl}
           alt="NBL"
           className="neologo"
-        />
+         width="300" height="100" />
 
         <img
           src={nabhlogo}
           alt="NABH"
           className="neologo"
-        />
+         width="300" height="100" />
 
         <div className={`mobile-navbar ${nav ? "open-nav" : ""}`}>
 
@@ -358,7 +358,7 @@ function Header() {
             src={logo}
             alt="Neo Super Speciality Hospital"
             className="neologo"
-          />
+           width="300" height="100" />
 
           <ul className="navbar-nav">
             {/* ================= MOBILE HOME ================= */}

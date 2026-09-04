@@ -108,7 +108,7 @@ function OurServicecards() {
                 className="card-image"
                 alt={value.altImg || value.title}
                 loading="lazy"
-              />
+               width="600" height="400" />
               <div className="card-overlay"></div>
             </div>
             

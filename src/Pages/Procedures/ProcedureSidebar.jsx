@@ -302,14 +302,15 @@ const handleCallback = async (e) => {
 
                     <div className="doctor-imagess">
 
-                      <img
-                      src={getDoctorImage(doctor)}
-                      alt={doctorName}
-                      onError={(e) => {
-                       
-                        e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
-                      }}
-                    />
+                    <img
+                        src={getDoctorImage(doctor)}
+                        alt={doctorName}
+                        width="400"
+                        height="300"
+                        onError={(e) => {
+                          e.target.src = "https://via.placeholder.com/90x90?text=Doctor";
+                        }}
+                      />
 
                     </div>
 

@@ -12,12 +12,12 @@ function Card({ doctor }) {
                 <div className="content">
                   {doctor.drImage ? (
                     <>
-                      <img src={doctor.drImage} alt={doctor.drTitle} />
+                      <img src={doctor.drImage} alt={doctor.drTitle}  width="400" height="300" />
                       <p>img</p>
                     </>
                   ) : (
                     <>
-                      <img src={fallbackImage} alt="NEO Hospital Doctors" />
+                      <img src={fallbackImage} alt="NEO Hospital Doctors"  width="257" height="230" />
                       <p>no</p>
                     </>
                   )}

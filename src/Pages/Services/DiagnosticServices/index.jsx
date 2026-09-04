@@ -8,7 +8,7 @@ function DiagnosticServices() {
   return (
     <>
       <section className="bannerimg">
-        <img src={patientservice} alt="" srcset="" className="img-fluid" />
+        <img src={patientservice} alt="" srcset="" className="img-fluid"  width="1600" height="400" />
       </section>
       <Corevalue />
 

@@ -8,7 +8,7 @@ function Pharmacyservices() {
   return (
     <>
       <section className="bannerimg">
-        <img src={patientservice} alt="" srcSet="" className="img-fluid" />
+        <img src={patientservice} alt="" srcSet="" className="img-fluid"  width="1600" height="400" />
       </section>
       <Corevalue />
 
@@ -26,7 +26,7 @@ function Pharmacyservices() {
           </div>
           <div className="col-md-8">
             <div>
-              <img src={Pharmacyservicesimg} alt="" className="img-fluid" />
+              <img src={Pharmacyservicesimg} alt="" className="img-fluid"  width="2000" height="1001" />
               <div>
                 <h3 className="about-title">
                   <span>Pharmacy Services</span>

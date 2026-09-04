@@ -101,7 +101,7 @@ const Specialty = () => {
                 src={`sicons/${specialty.id}.svg`} 
                 alt={specialty.title}
                 className="specialty-img"
-              />
+               width="400" height="300" />
             </div>
             <h3>{specialty.title}</h3>
             

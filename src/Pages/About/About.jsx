@@ -77,7 +77,7 @@ function About() {
           src="/abouts.webp"
           alt="About NEO Hospital"
           className="about-banner-image"
-        />
+         width="1920" height="600" />
       </section>
 
       {/* =====================================

@@ -32,7 +32,7 @@ const NeoTestimonialSlider = () => {
                   {testimonials.map((testimonial) => (
                     <div key={testimonial.id} className="testimonial">
                       <div className="testiimg">
-                        <img src={testimonial.person} alt="" srcSet="" />
+                        <img src={testimonial.person} alt="" srcSet=""  width="400" height="300" />
                       </div>
                       <p>{testimonial.text}</p>
                       <a

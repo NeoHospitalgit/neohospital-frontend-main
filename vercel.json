@@ -1,6 +1,118 @@
 {
   "version": 2,
   "routes": [
+     {
+      "src": "^/blog/refractive-errors-explained-myopia-hyperopia-astigmatism-made-simple/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/refractive-errors-explained-myopia-hyperopia-and-astigmatism"
+      }
+    },
+    {
+      "src": "^/blog/understanding-irregular-periods-expert-advice-from-a-gynecologist/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/irregular-periods-hormonal-imbalance-more-expert-care-by-the-best-gynaecologist-in-noida"
+      }
+    },
+    {
+      "src": "^/blog/best-neurology-treatment-for-headache-migraine-nerve-disorders/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/best-neuro-treatment-in-noida-advanced-care-for-stroke-migraine-nerve-disorders"
+      }
+    },
+    {
+      "src": "^/blog/exploring-the-phases-of-migraine/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/taking-control-of-your-migraines-exploring-the-possibility-of-prevention-and-management"
+      }
+    },
+    {
+      "src": "^/blog/navigating-kidney-stone-passage-and-preventing-recurrence-with-top-nephrologist-in-noida/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/breaking-down-kidney-stones-your-guide-to-optimal-care-with-best-nephrologist-in-noida"
+      }
+    },
+    {
+      "src": "^/blog/clearing-the-way-to-clean-skin-psoriasis-causes-symptoms-and-treatment/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/psoriasis-why-it-happens-and-how-to-control-it-before-it-gets-worse"
+      }
+    },
+    {
+      "src": "^/blog/decoding-digestive-health-a-guide-to-gastroenterologists-and-when-to-consult-the-best-gastroenterologists-in-noida/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/what-is-gastroenterology"
+      }
+    },
+    {
+      "src": "^/blog/understanding-hyperpigmentation-causes-treatments-and-prevention-strategies/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/how-to-reduce-dark-spots-naturally-medically"
+      }
+    },
+    {
+      "src": "^/blog/best-dermatologist-in-noida-a-closer-look-at-skin-health-services/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/how-the-best-dermatologist-in-noida-at-neo-hospital-can-cure-acne-permanently"
+      }
+    },
+    {
+      "src": "^/blog/why-more-people-are-searching-for-skin-specialists-in-noida-in-2026/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/how-the-best-dermatologist-in-noida-at-neo-hospital-can-cure-acne-permanently"
+      }
+    },
+    {
+      "src": "^/blog/power-of-early-detection-in-cardiovascular-disorders/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/10-early-warning-signs-of-heart-disease-you-should-never-ignore"
+      }
+    },
+    {
+      "src": "^/blog/know-your-risk-for-heart-disease-tips-to-keep-cardiovascular-issues/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/10-early-warning-signs-of-heart-disease-you-should-never-ignore"
+      }
+    },
+    {
+      "src": "^/blog/effective-tips-to-keep-your-heart-healthy/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/10-early-warning-signs-of-heart-disease-you-should-never-ignore"
+      }
+    },
+    {
+      "src": "^/blog/world-heart-day-empowering-communities-to-take-control-of-their-heart-health/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/10-early-warning-signs-of-heart-disease-you-should-never-ignore"
+      }
+    },
+    {
+      "src": "^/blog/best-orthopaedic-doctor-in-noida-for-knee-pain-back-pain-joint-problems/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/from-minor-injuries-to-major-surgeries-treatment-options-by-the-best-orthopedic-doctor-in-noida"
+      }
+    },
+    {
+      "src": "^/blog/advanced-treatments-for-joint-pain-fractures-and-sports-injuries/?$",
+      "status": 301,
+      "headers": {
+        "Location": "/blog/from-minor-injuries-to-major-surgeries-treatment-options-by-the-best-orthopedic-doctor-in-noida"
+      }
+    },
     {
       "src": "^/orthopaedics/?$",
       "status": 301,
@@ -42,14 +154,27 @@
         "Location": "https://www.neohospital.com/$1"
       }
     },
+
+    {
+      "src": "/(about|specialities|doctors|contact|blog|services|corporate-policies|bio-medical-report|international-patient|gallery|career|privacy-policy|terms-and-conditions|procedures)/?$",
+      "dest": "/api/page-meta?path=$1"
+    },
+
+    {
+      "src": "/(pulmonology|dental|gynaecology|dietetics|neurology|dermatology|anaesthesiology|emergency-medicine|gastrosciences|ent|clinical-psychology|orthopedics|nephrology|neurosurgery|clinical-laboratory|opthalmology|internal-medicine|cardiology|psychiatry|cosmetic-plastic-surgery|radiology|oncology-surgery|occupational-therapy|medical-oncology|urology|neonatology-peadiatrics|general-laparoscopic-surgery|audiologist-and-speech-therapist|physiotherapy|cath-lab|cardiothoracic-vascular-surgery|pediatric-gastroenterology)/?$",
+      "dest": "/api/page-meta?path=$1"
+    },
+
     {
       "src": "/(about|specialities|doctors|contact|blog|services|corporate-policies|bio-medical-report|international-patient|gallery|career|login|logout|privacy-policy|terms-and-conditions|procedures)/?$",
       "dest": "/index.html"
     },
+
     {
       "src": "/(pulmonology|dental|gynaecology|dietetics|neurology|dermatology|anaesthesiology|emergency-medicine|gastrosciences|ent|clinical-psychology|orthopedics|nephrology|neurosurgery|clinical-laboratory|opthalmology|internal-medicine|cardiology|psychiatry|cosmetic-plastic-surgery|radiology|oncology-surgery|occupational-therapy|medical-oncology|urology|neonatology-peadiatrics|general-laparoscopic-surgery|audiologist-and-speech-therapist|physiotherapy|cath-lab|cardiothoracic-vascular-surgery|pediatric-gastroenterology)/?$",
       "dest": "/index.html"
     },
+
     {
       "src": "^/doctor-details/([^/]+)/?$",
       "dest": "/api/doctor?slug=$1"
@@ -66,45 +191,46 @@
       "src": "^/doctor/([^/]+)/?$",
       "dest": "/api/doctor-keyword?slug=$1"
     },
+
     {
       "src": "/(service|treatment)/.*",
       "dest": "/index.html"
     },
+
     {
       "src": "/(admin|add-header|manage-header|add-testimonials|manage-testimonials|add-seopages|manage-seopages|add-blog|manage-blog|add-specialities|manage-specialities|add-doctors|manage-doctors|add-home-doctors|manage-home-doctors|manage-service|add-service|add-service-category|manage-service-category|manage-bio-medical-report|manage-medical-report|appointments|add-keywords|list-keywords|add-keyword|add-procedures|list-procedures)/.*",
       "dest": "/index.html"
     },
+
     {
       "src": "^/sitemap\\.xml$",
       "dest": "/api/sitemap"
     },
+
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, s-maxage=31536000, immutable"
+      },
+      "continue": true
+    },
+
+    {
+      "src": "/images/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, stale-while-revalidate=604800"
+      },
+      "continue": true
+    },
+
     {
       "handle": "filesystem"
     },
+
     {
       "src": "/.*",
       "status": 404,
       "dest": "/index.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/static/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/images/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=604800"
-        }
-      ]
     }
   ]
 }

@@ -8,7 +8,7 @@ function Professionsservices() {
   return (
     <>
       <section className="bannerimg">
-        <img src={patientservice} alt="" srcSet="" className="img-fluid" />
+        <img src={patientservice} alt="" srcSet="" className="img-fluid"  width="1600" height="400" />
       </section>
       <Corevalue />
 
@@ -26,7 +26,7 @@ function Professionsservices() {
           </div>
           <div className="col-md-8">
             <div>
-              <img src={Professionsservicesimg} alt="" className="img-fluid" />
+              <img src={Professionsservicesimg} alt="" className="img-fluid"  width="2000" height="946" />
               <div>
                 <h3 className="about-title mt-4">
                   <span>Profession Services</span>

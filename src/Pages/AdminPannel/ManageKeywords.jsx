@@ -835,7 +835,7 @@ const handleKeyword = (e) => {
                                   alt="Banner"
                                   width="200"
                                   className="img-thumbnail"
-                                />
+                                 height="400" />
                               </div>
                             )}
 

@@ -5,7 +5,7 @@ function Diagnosticinner() {
   return (
     <>
       <div>
-        <img src={clinicalserviceimg} alt="" className="img-fluid" />
+        <img src={clinicalserviceimg} alt="" className="img-fluid"  width="1998" height="1000" />
 
         <p className="mt-4">
           Diagnostic services refer to a range of medical tests and procedures

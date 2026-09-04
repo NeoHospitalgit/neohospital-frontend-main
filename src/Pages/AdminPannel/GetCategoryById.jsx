@@ -62,7 +62,7 @@ function GetCategory() {
       }
     } catch (error) {
       alert("Category not Added");
-      console.log(error);
+      
     }
   };
   return (

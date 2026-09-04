@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 function BlogCard(props) {
   const dateObject = props.blogdate ? new Date(props.blogdate) : null;
+
   const formattedDate =
     dateObject && !Number.isNaN(dateObject.getTime())
       ? dateObject.toLocaleDateString("en-IN", {
@@ -15,6 +16,7 @@ function BlogCard(props) {
 
   const title = props.title || "NEO Hospital Blog";
   const image = props.blogimage || "";
+
   const description = String(props.description || "")
     .replace(/<[^>]*>/g, " ")
     .replace(/\s+/g, " ")
@@ -32,6 +34,8 @@ function BlogCard(props) {
             <img
               src={image}
               alt={title}
+              width="400"
+              height="300"
               loading="lazy"
               onError={(event) => {
                 event.currentTarget.style.display = "none";
@@ -48,6 +52,7 @@ function BlogCard(props) {
       <div className="neo-blog-card-content">
         <div className="neo-blog-card-meta">
           <span className="neo-blog-card-badge">HEALTH BLOG</span>
+
           {formattedDate && (
             <span className="neo-blog-card-date">
               <i className="fa fa-calendar-o"></i>
@@ -57,11 +62,15 @@ function BlogCard(props) {
         </div>
 
         <h2 className="neo-blog-card-title">
-          <Link to={`/blog/${props.blogslug}`}>{title}</Link>
+          <Link to={`/blog/${props.blogslug}`}>
+            {title}
+          </Link>
         </h2>
 
         {description && (
-          <p className="neo-blog-card-description">{description}</p>
+          <p className="neo-blog-card-description">
+            {description}
+          </p>
         )}
 
         <div className="neo-blog-card-footer">
@@ -83,3 +92,4 @@ function BlogCard(props) {
 }
 
 export default BlogCard;
+

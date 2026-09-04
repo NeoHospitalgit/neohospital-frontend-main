@@ -4,7 +4,7 @@ function Careerbanner() {
   return (
     <>
       <section id="contact">
-        <img src={Careerban} alt="" srcset="" className="banner-img" />
+        <img src={Careerban} alt="" srcset="" className="banner-img"  width="1920" height="600" />
       </section>
     </>
   );

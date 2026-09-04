@@ -52,7 +52,7 @@ function DoctorsSection({
                       }
                       alt={doctor.drTitle}
                       loading="lazy"
-                    />
+                     width="600" height="400" />
                   </div>
 
                   <div className="doctor-body">

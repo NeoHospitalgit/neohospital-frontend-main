@@ -199,7 +199,7 @@ function DetailsDepartment() {
                   src={`${API}/uploads/categories/${department.image}`}
                   alt={department.title}
                   className="department-hero-image"
-                />
+                 width="1920" height="600" />
                 <div className="department-hero-overlay"></div>
                 <div className="department-hero-content">
                   <span className="hero-kicker">
@@ -311,14 +311,15 @@ function DetailsDepartment() {
                                 }
                               >
                                 <div className="doctor-photo-wrap">
-                                  <img
+                                <img
                                     src={image}
                                     alt={`${doctorName}, ${designation}`}
                                     className="doctor-photo"
+                                    width="400"
+                                    height="400"
                                     loading="lazy"
                                     onError={(event) => {
-                                      event.currentTarget.src =
-                                        fallbackImage;
+                                      event.currentTarget.src = fallbackImage;
                                     }}
                                   />
 

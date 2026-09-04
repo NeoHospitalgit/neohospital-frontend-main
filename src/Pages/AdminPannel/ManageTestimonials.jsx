@@ -23,7 +23,7 @@ function ManageTestimonials() {
         setViewTestimonialsData(data.Testimonials);
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -42,7 +42,7 @@ function ManageTestimonials() {
         toast.error("Failed to delete testimonials");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

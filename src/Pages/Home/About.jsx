@@ -7,7 +7,7 @@ function About() {
   return (
     <div className="about-section" id="about">
       <div className="about-image-content">
-        <img src={Doctor} alt="Doctor Group" className="about-image1" />
+        <img src={Doctor} alt="Doctor Group" className="about-image1"  width="525" height="476" />
       </div>
       <div className="about-text-content">
         <h3 className="about-title">

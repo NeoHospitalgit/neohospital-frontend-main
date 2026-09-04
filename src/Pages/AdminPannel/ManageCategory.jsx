@@ -23,7 +23,7 @@ function ManageCategory() {
         setViewCategoriesData(data.category);
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -42,7 +42,7 @@ function ManageCategory() {
         toast.error("Failed to delete category");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

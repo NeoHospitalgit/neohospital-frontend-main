@@ -19,7 +19,7 @@ function BookAppointment() {
               src="/images/neo.png" 
               alt="Neo Hospital" 
               className="background-image"
-            />
+             width="400" height="300" />
 {/*             <div className="video-overlay"></div> */}
           </div>
 

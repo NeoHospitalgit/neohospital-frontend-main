@@ -172,7 +172,7 @@ function AddBioMedicalReport() {
                           width="200"
                           alt="preview"
                           className="mt-2"
-                        />
+                         height="400" />
                       )}
                     </div>
                   </div>

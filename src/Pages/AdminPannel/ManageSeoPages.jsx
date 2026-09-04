@@ -24,7 +24,7 @@ function ManageSeoPages() {
        
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -43,7 +43,7 @@ function ManageSeoPages() {
         toast.error("Failed to delete seopages");
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

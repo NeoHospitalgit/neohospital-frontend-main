@@ -20,7 +20,7 @@ function List() {
     <div className="AdminList">
       <div>
         <div className="text-center">
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="Logo"  width="500" height="500" />
         </div>
         <ul>
           <li className={openMenu === null ? "active" : ""}>
