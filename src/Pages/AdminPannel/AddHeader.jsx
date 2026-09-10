@@ -166,6 +166,7 @@ function AddHeader() {
                            <option value="procedures">Procedures</option>
                            <option value="faq">Faq</option>
                            <option value="terms-and-conditions">Terms and Conditions</option>
+                           <option value="privacy-policy">Privacy policy</option>
                            <option value="gallery">Gallery</option>
                            <option value="career">Career</option>
                            <option value="corporate-policies">Corporate policies</option>
