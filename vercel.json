@@ -154,6 +154,10 @@
         "Location": "https://www.neohospital.com/$1"
       }
     },
+    {
+      "src": "^/$",
+      "dest": "/api/page-meta?path=/"
+    },
 
     {
       "src": "/(about|specialities|doctors|contact|blog|services|corporate-policies|bio-medical-report|international-patient|gallery|career|privacy-policy|terms-and-conditions|procedures)/?$",
