@@ -111,19 +111,39 @@ export default async function handler(req, res) {
     }
 
     // ==========================================
-    // INJECT SEO INTO <HEAD>
+    // INJECT DYNAMIC SEO
     // ==========================================
     if (tagdata) {
-      const headTags = String(tagdata)
+      let headTags = String(tagdata)
         .replace(/<\/?html[^>]*>/gi, "")
-        .replace(/<\/?head[^>]*>/gi, "");
+        .replace(/<\/?head[^>]*>/gi, "")
+        .trim();
+
+      /*
+       * Mark server injected SEO as React Helmet tags.
+       * This prevents Home.jsx Helmet from creating
+       * duplicate title/meta/canonical/OG/Twitter tags.
+       */
+      headTags = headTags.replace(
+        /<(title|meta|link)(\s[^>]*)?>/gi,
+        (match, tagName, attributes = "") => {
+          if (/data-react-helmet\s*=/i.test(attributes)) {
+            return match;
+          }
+
+          return `<${tagName}${attributes} data-react-helmet="true">`;
+        }
+      );
 
       html = html.replace(
         /<head>/i,
-        `<head>\n${headTags}`
+        `<head>\n${headTags}\n`
       );
     }
 
+    // ==========================================
+    // RESPONSE
+    // ==========================================
     res.status(200);
 
     res.setHeader(
