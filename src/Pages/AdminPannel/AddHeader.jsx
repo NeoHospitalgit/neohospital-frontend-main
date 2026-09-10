@@ -163,6 +163,14 @@ function AddHeader() {
                           <option value="services">Services</option>
                           <option value="contact">Contact</option>
                           <option value="blog">Blog</option>
+                           <option value="procedures">Procedures</option>
+                           <option value="faq">Faq</option>
+                           <option value="terms-and-conditions">Terms and Conditions</option>
+                           <option value="gallery">Gallery</option>
+                           <option value="career">Career</option>
+                           <option value="corporate-policies">Corporate policies</option>
+                           <option value="international-patient">International patient</option>
+                           <option value="bio-medical-report">Bio medical report</option>
                         </select>
                       </div>
 
