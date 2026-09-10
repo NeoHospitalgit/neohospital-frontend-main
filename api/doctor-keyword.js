@@ -6,6 +6,9 @@ export default async function handler(req, res) {
       return sendReact404(req, res);
     }
 
+    // =====================================
+    // Fetch keyword page data
+    // =====================================
     const apiResponse = await fetch(
       `https://api.neohospital.com/api/keywords/keyword/${encodeURIComponent(
         slug
@@ -49,7 +52,7 @@ export default async function handler(req, res) {
     let html = await pageResponse.text();
 
     // =====================================
-    // Get SEO data from keyword CMS
+    // Get Dynamic SEO from CMS
     // =====================================
     const seoTags =
       keyword?.seo_head ||
@@ -59,19 +62,97 @@ export default async function handler(req, res) {
       "";
 
     // =====================================
-    // Inject SEO into <head>
+    // Remove existing static SEO
     // =====================================
     if (seoTags) {
-      const headTags = String(seoTags)
+      html = html
+        // Remove existing title
+        .replace(
+          /<title\b[^>]*>[\s\S]*?<\/title>/gi,
+          ""
+        )
+
+        // Remove description
+        .replace(
+          /<meta\b[^>]*(?:name\s*=\s*["']description["']|name\s*=\s*["']title["'])[^>]*>/gi,
+          ""
+        )
+
+        // Remove keywords
+        .replace(
+          /<meta\b[^>]*name\s*=\s*["']keywords["'][^>]*>/gi,
+          ""
+        )
+
+        // Remove robots
+        .replace(
+          /<meta\b[^>]*name\s*=\s*["']robots["'][^>]*>/gi,
+          ""
+        )
+
+        // Remove author
+        .replace(
+          /<meta\b[^>]*name\s*=\s*["']author["'][^>]*>/gi,
+          ""
+        )
+
+        // Remove language
+        .replace(
+          /<meta\b[^>]*name\s*=\s*["']language["'][^>]*>/gi,
+          ""
+        )
+
+        // Remove Open Graph tags
+        .replace(
+          /<meta\b[^>]*property\s*=\s*["']og:[^"']+["'][^>]*>/gi,
+          ""
+        )
+
+        // Remove Twitter tags
+        .replace(
+          /<meta\b[^>]*name\s*=\s*["']twitter:[^"']+["'][^>]*>/gi,
+          ""
+        )
+
+        // Remove canonical
+        .replace(
+          /<link\b[^>]*rel\s*=\s*["']canonical["'][^>]*>/gi,
+          ""
+        );
+    }
+
+    // =====================================
+    // Inject Dynamic SEO
+    // =====================================
+    if (seoTags) {
+      let headTags = String(seoTags)
         .replace(/<\/?html[^>]*>/gi, "")
-        .replace(/<\/?head[^>]*>/gi, "");
+        .replace(/<\/?head[^>]*>/gi, "")
+        .trim();
+
+      // =====================================
+      // Mark SEO as React Helmet managed
+      // =====================================
+      headTags = headTags.replace(
+        /<(title|meta|link)(\s[^>]*)?>/gi,
+        (match, tagName, attributes = "") => {
+          if (/data-react-helmet\s*=/i.test(attributes)) {
+            return match;
+          }
+
+          return `<${tagName}${attributes} data-react-helmet="true">`;
+        }
+      );
 
       html = html.replace(
         /<head>/i,
-        `<head>\n${headTags}`
+        `<head>\n${headTags}\n`
       );
     }
 
+    // =====================================
+    // Response
+    // =====================================
     res.status(200);
 
     res.setHeader(
