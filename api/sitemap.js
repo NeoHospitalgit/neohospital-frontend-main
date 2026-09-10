@@ -9,10 +9,11 @@
  * - Doctors
  * - Specialities
  * - Procedures
+ * - Services
  * - Specialist / Keyword landing pages
  * - SEO / Treatment pages
  *
- * Specialist pages are NOT hard-coded.
+ * Specialist pages and service pages are NOT hard-coded.
  */
 
 const API_BASE = "https://api.neohospital.com";
@@ -80,7 +81,11 @@ const API_ENDPOINTS = {
   // PUBLIC SPECIALIST / KEYWORD PAGES
   keywords: `${API_BASE}/api/keywords/public-keywords`,
 
-  seoPages: `${API_BASE}/api/adminv8/view-seopages`
+  // SEO / TREATMENT PAGES
+  seoPages: `${API_BASE}/api/adminv8/view-seopages`,
+
+  // PUBLIC SERVICES
+  services: `${API_BASE}/api/services/public-services`
 };
 
 
@@ -411,6 +416,38 @@ function extractSeoPageSlug(item) {
     item?.seo_slug ||
     item?.seoSlug ||
     item?.slug
+  );
+}
+
+
+// =====================================
+// SERVICE SLUG EXTRACTORS
+// =====================================
+
+function extractServiceSlug(item) {
+
+  return (
+    item?.slug ||
+    item?.service_slug ||
+    item?.serviceSlug
+  );
+}
+
+
+function extractServiceCategorySlug(item) {
+
+  if (
+    typeof item?.serviceCat === "string"
+  ) {
+    return item.serviceCat;
+  }
+
+  return (
+    item?.serviceCat?.slug ||
+    item?.serviceCat?.category_slug ||
+    item?.serviceCat?.categorySlug ||
+    item?.categorySlug ||
+    item?.category_slug
   );
 }
 
@@ -860,6 +897,81 @@ export default async function handler(
             "monthly",
           priority:
             "0.65"
+        }
+      );
+    }
+
+
+    // =====================================
+    // SERVICES
+    // DYNAMIC SERVICE DETAIL PAGES
+    // =====================================
+
+    const services =
+      firstArray(
+        payloads.services,
+        [
+          "data",
+          "services",
+          "service",
+          "Services",
+          "Service"
+        ]
+      );
+
+    for (
+      const service of services
+    ) {
+
+      if (
+        !isActive(
+          service,
+          [
+            "status",
+            "service_status",
+            "isActive",
+            "active",
+            "published",
+            "isPublished"
+          ]
+        )
+      ) {
+        continue;
+      }
+
+      const serviceSlug =
+        extractServiceSlug(
+          service
+        );
+
+      const categorySlug =
+        extractServiceCategorySlug(
+          service
+        );
+
+      if (
+        !serviceSlug ||
+        !categorySlug
+      ) {
+        continue;
+      }
+
+      addUrl(
+        urls,
+        `/service/${encodeURIComponent(
+          categorySlug
+        )}/${encodeURIComponent(
+          serviceSlug
+        )}`,
+        {
+          lastmod:
+            getLastModified(
+              service
+            ),
+          changefreq:
+            "monthly",
+          priority:
+            "0.75"
         }
       );
     }

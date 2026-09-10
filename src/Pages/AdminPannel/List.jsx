@@ -209,6 +209,24 @@ function List() {
                 </li>
               </ol>
             )}
+            <li
+            onClick={() => toggleSubMenu("faq")}
+            className={openMenu === "faq" ? "active" : ""}
+          >
+            <Link to="/add-faq">FAQ</Link>
+            <i className="fa fa-caret-down"></i>
+          </li>
+
+          {openMenu === "faq" && (
+            <ol>
+              <li>
+                <Link to="/add-faq">Add FAQ</Link>
+              </li>
+              <li>
+                <Link to="/manage-faq">Manage FAQ</Link>
+              </li>
+            </ol>
+          )}
         </ul>
       </div>
     </div>

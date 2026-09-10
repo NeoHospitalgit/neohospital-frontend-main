@@ -18,6 +18,7 @@ import ScrollToTop from "./Pages/ScrollToTop.jsx";
 const KeywordsPage = lazy(() => import("./Pages/KeywordsPage.jsx"));
 const Index = lazy(() => import("./Pages/Home/Home.jsx"));
 const About = lazy(() => import("./Pages/About/About.jsx"));
+
 const OurDepartment = lazy(
   () => import("./Pages/OurDepartment/OurDepartment.jsx")
 );
@@ -166,6 +167,16 @@ const ManageBioReports = lazy(
     import(
       "./Pages/AdminPannel/ManageBioReports.jsx"
     )
+);
+const FAQ = lazy(
+  () => import("./Pages/FAQ/FAQ.jsx")
+);
+const AddFAQ = lazy(
+  () => import("./Pages/AdminPannel/AddFAQ.jsx")
+);
+
+const ManageFAQ = lazy(
+  () => import("./Pages/AdminPannel/ManageFAQ.jsx")
 );
 
 const App = () => {
@@ -329,6 +340,10 @@ const App = () => {
               path="/procedures/:slug"
               element={<ProcedurePage />}
             />
+           <Route
+                path="/faq"
+                element={<FAQ />}
+              />
 
             {/* Protected Admin Routes */}
             <Route
@@ -748,6 +763,38 @@ const App = () => {
                 )
               }
             />
+            <Route
+                path="/add-faq"
+                element={
+                  isLoggedIn ? (
+                    <AddFAQ />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+
+              <Route
+                path="/add-faq/:id"
+                element={
+                  isLoggedIn ? (
+                    <AddFAQ />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+
+              <Route
+                path="/manage-faq"
+                element={
+                  isLoggedIn ? (
+                    <ManageFAQ />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
           </Routes>
         </Suspense>
 

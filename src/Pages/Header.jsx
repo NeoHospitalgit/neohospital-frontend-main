@@ -296,7 +296,7 @@ function Header() {
             </a>
           </li>
 
-          {/* ================= RESOURCES ================= */}
+         {/* ================= RESOURCES ================= */}
 
           <li
             className="nav-item resources-parent"
@@ -311,7 +311,11 @@ function Header() {
               />
             </span>
 
-            <div className={`resources-dropdown ${resourcesMenu ? "show" : ""}`}>
+            <div
+              className={`resources-dropdown ${
+                resourcesMenu ? "show" : ""
+              }`}
+            >
               <Link
                 className="resources-link"
                 to="/corporate-policies"
@@ -324,6 +328,13 @@ function Header() {
                 to="/bio-medical-report"
               >
                 Bio Medical Report
+              </Link>
+
+              <Link
+                className="resources-link"
+                to="/faq"
+              >
+                FAQ
               </Link>
             </div>
           </li>
@@ -530,55 +541,68 @@ function Header() {
               </a>
             </li>
 
-            {/* ================= MOBILE RESOURCES ================= */}
+           {/* ================= MOBILE RESOURCES ================= */}
 
-            <li className="nav-item">
+          <li className="nav-item">
 
-              <div
-                className="mobile-speciality-title"
-                onClick={() =>
-                  setMobileResourcesMenu(!mobileResourcesMenu)
-                }
+            <div
+              className="mobile-speciality-title"
+              onClick={() =>
+                setMobileResourcesMenu(!mobileResourcesMenu)
+              }
+            >
+              <span>RESOURCES</span>
+
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={`dropdown-icon ${
+                  mobileResourcesMenu ? "rotate" : ""
+                }`}
+              />
+            </div>
+
+            <div
+              className={`mobile-mega-menu ${
+                mobileResourcesMenu ? "show-mobile-menu" : ""
+              }`}
+            >
+
+              <Link
+                className="mobile-mega-link"
+                to="/corporate-policies"
+                onClick={() => {
+                  setMobileResourcesMenu(false);
+                  openNav();
+                }}
               >
-                <span>RESOURCES</span>
+                Corporate Policies
+              </Link>
 
-                <FontAwesomeIcon
-                  icon={faChevronDown}
-                  className={`dropdown-icon ${mobileResourcesMenu ? "rotate" : ""
-                    }`}
-                />
-              </div>
-
-              <div
-                className={`mobile-mega-menu ${mobileResourcesMenu ? "show-mobile-menu" : ""
-                  }`}
+              <Link
+                className="mobile-mega-link"
+                to="/bio-medical-report"
+                onClick={() => {
+                  setMobileResourcesMenu(false);
+                  openNav();
+                }}
               >
+                Bio Medical Report
+              </Link>
 
-                <Link
-                  className="mobile-mega-link"
-                  to="/corporate-policies"
-                  onClick={() => {
-                    setMobileResourcesMenu(false);
-                    openNav();
-                  }}
-                >
-                  Corporate Policies
-                </Link>
+              <Link
+                className="mobile-mega-link"
+                to="/faq"
+                onClick={() => {
+                  setMobileResourcesMenu(false);
+                  openNav();
+                }}
+              >
+                FAQ
+              </Link>
 
-                <Link
-                  className="mobile-mega-link"
-                  to="/bio-medical-report"
-                  onClick={() => {
-                    setMobileResourcesMenu(false);
-                    openNav();
-                  }}
-                >
-                  Bio Medical Report
-                </Link>
+            </div>
 
-              </div>
-
-            </li>
+          </li>
 
 
           </ul>
