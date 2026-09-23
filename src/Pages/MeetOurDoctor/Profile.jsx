@@ -3,7 +3,7 @@ import React, {
   useEffect,
 } from "react";
 
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "./Profile.css";
 import parse from "html-react-parser";
@@ -55,8 +55,10 @@ function Profile() {
 
   const [showAppointmentForm, setShowAppointmentForm] =
     useState(false);
+  const [openFaq, setOpenFaq] = useState(0);
 
   const { dr } = useParams();
+  const [searchParams] = useSearchParams();
 
   // =====================================
   // Fetch Doctors
@@ -124,6 +126,12 @@ function Profile() {
     (value) =>
       value.drSlug === dr
   );
+
+  useEffect(() => {
+    if (doctor && searchParams.get("appointment") === "1") {
+      setShowAppointmentForm(true);
+    }
+  }, [doctor, searchParams]);
 
   // =====================================
   // Doctor Name
@@ -513,110 +521,53 @@ if (!loading && (!doctor || error)) {
           DOCTOR HEADER
       ===================================== */}
 
-      <div className="doctor-profile-header">
-
-        <div className="container">
-
-          <div className="doctor-header-grid">
-
-            <div className="doctor-image-container">
-
-             <img
-              src={doctorImage}
-              alt={doctor.drTitle}
-              width="400"
-              height="300"
-              onError={(e) => {
-                e.currentTarget.src = fallbackImage;
-              }}
-              loading="lazy"
-            />
+      <div className="premium-profile">
+        <div className="premium-breadcrumb"><div className="premium-container"><span>Doctors</span><b>/</b><strong>{getDoctorDisplayName()}</strong></div></div>
+        <section className="premium-hero">
+          <div className="premium-container premium-hero-grid">
+            <div className="premium-image-card">
+              <img src={doctorImage} alt={doctor.drTitle} onError={(e) => { e.currentTarget.src = fallbackImage; }} />
+              <span className="premium-experience-badge"><strong>{doctor.drExperience || "10"}+</strong><small>Years Experience</small></span>
             </div>
-
-            <div className="doctor-info-container">
-
-              <h1>
-                {doctor.drTitle}
-              </h1>
-
-              <p className="specialty">
-                {doctor.drDepartment}
-              </p>
-
-              <div className="qualifications">
-
-                {formatQualification(
-                  doctor.drQualification
-                )}
-
-              </div>
-
-              <p className="experience">
-
-                {doctor.drExperience
-                  ? `${doctor.drExperience}+ years experience`
-                  : "Experienced Doctor"}
-
-              </p>
-
-              <button
-                className="hero-appointment-btn"
-                onClick={() =>
-                  setShowAppointmentForm(true)
-                }
-              >
-                📅 Book Appointment
-              </button>
-
+            <div className="premium-hero-content">
+              <span className="premium-label">{doctor.drDesignation || "CONSULTANT"}</span>
+              <h1>{doctor.drTitle}</h1>
+              <h2>{(doctor.drDepartment || "SPECIALIST").toUpperCase()}</h2>
+              <div className="premium-tags">{formatQualification(doctor.drQualification)}</div>
+              <p>{doctor.drDesignation || "Consultant"} – {doctor.drDepartment || "Medical Specialist"}. {doctor.drDetail ? String(doctor.drDetail).replace(/<[^>]+>/g, "").slice(0, 220) : "Providing compassionate, expert care for every patient."}</p>
+              <div className="premium-actions"><button type="button" onClick={() => setShowAppointmentForm(true)} className="premium-primary-btn">Book Appointment <span>→</span></button><a href="#doctor-overview" className="premium-outline-btn">View Consultation Info</a></div>
             </div>
-
           </div>
-
-        </div>
-
-      </div>
-
-      {/* =====================================
-          DOCTOR CONTENT
-      ===================================== */}
-
-      <main className="main-content">
-
-        <div className="container">
-
-          <div className="content-full">
-
-            <section className="doctor-content">
-
-              <div className="about-section">
-
-                <h2 className="section-title">
-
-                  <div className="title-icon">
-                    ℹ️
-                  </div>
-
-                  About {getDoctorDisplayName()}
-
-                </h2>
-
-                <div className="about-text">
-
-                  {doctor.drDetail
-                    ? parse(doctor.drDetail)
-                    : "Doctor information will be updated soon."}
-
-                </div>
-
-              </div>
-
+        </section>
+        <section className="premium-stats"><div className="premium-container premium-stats-grid">
+          <div><strong>{doctor.drExperience || "10"}+</strong><span>Years Experience</span></div>
+          <div><strong>{(doctor.drQualification || "—").split(",")[0]}</strong><span>Primary Qualification</span></div>
+          <div><strong>{doctor.drDepartment || "Specialist"}</strong><span>Department</span></div>
+          <div><strong>{doctor.drTiming || "By appointment"}</strong><span>OPD Availability</span></div>
+        </div></section>
+        <main className="premium-container premium-main" id="doctor-overview">
+          <div className="premium-content">
+            <section className="premium-section"><span className="premium-label">DOCTOR PROFILE</span><h2>About {getDoctorDisplayName()}</h2><div className="premium-line" /><div className="premium-detail">{doctor.drDetail ? parse(doctor.drDetail) : <p>Doctor information will be updated soon.</p>}</div></section>
+            <section className="premium-info-grid">
+              {[
+                ["SPECIALITY", doctor.drDepartment || "Specialist"],
+                ["EXPERIENCE", `${doctor.drExperience || "Experienced"} years`],
+                ["QUALIFICATION", doctor.drQualification || "Not available"],
+                ["DESIGNATION", doctor.drDesignation || "Consultant"],
+              ].map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
             </section>
-
+            <section className="premium-opd"><div><span className="premium-label">OPD TIMINGS</span><h3>{doctor.drTiming || "Contact hospital for availability"}</h3><p>Contact hospital for availability</p></div><div className="premium-location"><span>LOCATION</span><strong>Neo Super Speciality Hospital,<br />Sector 50, Noida</strong></div></section>
+            <section className="premium-section premium-credentials"><span className="premium-label">QUALIFICATIONS</span><h2>Education & Credentials</h2><div className="premium-line" /><div className="premium-credential-list">{String(doctor.drQualification || "Qualification not available").split(/[,|;]/).filter(Boolean).map((item, index) => <div key={`${item}-${index}`}><b>{String(index + 1).padStart(2, "0")}</b><span><strong>{item.trim()}</strong><small>Professional qualification</small></span></div>)}</div></section>
+            <section className="premium-faq"><span className="premium-label">FREQUENTLY ASKED QUESTIONS</span><h2>Consultation Information</h2>{[
+              [`What is ${getDoctorDisplayName()}'s speciality?`, `${getDoctorDisplayName()} is a consultant in ${doctor.drDepartment || "healthcare"}.`],
+              ["What are the OPD timings?", doctor.drTiming || "Please contact the hospital for availability."],
+              ["What is the doctor's qualification?", doctor.drQualification || "Qualification details are available on request."],
+            ].map(([question, answer], index) => <div className={`premium-faq-item ${openFaq === index ? "active" : ""}`} key={question}><button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)}><span>{question}</span><b>{openFaq === index ? "−" : "+"}</b></button>{openFaq === index && <p>{answer}</p>}</div>)}</section>
           </div>
-
-        </div>
-
-      </main>
+          <aside className="premium-sidebar"><div className="premium-book-card" id="appointment"><span className="premium-label">CONSULTATION</span><h3>Book an Appointment</h3><p>Schedule a consultation with {getDoctorDisplayName()}.</p><button type="button" className="premium-call-btn" onClick={() => window.location.href = "tel:01204880000"}>Call Hospital</button><button type="button" className="premium-book-btn" onClick={() => setShowAppointmentForm(true)}>Book Appointment</button></div><div className="premium-side-card"><span className="premium-label">QUICK INFORMATION</span><p><span>Doctor</span><strong>{doctor.drTitle}</strong></p><p><span>Department</span><strong>{doctor.drDepartment}</strong></p><p><span>OPD</span><strong>{doctor.drTiming || "By appointment"}</strong></p><p><span>Location</span><strong>Sector 50, Noida</strong></p></div><div className="premium-emergency"><span>NEED IMMEDIATE HELP?</span><strong>Contact Hospital</strong><a href="tel:01204880000">0120-4880000</a></div></aside>
+        </main>
+        <section className="premium-bottom-cta"><div className="premium-container"><div><span>NEO SUPER SPECIALITY HOSPITAL</span><h2>Get the right specialist care</h2><p>Schedule your consultation with our experienced medical specialists.</p></div><button type="button" onClick={() => setShowAppointmentForm(true)} className="premium-primary-btn">Book Appointment <span>→</span></button></div></section>
+      </div>
 
       {/* =====================================
           APPOINTMENT MODAL
