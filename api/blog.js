@@ -1,3 +1,18 @@
+const BLOGS_MISSING_PUBLISHER = new Set([
+  "recurrent-headaches-common-pain-or-serious-neurological-conditions",
+  "silent-warning-signs-your-body-should-never-ignore",
+  "breathlessness-during-daily-activities",
+  "high-blood-pressure-despite-medication",
+  "early-signs-of-kidney-disease-you-should-never-ignore",
+  "frequent-stomach-bloating-when-is-it-more-than-just-indigestion",
+  "dengue-fever-symptoms-causes-cure-and-prevention",
+  "world-senior-citizen-day",
+  "world-breastfeeding-week",
+  "world-mosquito-day",
+  "viral-fever-signs-symptoms-and-prevention-tips",
+  "understanding-cataracts-symptoms-treatment-and-prevention",
+]);
+
 export default async function handler(req, res) {
   try {
     const slug = req.query.slug;
@@ -7,15 +22,15 @@ export default async function handler(req, res) {
     }
 
     // =====================================
-    // FETCH BLOGS
+    // FETCH THE FULL SEO RECORD FOR ONE BLOG
     // =====================================
 
     const apiResponse = await fetch(
-      "https://api.neohospital.com/api/blogs/view-blogs",
+      `https://api.neohospital.com/api/blogs/view-blog/${encodeURIComponent(
+        slug
+      )}`,
       {
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
       }
     );
 
@@ -24,28 +39,13 @@ export default async function handler(req, res) {
     }
 
     const data = await apiResponse.json();
+    const blog = data?.Blog;
 
-    let blogs = [];
-
-    if (Array.isArray(data)) {
-      blogs = data;
-    } else if (Array.isArray(data.Blog)) {
-      blogs = data.Blog;
-    } else if (Array.isArray(data.blogs)) {
-      blogs = data.blogs;
-    } else if (Array.isArray(data.data)) {
-      blogs = data.data;
-    }
-
-    // =====================================
-    // FIND CURRENT BLOG
-    // =====================================
-
-    const blog = blogs.find(
-      (item) => item.blog_slug === slug
-    );
-
-    if (!blog || blog.blog_status === false) {
+    if (
+      !blog ||
+      blog.blog_status !== true ||
+      blog.blog_slug !== slug
+    ) {
       return sendReact404(req, res);
     }
 
@@ -53,19 +53,31 @@ export default async function handler(req, res) {
     // SEO DATA
     // =====================================
 
+    const blogSeo = String(blog.blog_seo || "");
     const pageTitle =
+      getSeoTitle(blogSeo) ||
+      blog.blog_metaTitle ||
       `${blog.blog_title || "NEO Hospital"} | NEO Hospital`;
 
     const metaDescription =
-      blog.blog_meta_description ||
+      getSeoMetaContent(blogSeo, "description") ||
+      blog.blog_metaDescription ||
       `Read about ${
         blog.blog_title || "health"
       } at NEO Hospital.`;
 
-    const canonicalUrl =
-      `https://www.neohospital.com/blog/${
-        blog.blog_slug
-      }`;
+    const metaKeywords =
+      getSeoMetaContent(blogSeo, "keywords") ||
+      blog.blog_metaKeyword;
+    const publisher =
+      getSeoMetaContent(blogSeo, "publisher") ||
+      (BLOGS_MISSING_PUBLISHER.has(blog.blog_slug)
+        ? "NEO Hospital"
+        : "");
+
+    const canonicalUrl = `https://www.neohospital.com/blog/${encodeURIComponent(
+      blog.blog_slug
+    )}`;
 
     // =====================================
     // BLOG IMAGE
@@ -100,6 +112,28 @@ export default async function handler(req, res) {
       blog.blog_auther ||
       blog.blog_author ||
       "NEO Hospital";
+
+    const publishedDate = new Date(blog.blog_date);
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: blog.blog_title || pageTitle,
+      description: metaDescription,
+      mainEntityOfPage: canonicalUrl,
+      ...(Number.isNaN(publishedDate.getTime())
+        ? {}
+        : { datePublished: publishedDate.toISOString() }),
+      author: {
+        "@type": "Organization",
+        name: author,
+      },
+      publisher: {
+        "@type": "Hospital",
+        name: "NEO Hospital",
+        url: "https://www.neohospital.com",
+      },
+      ...(blogImage ? { image: blogImage } : {}),
+    };
 
     // =====================================
     // LOAD REACT INDEX.HTML
@@ -159,6 +193,8 @@ export default async function handler(req, res) {
   )}"
 >
 
+${metaKeywords ? `<meta name="keywords" content="${escapeAttr(metaKeywords)}">` : ""}
+
 <meta
   name="robots"
   content="index, follow"
@@ -170,6 +206,8 @@ export default async function handler(req, res) {
     author
   )}"
 >
+
+${publisher ? `<meta name="publisher" content="${escapeAttr(publisher)}">` : ""}
 
 <link
   rel="canonical"
@@ -299,6 +337,11 @@ ${
   content="Health & Wellness"
 >
 
+<script type="application/ld+json">${JSON.stringify(structuredData).replace(
+      /</g,
+      "\\u003c"
+    )}</script>
+
 ${
   blog.blog_date
     ? `
@@ -313,6 +356,15 @@ ${
 }
 `;
 
+    // Mark server-rendered tags so React Helmet can reconcile them after hydration.
+    const managedSeoTags = seoTags.replace(
+      /<(title|meta|link|script)(\s[^>]*)?>/gi,
+      (match, tagName, attributes = "") =>
+        /data-react-helmet\s*=/i.test(attributes)
+          ? match
+          : `<${tagName}${attributes} data-react-helmet="true">`
+    );
+
     // =====================================
     // INSERT SEO INTO HEAD
     // =====================================
@@ -323,11 +375,11 @@ ${
       html =
         html.replace(
           /<\/head>/i,
-          `${seoTags}\n</head>`
+          `${managedSeoTags}\n</head>`
         );
     } else {
       html =
-        `${seoTags}\n${html}`;
+        `${managedSeoTags}\n${html}`;
     }
 
     // =====================================
@@ -447,6 +499,41 @@ function escapeAttr(
       /'/g,
       "&#39;"
     );
+}
+
+function getSeoTitle(seoHead = "") {
+  const title = String(seoHead).match(
+    /<title\b[^>]*>([\s\S]*?)<\/title>/i
+  )?.[1];
+
+  return title
+    ? decodeHtmlEntities(title.replace(/<[^>]*>/g, "").trim())
+    : "";
+}
+
+function getSeoMetaContent(seoHead = "", name) {
+  const normalizedName = String(name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const tag = String(seoHead).match(
+    new RegExp(
+      `<meta\\b(?=[^>]*\\bname\\s*=\\s*(?:[\\"']${normalizedName}[\\"']|${normalizedName}\\b))[^>]*>`,
+      "i"
+    )
+  )?.[0];
+  const content = tag?.match(
+    /\bcontent\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i
+  );
+  const value = content?.[1] ?? content?.[2] ?? content?.[3] ?? "";
+
+  return decodeHtmlEntities(value.trim());
+}
+
+function decodeHtmlEntities(value) {
+  return String(value)
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
 }
 
 

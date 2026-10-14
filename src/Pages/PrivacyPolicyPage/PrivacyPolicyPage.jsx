@@ -1,26 +1,85 @@
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./PrivacyPolicyPage.css";
 import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
+import { useAuth } from "../../store/auth";
 
 function PrivacyPolicyPage() {
+  const { API } = useAuth();
+  const [seo, setSeo] = useState(null);
+
+  // =====================================
+  // Fetch Privacy Policy SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        const privacySeo = Array.isArray(data?.header)
+          ? data.header.find(
+              (item) =>
+                item?.page?.trim()?.toLowerCase() ===
+                "privacy-policy"
+            )
+          : null;
+
+        if (!cancelled) {
+          setSeo(privacySeo || null);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error("Privacy Policy SEO Error:", error);
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [API]);
+
   return (
     <>
-      <Helmet>
-        <title>Privacy Policy | Neo Hospital</title>
-      </Helmet>
+      {/* =====================================
+          DYNAMIC PRIVACY POLICY SEO
+      ===================================== */}
+
+      {seo?.tagdata && (
+        <Helmet>
+          {parse(seo.tagdata)}
+        </Helmet>
+      )}
 
       <section className="policies-section">
         <div className="policies-header">
-          <h1 className="policies-title">Privacy Policy – Neo Hospital</h1>
-        
+          <h1 className="policies-title">
+            Privacy Policy – Neo Hospital
+          </h1>
+
           <p className="policies-description">
             This website (www.neohospital.com) is owned and operated by
-                Muskan Medical Center Private Limited, operating under the brand
-                name "Neo Hospital".
+            Muskan Medical Center Private Limited, operating under the brand
+            name "Neo Hospital".
           </p>
-        
-         
         </div>
 
         <div className="policy-content">
@@ -30,20 +89,20 @@ function PrivacyPolicyPage() {
             Technology Act, 2000, and the rules made thereunder.
           </p>
 
-         <p>
-          Muskan Medical Center Private Limited ("Company"),
-          operating under the brand name "Neo Hospital",
-          respects your privacy and is dedicated to maintaining
-          the confidentiality of your personal information.
-          This Policy outlines how we collect, store, use,
-          and protect sensitive personal data and information ("SPDI").
-        </p>
-        
-        <p>
-          By accessing or using our website, digital platforms, or availing
-          healthcare services at Neo Hospital, you consent to the terms of
-          this Privacy Policy.
-        </p>
+          <p>
+            Muskan Medical Center Private Limited ("Company"),
+            operating under the brand name "Neo Hospital",
+            respects your privacy and is dedicated to maintaining
+            the confidentiality of your personal information.
+            This Policy outlines how we collect, store, use,
+            and protect sensitive personal data and information ("SPDI").
+          </p>
+
+          <p>
+            By accessing or using our website, digital platforms, or availing
+            healthcare services at Neo Hospital, you consent to the terms of
+            this Privacy Policy.
+          </p>
 
           <h2>2. Information We Collect</h2>
 
@@ -150,8 +209,12 @@ function PrivacyPolicyPage() {
           <p>As per applicable law, you have the right to:</p>
 
           <ul>
-            <li>Access and review the personal information you have shared.</li>
-            <li>Request corrections or updates to your data.</li>
+            <li>
+              Access and review the personal information you have shared.
+            </li>
+            <li>
+              Request corrections or updates to your data.
+            </li>
             <li>
               Withdraw consent for data usage (subject to hospital obligations).
             </li>
@@ -189,16 +252,30 @@ function PrivacyPolicyPage() {
           </p>
 
           <div className="contact-box">
-          <p><strong>Grievance Officer Name:</strong> Dr. Sachin Arora</p>
-          <p><strong>Designation:</strong> Grievance Officer – Neo Hospital</p>
-          <p><strong>Email:</strong> ms@neohospital.com</p>
-          <p><strong>Phone:</strong> 9953110317</p>
-          <p>
-            <strong>Address:</strong>
-            Muskan Medical Center Private Limited (Neo Hospital),
-            D-170A, Sector-50, Noida, Gautam Buddha Nagar, Uttar Pradesh - 201301.
-          </p>
-        </div>
+            <p>
+              <strong>Grievance Officer Name:</strong> Dr. Sachin Arora
+            </p>
+
+            <p>
+              <strong>Designation:</strong> Grievance Officer – Neo Hospital
+            </p>
+
+            <p>
+              <strong>Email:</strong> ms@neohospital.com
+            </p>
+
+            <p>
+              <strong>Phone:</strong> 9953110317
+            </p>
+
+            <p>
+              <strong>Address:</strong>
+              Muskan Medical Center Private Limited (Neo Hospital),
+              D-170A, Sector-50, Noida, Gautam Buddha Nagar,
+              Uttar Pradesh - 201301.
+            </p>
+          </div>
+
           <p>
             The Grievance Officer shall respond to your queries and complaints
             within the statutory timeline prescribed under the Information
@@ -220,4 +297,3 @@ function PrivacyPolicyPage() {
 }
 
 export default PrivacyPolicyPage;
-

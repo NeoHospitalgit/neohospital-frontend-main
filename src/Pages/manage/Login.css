@@ -11,3 +11,8 @@
 .AdminLoginForm .LoginForm .signin{
     width: 100%;
 }
+
+.AdminLoginForm .LoginForm .signin:disabled{
+    cursor: wait;
+    opacity: 0.75;
+}

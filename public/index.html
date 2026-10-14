@@ -4,13 +4,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins&amp;family=Rubik&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&amp;family=Rubik&amp;display=swap" /></noscript>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <!-- fontawsome 6 start -->
 <!--   <script src="https://kit.fontawesome.com/842726e8ec.js" crossorigin="anonymous"></script> -->
   <!-- fontawsome 6 end -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
- 
   <!-- Favicon -->
   <link rel="icon" href="/logo.png" type="image/png" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/logo.png" />
@@ -34,22 +39,35 @@
 
   <meta name="google-site-verification" content="VnWDDxYoLIV0fLC8x_9vPyumoMbiKEiiLpuoyWQyL_U" />
  
-  <!-- 	Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EHCKDVYJ0F"></script>
-
-
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xmcwtncfvw");
-</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-EHCKDVYJ0F');
+
+  const loadAnalytics = () => {
+    const analyticsScript = document.createElement("script");
+    analyticsScript.async = true;
+    analyticsScript.src = "https://www.googletagmanager.com/gtag/js?id=G-EHCKDVYJ0F";
+    document.head.appendChild(analyticsScript);
+
+    if (!["localhost", "127.0.0.1", "::1"].includes(window.location.hostname)) {
+      const clarityScript = document.createElement("script");
+      clarityScript.async = true;
+      clarityScript.src = "https://www.clarity.ms/tag/xmcwtncfvw";
+      document.head.appendChild(clarityScript);
+    }
+  };
+
+  window.addEventListener("load", () => {
+    window.setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(loadAnalytics, { timeout: 4000 });
+      } else {
+        loadAnalytics();
+      }
+    }, 1000);
+  }, { once: true });
 </script>
   
 </head>

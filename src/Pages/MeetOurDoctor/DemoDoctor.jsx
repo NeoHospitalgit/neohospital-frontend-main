@@ -10,7 +10,13 @@ function DemoDoctor() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [department, setDepartment] = useState("");
+  const [experience, setExperience] = useState("");
+  const [gender, setGender] = useState("");
+  const [sortBy, setSortBy] = useState("popular");
   const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 8;
 
   // =====================================
   // Fetch Doctors + Categories
@@ -76,23 +82,30 @@ function DemoDoctor() {
   // =====================================
 
   useEffect(() => {
-    const search = searchQuery
-      .trim()
-      .toLowerCase();
-
-    if (!search) {
-      setFilteredDoctors(doctors);
-      return;
-    }
-
-    const filtered = doctors.filter((doctor) =>
-      doctor.drTitle
-        ?.toLowerCase()
-        .includes(search)
-    );
-
+    const search = searchQuery.trim().toLowerCase();
+    const filtered = doctors.filter((doctor) => {
+      const searchable = [
+        doctor.drTitle,
+        doctor.drDepartment,
+        doctor.drQualification,
+      ].join(" ").toLowerCase();
+      const doctorExperience = Number.parseInt(
+        String(doctor.drExperience || doctor.drYearsExperience || "").match(/\d+/)?.[0] || "0",
+        10
+      );
+      const doctorGender = String(doctor.drGender || doctor.gender || "").toLowerCase();
+      return (!search || searchable.includes(search)) &&
+        (!department || doctor.drDepartment === department) &&
+        (!experience || doctorExperience >= Number(experience)) &&
+        (!gender || doctorGender === gender.toLowerCase());
+    });
     setFilteredDoctors(filtered);
-  }, [searchQuery, doctors]);
+    setCurrentPage(1);
+  }, [searchQuery, department, experience, gender, doctors]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortBy]);
 
   // =====================================
   // Search Change
@@ -102,17 +115,24 @@ function DemoDoctor() {
     setSearchQuery(event.target.value);
   };
 
-  // =====================================
-  // Loading
-  // =====================================
+  const resetFilters = () => {
+    setSearchQuery("");
+    setDepartment("");
+    setExperience("");
+    setGender("");
+  };
 
-  if (isLoading) {
-    return (
-      <div className="text-center py-5">
-        <h3>Loading doctors...</h3>
-      </div>
+  const sortedDoctors = [...filteredDoctors].sort((firstDoctor, secondDoctor) => {
+    if (sortBy !== "name") return 0;
+    return String(firstDoctor.drTitle || "").localeCompare(
+      String(secondDoctor.drTitle || "")
     );
-  }
+  });
+  const totalPages = Math.ceil(sortedDoctors.length / doctorsPerPage);
+  const visibleDoctors = sortedDoctors.slice(
+    (currentPage - 1) * doctorsPerPage,
+    currentPage * doctorsPerPage
+  );
 
   // =====================================
   // Error
@@ -136,127 +156,92 @@ function DemoDoctor() {
 
   return (
     <section className="doctorpage">
-
-      {/* Header */}
-      <div>
-        <div className="row align-items-center">
-
-          <div className="col-md-8">
-            <h1 className="about-title">
-              Meet Our Doctors
-            </h1>
+      <div className="doctor-hero">
+        <div className="doctor-hero-inner">
+          <div className="doctor-hero-copy">
+            <div className="doctor-breadcrumb">Home <span>›</span> Doctors</div>
+            <h1>Meet Our <span>Expert Doctors</span></h1>
+            <p>Our experienced team of doctors is committed to providing world-class, compassionate and personalized healthcare for you and your family.</p>
+            <div className="doctor-highlights">
+              <span><b>♧</b> Highly Qualified<br />Specialists</span>
+              <span><b>♡</b> Patient-Centric<br />Approach</span>
+              <span><b>▦</b> Advanced<br />Medical Facilities</span>
+              <span><b>♢</b> Trusted by<br />Thousands</span>
+            </div>
           </div>
-
-          <div className="col-md-4">
-            <form
-              className="search-bar form-inline my-2 my-lg-0"
-              onSubmit={(e) =>
-                e.preventDefault()
-              }
-            >
-              <input
-                className="form-control mr-sm-2"
-                type="search"
-                placeholder="Search doctors"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </form>
+          <div className="doctor-quote">“Expert Care<br />for a Healthier<br />Tomorrow”</div>
+          <div className="doctor-stats">
+            <div><strong>♟</strong><b>25+</b><small>Years of Excellence</small></div>
+            <div><strong>♧</strong><b>100+</b><small>Expert Doctors</small></div>
+            <div><strong>♣</strong><b>50,000+</b><small>Happy Patients</small></div>
+            <div><strong>♧</strong><b>30+</b><small>Specialities</small></div>
           </div>
-
         </div>
-
-        <p className="about-description">
-          Neo Super Speciality Hospital places
-          paramount importance on patient care,
-          seamlessly merging cutting-edge medical
-          advancements with heartfelt compassion.
-          Our foundational principle is to craft
-          an experience where every patient feels
-          supported, efficient, and valued.
-        </p>
       </div>
 
-      {/* No Doctors */}
-      {filteredDoctors.length === 0 && (
-        <div className="text-center py-5">
-          <h3>No doctors found.</h3>
+      <div className="doctor-filter-bar">
+        <form onSubmit={(e) => e.preventDefault()} className="doctor-search">
+          <span>⌕</span>
+          <input type="search" placeholder="Search by doctor name, specialty or condition..." value={searchQuery} onChange={handleSearchChange} />
+        </form>
+        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+          <option value="">All Departments</option>
+          {categories.map((category) => <option key={category._id || category.title} value={category.title}>{category.title}</option>)}
+        </select>
+        <select value={experience} onChange={(e) => setExperience(e.target.value)}><option value="">Experience</option><option value="10">10+ Years</option><option value="15">15+ Years</option><option value="20">20+ Years</option></select>
+        <select value={gender} onChange={(e) => setGender(e.target.value)}><option value="">Gender</option><option>Male</option><option>Female</option></select>
+        <button className="doctor-search-btn" type="submit">Search</button>
+        <button className="doctor-reset-btn" type="button" onClick={resetFilters}>↻ Reset Filters</button>
+      </div>
+
+      {isLoading ? (
+        <div className="doctor-grid doctor-grid-loading" aria-label="Loading doctors">
+          {Array.from({ length: doctorsPerPage }, (_, index) => (
+            <div className="doctor-skeleton" key={index} aria-hidden="true" />
+          ))}
         </div>
-      )}
-
-      {/* Doctors by Department */}
-      {categories
-        .filter((category) =>
-          filteredDoctors.some(
-            (doctor) =>
-              doctor.drDepartment ===
-              category.title
-          )
-        )
-        .map((category) => (
-
-          <div
-            key={
-              category._id ||
-              category.id ||
-              category.title
-            }
-          >
-
-            <h2>{category.title}</h2>
-
-            <div className="row">
-
-              {filteredDoctors
-                .filter(
-                  (doctor) =>
-                    doctor.drDepartment ===
-                    category.title
-                )
-                .map((doctor) => (
-
-                  <div
-                    className="col-md-3"
-                    key={
-                      doctor._id ||
-                      doctor.id ||
-                      doctor.drSlug
-                    }
-                  >
-
-                    <Doctorcard
-                      doctorpic={
-                        doctor.drImage
-                      }
-                      doctorname={
-                        doctor.drTitle
-                      }
-                      doctordetails={
-                        doctor.drQualification
-                      }
-                      doctorslug={
-                        doctor.drSlug
-                      }
-                      doctordepartment={
-                        doctor.drDepartment
-                      }
-                      doctortime={
-                        doctor.drTiming
-                      }
-                      doctorspecialist={
-                        doctor.drQualification
-                      }
-                    />
-
-                  </div>
-
-                ))}
-
-            </div>
-
+      ) : (
+        <>
+          <div className="doctor-results-head">
+            <strong>Showing {filteredDoctors.length} Doctors</strong>
+            <label>Sort by:
+              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}><option value="popular">Most Popular</option><option value="name">Name</option></select>
+            </label>
           </div>
 
-        ))}
+          {filteredDoctors.length === 0 && (
+            <div className="text-center py-5">
+              <h3>No doctors found.</h3>
+            </div>
+          )}
+
+          <div className="doctor-grid">
+            {visibleDoctors.map((doctor) => (
+              <Doctorcard key={doctor._id || doctor.id || doctor.drSlug} doctorpic={doctor.drImage} doctorname={doctor.drTitle} doctordetails={doctor.drQualification} doctorslug={doctor.drSlug} doctordepartment={doctor.drDepartment} doctortime={doctor.drTiming} doctorspecialist={doctor.drQualification} />
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <nav className="doctor-pagination" aria-label="Doctor pages">
+              <button
+                type="button"
+                onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>Page {currentPage} of {totalPages}</span>
+              <button
+                type="button"
+                onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </nav>
+          )}
+        </>
+      )}
     </section>
   );
 }

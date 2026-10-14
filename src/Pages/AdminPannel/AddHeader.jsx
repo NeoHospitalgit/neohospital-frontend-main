@@ -6,6 +6,25 @@ import { useAuth } from "../../store/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+const servicesCanonical = "https://www.neohospital.com/services";
+const canonicalLinkPattern = /<link\b(?=[^>]*\brel\s*=\s*(?:"canonical"|'canonical'|canonical\b))[^>]*>/gi;
+
+const normalizeHeaderData = (headerData) => {
+  if (String(headerData.page || "").trim().toLowerCase() !== "services") {
+    return headerData;
+  }
+
+  const tagdata = String(headerData.tagdata || "").replace(
+    canonicalLinkPattern,
+    ""
+  );
+
+  return {
+    ...headerData,
+    tagdata: `${tagdata.trim()}\n<link rel="canonical" href="${servicesCanonical}" />`,
+  };
+};
+
 function AddHeader() {
   const { id } = useParams();
   const { authorizationToken, API } = useAuth();
@@ -19,32 +38,32 @@ function AddHeader() {
   });
 
   useEffect(() => {
-    if (id) {
-      fetchHeaderData();
-    }
-  }, [id]);
+    if (!id) return undefined;
 
-  const fetchHeaderData = async () => {
-    try {
-      const response = await fetch(`${URL}/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: authorizationToken,
-        },
-      });
-      if (response.ok) {
-        const { header } = await response.json();
-        setHeaderData(header);
-      } else {
-        const jsonResponse = await response.json();
-        const message = jsonResponse.message;
-        toast.error(message);
+    const fetchHeaderData = async () => {
+      try {
+        const response = await fetch(`${URL}/${id}`, {
+          method: "GET",
+          headers: {
+            Authorization: authorizationToken,
+          },
+        });
+        if (response.ok) {
+          const { header } = await response.json();
+          setHeaderData(header);
+        } else {
+          const jsonResponse = await response.json();
+          const message = jsonResponse.message;
+          toast.error(message);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to fetch header data");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to fetch header data");
-    }
-  };
+    };
+
+    fetchHeaderData();
+  }, [id, URL, authorizationToken]);
 
   const handleHeaderInput = (e) => {
     const { name, value } = e.target;
@@ -62,7 +81,7 @@ function AddHeader() {
           Authorization: authorizationToken,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(headerData),
+        body: JSON.stringify(normalizeHeaderData(headerData)),
       });
 
       if (response.ok) {
@@ -90,7 +109,7 @@ function AddHeader() {
           Authorization: authorizationToken,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(headerData),
+        body: JSON.stringify(normalizeHeaderData(headerData)),
       });
 
       if (response.ok) {

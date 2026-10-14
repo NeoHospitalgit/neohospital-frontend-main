@@ -7,7 +7,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 import logo from "../Assets/index/logo.png";
 import nabhlogo from "../Assets/index/NABH-Logo.png";
@@ -84,23 +83,30 @@ function Header() {
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-")
       .replace(/^-|-$/g, "");
-  const loadProcedures = async () => {
-    try {
-
-     const res = await axios.get(`${API}/api/procedures/public-procedures`);
-
-      if (res.data.success) {
-        setProcedures(res.data.data);
-      }
-
-    } catch (error) {
-      
-    }
-  };
-
   useEffect(() => {
+    const controller = new AbortController();
+
+    const loadProcedures = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/procedures/public-procedures`,
+          { signal: controller.signal }
+        );
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (data.success) {
+          setProcedures(data.data);
+        }
+      } catch (error) {
+        if (error.name !== "AbortError") return;
+      }
+    };
+
     loadProcedures();
-  }, []);
+    return () => controller.abort();
+  }, [API]);
 
   return (
     <>
@@ -113,7 +119,7 @@ function Header() {
             src={logo}
             alt="Neo Super Speciality Hospital"
             className="neologo"
-           width="300" height="100" />
+            width="500" height="500" />
         </Link>
 
         <ul className="navbar-items">
@@ -345,13 +351,13 @@ function Header() {
           src={nbl}
           alt="NBL"
           className="neologo"
-         width="300" height="100" />
+          width="240" height="249" />
 
         <img
           src={nabhlogo}
           alt="NABH"
           className="neologo"
-         width="300" height="100" />
+          width="500" height="500" />
 
         <div className={`mobile-navbar ${nav ? "open-nav" : ""}`}>
 
@@ -369,7 +375,7 @@ function Header() {
             src={logo}
             alt="Neo Super Speciality Hospital"
             className="neologo"
-           width="300" height="100" />
+            width="500" height="500" />
 
           <ul className="navbar-nav">
             {/* ================= MOBILE HOME ================= */}
@@ -637,7 +643,7 @@ function Header() {
 
         <div className="right">
           <div className="labbtn">
-            <a href="tel:01204880000">
+            <a href="tel:0120-4880088">
               EMERGENCY CALL
             </a>
           </div>

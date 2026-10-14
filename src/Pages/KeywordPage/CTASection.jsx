@@ -29,7 +29,7 @@ function CTASection({ title, content, doctorname }) {
             </div>
 
             <a
-              href="tel:01204880088"
+              href="tel:0120-4880088"
               className="cta-call-btn"
             >
               📞 Call Now

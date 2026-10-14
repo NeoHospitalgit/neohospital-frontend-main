@@ -1,5 +1,11 @@
 User-agent: *
 Allow: /
-Disallow:
+Disallow: /admin
+Disallow: /add-
+Disallow: /manage-
+Disallow: /list-
+Disallow: /appointments
+Disallow: /logout
+Disallow: /login
 
 Sitemap: https://www.neohospital.com/sitemap.xml

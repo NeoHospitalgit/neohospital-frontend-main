@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./BioMedicalReport.css";
 import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
 import { useAuth } from "../../store/auth";
 
 function BioMedicalReport() {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [seo, setSeo] = useState(null);
 
   const { API } = useAuth();
 
@@ -43,14 +45,72 @@ function BioMedicalReport() {
     }
   }, [API]);
 
+  // =====================================
+  // Fetch Bio Medical Report SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        const biomedicalSeo = Array.isArray(data?.header)
+          ? data.header.find(
+              (item) =>
+                item?.page?.trim()?.toLowerCase() ===
+                "bio-medical-report"
+            )
+          : null;
+
+        if (!cancelled) {
+          setSeo(biomedicalSeo || null);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error(
+            "Bio Medical Report SEO Error:",
+            error
+          );
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [API]);
+
   // Backend URL
   const BACKEND_URL = API?.replace("/api", "");
 
   return (
     <>
-      <Helmet>
-        <title>Bio Medical Reports | NEO Hospital</title>
-      </Helmet>
+      {/* =====================================
+          DYNAMIC BIO MEDICAL REPORT SEO
+      ===================================== */}
+
+      {seo?.tagdata && (
+        <Helmet>
+          {parse(seo.tagdata)}
+        </Helmet>
+      )}
 
       <section className="policies-section">
 

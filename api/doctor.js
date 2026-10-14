@@ -1,4 +1,243 @@
+const NOINDEX_DOCTOR_SLUGS = new Set([
+  "dt-anjali-porwal",
+  "dt-deepti-choudhary",
+  "dt-shweta-dubey",
+  "dr-ankit-jain",
+  "dr-sanjay-dalal",
+  "dr-shams-gulrej",
+  "dr-yogesh-arora",
+]);
+
+function shouldNoindexDoctor(slug) {
+  return typeof slug === "string" && NOINDEX_DOCTOR_SLUGS.has(slug.trim());
+}
+
+function applyNoindexMetaTagsForDoctor(slug, seoTags) {
+  if (!seoTags || !seoTags.trim() || !shouldNoindexDoctor(slug)) {
+    return seoTags;
+  }
+
+  const metaTags = [
+    '<meta data-react-helmet="true" name="robots" content="noindex, nofollow">',
+    '<meta data-react-helmet="true" name="googlebot" content="noindex, nofollow">',
+    '<meta data-react-helmet="true" name="bingbot" content="noindex, nofollow">',
+  ].join("\n");
+
+  let result = seoTags.replace(
+    /<meta\b[^>]*\bname=["']robots["'][^>]*>/gi,
+    ""
+  );
+  result = result.replace(
+    /<meta\b[^>]*\bname=["']googlebot["'][^>]*>/gi,
+    ""
+  );
+  result = result.replace(
+    /<meta\b[^>]*\bname=["']bingbot["'][^>]*>/gi,
+    ""
+  );
+
+  return `${result}\n${metaTags}`;
+}
+
+const MEDICAL_SPECIALTIES = {
+  "ANAESTHESIOLOGY": "Anesthesia",
+  "CARDIOLOGY": "Cardiovascular",
+  "CARDIOTHORACIC & VASCULAR SURGERY": "Cardiovascular",
+  "CLINICAL LABORATORY": "LaboratoryScience",
+  "CLINICAL PSYCHOLOGY": "Psychiatric",
+  "COSMETIC & PLASTIC SURGERY": "PlasticSurgery",
+  "DENTAL": "Dentist",
+  "DERMATOLOGY": "Dermatologic",
+  "DIETETICS": "DietNutrition",
+  "ENT": "Otolaryngologic",
+  "GASTROSCIENCES": "Gastroenterologic",
+  "GENERAL & LAPAROSCOPIC SURGERY": "Surgical",
+  "GYNAECOLOGY & OBSTETRICS": "Gynecologic",
+  "INTERNAL MEDICINE": "PrimaryCare",
+  "MEDICAL ONCOLOGY": "Oncologic",
+  "NEONATOLOGY & PEADIATRICS": "Pediatric",
+  "NEPHROLOGY": "Renal",
+  "NEUROLOGY": "Neurologic",
+  "NEUROSURGERY": "Surgical",
+  "NEUROSURGERY (CHIEF)": "Surgical",
+  "ONCOLOGY SURGERY": "Oncologic",
+  "OPTHALMOLOGY": "Optometric",
+  "ORTHOPEDICS": "Musculoskeletal",
+  "PEDIATRIC GASTROENTEROLOGY": "Gastroenterologic",
+  "PHYSIOTHERAPY": "Musculoskeletal",
+  "PSYCHIATRY": "Psychiatric",
+  "PULMONOLOGY": "Pulmonary",
+  "RADIOLOGY": "Radiography",
+  "UROLOGY": "Urologic",
+};
+
+function createPhysicianSchema(doctor, slug) {
+  const name =
+    doctor.drTitle ||
+    doctor.drName ||
+    doctor.doctor_name ||
+    doctor.doctorName ||
+    doctor.name;
+  const department =
+    doctor.drDepartment ||
+    doctor.specialization ||
+    doctor.speciality ||
+    doctor.specialty ||
+    doctor.department;
+  const profileUrl =
+    `https://www.neohospital.com/doctor-details/${encodeURIComponent(slug)}`;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Physician",
+    "@id": `${profileUrl}#physician`,
+    url: profileUrl,
+    worksFor: {
+      "@type": "Hospital",
+      "@id": "https://www.neohospital.com/#hospital",
+      name: "NEO Hospital",
+      url: "https://www.neohospital.com/",
+    },
+  };
+
+  if (name) {
+    schema.name = String(name).trim();
+  }
+
+  if (department) {
+    const normalizedDepartment = String(department)
+      .trim()
+      .replace(/\s+/g, " ")
+      .toUpperCase();
+    const specialty = MEDICAL_SPECIALTIES[normalizedDepartment];
+
+    if (specialty) {
+      schema.medicalSpecialty = {
+        "@id": `https://schema.org/${specialty}`,
+      };
+    } else {
+      schema.knowsAbout = String(department).trim();
+    }
+  }
+
+  const image = getDoctorImage(doctor);
+  if (image) {
+    schema.image = image;
+  }
+
+  const qualifications =
+    doctor.drQualification ||
+    doctor.qualification ||
+    doctor.qualifications ||
+    doctor.credentials;
+  const credentials = Array.isArray(qualifications)
+    ? qualifications
+    : typeof qualifications === "string"
+      ? qualifications.split(/[,;\n]/)
+      : [];
+  const validCredentials = credentials
+    .map((credential) => String(credential).trim())
+    .filter(Boolean);
+
+  if (validCredentials.length) {
+    schema.hasCredential = validCredentials.map((credential) => ({
+      "@type": "EducationalOccupationalCredential",
+      name: credential,
+    }));
+  }
+
+  return schema;
+}
+
+function containsPhysicianSchema(value) {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const types = Array.isArray(value["@type"])
+    ? value["@type"]
+    : [value["@type"]];
+
+  return types.includes("Physician");
+}
+
+function removePhysicianSchemasFromJsonLd(value) {
+  if (Array.isArray(value)) {
+    const filtered = value.filter(
+      (item) => !containsPhysicianSchema(item)
+    );
+    return filtered.length ? filtered : null;
+  }
+
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  if (containsPhysicianSchema(value)) {
+    return null;
+  }
+
+  if (Array.isArray(value["@graph"])) {
+    const graph = value["@graph"].filter(
+      (item) => !containsPhysicianSchema(item)
+    );
+
+    if (!graph.length) {
+      return null;
+    }
+
+    return { ...value, "@graph": graph };
+  }
+
+  return value;
+}
+
+function appendPhysicianSchema(markup, doctor, slug) {
+  const withoutDuplicatePhysicianSchemas = markup.replace(
+    /(<script\b(?=[^>]*\btype\s*=\s*["']application\/ld\+json["'])[^>]*>)([\s\S]*?)(<\/script>)/gi,
+    (script, openingTag, schemaMarkup, closingTag) => {
+      try {
+        const schema = JSON.parse(schemaMarkup);
+        const updatedSchema = removePhysicianSchemasFromJsonLd(schema);
+
+        if (updatedSchema === schema) {
+          return script;
+        }
+
+        return updatedSchema
+          ? `${openingTag}${JSON.stringify(updatedSchema).replace(
+              /</g,
+              "\\u003c"
+            )}${closingTag}`
+          : "";
+      } catch (error) {
+        console.error("Invalid existing doctor JSON-LD:", error);
+        return script;
+      }
+    }
+  );
+  const physicianSchema = createPhysicianSchema(doctor, slug);
+  const schemaScript =
+    `<script type="application/ld+json" data-doctor-physician-schema="true">${JSON.stringify(
+      physicianSchema
+    ).replace(/</g, "\\u003c")}</script>`;
+
+  return `${withoutDuplicatePhysicianSchemas}\n${schemaScript}`;
+}
+
 export default async function handler(req, res) {
+  if (req.query?.appointment !== undefined) {
+    const slug = String(req.query.slug || "");
+
+    if (slug) {
+      res.setHeader(
+        "Location",
+        `https://www.neohospital.com/doctor-details/${encodeURIComponent(slug)}`
+      );
+
+      return res.status(301).end();
+    }
+  }
+
   try {
     const slug = req.query.slug;
 
@@ -67,6 +306,10 @@ export default async function handler(req, res) {
       return serveNotFoundPage(req, res);
     }
 
+    if (shouldNoindexDoctor(slug)) {
+      res.setHeader("X-Robots-Tag", "noindex, nofollow");
+    }
+
     // ==========================================
     // EXISTING CMS SEO TAGS
     // ==========================================
@@ -121,10 +364,13 @@ export default async function handler(req, res) {
 
     if (doctorMetaTags) {
 
-      const serverSeoTags =
+      let serverSeoTags =
         prepareServerSeoTags(
           doctorMetaTags
         );
+
+      serverSeoTags = applyNoindexMetaTagsForDoctor(slug, serverSeoTags);
+      serverSeoTags = appendPhysicianSchema(serverSeoTags, doctor, slug);
 
       html =
         injectIntoHead(
@@ -201,7 +447,19 @@ export default async function handler(req, res) {
 <meta
   data-react-helmet="true"
   name="robots"
-  content="index, follow"
+  content="${shouldNoindexDoctor(slug) ? "noindex, nofollow" : "index, follow"}"
+>
+
+<meta
+  data-react-helmet="true"
+  name="googlebot"
+  content="${shouldNoindexDoctor(slug) ? "noindex, nofollow" : "index, follow"}"
+>
+
+<meta
+  data-react-helmet="true"
+  name="bingbot"
+  content="${shouldNoindexDoctor(slug) ? "noindex, nofollow" : "index, follow"}"
 >
 
 <meta
@@ -327,6 +585,8 @@ ${
 `
     : ""
 }
+
+${appendPhysicianSchema("", doctor, slug)}
 `;
 
       html =

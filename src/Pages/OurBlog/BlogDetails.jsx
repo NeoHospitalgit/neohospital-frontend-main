@@ -11,6 +11,31 @@ import { useAuth } from "../../store/auth";
 import NotFound from "../NotFound";
 import "./OurBlog.css";
 
+const BLOGS_MISSING_PUBLISHER = new Set([
+  "recurrent-headaches-common-pain-or-serious-neurological-conditions",
+  "silent-warning-signs-your-body-should-never-ignore",
+  "breathlessness-during-daily-activities",
+  "high-blood-pressure-despite-medication",
+  "early-signs-of-kidney-disease-you-should-never-ignore",
+  "frequent-stomach-bloating-when-is-it-more-than-just-indigestion",
+  "dengue-fever-symptoms-causes-cure-and-prevention",
+  "world-senior-citizen-day",
+  "world-breastfeeding-week",
+  "world-mosquito-day",
+  "viral-fever-signs-symptoms-and-prevention-tips",
+  "understanding-cataracts-symptoms-treatment-and-prevention",
+]);
+
+const BLOGS_MISSING_SOCIAL_IMAGES = new Set([
+  "expert-solutions-for-acne-pigmentation-hair-loss-and-more",
+  "taking-control-of-your-migraines-exploring-the-possibility-of-prevention-and-management",
+]);
+
+const BLOGS_WITH_INVALID_CANONICAL = new Set([
+  "pediatric-pulmonology-best-lung-care-for-children-in-noida",
+  "dry-eye-syndrome-causes-symptoms-and-treatment-in-noida",
+]);
+
 const BlogDetails = () => {
   const { API } = useAuth();
   const { blogs: blogSlug } = useParams();
@@ -280,11 +305,57 @@ const BlogDetails = () => {
     ? `${API}/uploads/blogs/${blog.blog_image}`
     : "";
 
+  const blogSeo = blog.blog_seo || "";
+  const seoCanonical = blogSeo.match(
+    /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>/i
+  )?.[0];
+  const seoCanonicalUrl = seoCanonical?.match(
+    /\bhref\s*=\s*["']([^"']+)["']/i
+  )?.[1];
+  const hasValidCanonical = seoCanonicalUrl === canonicalUrl;
+  const hasOgImage = /<meta\b(?=[^>]*\bproperty\s*=\s*["']og:image["'])/i.test(
+    blogSeo
+  );
+  const hasTwitterImage = /<meta\b(?=[^>]*\bname\s*=\s*["']twitter:image["'])/i.test(
+    blogSeo
+  );
+  const hasPublisher = /<meta\b(?=[^>]*\bname\s*=\s*["']publisher["'])/i.test(
+    blogSeo
+  );
+  const correctedBlogSeo =
+    blogSeo &&
+    BLOGS_WITH_INVALID_CANONICAL.has(blog.blog_slug) &&
+    !hasValidCanonical
+      ? blogSeo.replace(
+          /<link\b(?=[^>]*\brel\s*=\s*["']canonical["'])[^>]*>/gi,
+          ""
+        )
+      : blogSeo;
+
   return (
     <>
       <Helmet>
         {blog.blog_seo && blog.blog_seo.trim() !== "" ? (
-          parse(blog.blog_seo)
+          <>
+            {parse(correctedBlogSeo)}
+            {BLOGS_WITH_INVALID_CANONICAL.has(blog.blog_slug) &&
+              !hasValidCanonical && (
+              <link rel="canonical" href={canonicalUrl} />
+            )}
+            {BLOGS_MISSING_SOCIAL_IMAGES.has(blog.blog_slug) &&
+              !hasOgImage &&
+              blogImage && (
+              <meta property="og:image" content={blogImage} />
+            )}
+            {BLOGS_MISSING_SOCIAL_IMAGES.has(blog.blog_slug) &&
+              !hasTwitterImage &&
+              blogImage && (
+              <meta name="twitter:image" content={blogImage} />
+            )}
+            {!hasPublisher && BLOGS_MISSING_PUBLISHER.has(blog.blog_slug) && (
+              <meta name="publisher" content="NEO Hospital" />
+            )}
+          </>
         ) : (
           <>
             <title>{pageTitle}</title>

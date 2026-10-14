@@ -28,13 +28,10 @@ function DoctorAll() {
 
         try {
 
-          const response =
-            await fetch(
-              `${API}/api/home-doctors/view-home-doctors`
-            );
-
-          const data =
-            await response.json();
+          const response = await fetch(
+            `${API}/api/home-doctors/view-home-doctors`
+          );
+          const data = await response.json();
 
           if (!response.ok) {
 
@@ -49,8 +46,7 @@ function DoctorAll() {
             ...new Map(
               (data?.doctors || [])
                 .map((doc) => [
-                  doc.drSlug ||
-                  doc.drTitle,
+                  doc.drSlug || doc.drTitle,
                   doc,
                 ])
             ).values(),
@@ -59,6 +55,44 @@ function DoctorAll() {
           setHomeDoc(
             uniqueDoctors
           );
+
+          setIsLoading(false);
+
+          const refreshSlugs = uniqueDoctors
+            .map((doctor) => doctor.drSlug)
+            .filter(Boolean);
+
+          if (refreshSlugs.length) {
+            fetch(
+              `${API}/api/doctors/view-doctors?slugs=${encodeURIComponent(refreshSlugs.join(","))}`
+            )
+              .then((latestDoctorsResponse) => {
+                if (!latestDoctorsResponse.ok) return null;
+                return latestDoctorsResponse.json();
+              })
+              .then((latestDoctorsData) => {
+                if (!latestDoctorsData) return;
+
+                const latestDoctorsBySlug = new Map(
+                  (latestDoctorsData?.doctors || []).map((doctor) => [
+                    doctor.drSlug,
+                    doctor,
+                  ])
+                );
+
+                setHomeDoc((currentDoctors) =>
+                  currentDoctors.map((doctor) => ({
+                    ...doctor,
+                    drImage:
+                      latestDoctorsBySlug.get(doctor.drSlug)?.drImage ||
+                      doctor.drImage,
+                  }))
+                );
+              })
+              .catch((refreshError) => {
+                console.error("Latest doctor image refresh failed:", refreshError);
+              });
+          }
 
         } catch (error) {
 
@@ -116,7 +150,7 @@ function DoctorAll() {
                 doctor._id ||
                 doctor.drSlug
               }
-              className="col-md-3"
+              className="col-12 col-md-6 col-lg-3"
             >
 
               <Doctorcard

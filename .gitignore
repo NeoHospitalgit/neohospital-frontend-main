@@ -1,7 +1,6 @@
-@"
 .vercel/
 node_modules/
 build/
 .env*
 *.log
-"@ | Set-Content .gitignore
+.vercel

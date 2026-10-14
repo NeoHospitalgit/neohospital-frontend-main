@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import OurServicebanner from './OurServicebanner';
-import Corevalue from '../About/Corevalue';
 import OurServicecards from './OurServicecards';
-import { Serviceseo } from "../SeoContent";
 
 import { Helmet } from "react-helmet";
 import parse from "html-react-parser";
 
 import { useAuth } from "../../store/auth";
-  
+
+const servicesCanonical = "https://www.neohospital.com/services";
+const canonicalLinkPattern = /<link\b(?=[^>]*\brel\s*=\s*(?:"canonical"|'canonical'|canonical\b))[^>]*>/gi;
+
 function OurService() {
   const { API } = useAuth();
 
@@ -76,11 +76,24 @@ function OurService() {
     };
 
   }, [API]);
+
+  const seoTagdata = seo?.tagdata
+    ? String(seo.tagdata).replace(canonicalLinkPattern, "")
+    : "";
+  const hasServicesCanonical =
+    typeof document !== "undefined" &&
+    Array.from(document.head.querySelectorAll('link[rel="canonical"]')).some(
+      (link) => link.href === servicesCanonical
+    );
+
   return (
     <>
-         {seo?.tagdata && (
+         {seoTagdata && (
         <Helmet>
-          {parse(seo.tagdata)}
+          {parse(seoTagdata)}
+          {!hasServicesCanonical && (
+            <link rel="canonical" href={servicesCanonical} />
+          )}
         </Helmet>
       )}
   {/*           <OurServicebanner />

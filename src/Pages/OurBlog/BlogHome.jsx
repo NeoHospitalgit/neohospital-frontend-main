@@ -95,7 +95,7 @@ function BlogHome() {
       {neoblog.slice(0, 4).map(
         (value, index) => (
           <div
-            className="col-md-3"
+            className="col-12 col-md-6 col-lg-3"
             key={
               value._id ||
               value.id ||

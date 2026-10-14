@@ -6,17 +6,26 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [userRole, setUserRole] = useState("");
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() =>
+    Boolean(localStorage.getItem("token"))
+  );
   const [error, setError] = useState(null);
 
-  const API = "https://api.neohospital.com";
+  const API = process.env.REACT_APP_API_URL || "https://api.neohospital.com";
 
   const authorizationToken = token ? `Bearer ${token}` : "";
 
   // Store Token
-  const storeTokenInLS = (serverToken) => {
+  const storeTokenInLS = (serverToken, authenticatedUser = null) => {
     setToken(serverToken);
     localStorage.setItem("token", serverToken);
+
+    if (authenticatedUser) {
+      setUser(authenticatedUser);
+      setUserRole(authenticatedUser.username || "");
+      setError(null);
+      setIsLoading(false);
+    }
   };
 
   // Logout
@@ -65,8 +74,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (user) {
+      setIsLoading(false);
+      return;
+    }
+
     userAuthentication();
-  }, [token]);
+  }, [token, user]);
 
   return (
     <AuthContext.Provider

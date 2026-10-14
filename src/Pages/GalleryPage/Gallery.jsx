@@ -1,16 +1,75 @@
-import React from "react";
-// import Corevalue from "../About/Corevalue";
+import React, { useEffect, useState } from "react";
 import "./Gallery.css";
 import GalleryPage from "./GalleryPage";
-// import { Contactseo } from "../SeoContent";
-// import { Helmet } from "react-helmet";
-// import parse from "html-react-parser";
+import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
+import { useAuth } from "../../store/auth";
 
 function Contact() {
+  const { API } = useAuth();
+  const [seo, setSeo] = useState(null);
+
+  // =====================================
+  // Fetch Gallery SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        const gallerySeo = Array.isArray(data?.header)
+          ? data.header.find(
+              (item) =>
+                item?.page?.trim()?.toLowerCase() ===
+                "gallery"
+            )
+          : null;
+
+        if (!cancelled) {
+          setSeo(gallerySeo || null);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error("Gallery SEO Error:", error);
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [API]);
+
   return (
     <>
-      {/* <Helmet>{parse(Contactseo.meetafamily)}</Helmet> */}
-      {/* <Corevalue /> */}
+      {/* =====================================
+          DYNAMIC GALLERY SEO
+      ===================================== */}
+
+      {seo?.tagdata && (
+        <Helmet>
+          {parse(seo.tagdata)}
+        </Helmet>
+      )}
+
       <GalleryPage />
     </>
   );

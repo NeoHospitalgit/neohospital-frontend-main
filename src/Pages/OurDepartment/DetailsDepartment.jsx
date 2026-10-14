@@ -7,6 +7,16 @@ import NotFound from "../NotFound";
 import { useAuth } from "../../store/auth";
 import fallbackImage from "../../Assets/manpic.png";
 
+function normalizeSlug(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function DetailsDepartment() {
   const { API } = useAuth();
   const { departid } = useParams();
@@ -43,7 +53,7 @@ function DetailsDepartment() {
         setDepartments(categoryList);
 
         const currentDepartment = categoryList.find(
-          (item) => item?.slug === departid
+          (item) => normalizeSlug(item?.slug) === normalizeSlug(departid)
         );
 
         if (!currentDepartment) {
@@ -52,7 +62,7 @@ function DetailsDepartment() {
         }
 
         const doctorResponse = await fetch(
-          `${API}/api/adminv2/department/${currentDepartment._id}`
+          `${API}/api/doctors/department/${currentDepartment._id}`
         );
         const doctorData = await doctorResponse.json();
 
@@ -90,7 +100,7 @@ function DetailsDepartment() {
   }, [API, departid]);
 
   const department = useMemo(
-    () => departments.find((item) => item?.slug === departid),
+    () => departments.find((item) => normalizeSlug(item?.slug) === normalizeSlug(departid)),
     [departments, departid]
   );
 
@@ -187,7 +197,7 @@ function DetailsDepartment() {
                 <p>Speak with our hospital team for assistance.</p>
                 <button onClick={handleCallNow}>
                   <i className="fa fa-phone"></i>
-                  Call 0120-4880000
+                  Call Helpdesk 0120-4880000
                 </button>
               </div>
             </aside>

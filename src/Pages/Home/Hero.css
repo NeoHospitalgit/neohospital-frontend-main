@@ -26,9 +26,19 @@
     position: relative;
     width: 100%;
     height: 70vh;
+    overflow: hidden;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
   
   .overlay {
@@ -37,7 +47,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgb(19 116 172 / 29%), rgb(24 157 235 / 64%));
+    background: linear-gradient(
+      90deg,
+      rgb(5 28 48 / 78%) 0%,
+      rgb(7 55 79 / 62%) 56%,
+      rgb(13 100 139 / 35%) 100%
+    );
     z-index: 1;
   }
   
@@ -54,6 +69,13 @@
   .text-section {
     max-width: 600px;
     color: #ffffff;
+  }
+
+  .text-headline,
+  .text-title,
+  .text-descritpion,
+  .text-stats-container p {
+    text-shadow: 0 2px 8px rgb(0 0 0 / 45%);
   }
   
   .text-headline {
@@ -202,6 +224,7 @@
   
     .slider-container {
       height: 50vh;
+      background-position: 62% center;
     }
   
     .content-wrapper {

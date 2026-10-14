@@ -25,6 +25,7 @@ const STATIC_URLS = [
   { path: "/doctors", priority: "0.90", changefreq: "weekly" },
   { path: "/contact", priority: "0.80", changefreq: "monthly" },
   { path: "/blog", priority: "0.80", changefreq: "daily" },
+  { path: "/faq", priority: "0.80", changefreq: "weekly" },
   { path: "/services", priority: "0.80", changefreq: "weekly" },
   { path: "/procedures", priority: "0.80", changefreq: "weekly" },
   { path: "/corporate-policies", priority: "0.60", changefreq: "monthly" },
@@ -34,6 +35,7 @@ const STATIC_URLS = [
   { path: "/career", priority: "0.60", changefreq: "monthly" },
   { path: "/privacy-policy", priority: "0.40", changefreq: "yearly" },
   { path: "/terms-and-conditions", priority: "0.40", changefreq: "yearly" },
+   
 
   // Public speciality pages
   { path: "/pulmonology", priority: "0.80", changefreq: "weekly" },
@@ -69,6 +71,16 @@ const STATIC_URLS = [
   { path: "/cardiothoracic-vascular-surgery", priority: "0.80", changefreq: "weekly" },
   { path: "/pediatric-gastroenterology", priority: "0.80", changefreq: "weekly" }
 ];
+
+const NOINDEX_DOCTOR_SLUGS = new Set([
+  "dt-anjali-porwal",
+  "dt-deepti-choudhary",
+  "dt-shweta-dubey",
+  "dr-ankit-jain",
+  "dr-sanjay-dalal",
+  "dr-shams-gulrej",
+  "dr-yogesh-arora",
+]);
 
 const API_ENDPOINTS = {
   blogs: `${API_BASE}/api/blogs/view-blogs`,
@@ -628,6 +640,10 @@ export default async function handler(
         );
 
       if (!slug) {
+        continue;
+      }
+
+      if (NOINDEX_DOCTOR_SLUGS.has(String(slug).trim())) {
         continue;
       }
 

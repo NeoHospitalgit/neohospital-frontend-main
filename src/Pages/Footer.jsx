@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
+import React, { useState, useEffect, useRef } from "react";
 import "./Footer.css";
 import logo from "../Assets/index/logo.png";
 import { Link } from "react-router-dom";
 import Social from "./Home/Social";
-import axios from 'axios';
 import { useAuth } from "../store/auth";
 function Footer() {
-   const { API } = useAuth();
+  const { API } = useAuth();
+  const mapFrameRef = useRef(null);
+  const [shouldLoadMap, setShouldLoadMap] = useState(false);
 
   const [keywords, setKeywords] = useState([]);
   const [Neospecial, setNeospecial] = useState([]);
-  const [error, setError] = useState(null);
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -19,50 +18,72 @@ function Footer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSpecialties, setShowSpecialties] = useState(false);
 
+  useEffect(() => {
+    const mapFrame = mapFrameRef.current;
+    if (!mapFrame) return undefined;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoadMap(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setShouldLoadMap(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "200px 0px" });
+
+    observer.observe(mapFrame);
+    return () => observer.disconnect();
+  }, []);
+
 
   useEffect(() => {
-  if (!API) return;
+    if (!API) return undefined;
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch(
-        `${API}/api/categories/view-category`
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data?.message || "Failed to fetch categories"
+    const controller = new AbortController();
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/categories/view-category`,
+          { signal: controller.signal }
         );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data?.message || "Failed to fetch categories");
+        }
+
+        setNeospecial(data?.category || []);
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("Category API Error:", error);
+        }
       }
+    };
 
-      setNeospecial(data?.category || []);
-    } catch (error) {
-      console.error("Category API Error:", error);
-      setError(error);
-    }
-  };
+    const fetchKeywords = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/keywords/public-keywords`,
+          { signal: controller.signal }
+        );
+        const data = await response.json();
 
-  fetchData();
-  fetchKeywords();
-
-}, [API]);
-  const fetchKeywords = async () => {
-    try {
-      const response = await fetch(
-        `${API}/api/keywords/public-keywords`
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        setKeywords(data.data);
+        if (data.success) {
+          setKeywords(data.data);
+        }
+      } catch (error) {
+        if (error.name !== "AbortError") return;
       }
-    } catch (error) {
-      
-    }
-  };
+    };
+
+    fetchCategories();
+    fetchKeywords();
+
+    return () => controller.abort();
+  }, [API]);
   const sendEmail = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -95,12 +116,16 @@ function Footer() {
     }
 
     try {
-      const response = await axios.post(`https://api.neohospital.com/api/sendmails/send-contact-email`, {
-        name,
-        number,
-        email,
-        message
+      const response = await fetch(`${API}/api/sendmails/send-contact-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, number, email, message }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit feedback");
+      }
+
       if (response.status === 200) {
         alert('Feedback submitted successfully');
         // Reset form fields
@@ -163,7 +188,7 @@ function Footer() {
                     <div className="cta-text">
                       <h2>Find Us :</h2>
                       <span>
-                        <a href="#">
+                        <a href="https://maps.google.com/?q=NEO+Hospital+Noida">
                           {/* NEO HOSPITAL D-170, 170A, 170B, Sector-50, Noida,
                           <br />
                           Gautam Buddh Nagar (U.P) 201301 */}
@@ -177,7 +202,9 @@ function Footer() {
 
                 <div className="col-md-6">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.997586581386!2d77.3675414745703!3d28.56983518692671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce58cda3bc64d%3A0x2e9995b44137c369!2sNEO%20Hospital!5e0!3m2!1sen!2sin!4v1709726316429!5m2!1sen!2sin"
+                    title="NEO Hospital location on Google Maps"
+                    ref={mapFrameRef}
+                    src={shouldLoadMap ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.997586581386!2d77.3675414745703!3d28.56983518692671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce58cda3bc64d%3A0x2e9995b44137c369!2sNEO%20Hospital!5e0!3m2!1sen!2sin!4v1709726316429!5m2!1sen!2sin" : undefined}
                     width="100%"
                     height="150"
                     style={{ padding: "0", margin: "0" }}
@@ -308,14 +335,20 @@ function Footer() {
                       <div>
                         <div className="single-cta">
                           <i className="fa fa-phone"></i>
-                          <a className="fss" href="tel:0120-4880000">
-                            0120-4880000
+                          <a className="fss" href="tel:0120-4880088">
+                            Emergency: 0120-4880088
                           </a>
                         </div>
                         <div className="single-cta">
                           <i className="fa fa-phone"></i>
                           <a className="fss" href="tel:0120-3120000">
-                            0120-3120000
+                            Helpdesk: 0120-3120000
+                          </a>
+                        </div>
+                        <div className="single-cta">
+                          <i className="fa fa-phone"></i>
+                          <a className="fss" href="tel:0120-4880000">
+                            Helpdesk: 0120-4880000
                           </a>
                         </div>
                         <div className="single-cta">

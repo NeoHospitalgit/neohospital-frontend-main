@@ -88,7 +88,7 @@ function MeetOurDoctor() {
       )}
       <Doctorsbanner />
 
-      <section className="Meetourdoctor container mt-5">
+      <section className="Meetourdoctor">
         <DemoDoctor />
       </section>
     </>

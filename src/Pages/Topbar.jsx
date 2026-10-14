@@ -14,6 +14,7 @@ function Topbar() {
           </div>
           <div className="icon">
             <i className="fa fa-phone"></i>
+            <a>Helpdesk - </a>
             <a href="tel:0120-3120000"><span className="emergency-highlight">0120-3120000</span></a>
           </div>
           <div className="icon">

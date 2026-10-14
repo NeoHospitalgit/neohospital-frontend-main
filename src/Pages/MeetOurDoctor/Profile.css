@@ -1274,3 +1274,459 @@ span.data-start::after {
         font-weight: 500;
         box-shadow: 5px 5px 5px grey;
     }
+
+/* Appointment modal refinement */
+.appointment-modal {
+  background: rgba(3, 20, 31, 0.78);
+  backdrop-filter: blur(8px);
+  padding: 1.25rem;
+}
+
+.appointment-modal-content {
+  width: min(100%, 680px);
+  max-height: min(92vh, 820px);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  box-shadow: 0 28px 80px rgba(1, 19, 29, 0.35);
+  scrollbar-width: thin;
+  scrollbar-color: #7c9a9b transparent;
+}
+
+.appointment-card {
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.close-modal {
+  position: absolute;
+  z-index: 2;
+  top: 1rem;
+  right: 1rem;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d6e4e2;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #31545b;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 1;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.close-modal:hover {
+  background: #082f49;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.card-header {
+  padding-right: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.appointment-title {
+  color: #082f49;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  letter-spacing: -0.02em;
+}
+
+.appointment-title::first-letter {
+  color: #0f766e;
+}
+
+.appointment-subtitle {
+  color: #668083;
+  font-size: 0.95rem;
+}
+
+.appointment-note {
+  align-items: center;
+  background: #effaf6;
+  border: 1px solid #c9ebe0;
+  border-left: 4px solid #0f766e;
+  border-radius: 3px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.note-icon {
+  color: #0f766e;
+}
+
+.appointment-note p {
+  color: #31545b;
+}
+
+.appointment-form {
+  gap: 1rem;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  min-height: 48px;
+  border: 1px solid #cddedc;
+  border-radius: 3px;
+  background: #fbfdfc;
+  color: #173b44;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: #0f766e;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+.form-textarea {
+  min-height: 96px;
+}
+
+.form-row {
+  gap: 1rem;
+}
+
+.submit-btn {
+  min-height: 50px;
+  margin-top: 0.25rem;
+  border-radius: 3px;
+  background: #0f766e;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #0b5f59;
+  transform: translateY(-1px);
+}
+
+.contact-infoo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e1ecea;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.contact-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e8f6f1;
+}
+
+.contact-label {
+  color: #789092;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.contact-value {
+  color: #173b44;
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+
+.availability-badge.small {
+  color: #0f766e;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-indicator.small {
+  background: #84cc16;
+}
+
+@media (max-width: 640px) {
+  .appointment-modal {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .appointment-modal-content {
+    width: 100%;
+    max-height: 94vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .appointment-card {
+    padding: 1.5rem 1rem 1.25rem;
+  }
+
+  .form-row,
+  .contact-infoo {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .availability-badge.small {
+    align-self: flex-start;
+  }
+}
+
+/* Premium dynamic profile presentation */
+.doctor-profile-header {
+  background: linear-gradient(120deg, #082f49 0%, #0b5368 58%, #0f766e 100%);
+  padding: 1.25rem 0 4.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.doctor-profile-header::after {
+  content: '';
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  right: -150px;
+  top: -210px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  box-shadow: 0 0 0 35px rgba(255, 255, 255, 0.04), 0 0 0 70px rgba(255, 255, 255, 0.03);
+}
+
+.profile-breadcrumb {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  margin: 0 0 2rem;
+  text-transform: uppercase;
+}
+
+.profile-breadcrumb span {
+  color: #7dd3c7;
+  margin: 0 0.55rem;
+}
+
+.doctor-header-grid {
+  grid-template-columns: minmax(270px, 360px) 1fr;
+  gap: clamp(2rem, 6vw, 5.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.doctor-image-container {
+  text-align: center;
+}
+
+.profile-image-frame {
+  position: relative;
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 25px 60px rgba(1, 25, 38, 0.28);
+}
+
+.profile-image-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  pointer-events: none;
+}
+
+.doctor-image-container img {
+  display: block;
+  width: 100%;
+  height: 390px;
+  object-fit: cover;
+  object-position: top center;
+  border: 0;
+}
+
+.profile-verified {
+  position: absolute;
+  z-index: 2;
+  top: 1.35rem;
+  left: 1.35rem;
+  padding: 0.45rem 0.7rem;
+  background: #d9f99d;
+  color: #365314;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.doctor-info-container h1 {
+  max-width: 700px;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 1.05;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.profile-eyebrow {
+  color: #99f6e4;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  margin-bottom: 1.25rem;
+}
+
+.doctor-info-container .specialty {
+  color: #ccfbf1;
+}
+
+.qualification-tag {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 2px;
+  color: #f0fdfa;
+}
+
+.experience {
+  color: rgba(240, 253, 250, 0.82);
+}
+
+.main-content {
+  padding: 4.5rem 0;
+  background: #f4f8f7;
+}
+
+.profile-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.about-section {
+  background: #ffffff;
+  border-radius: 4px;
+  padding: clamp(2rem, 5vw, 4rem);
+  box-shadow: 0 18px 45px rgba(8, 47, 73, 0.08);
+  border: 1px solid #dcebe8;
+}
+
+.profile-side-panel {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.profile-side-card {
+  background: #082f49;
+  color: #ffffff;
+  padding: 2rem;
+  border-top: 4px solid #a3e635;
+  box-shadow: 0 18px 45px rgba(8, 47, 73, 0.14);
+}
+
+.side-card-kicker {
+  color: #a3e635;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  margin-bottom: 1rem;
+}
+
+.profile-side-card h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.55rem;
+  line-height: 1.25;
+  margin-bottom: 1.75rem;
+}
+
+.profile-facts {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.profile-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.profile-fact span,
+.side-note {
+  color: #b6d1d0;
+  font-size: 0.78rem;
+}
+
+.profile-fact strong {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.side-appointment-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1rem;
+  background: #a3e635;
+  border: 0;
+  color: #1a2e05;
+  cursor: pointer;
+  font-weight: 800;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.side-appointment-btn:hover {
+  background: #bef264;
+  transform: translateY(-2px);
+}
+
+.side-appointment-btn span {
+  font-size: 1.35rem;
+}
+
+.side-note {
+  margin: 1rem 0 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .doctor-profile-header {
+    padding-bottom: 3rem;
+  }
+
+  .profile-breadcrumb {
+    margin-bottom: 1.5rem;
+  }
+
+  .doctor-header-grid,
+  .profile-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doctor-image-container img {
+    height: min(390px, 90vw);
+  }
+
+  .profile-side-panel {
+    position: static;
+  }
+}

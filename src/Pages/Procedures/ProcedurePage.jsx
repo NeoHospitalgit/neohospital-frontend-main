@@ -22,7 +22,9 @@ const { API } = useAuth();
   // =====================================
   const removeDynamicSeo = useCallback(() => {
     document
-      .querySelectorAll("[data-dynamic-seo]")
+      .querySelectorAll(
+        "[data-dynamic-seo], [data-procedure-ssr-seo]"
+      )
       .forEach((el) => el.remove());
   }, []);
 
@@ -57,6 +59,18 @@ const { API } = useAuth();
           return;
         }
 
+        if (
+          tagName === "link" &&
+          node.getAttribute("rel")?.toLowerCase() === "canonical"
+        ) {
+          node.setAttribute(
+            "href",
+            `https://www.neohospital.com/procedures/${encodeURIComponent(
+              slug
+            )}`
+          );
+        }
+
         // Other SEO tags
         const clone = node.cloneNode(true);
 
@@ -65,7 +79,7 @@ const { API } = useAuth();
         document.head.appendChild(clone);
       });
     },
-    [removeDynamicSeo]
+    [removeDynamicSeo, slug]
   );
 
   // =====================================

@@ -34,11 +34,6 @@ function OurDepartment() {
 
         const data = await response.json();
 
-        console.log(
-          "Header API Response:",
-          data
-        );
-
         // =====================================
         // Find Department SEO Record
         // =====================================
@@ -54,11 +49,6 @@ function OurDepartment() {
                 "specialities"
             )
           : null;
-
-        console.log(
-          "Department SEO:",
-          departmentSeo
-        );
 
         if (!cancelled) {
           setSeo(departmentSeo || null);

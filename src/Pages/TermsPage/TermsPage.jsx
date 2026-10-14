@@ -1,21 +1,81 @@
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TermsPage.css";
 import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
+import { useAuth } from "../../store/auth";
 
 function TermsPage() {
+  const { API } = useAuth();
+  const [seo, setSeo] = useState(null);
+
+  // =====================================
+  // Fetch Terms & Conditions SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        const termsSeo = Array.isArray(data?.header)
+          ? data.header.find(
+              (item) =>
+                item?.page?.trim()?.toLowerCase() ===
+                "terms-and-conditions"
+            )
+          : null;
+
+        if (!cancelled) {
+          setSeo(termsSeo || null);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error("Terms SEO Error:", error);
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [API]);
+
   return (
     <>
-      <Helmet>
-        <title>Terms & Conditions | Neo Hospital</title>
-      </Helmet>
+      {/* =====================================
+          DYNAMIC TERMS SEO
+      ===================================== */}
+
+      {seo?.tagdata && (
+        <Helmet>
+          {parse(seo.tagdata)}
+        </Helmet>
+      )}
 
       <section className="policies-section">
         <div className="policies-header">
           <h1 className="policies-title">
             Terms & Conditions – Neo Hospital
           </h1>
-           <div className="ownership-notice">
+
+          <div className="ownership-notice">
             <p>
               <strong>
                 This website (www.neohospital.com) is owned and operated by
@@ -24,14 +84,14 @@ function TermsPage() {
               </strong>
             </p>
           </div>
+
           <p className="policies-description">
             Welcome to the website of NEO Hospital. By accessing or using this
             website, you agree to comply with and be bound by the following
             Terms and Conditions.
           </p>
-        
-         
         </div>
+
         <div className="policy-content">
           <p>
             <strong>Effective Date:</strong> June 2026
@@ -44,14 +104,14 @@ function TermsPage() {
 
           <h2>1. Use of the Website</h2>
 
-         <p>
-  The content available on this website is provided for general
-  informational purposes only by Muskan Medical Center Private Limited,
-  operating under the brand name "Neo Hospital". While we strive to
-  ensure that the information presented is accurate and up to date,
-  we make no guarantees regarding the completeness, reliability,
-  or accuracy of the content.
-</p>
+          <p>
+            The content available on this website is provided for general
+            informational purposes only by Muskan Medical Center Private Limited,
+            operating under the brand name "Neo Hospital". While we strive to
+            ensure that the information presented is accurate and up to date,
+            we make no guarantees regarding the completeness, reliability,
+            or accuracy of the content.
+          </p>
 
           <p>
             Your use of any information or materials on this website is entirely
@@ -180,32 +240,34 @@ function TermsPage() {
           <h2>Contact Us</h2>
 
           <div className="contact-box">
-           <h2>Contact Us</h2>
+            <h2>Contact Us</h2>
 
-<div className="contact-box">
-  <p>
-    If you have any questions regarding these Terms and Conditions,
-    please contact:
-  </p>
+            <div className="contact-box">
+              <p>
+                If you have any questions regarding these Terms and Conditions,
+                please contact:
+              </p>
 
-  <p>
-    <strong>Muskan Medical Center Private Limited</strong><br />
-    (Operating as Neo Hospital)
-  </p>
-  <p>
-    D-170A, Sector-50,,<br />
-    Noida, Gautam Buddh Nagar,<br />
-    Uttar Pradesh - 201301
-  </p>
+              <p>
+                <strong>Muskan Medical Center Private Limited</strong>
+                <br />
+                (Operating as Neo Hospital)
+              </p>
 
-  <p>
-    Phone: 0120-3120000 / 0120-4880000
-  </p>
+              <p>
+                D-170A, Sector-50,,<br />
+                Noida, Gautam Buddh Nagar,<br />
+                Uttar Pradesh - 201301
+              </p>
 
-  <p>
-    Email: info@neohospital.com
-  </p>
-</div>
+              <p>
+                Helpdesk: 0120-3120000 / 0120-4880000
+              </p>
+
+              <p>
+                Email: info@neohospital.com
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -36,11 +36,6 @@ function OurBlog() {
 
         const data = await response.json();
 
-        console.log(
-          "Header API Response:",
-          data
-        );
-
         // =====================================
         // Find About SEO Record
         // =====================================
@@ -56,11 +51,6 @@ function OurBlog() {
                 "blog"
             )
           : null;
-
-        console.log(
-          "Blog SEO:",
-          blogSeo
-        );
 
         if (!cancelled) {
           setSeo(blogSeo || null);

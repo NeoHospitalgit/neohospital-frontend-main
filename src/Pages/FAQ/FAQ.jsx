@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import parse from "html-react-parser";
 import { useAuth } from "../../store/auth";
 import "./FAQ.css";
 
@@ -10,6 +11,12 @@ function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const [seo, setSeo] = useState(null);
+
+  // =====================================
+  // Fetch FAQs
+  // =====================================
 
   useEffect(() => {
     if (!API) return;
@@ -53,147 +60,381 @@ function FAQ() {
     };
   }, [API]);
 
+  // =====================================
+  // Fetch FAQ SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(`${API}/api/header/view-header`);
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        const headers = Array.isArray(data?.header)
+          ? data.header
+          : [];
+
+        const faqSeo = headers.find((item) => {
+          const pageName = String(item?.page || "")
+            .trim()
+            .toLowerCase();
+
+          return (
+            pageName === "faq" ||
+            pageName === "/faq" ||
+            pageName === "faqs" ||
+            pageName === "/faqs"
+          );
+        });
+
+        if (!cancelled) {
+          setSeo(faqSeo || null);
+        }
+      } catch (error) {
+        console.error("FAQ SEO Error:", error);
+
+        if (!cancelled) {
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [API]);
+
+  // =====================================
+  // FAQ Accordion
+  // =====================================
+
   const handleFAQClick = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
+    setOpenIndex((currentIndex) =>
+      currentIndex === index ? null : index
+    );
   };
+
+  // =====================================
+  // FAQ Schema
+  // =====================================
 
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
+    mainEntity: faqs
+      .filter(
+        (faq) =>
+          faq?.question &&
+          faq?.answer
+      )
+      .map((faq) => ({
+        "@type": "Question",
+        name: String(faq.question).trim(),
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: String(faq.answer).trim(),
+        },
+      })),
   };
 
+  // =====================================
+  // Dynamic SEO Head
+  // =====================================
+
+  const seoTags = seo?.tagdata
+    ? parse(seo.tagdata)
+    : null;
+
   return (
-    <div className="faq-page">
-
+    <>
       <Helmet>
-        <title>
-          Frequently Asked Questions | NEO Hospital Noida
-        </title>
+        {/* =====================================
+            DEFAULT FAQ SEO FALLBACK
+            Used when CMS SEO is unavailable
+        ===================================== */}
 
-        <meta
-          name="description"
-          content="Find answers to frequently asked questions about NEO Hospital, doctors, appointments, treatments, services and healthcare facilities in Noida."
-        />
+        {!seo?.tagdata && (
+          <>
+            <title>
+              Frequently Asked Questions | NEO Hospital
+            </title>
 
-        <link
-          rel="canonical"
-          href="https://www.neohospital.com/faq"
-        />
+            <meta
+              name="description"
+              content="Find answers to frequently asked questions about NEO Hospital, healthcare services, treatments, doctors, facilities and patient care in Noida."
+            />
 
-        {faqs.length > 0 && (
-          <script type="application/ld+json">
-            {JSON.stringify(faqSchema)}
-          </script>
+            <meta
+              name="keywords"
+              content="NEO Hospital FAQ, frequently asked questions NEO Hospital, hospital FAQ Noida, healthcare FAQ Noida, NEO Hospital services, hospital services Noida"
+            />
+
+            <link
+              rel="canonical"
+              href="https://www.neohospital.com/faq"
+            />
+
+            <meta
+              name="robots"
+              content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+            />
+
+            <meta
+              name="author"
+              content="NEO Hospital"
+            />
+
+            <meta
+              name="publisher"
+              content="NEO Hospital"
+            />
+
+            {/* Open Graph */}
+
+            <meta
+              property="og:title"
+              content="Frequently Asked Questions | NEO Hospital"
+            />
+
+            <meta
+              property="og:description"
+              content="Find answers to frequently asked questions about NEO Hospital, healthcare services, treatments, doctors, facilities and patient care in Noida."
+            />
+
+            <meta
+              property="og:type"
+              content="website"
+            />
+
+            <meta
+              property="og:url"
+              content="https://www.neohospital.com/faq"
+            />
+
+            <meta
+              property="og:site_name"
+              content="NEO Hospital"
+            />
+
+            <meta
+              property="og:locale"
+              content="en_IN"
+            />
+
+            {/* Twitter / X */}
+
+            <meta
+              name="twitter:card"
+              content="summary_large_image"
+            />
+
+            <meta
+              name="twitter:title"
+              content="Frequently Asked Questions | NEO Hospital"
+            />
+
+            <meta
+              name="twitter:description"
+              content="Find answers to frequently asked questions about NEO Hospital, healthcare services, treatments, doctors, facilities and patient care in Noida."
+            />
+
+            <meta
+              name="twitter:url"
+              content="https://www.neohospital.com/faq"
+            />
+          </>
+        )}
+
+        {/* =====================================
+            CMS SEO HEAD
+        ===================================== */}
+
+        {seoTags}
+
+        {/* =====================================
+            FAQ STRUCTURED DATA
+        ===================================== */}
+
+        {faqSchema.mainEntity.length > 0 && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(faqSchema),
+            }}
+          />
         )}
       </Helmet>
 
-      {/* FAQ Banner */}
-      <section className="faq-banner">
-        <div className="faq-banner-content">
-          <h1>Frequently Asked Questions</h1>
+      {/* =====================================
+          FAQ PAGE
+      ===================================== */}
 
-          <p>
-            Find answers to common questions about NEO Hospital,
-            our healthcare services, treatments and facilities.
-          </p>
-        </div>
-      </section>
+      <div className="faq-page">
 
-      {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="container">
+        {/* FAQ Banner */}
 
-          <div className="faq-heading">
-            <span>FAQ</span>
+        <section className="faq-banner">
+          <div className="faq-banner-content">
 
-            <h2>
+            <h1>
               Frequently Asked Questions
-            </h2>
+            </h1>
 
             <p>
-              Get answers to the most commonly asked questions
-              about NEO Hospital and our healthcare services.
+              Find answers to common questions about NEO Hospital,
+              our healthcare services, treatments and facilities.
             </p>
+
           </div>
+        </section>
 
-          {loading && (
-            <div className="faq-message">
-              <p>Loading FAQs...</p>
-            </div>
-          )}
+        {/* FAQ Section */}
 
-          {!loading && error && (
-            <div className="faq-message">
+        <section className="faq-section">
+          <div className="container">
+
+            <div className="faq-heading">
+
+              <span>FAQ</span>
+
+              <h2>
+                Frequently Asked Questions
+              </h2>
+
               <p>
-                Unable to load FAQs at the moment. Please try again later.
+                Get answers to the most commonly asked questions
+                about NEO Hospital and our healthcare services.
               </p>
+
             </div>
-          )}
 
-          {!loading && !error && faqs.length === 0 && (
-            <div className="faq-message">
-              <p>No FAQs available at the moment.</p>
-            </div>
-          )}
+            {/* Loading */}
 
-          {!loading && !error && faqs.length > 0 && (
-            <div className="faq-list">
+            {loading && (
+              <div className="faq-message">
+                <p>
+                  Loading FAQs...
+                </p>
+              </div>
+            )}
 
-              {faqs.map((faq, index) => (
-                <div
-                  className={`faq-item ${
-                    openIndex === index ? "faq-active" : ""
-                  }`}
-                  key={faq._id}
-                >
+            {/* Error */}
 
-                  <button
-                    type="button"
-                    className="faq-question"
-                    onClick={() => handleFAQClick(index)}
-                    aria-expanded={openIndex === index}
-                    aria-controls={`faq-answer-${faq._id}`}
-                  >
-                    <span>
-                      {faq.question}
-                    </span>
+            {!loading && error && (
+              <div className="faq-message">
+                <p>
+                  Unable to load FAQs at the moment.
+                  Please try again later.
+                </p>
+              </div>
+            )}
 
-                    <span className="faq-icon">
-                      {openIndex === index ? "−" : "+"}
-                    </span>
-                  </button>
+            {/* Empty */}
 
-                  <div
-                    id={`faq-answer-${faq._id}`}
-                    className="faq-answer"
-                    style={{
-                      display:
-                        openIndex === index ? "block" : "none",
-                    }}
-                  >
-                    <p>
-                      {faq.answer}
-                    </p>
-                  </div>
+            {!loading &&
+              !error &&
+              faqs.length === 0 && (
+                <div className="faq-message">
+                  <p>
+                    No FAQs available at the moment.
+                  </p>
+                </div>
+              )}
+
+            {/* FAQ List */}
+
+            {!loading &&
+              !error &&
+              faqs.length > 0 && (
+                <div className="faq-list">
+
+                  {faqs.map((faq, index) => (
+                    <div
+                      className={`faq-item ${
+                        openIndex === index
+                          ? "faq-active"
+                          : ""
+                      }`}
+                      key={
+                        faq?._id ||
+                        faq?.id ||
+                        `faq-${index}`
+                      }
+                    >
+
+                      <button
+                        type="button"
+                        className="faq-question"
+                        onClick={() =>
+                          handleFAQClick(index)
+                        }
+                        aria-expanded={
+                          openIndex === index
+                        }
+                        aria-controls={`faq-answer-${
+                          faq?._id ||
+                          faq?.id ||
+                          index
+                        }`}
+                      >
+
+                        <span>
+                          {faq?.question}
+                        </span>
+
+                        <span className="faq-icon">
+                          {openIndex === index
+                            ? "−"
+                            : "+"}
+                        </span>
+
+                      </button>
+
+                      <div
+                        id={`faq-answer-${
+                          faq?._id ||
+                          faq?.id ||
+                          index
+                        }`}
+                        className="faq-answer"
+                        style={{
+                          display:
+                            openIndex === index
+                              ? "block"
+                              : "none",
+                        }}
+                      >
+
+                        <p>
+                          {faq?.answer}
+                        </p>
+
+                      </div>
+
+                    </div>
+                  ))}
 
                 </div>
-              ))}
+              )}
 
-            </div>
-          )}
+          </div>
+        </section>
 
-        </div>
-      </section>
-
-    </div>
+      </div>
+    </>
   );
 }
 

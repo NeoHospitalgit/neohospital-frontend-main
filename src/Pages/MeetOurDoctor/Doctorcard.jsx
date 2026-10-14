@@ -8,21 +8,15 @@ function Doctorcard(props) {
   const { API } = useAuth();
 
   const imageUrl = props.doctorpic
-    ? `${API}/uploads/doctors/${props.doctorpic}`
+    ? /^https?:\/\//i.test(props.doctorpic)
+      ? props.doctorpic
+      : `${API}/uploads/doctors/${props.doctorpic.replace(/^\/?uploads\/doctors\//, "")}`
     : fallbackImage;
 
   return (
-    <section className="doclinks">
-      <Link to={`/doctor-details/${props.doctorslug}`}>
-        <div className="doctorcard">
-          <div className="card">
-
-            {/* =========================
-                FRONT
-            ========================= */}
-
-            <div className="face face1">
-              <div className="content">
+    <article className="doctorcard">
+      <div className="doctor-card-image-wrap">
+        <Link to={`/doctor-details/${props.doctorslug}`}>
                 <img
                   src={imageUrl}
                   alt={
@@ -31,60 +25,34 @@ function Doctorcard(props) {
                   }
                   width="400"
                   height="300"
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.src = fallbackImage;
                   }}
                 />
-
-                <h3>
-                  {props.doctorname}
-                </h3>
-              </div>
-            </div>
-
-            {/* =========================
-                DETAILS
-            ========================= */}
-
-            <div className="face face2">
-              <div className="content">
-
-                {props.doctortime && (
-                  <p>
-                    {props.doctortime}
-                  </p>
-                )}
-
-                {props.doctorspecialist && (
-                  <p>
-                    {props.doctorspecialist}
-                  </p>
-                )}
-
-                {props.doctordepartment && (
-                  <p>
-                    {props.doctordepartment}
-                  </p>
-                )}
-
-                <div>
-                  <button
-                    type="button"
-                    className="text-appointment-btn"
-                  >
-                    📝 Schedule
-                  </button>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
+        </Link>
+        <button className="doctor-favorite" type="button" aria-label="Add doctor to favourites">♡</button>
+        <span className="doctor-availability"><i /> Available</span>
+      </div>
+      <div className="doctor-card-body">
+        <Link to={`/doctor-details/${props.doctorslug}`}><h3>{props.doctorname}</h3></Link>
+        <small>{props.doctordetails || "Consultant"}</small>
+        <p className="doctor-speciality">♧ {props.doctordepartment || "Specialist"}</p>
+        <p className="doctor-experience">{props.doctortime || "Experienced Consultant"}</p>
+        <div className="doctor-card-actions">
+          <Link className="doctor-profile-btn" to={`/doctor-details/${props.doctorslug}`}>View Profile</Link>
+          <Link
+            className="doctor-book-btn"
+            to={`/doctor-details/${props.doctorslug}`}
+            state={{ openAppointment: true }}
+          >
+            Book Appointment
+          </Link>
         </div>
-      </Link>
-    </section>
+      </div>
+    </article>
   );
 }
 
 export default Doctorcard;
-

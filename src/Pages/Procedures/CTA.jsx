@@ -32,7 +32,7 @@ function CTA({ pageData }) {
         doctorname=""
       />
             <a
-              href="tel:01204880088"
+              href="tel:0120-4880088"
               className="cta-btn btn-outlines"
             >
               <FaPhoneAlt />

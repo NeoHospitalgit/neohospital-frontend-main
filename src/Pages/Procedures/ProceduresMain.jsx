@@ -6,10 +6,8 @@ import parse from "html-react-parser";
 import "./ProceduresMain.css";
 import { useAuth } from "../../store/auth";
 
-
 function ProceduresMain() {
-     const { API } = useAuth();
- 
+  const { API } = useAuth();
 
   const [procedures, setProcedures] = useState([]);
   const [filteredProcedures, setFilteredProcedures] = useState([]);
@@ -24,6 +22,7 @@ function ProceduresMain() {
 
   useEffect(() => {
     if (!API) return;
+
     const fetchProcedures = async () => {
       try {
         setLoading(true);
@@ -46,17 +45,6 @@ function ProceduresMain() {
 
         setProcedures(list);
         setFilteredProcedures(list);
-
-        const seoData =
-          data?.seo_head ||
-          data?.tagdata ||
-          data?.seo ||
-          null;
-
-        if (seoData) {
-          setSeo(seoData);
-        }
-
       } catch (error) {
         console.error(
           "Procedures Error:",
@@ -68,6 +56,58 @@ function ProceduresMain() {
     };
 
     fetchProcedures();
+  }, [API]);
+
+  // =====================================
+  // Fetch Procedures SEO
+  // =====================================
+
+  useEffect(() => {
+    if (!API) return;
+
+    let cancelled = false;
+
+    const fetchSeo = async () => {
+      try {
+        const response = await fetch(
+          `${API}/api/header/view-header`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch header data: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        const proceduresSeo = Array.isArray(data?.header)
+          ? data.header.find(
+              (item) =>
+                item?.page?.trim()?.toLowerCase() ===
+                "procedures"
+            )
+          : null;
+
+        if (!cancelled) {
+          setSeo(proceduresSeo || null);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.error(
+            "Procedures SEO Error:",
+            error
+          );
+          setSeo(null);
+        }
+      }
+    };
+
+    fetchSeo();
+
+    return () => {
+      cancelled = true;
+    };
   }, [API]);
 
   // =====================================
@@ -91,7 +131,6 @@ function ProceduresMain() {
     );
 
     setFilteredProcedures(result);
-
   }, [search, procedures]);
 
   // =====================================
@@ -104,9 +143,9 @@ function ProceduresMain() {
           PROCEDURES SEO
       ===================================== */}
 
-      {seo && (
+      {seo?.tagdata && (
         <Helmet>
-          {parse(seo)}
+          {parse(seo.tagdata)}
         </Helmet>
       )}
 

@@ -10,6 +10,7 @@ export const Login = () => {
     email: "",
     password: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const { isLoggedIn, storeTokenInLS, API } = useAuth();
@@ -32,6 +33,12 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
       const response = await fetch(`${API}/api/auth/login`, {
         method: "POST",
@@ -44,7 +51,7 @@ export const Login = () => {
       const res_data = await response.json();
 
       if (response.ok) {
-        storeTokenInLS(res_data.token);
+        storeTokenInLS(res_data.token, res_data.userData);
 
         setUser({
           email: "",
@@ -52,7 +59,6 @@ export const Login = () => {
         });
 
         toast.success("Login successful");
-        navigate("/admin");
       } else {
         const errorMessage = res_data.extraDetails
           ? res_data.extraDetails
@@ -63,6 +69,8 @@ export const Login = () => {
     } catch (error) {
       console.error("An error occurred:", error);
       toast.error("An error occurred while logging in");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -72,7 +80,11 @@ export const Login = () => {
         <title>Admin Login | NEO Hospital</title>
         <meta
           name="robots"
-          content="noindex, nofollow"
+          content="noindex, follow"
+        />
+        <meta
+          name="googlebot"
+          content="noindex, follow"
         />
       </Helmet>
 
@@ -130,8 +142,9 @@ export const Login = () => {
                 <button
                   type="submit"
                   className="btn btn-primary btn-block mb-4 signin"
+                  disabled={isSubmitting}
                 >
-                  Sign in
+                  {isSubmitting ? "Signing in..." : "Sign in"}
                 </button>
               </form>
             </div>

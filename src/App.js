@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,10 +13,36 @@ import "./App.css";
 import Header from "./Pages/Header.jsx";
 import Footer from "./Pages/Footer.jsx";
 import ScrollToTop from "./Pages/ScrollToTop.jsx";
+import Breadcrumbs from "./Pages/Breadcrumbs.jsx";
+
+const campaignHosts = new Set([
+  "cardiology.neohospital.com",
+  "gastro.neohospital.com",
+]);
+
+function CampaignRobots() {
+  useEffect(() => {
+    if (!campaignHosts.has(window.location.hostname.toLowerCase())) {
+      return undefined;
+    }
+
+    const tags = ["robots", "googlebot"].map((name) => {
+      const meta = document.createElement("meta");
+      meta.name = name;
+      meta.content = "noindex, follow";
+      document.head.appendChild(meta);
+      return meta;
+    });
+
+    return () => tags.forEach((tag) => tag.remove());
+  }, []);
+
+  return null;
+}
 
 // Public Pages
 const KeywordsPage = lazy(() => import("./Pages/KeywordsPage.jsx"));
-const Index = lazy(() => import("./Pages/Home/Home.jsx"));
+const Index = lazy(() => import(/* webpackPreload: true */ "./Pages/Home/Home.jsx"));
 const About = lazy(() => import("./Pages/About/About.jsx"));
 
 const OurDepartment = lazy(
@@ -200,9 +226,12 @@ const App = () => {
         {!isLoggedIn && <Header />}
 
         <ScrollToTop />
+        <CampaignRobots />
+        <Breadcrumbs />
 
-        <Suspense fallback={null}>
-          <Routes>
+        <div className="route-content">
+          <Suspense fallback={null}>
+            <Routes>
             {/* Fallback */}
             <Route
               path="*"
@@ -795,9 +824,9 @@ const App = () => {
                   )
                 }
               />
-          </Routes>
-        </Suspense>
-
+            </Routes>
+          </Suspense>
+        </div>
         {!isLoggedIn && <Footer />}
       </div>
     </Router>

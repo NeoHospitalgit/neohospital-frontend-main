@@ -3,7 +3,12 @@ import React, {
   useEffect,
 } from "react";
 
-import { useParams, useSearchParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "./Profile.css";
 import parse from "html-react-parser";
@@ -12,6 +17,16 @@ import NotFound from "../NotFound";
 import { useAuth } from "../../store/auth";
 
 import fallbackImage from "../../Assets/manpic.png";
+
+const NOINDEX_DOCTOR_SLUGS = new Set([
+  "dt-anjali-porwal",
+  "dt-deepti-choudhary",
+  "dt-shweta-dubey",
+  "dr-ankit-jain",
+  "dr-sanjay-dalal",
+  "dr-shams-gulrej",
+  "dr-yogesh-arora",
+]);
 
 function Profile() {
 
@@ -59,6 +74,15 @@ function Profile() {
 
   const { dr } = useParams();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!location.state?.openAppointment) return;
+
+    setShowAppointmentForm(true);
+    navigate(location.pathname, { replace: true, state: null });
+  }, [location.pathname, location.state, navigate]);
 
   // =====================================
   // Fetch Doctors
@@ -71,6 +95,8 @@ function Profile() {
       return;
     }
 
+    const controller = new AbortController();
+
     const fetchData = async () => {
 
       try {
@@ -79,7 +105,8 @@ function Profile() {
         setError(null);
 
         const response = await fetch(
-          `${API}/api/doctors/view-doctors`
+          `${API}/api/doctors/view-doctors?details=true&slug=${encodeURIComponent(dr || "")}`,
+          { signal: controller.signal }
         );
 
         const data =
@@ -92,11 +119,17 @@ function Profile() {
           );
         }
 
-        setNeodoctor(
-          data?.doctors || []
-        );
+        const doctors = Array.isArray(data?.doctors)
+          ? data.doctors
+          : data?.doctor
+            ? [data.doctor]
+            : [];
+
+        setNeodoctor(doctors);
 
       } catch (error) {
+
+  if (error.name === "AbortError") return;
 
   console.error(
     "Doctor profile API error:",
@@ -116,7 +149,9 @@ function Profile() {
 
     fetchData();
 
-  }, [API]);
+    return () => controller.abort();
+
+  }, [API, dr]);
 
   // =====================================
   // Find Doctor
@@ -132,6 +167,9 @@ function Profile() {
       setShowAppointmentForm(true);
     }
   }, [doctor, searchParams]);
+  const isNoindexDoctor = Boolean(
+    doctor?.drSlug && NOINDEX_DOCTOR_SLUGS.has(String(doctor.drSlug).trim())
+  );
 
   // =====================================
   // Doctor Name
@@ -359,31 +397,6 @@ if (!loading && (!doctor || error)) {
   };
 
   // =====================================
-  // Qualification
-  // =====================================
-
-  const formatQualification =
-    (qualification) => {
-
-      if (!qualification) {
-        return null;
-      }
-
-      return qualification
-        .split(",")
-        .map((qual, index) => (
-
-          <span
-            key={index}
-            className="qualification-tag"
-          >
-            {qual.trim()}
-          </span>
-
-        ));
-    };
-
-  // =====================================
   // Doctor Image
   // =====================================
 
@@ -391,6 +404,9 @@ if (!loading && (!doctor || error)) {
     doctor.drImage
       ? `${API}/uploads/doctors/${doctor.drImage}`
       : fallbackImage;
+  const qualifications = doctor.drQualification
+    ? doctor.drQualification.split(",").map((item) => item.trim()).filter(Boolean)
+    : [];
 
   return (
 
@@ -401,7 +417,16 @@ if (!loading && (!doctor || error)) {
       ===================================== */}
       <Helmet>
   {doctor.drMetaTags?.trim() ? (
-    parse(doctor.drMetaTags)
+    <>
+      {parse(doctor.drMetaTags)}
+      {isNoindexDoctor && (
+        <>
+          <meta name="robots" content="noindex, nofollow" />
+          <meta name="googlebot" content="noindex, nofollow" />
+          <meta name="bingbot" content="noindex, nofollow" />
+        </>
+      )}
+    </>
   ) : (
     <>
      <title>
@@ -444,17 +469,17 @@ if (!loading && (!doctor || error)) {
 
         <meta
           name="robots"
-          content="index, follow"
+          content={isNoindexDoctor ? "noindex, nofollow" : "index, follow"}
         />
 
         <meta
           name="googlebot"
-          content="index, follow"
+          content={isNoindexDoctor ? "noindex, nofollow" : "index, follow"}
         />
 
         <meta
           name="bingbot"
-          content="index, follow"
+          content={isNoindexDoctor ? "noindex, nofollow" : "index, follow"}
         />
 
         <meta
@@ -533,7 +558,13 @@ if (!loading && (!doctor || error)) {
               <span className="premium-label">{doctor.drDesignation || "CONSULTANT"}</span>
               <h1>{doctor.drTitle}</h1>
               <h2>{(doctor.drDepartment || "SPECIALIST").toUpperCase()}</h2>
-              <div className="premium-tags">{formatQualification(doctor.drQualification)}</div>
+              <div className="premium-tags">
+                {qualifications.length
+                  ? qualifications.map((qualification) => (
+                      <span key={qualification}>{qualification}</span>
+                    ))
+                  : "Trusted medical expertise"}
+              </div>
               <p>{doctor.drDesignation || "Consultant"} – {doctor.drDepartment || "Medical Specialist"}. {doctor.drDetail ? String(doctor.drDetail).replace(/<[^>]+>/g, "").slice(0, 220) : "Providing compassionate, expert care for every patient."}</p>
               <div className="premium-actions"><button type="button" onClick={() => setShowAppointmentForm(true)} className="premium-primary-btn">Book Appointment <span>→</span></button><a href="#doctor-overview" className="premium-outline-btn">View Consultation Info</a></div>
             </div>
@@ -823,7 +854,7 @@ if (!loading && (!doctor || error)) {
                     </div>
 
                     <div className="contact-value">
-                      0120-4880000
+                      0120-4880088
                     </div>
 
                   </div>

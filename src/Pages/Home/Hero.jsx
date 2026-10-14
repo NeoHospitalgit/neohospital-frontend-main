@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { gsap } from "gsap";
 import "./Hero.css";
 
 // WhatsApp SVG Icon Component
@@ -12,12 +11,9 @@ import "./Hero.css";
 function Hero() {
   const navigate = useNavigate();
   const [goUp, setGoUp] = useState(false);
-  const textRef = useRef(null);
-  const sliderRef = useRef(null);
   const images = [
-    "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "2.jpg",
-    "1.jpg",
+    "/2.jpg",
+    "/1.jpg",
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -40,41 +36,11 @@ function Hero() {
     return () => window.removeEventListener("scroll", onPageScroll);
   }, []);
 
-  // GSAP text animations
   useEffect(() => {
-    gsap.fromTo(
-      textRef.current.querySelectorAll(".text-headline, .text-title, .text-descritpion, .text-appointment-btn, .text-stats-container"),
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out",
-      }
-    );
-  }, []);
+    const interval = window.setInterval(() => {
+      setCurrentSlide((previousSlide) => (previousSlide + 1) % images.length);
+    }, 15000);
 
-  // Slider fade animation
-  useEffect(() => {
-    const slider = sliderRef.current;
-    const animateSlide = () => {
-      gsap.to(slider, {
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.in",
-        onComplete: () => {
-          setCurrentSlide((prev) => (prev + 1) % images.length);
-          gsap.to(slider, {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-        },
-      });
-    };
-
-    const interval = setInterval(animateSlide, 5000);
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -82,10 +48,10 @@ function Hero() {
     <section className="banner-back-color">
       <div className="section-container">
         <div className="hero-section">
-          <div className="slider-container" ref={sliderRef} style={{ backgroundImage: `url(${images[currentSlide]})` }}>
+          <div className="slider-container" style={{ backgroundImage: `url(${images[currentSlide]})` }}>
             <div className="overlay"></div>
             <div className="content-wrapper">
-              <div className="text-section" ref={textRef}>
+              <div className="text-section">
                 <p className="text-headline">Your Health, Our Priority</p>
                 <h1 className="text-title">Expert Care for a Healthier Tomorrow</h1>
                 <p className="text-descritpion">
@@ -126,11 +92,24 @@ function Hero() {
                   <h3>Emergency Contact</h3>
                   <div className="info-item">
                     <i className="fa fa-phone"></i>
-                    <p> 0120-4880000</p>
+                    <p>
+                      Emergency:{" "}
+                      <a href="tel:0120-4880088">0120-4880088</a>
+                    </p>
                   </div>
                   <div className="info-item">
-                    <i className="fa fa-ambulance"></i>
-                    <p>Ambulance: 0120-3120000</p>
+                    <i className="fa fa-phone"></i>
+                    <p>
+                      Helpdesk:{" "}
+                      <a href="tel:0120-4880000">0120-4880000</a>
+                    </p>
+                  </div>
+                  <div className="info-item">
+                    <i className="fa fa-phone"></i>
+                    <p>
+                      Helpdesk:{" "}
+                      <a href="tel:0120-3120000">0120-3120000</a>
+                    </p>
                   </div>
                   <div className="info-divider"></div>
                   <h3>Hospital Hours</h3>
