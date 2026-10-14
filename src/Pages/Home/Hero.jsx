@@ -12,8 +12,18 @@ function Hero() {
   const navigate = useNavigate();
   const [goUp, setGoUp] = useState(false);
   const images = [
-    "/2.jpg",
-    "/1.jpg",
+    {
+      src: "/2.jpg",
+      alt: "Doctor in blue scrubs attending to a patient in a hospital ward.",
+      width: 2560,
+      height: 1441,
+    },
+    {
+      src: "/1.jpg",
+      alt: "NEO Hospital doctors and nurses standing together in a hospital ward.",
+      width: 2560,
+      height: 1706,
+    },
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -48,7 +58,15 @@ function Hero() {
     <section className="banner-back-color">
       <div className="section-container">
         <div className="hero-section">
-          <div className="slider-container" style={{ backgroundImage: `url(${images[currentSlide]})` }}>
+          <div className="slider-container">
+            <img
+              className="hero-image"
+              src={images[currentSlide].src}
+              alt={images[currentSlide].alt}
+              width={images[currentSlide].width}
+              height={images[currentSlide].height}
+              fetchPriority={currentSlide === 0 ? "high" : "auto"}
+            />
             <div className="overlay"></div>
             <div className="content-wrapper">
               <div className="text-section">
