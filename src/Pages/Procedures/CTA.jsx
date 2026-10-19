@@ -28,14 +28,11 @@ function CTA({ pageData }) {
         />
 
         <div className="procedure-cta-buttons">
-          <button
-            type="button"
-            className="cta-btn"
-            onClick={() => setShowAppointment(true)}
-          >
-            <FaCalendarCheck />
-            Book Appointment
-          </button>
+         <AppointmentModal
+        show={showAppointment}
+        onClose={() => setShowAppointment(false)}
+        doctorname=""
+      />
 
           <a
             href="tel:0120-4880088"
@@ -47,11 +44,7 @@ function CTA({ pageData }) {
         </div>
       </div>
 
-      <AppointmentModal
-        show={showAppointment}
-        onClose={() => setShowAppointment(false)}
-        doctorname=""
-      />
+     
     </section>
   );
 }
