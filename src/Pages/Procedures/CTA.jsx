@@ -1,58 +1,56 @@
-
 import React, { useState } from "react";
 import { FaPhoneAlt, FaCalendarCheck } from "react-icons/fa";
 import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import "./ProceduresPage.css";
 
 function CTA({ pageData }) {
+ 
   const [showAppointment, setShowAppointment] = useState(false);
 
-  const description =
-    pageData?.cat_content ||
-    "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital.";
-
   return (
-    <section className="procedure-cta">
-      <div className="procedure-cta-content">
-        <span>NEO Hospitals</span>
+    <>
+      <section className="procedure-cta">
 
-        <h2>
-          {pageData?.cat_title || "Looking for the Right Treatment?"}
-        </h2>
+        <div className="procedure-cta-content">
 
-        <div
+          <span>NEO Hospital</span>
+
+          <h2>
+            {pageData?.cat_title || "Looking for the Right Treatment?"}
+          </h2>
+
+         
+            <div
           className="procedure-cta-description"
           dangerouslySetInnerHTML={{
             __html: description,
           }}
         />
+        
 
-        <div className="procedure-cta-buttons">
-          <button
-            type="button"
-            className="cta-btn"
-            onClick={() => setShowAppointment(true)}
-          >
-            <FaCalendarCheck />
-            Book Appointment
-          </button>
+          <div className="procedure-cta-buttons">
 
-          <a
-            href="tel:0120-4880088"
-            className="cta-btn btn-outlines"
-          >
-            <FaPhoneAlt />
-            Call Now
-          </a>
-        </div>
-      </div>
-
-      <AppointmentModal
+           <AppointmentModal
         show={showAppointment}
         onClose={() => setShowAppointment(false)}
         doctorname=""
       />
-    </section>
+            <a
+              href="tel:0120-4880088"
+              className="cta-btn btn-outlines"
+            >
+              <FaPhoneAlt />
+              Call Now
+            </a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      
+    </>
   );
 }
 
