@@ -324,8 +324,9 @@
     padding: 1.5rem 1rem;
     text-align: center;
   }
+}
 
-  /* Premium doctor details presentation */
+/* Premium doctor details presentation */
   .premium-profile {
     --premium-primary: #078fc0;
     --premium-heading: #123f5b;
@@ -357,17 +358,21 @@
   .premium-primary-btn { border: 0; background: linear-gradient(135deg,#078fc0,#0aa7b8); color: #fff; box-shadow: 0 10px 25px rgba(7,143,192,.2); }
   .premium-outline-btn { border: 1px solid #c7e1e6; background: #fff; color: #087b99; }
   .premium-stats { background: #fff; }
-  .premium-stats-grid { display: grid; grid-template-columns: repeat(4,1fr); border-left: 1px solid #e2edf0; border-right: 1px solid #e2edf0; box-shadow: 0 12px 35px rgba(25,75,95,.05); }
-  .premium-stats-grid > div { padding: 24px; border-right: 1px solid #e3edf0; }
+  .premium-stats-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); border-left: 1px solid #e2edf0; border-right: 1px solid #e2edf0; box-shadow: 0 12px 35px rgba(25,75,95,.05); }
+  .premium-stats-grid > div { min-width: 0; padding: 24px; border-right: 1px solid #e3edf0; }
   .premium-stats-grid > div:last-child { border-right: 0; }
   .premium-stats-grid strong { display: block; margin-bottom: 5px; color: var(--premium-primary); font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .premium-stats-grid span { color: #7d8e97; font-size: 10px; font-weight: 600; }
   .premium-main { display: grid; grid-template-columns: minmax(0,1fr) 330px; gap: 38px; padding: 60px 0 95px; }
+  .premium-main > * { min-width: 0; }
   .premium-content { padding: 36px; border: 1px solid #e0ecef; border-radius: 24px; background: #fff; box-shadow: 0 12px 38px rgba(30,78,98,.06); }
   .premium-section { margin-bottom: 42px; }
   .premium-section h2,.premium-faq h2 { margin: 8px 0 0; color: var(--premium-heading); font-size: 30px; line-height: 1.25; }
   .premium-line { width: 50px; height: 4px; margin: 15px 0 22px; border-radius: 5px; background: linear-gradient(90deg,#078fc0,#0aa7b8); }
-  .premium-detail { color: var(--premium-text); font-size: 13px; line-height: 1.8; }
+  .premium-detail { min-width: 0; overflow-x: auto; color: var(--premium-text); font-size: 13px; line-height: 1.8; }
+  .premium-detail table { width: 100%; min-width: 680px; border-collapse: collapse; color: var(--premium-text); font-size: 12px; line-height: 1.6; }
+  .premium-detail th,.premium-detail td { padding: 9px 11px; border: 1px solid #dce8eb; text-align: left; vertical-align: top; }
+  .premium-detail th { background: #f1f8fa; color: var(--premium-heading); font-weight: 700; }
   .premium-info-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 13px; margin: 28px 0 35px; }
   .premium-info-grid > div { padding: 18px; border: 1px solid #dcecef; border-radius: 15px; background: #f5fbfc; }
   .premium-info-grid span,.premium-location > span,.premium-side-card p span { display: block; margin-bottom: 6px; color: #85959e; font-size: 8px; font-weight: 800; letter-spacing: 1px; }
@@ -430,7 +435,7 @@
     .premium-bottom-cta .premium-primary-btn { width: 100%; margin-top: 20px; }
   }
 
-
+@media (max-width: 767px) {
 
   .doctor-image-container {
     text-align: center;
