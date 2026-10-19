@@ -1,52 +1,58 @@
+
 import React, { useState } from "react";
 import { FaPhoneAlt, FaCalendarCheck } from "react-icons/fa";
 import AppointmentModal from "../AppointmentModal/AppointmentModal";
 import "./ProceduresPage.css";
 
 function CTA({ pageData }) {
- 
   const [showAppointment, setShowAppointment] = useState(false);
 
+  const description =
+    pageData?.cat_content ||
+    "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital.";
+
   return (
-    <>
-      <section className="procedure-cta">
+    <section className="procedure-cta">
+      <div className="procedure-cta-content">
+        <span>NEO Hospitals</span>
 
-        <div className="procedure-cta-content">
+        <h2>
+          {pageData?.cat_title || "Looking for the Right Treatment?"}
+        </h2>
 
-          <span>NEO Hospitals</span>
+        <div
+          className="procedure-cta-description"
+          dangerouslySetInnerHTML={{
+            __html: description,
+          }}
+        />
 
-          <h2>
-            {pageData?.cat_title || "Looking for the Right Treatment?"}
-          </h2>
+        <div className="procedure-cta-buttons">
+          <button
+            type="button"
+            className="cta-btn"
+            onClick={() => setShowAppointment(true)}
+          >
+            <FaCalendarCheck />
+            Book Appointment
+          </button>
 
-         
-            {pageData?.cat_content ||
-              "Connect with our experienced specialists and get the best treatment with personalized care at NEO Hospital."}
-        
+          <a
+            href="tel:0120-4880088"
+            className="cta-btn btn-outlines"
+          >
+            <FaPhoneAlt />
+            Call Now
+          </a>
+        </div>
+      </div>
 
-          <div className="procedure-cta-buttons">
-
-           <AppointmentModal
+      <AppointmentModal
         show={showAppointment}
         onClose={() => setShowAppointment(false)}
         doctorname=""
       />
-            <a
-              href="tel:0120-4880088"
-              className="cta-btn btn-outlines"
-            >
-              <FaPhoneAlt />
-              Call Now
-            </a>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      
-    </>
+    </section>
   );
 }
 
