@@ -13,7 +13,7 @@ function CTA({ pageData }) {
 
         <div className="procedure-cta-content">
 
-          <span>NEO Hospital</span>
+          <span>NEO Hospitals</span>
 
           <h2>
             {pageData?.cat_title || "Looking for the Right Treatment?"}
